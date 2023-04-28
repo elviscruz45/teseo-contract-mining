@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import reduxThunk from "redux-thunk";
 import { rootReducers } from "./src/reducers";
 import { AppNavigation } from "./src/navigation/AppNavigation";
+import { ConnectedLoginNavigator } from "./src/navigation/LoginNavigator";
 LogBox.ignoreAllLogs();
 
 const composedEnhancers = compose(applyMiddleware(reduxThunk));
@@ -22,6 +23,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <AppNavigation />
+        {/* <ConnectedLoginNavigator /> */}
       </NavigationContainer>
     </Provider>
   );

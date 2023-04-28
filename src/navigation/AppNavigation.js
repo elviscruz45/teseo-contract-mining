@@ -5,6 +5,10 @@ import React from "react";
 import { Icon } from "@rneui/themed";
 import { screen } from "../utils";
 import { HomeStack } from "./HomeStack";
+import { PostStack } from "./PostStack";
+import { ActivityStack } from "./ActivityStack";
+import { ProfileStack } from "./ProfileStack";
+import { SearchStack } from "./SearchStack";
 import { styles } from "./Navigation.styles";
 
 // const backgroundImage = require("../../assets/cerro3.jpeg");
@@ -29,22 +33,22 @@ export function AppNavigation() {
       />
       <Tab.Screen
         name={screen.search.tab}
-        component={HomeStack}
+        component={SearchStack}
         options={{ title: "Search" }}
       />
       <Tab.Screen
         name={screen.post.tab}
-        component={HomeStack}
+        component={PostStack}
         options={{ title: "Post" }}
       />
       <Tab.Screen
         name={screen.activity.tab}
-        component={HomeStack}
+        component={ActivityStack}
         options={{ title: "Activity" }}
       />
       <Tab.Screen
         name={screen.profile.tab}
-        component={HomeStack}
+        component={ProfileStack}
         options={{ title: "Profile" }}
       />
     </Tab.Navigator>

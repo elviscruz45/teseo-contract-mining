@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export function PostScreen() {
+export function UploadImagesForm() {
   return (
     <View>
-      <Text>PostScreen</Text>
+      <Text>UploadImagesForm</Text>
     </View>
   );
 }

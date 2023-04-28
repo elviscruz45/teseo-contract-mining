@@ -13,7 +13,7 @@ const searchStack = {
 
 const postStack = {
   tab: "PostTab",
-  Information: "Information",
+  post: "Post",
   addInformation: "AddInformation",
   addReviewInformation: "AddReviewInformation",
 };

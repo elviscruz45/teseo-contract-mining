@@ -4,6 +4,7 @@ import { post } from "./post";
 import { activity } from "./activity";
 import { home } from "./home";
 import { search } from "./search";
+import { auth } from "./auth";
 
 export const rootReducers = combineReducers({
   home,
@@ -11,4 +12,5 @@ export const rootReducers = combineReducers({
   post,
   activity,
   search,
+  auth,
 });
