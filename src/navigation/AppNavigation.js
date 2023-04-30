@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import { screen } from "../utils";
-import { HomeStack } from "./HomeStack";
+import { ConnectedHomeStack } from "./HomeStack";
 import { PostStack } from "./PostStack";
 import { ActivityStack } from "./ActivityStack";
 import { ProfileStack } from "./ProfileStack";
@@ -28,28 +28,28 @@ export function AppNavigation() {
     >
       <Tab.Screen
         name={screen.home.tab}
-        component={HomeStack}
-        options={{ title: "Home" }}
+        component={ConnectedHomeStack}
+        options={{ title: "Inicio" }}
       />
       <Tab.Screen
         name={screen.search.tab}
         component={SearchStack}
-        options={{ title: "Search" }}
+        options={{ title: "Buscar" }}
       />
       <Tab.Screen
         name={screen.post.tab}
         component={PostStack}
-        options={{ title: "Post" }}
+        options={{ title: "Publicar" }}
       />
       <Tab.Screen
         name={screen.activity.tab}
         component={ActivityStack}
-        options={{ title: "Activity" }}
+        options={{ title: "Actividad" }}
       />
       <Tab.Screen
         name={screen.profile.tab}
         component={ProfileStack}
-        options={{ title: "Profile" }}
+        options={{ title: "Perfil" }}
       />
     </Tab.Navigator>
   );

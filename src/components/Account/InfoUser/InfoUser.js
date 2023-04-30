@@ -1,16 +1,26 @@
 import React, { useState } from "react";
-import { View } from "react-native";
-import { Avatar, Text } from "react-native-elements";
+import { View, TouchableOpacity } from "react-native";
+import { Avatar, Text } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { styles } from "./InfoUser.styles";
+import { ConnectedChangeDisplayNameForm } from "../ChangeDisplayNameForm";
+import { Modal } from "../Modal";
+import { connect } from "react-redux";
+import { update_firebasePhoto } from "../../../actions/profile";
 
-export function InfoUser(props) {
-  const { setLoading, setLoadingText } = props;
+function InfoUser(props) {
+  // const { setLoading, setLoadingText } = props;
+  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("");
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [avatar, setAvatar] = useState(photoURL);
+  const [showModal, setShowModal] = useState(false);
+  const [renderComponent, setRenderComponent] = useState(null);
 
+  const user = getAuth().currentUser;
+  console.log("prospInfoUser", props);
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -18,7 +28,7 @@ export function InfoUser(props) {
       aspect: [4, 3],
     });
 
-    if (!result.cancelled) uploadImage(result.uri);
+    if (!result.canceled) uploadImage(result.uri);
   };
 
   const uploadImage = async (uri) => {
@@ -46,8 +56,18 @@ export function InfoUser(props) {
     updateProfile(auth.currentUser, { photoURL: imageUrl });
 
     setAvatar(imageUrl);
+    props.update_firebasePhoto(imageUrl);
+    console.log("propsInfoUsers", props);
     setLoading(false);
   };
+
+  const update_Name = () => {
+    setRenderComponent(
+      <ConnectedChangeDisplayNameForm onClose={onCloseOpenModal} />
+    );
+    setShowModal(true);
+  };
+  const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
   return (
     <View style={styles.content}>
@@ -62,9 +82,23 @@ export function InfoUser(props) {
       </Avatar>
 
       <View>
-        <Text style={styles.displayName}>{displayName || "Anónimo"}</Text>
+        <TouchableOpacity onPress={update_Name}>
+          <Text style={styles.displayName}>{displayName || "Anónimo"}</Text>
+        </TouchableOpacity>
+
         <Text>{email}</Text>
       </View>
+      <Modal show={showModal} close={onCloseOpenModal}>
+        {renderComponent}
+      </Modal>
     </View>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return reducers.profile;
+};
+
+export const ConnectedInfoUser = connect(mapStateToProps, {
+  update_firebasePhoto,
+})(InfoUser);

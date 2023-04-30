@@ -4,9 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { styles } from "./Navigation.styles";
 import { ConnectedPostScreen } from "../screens";
+import { getAuth, updateProfile } from "firebase/auth";
+import { ConnectedCameraScreen } from "../screens";
+import { ConnectedInformationScreen } from "../screens";
 
 export function PostStack() {
   const Stack = createNativeStackNavigator();
+  const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
   return (
     <Stack.Navigator
@@ -23,7 +27,7 @@ export function PostStack() {
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
             <Image
-              source={require("../../assets/Elvis_Cruz_Formal.jpg")}
+              source={{ uri: photoURL }}
               style={{
                 width: 40,
                 height: 40,
@@ -40,17 +44,17 @@ export function PostStack() {
         component={ConnectedPostScreen}
         options={{ title: " " }}
       />
-      {/* <Stack.Screen
-        name={screen.homestack.data}
-        component={DataScreen}
-        options={{ title: "Conveyor Belt" }}
+      <Stack.Screen
+        name={screen.post.camera}
+        component={ConnectedCameraScreen}
+        options={{ title: " " }}
       />
       <Stack.Screen
-        name={screen.homestack.graphic}
-        component={GraphicScreen}
-        options={{ title: "Conveyor Belt" }}
+        name={screen.post.form}
+        component={ConnectedInformationScreen}
+        options={{ title: "Formulario" }}
       />
-
+      {/* 
       <Stack.Screen
         name={screen.homestack.changes}
         component={ChangesScreen}

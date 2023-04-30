@@ -85,7 +85,6 @@ const mapStateToProps = (reducers) => {
   return reducers.auth;
 };
 
-// export default connect(mapStateToProps, { update_firebaseUserUid })(LoginForm);
 export const ConnectedLoginForm = connect(mapStateToProps, {
   update_firebaseUserUid,
 })(LoginForm);

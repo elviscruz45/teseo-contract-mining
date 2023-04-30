@@ -5,13 +5,14 @@ export const styles = StyleSheet.create({
     marginTop: 30,
     paddingVertical: 10,
     borderRadius: 0,
-    backgroundColor: "#fff",
+    backgroundColor: "#F9CEDE",
     borderTopWidth: 1,
     borderTopColor: "#e3e3e3",
     borderBottomWidth: 1,
     borderBottomColor: "#e3e3e3",
   },
   btnTextStyle: {
-    color: "#00a680",
+    color: "#ffff",
+    fontWeight: "bold",
   },
 });

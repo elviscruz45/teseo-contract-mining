@@ -152,25 +152,24 @@ export const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50, // half of width and height
   },
-  image: {
-    width: "15%",
-    height: 55,
+});
+
+export const styles2 = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
   },
-  avatar: {
-    marginRight: 20,
-    backgroundColor: "#D7DDE9",
-    zIndex: 10,
+  camera: {
+    flex: 1,
   },
-  equipments: {
+  buttonContainer: {
+    flex: 1,
     flexDirection: "row",
-    margin: 10,
+    backgroundColor: "transparent",
+    margin: 64,
   },
-  name: {
-    fontWeight: "bold",
-  },
-  info: {
-    color: "#828282",
-    paddingRight: 100,
-    marginTop: 3,
+  button: {
+    alignSelf: "flex-end",
+    alignItems: "center",
   },
 });

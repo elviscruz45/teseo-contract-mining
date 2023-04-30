@@ -8,7 +8,6 @@ import { AuthScreen } from "../screens/Auth/AuthScreen";
 import { connect } from "react-redux";
 
 function LoginNavigator(props) {
-  console.log("fromLoginNavigator", props);
   return <>{props.firebase_user_uid ? <AppNavigation /> : <AuthScreen />}</>;
 }
 

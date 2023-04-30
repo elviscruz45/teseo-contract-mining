@@ -22,8 +22,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AppNavigation />
-        {/* <ConnectedLoginNavigator /> */}
+        {/* <AppNavigation /> */}
+        <ConnectedLoginNavigator />
       </NavigationContainer>
     </Provider>
   );

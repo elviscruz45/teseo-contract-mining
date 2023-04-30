@@ -1,13 +1,19 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { ConnectedHomeScreen } from "../screens";
 import { styles } from "./Navigation.styles";
+import { connect } from "react-redux";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth, updateProfile } from "firebase/auth";
 
-export function HomeStack() {
+function HomeStack(props) {
   const Stack = createNativeStackNavigator();
 
+  const { uid, photoURL, displayName, email } = getAuth().currentUser;
+
+  console.log("propsHOMESKACT", props);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -23,7 +29,7 @@ export function HomeStack() {
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
             <Image
-              source={require("../../assets/Elvis_Cruz_Formal.jpg")}
+              source={{ uri: photoURL }}
               style={{
                 width: 40,
                 height: 40,
@@ -59,3 +65,11 @@ export function HomeStack() {
     </Stack.Navigator>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return reducers.profile;
+};
+
+export const ConnectedHomeStack = connect(mapStateToProps, {
+  // update_firebaseUserUid,
+})(HomeStack);

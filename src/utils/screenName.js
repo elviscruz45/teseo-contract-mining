@@ -14,8 +14,8 @@ const searchStack = {
 const postStack = {
   tab: "PostTab",
   post: "Post",
-  addInformation: "AddInformation",
-  addReviewInformation: "AddReviewInformation",
+  camera: "Camera",
+  form: "Form",
 };
 
 const activityStack = {
