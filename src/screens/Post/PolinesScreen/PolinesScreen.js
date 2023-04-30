@@ -18,8 +18,9 @@ import { screen } from "../../../utils";
 
 export function PolinesScreen(props) {
   const navigation = useNavigation();
+  const { route } = props;
+  console.log("goback", route.params.formData);
 
-  console.log("holaBROOO");
   const [dataList, setDataList] = useState([]);
   const [data, setData] = useState();
   const dataID = data?.numeroFaja + data?.numeroPolin + data?.posicion || "";
@@ -29,26 +30,26 @@ export function PolinesScreen(props) {
       lastListData?.numeroPolin +
       lastListData?.posicion || "";
 
-  // useEffect(() => {
-  //   if (route.params) {
-  //     setData(route.params.formData);
-  //   }
-  // }, [route.params]);
+  useEffect(() => {
+    if (route.params) {
+      setData(route.params.formData);
+    }
+  }, [route.params]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     if (dataID === lastListDataID) {
-  //       alert("No se guardo, el polin ya esta registrado anteriormente");
-  //       return;
-  //     } else if (route.params.Index || route.params.Index === 0) {
-  //       const newDataList = [...dataList];
-  //       newDataList.splice(route.params.Index, 0, data);
-  //       setDataList(newDataList);
-  //     } else {
-  //       setDataList((prevDataList) => [...prevDataList, data]);
-  //     }
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      if (dataID === lastListDataID) {
+        alert("No se guardo, el polin ya esta registrado anteriormente");
+        return;
+      } else if (route.params.Index || route.params.Index === 0) {
+        const newDataList = [...dataList];
+        newDataList.splice(route.params.Index, 0, data);
+        setDataList(newDataList);
+      } else {
+        setDataList((prevDataList) => [...prevDataList, data]);
+      }
+    }
+  }, [data]);
 
   const goToInformation = () => {
     console.log("goToInformation222");
@@ -265,7 +266,7 @@ export function PolinesScreen(props) {
                         opacity: 0.5,
                       }}
                     >
-                      {item.userEmail}
+                      {item.userName}
                     </Text>
                   </View>
                 </View>

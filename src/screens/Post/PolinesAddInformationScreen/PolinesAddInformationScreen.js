@@ -12,14 +12,12 @@ import { screen } from "../../../utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { InfoForm } from "../../../components/Forms/BeltForms/InforForm/InfoForm";
 import { getAuth, updateProfile } from "firebase/auth";
-const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
-export function PolinesAddInformationScreen(props) {
-  const { route } = props;
-  // const [formData, setFormData] = useState(null);
+export function PolinesAddInformationScreen() {
+  const { displayName } = getAuth().currentUser;
+
   const navigation = useNavigation();
 
-  // useEffect(() => {}, [formData]);
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -56,7 +54,6 @@ export function PolinesAddInformationScreen(props) {
         newData.ID = `${formValue.numeroFaja}/${formValue.numeroPolin}-${formValue.posicion}`;
         navigation.navigate(screen.post.polines, {
           formData: newData,
-          Index: route.params?.EditData?.Index || "-",
         });
       } catch (error) {
         alert(error);
