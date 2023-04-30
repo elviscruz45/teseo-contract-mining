@@ -22,7 +22,7 @@ const postStack = {
 
 const activityStack = {
   tab: "ActivityTab",
-  account: "Account",
+  activity: "Activity",
   login: "Login",
   register: "Register",
 };

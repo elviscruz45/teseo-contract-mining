@@ -19,7 +19,6 @@ import { screen } from "../../../utils";
 export function PolinesScreen(props) {
   const navigation = useNavigation();
   const { route } = props;
-  console.log("goback", route.params.formData);
 
   const [dataList, setDataList] = useState([]);
   const [data, setData] = useState();

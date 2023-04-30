@@ -9,16 +9,31 @@ import { ConnectedCameraScreen } from "../screens";
 import { ConnectedInformationScreen } from "../screens";
 import { PolinesScreen } from "../screens";
 import { PolinesAddInformationScreen } from "../screens/Post/PolinesAddInformationScreen";
+import { useNavigation } from "@react-navigation/native";
+
 export function PostStack() {
   const Stack = createNativeStackNavigator();
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
+  const navigation = useNavigation();
+
+  const home_screen = () => {
+    navigation.navigate(screen.home.tab, {
+      screen: screen.home.home,
+    });
+  };
+
+  const profile_screen = () => {
+    navigation.navigate(screen.profile.tab, {
+      screen: screen.profile.account,
+    });
+  };
 
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
         headerLeft: () => (
-          <TouchableOpacity onPress={() => profile_screen()}>
+          <TouchableOpacity onPress={() => home_screen()}>
             <Image
               source={require("../../assets/logoTeseo1.png")}
               style={{ width: 90, height: 18 }}

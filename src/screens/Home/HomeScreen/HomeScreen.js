@@ -1,8 +1,17 @@
 import React from "react";
-import { Text, View, Image, FlatList, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
+import { equipmentList } from "../../../utils/equipmentList";
 
 // source={require("../../../../assets/StatisticsGraphic.png")}
 // Icono;
@@ -10,6 +19,21 @@ import { styles } from "./HomeScreen.styles";
 function HomeScreen() {
   return (
     <View>
+      <Text></Text>
+
+      <View>
+        <FlatList
+          horizontal={true}
+          data={equipmentList}
+          renderItem={({ item }) => (
+            <View style={styles.textImage}>
+              <Image source={item.image} style={styles.roundImage5} />
+              <Text>{item.tag}</Text>
+            </View>
+          )}
+        />
+      </View>
+      <Text></Text>
       <FlatList
         data={"12345678"}
         renderItem={({ item }) => (

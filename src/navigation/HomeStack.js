@@ -7,19 +7,31 @@ import { styles } from "./Navigation.styles";
 import { connect } from "react-redux";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
+  const navigation = useNavigation();
 
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
-  console.log("propsHOMESKACT", props);
+  const home_screen = () => {
+    navigation.navigate(screen.home.tab, {
+      screen: screen.home.home,
+    });
+  };
+
+  const profile_screen = () => {
+    navigation.navigate(screen.profile.tab, {
+      screen: screen.profile.account,
+    });
+  };
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
         headerLeft: () => (
-          <TouchableOpacity onPress={() => profile_screen()}>
+          <TouchableOpacity onPress={() => home_screen()}>
             <Image
               source={require("../../assets/logoTeseo1.png")}
               style={{ width: 90, height: 18 }}
