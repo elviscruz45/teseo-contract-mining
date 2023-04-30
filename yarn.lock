@@ -1069,6 +1069,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@dietime/react-native-date-picker@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@dietime/react-native-date-picker/-/react-native-date-picker-1.2.0.tgz#a41821718b9243532d7248c0a621b37429d0939d"
+  integrity sha512-hFd1OUlVeJLpRZ//B99mfB4G8UYGpXOIL1KNG3SNByLS7o5gEtnlXp6Pk7B4/mz2an6t+T6UBaF4tqye0tBzdw==
+
 "@expo/bunyan@4.0.0", "@expo/bunyan@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@expo/bunyan/-/bunyan-4.0.0.tgz#be0c1de943c7987a9fbd309ea0b1acd605890c7b"
@@ -2171,6 +2176,11 @@
     graceful-fs "^4.1.3"
     prompts "^2.4.0"
     semver "^6.3.0"
+
+"@react-native-picker/picker@^2.4.10":
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.10.tgz#339c7bfc6e1d9a5e934122eaaa7767dc1c5fb725"
+  integrity sha512-EvAlHmPEPOwvbP6Pjg/gtDV3XJzIjIxr10fXFNlX5r9HeHw582G1Zt2o8FLyB718nOttgj8HYUTGxvhu4N65sQ==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"

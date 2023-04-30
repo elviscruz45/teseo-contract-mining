@@ -138,13 +138,18 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   btnContainer1: {
-    position: "absolute",
-    bottom: 80,
-    right: 10,
+    // position: "absolute",
+    top: 30,
+    right: width * 0.2,
   },
   btnContainer2: {
     position: "absolute",
     bottom: 10,
+    right: 10,
+  },
+  btnContainer3: {
+    position: "absolute",
+    bottom: 80,
     right: 10,
   },
   roundImageUpload: {

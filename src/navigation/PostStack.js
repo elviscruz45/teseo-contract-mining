@@ -7,7 +7,8 @@ import { ConnectedPostScreen } from "../screens";
 import { getAuth, updateProfile } from "firebase/auth";
 import { ConnectedCameraScreen } from "../screens";
 import { ConnectedInformationScreen } from "../screens";
-
+import { PolinesScreen } from "../screens";
+import { PolinesAddInformationScreen } from "../screens/Post/PolinesAddInformationScreen";
 export function PostStack() {
   const Stack = createNativeStackNavigator();
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
@@ -54,12 +55,16 @@ export function PostStack() {
         component={ConnectedInformationScreen}
         options={{ title: "Formulario" }}
       />
-      {/* 
       <Stack.Screen
-        name={screen.homestack.changes}
-        component={ChangesScreen}
-        options={{ title: "Conveyor Belt" }}
-      /> */}
+        name={screen.post.polines}
+        component={PolinesScreen}
+        options={{ title: "Polines" }}
+      />
+      <Stack.Screen
+        name={screen.post.addpolines}
+        component={PolinesAddInformationScreen}
+        options={{ title: "AddPolines" }}
+      />
     </Stack.Navigator>
   );
 }

@@ -71,6 +71,18 @@ function PostScreen(props) {
           </View>
         </View>
         <View>
+          <Icon
+            // reverse
+            type="material-community"
+            name="arrow-right-bold"
+            color="#384967"
+            size={25}
+            containerStyle={styles.btnContainer1}
+            // onPress={() => goToEdit(item, index)}
+          />
+        </View>
+
+        <View>
           <Avatar
             size="large"
             rounded
@@ -113,7 +125,7 @@ function PostScreen(props) {
         />
       </View>
       <TouchableOpacity
-        style={styles.btnContainer1}
+        style={styles.btnContainer3}
         onPress={() => pickImage()}
       >
         <Image

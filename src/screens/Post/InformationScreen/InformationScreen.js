@@ -8,15 +8,24 @@ import {
   Image,
 } from "react-native";
 import { Icon, Avatar, Input } from "@rneui/themed";
-
 import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import { styles } from "./InformationScreen.styles";
+import { InfoFormCrusher } from "../../../components/Forms/CrusherForms/InforForm/InfoFormCrusher";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
 
 function InformationScreen(props) {
   console.log(props);
+  const navigation = useNavigation();
+
+  const goToPolines = () => {
+    console.log("polinesModule");
+    navigation.navigate(screen.post.polines);
+  };
   return (
-    <>
+    <KeyboardAwareScrollView>
       <View style={styles.equipments}>
         <Avatar
           size="large"
@@ -25,140 +34,40 @@ function InformationScreen(props) {
           icon={{ type: "material", name: "person" }}
           source={props.actualEquipment?.image}
         ></Avatar>
+        <Icon
+          reverse
+          type="material-community"
+          name="plus"
+          color="#8CBBF1"
+          containerStyle={styles.btnContainer2}
+          onPress={goToPolines}
+        />
         <View>
           <Text></Text>
           <Text style={styles.name}>
-            {props.actualEquipment?.tag || "Selecciona Equipo"}
+            {props.actualEquipment?.tag || "Vuelve al Inicio"}
           </Text>
-          <Text style={styles.info}>
-            {props.actualEquipment?.nombre || "de la lista"}
-          </Text>
+          <Text style={styles.info}>{props.actualEquipment?.nombre}</Text>
         </View>
+      </View>
+      <View style={styles.equipments}>
+        <Image
+          source={{
+            uri: props.savePhotoUri,
+          }}
+          style={styles.postPhoto}
+        />
+        <Input
+          placeholder="Comentarios"
+          multiline={true}
+          inputContainerStyle={styles.textArea}
+          // onChangeText={(text) => formik.setFieldValue("observacion", text)}
+          // errorMessage={formik.errors.observacion}
+        />
       </View>
 
-      <Image
-        source={{
-          uri: props.savePhotoUri,
-        }}
-        style={styles.postPhoto}
-      />
-      <View>
-        <Text></Text>
-        <View style={styles.content}>
-          <Input
-            placeholder="Numero de Faja"
-            defaultValue={defaultValueFaja}
-            editable={false}
-            onChangeText={() =>
-              formik.setFieldValue(
-                "numeroFaja",
-                defaultValueFaja || CopyBeltNumber.numeroFaja
-              )
-            }
-            // errorMessage={formik.errors.numeroFaja}
-            rightIcon={{
-              type: "material-community",
-              name: "tag-multiple-outline",
-              // color: getColorIconMap(formik),
-              // onPress: () => selectComponent("numeroFaja"),
-            }}
-          />
-          <Input
-            placeholder="Zona/Tipo"
-            // defaultValue={defaultValueZone}
-            editable={false}
-            // onChangeText={() =>
-            //   formik.setFieldValue(
-            //     "zona",
-            //     defaultValueZone || CopyBeltNumber.zona
-            //   )
-            // }
-            // errorMessage={formik.errors.zona}
-            rightIcon={{
-              type: "material-community",
-              name: "multicast",
-              // color: getColorIconMap(formik),
-              // onPress: () => selectComponent("zona"),
-            }}
-          />
-          <Input
-            placeholder="Numero Polin"
-            defaultValue={defaultValueIdler}
-            editable={false}
-            // onChangeText={() =>
-            //   formik.setFieldValue(
-            //     "numeroPolin",
-            //     defaultValueIdler || CopyBeltNumber.numeroPolin
-            //   )
-            // }
-            // errorMessage={formik.errors.numeroPolin}
-            rightIcon={{
-              type: "material-community",
-              name: "numeric",
-              // color: getColorIconMap(formik),
-              onPress: () => selectComponent("numeroPolin"),
-            }}
-          />
-          <Input
-            placeholder="Posicion"
-            defaultValue={defaultValuePosition}
-            editable={false}
-            onChangeText={() =>
-              formik.setFieldValue("posicion", defaultValuePosition)
-            }
-            errorMessage={formik.errors.posicion}
-            rightIcon={{
-              type: "material-community",
-              name: "clipboard-list-outline",
-              // color: getColorIconMap(formik),
-              onPress: () => selectComponent("posicion"),
-            }}
-          />
-          <Input
-            placeholder="Condicion"
-            defaultValue={defaultValueCondition}
-            editable={false}
-            onChangeText={() =>
-              formik.setFieldValue("condicion", defaultValueCondition)
-            }
-            errorMessage={formik.errors.condicion}
-            rightIcon={{
-              type: "material-community",
-              name: "bullseye",
-              // color: getColorIconMap(formik),
-              onPress: () => selectComponent("condicion"),
-            }}
-          />
-          <Input
-            placeholder="Prioridad"
-            defaultValue={defaultValuePriority}
-            editable={false}
-            onChangeText={() =>
-              formik.setFieldValue("prioridad", defaultValuePriority)
-            }
-            errorMessage={formik.errors.prioridad}
-            rightIcon={{
-              type: "material-community",
-              name: "priority-high",
-              // color: getColorIconMap(formik),
-              onPress: () => selectComponent("prioridad"),
-            }}
-          />
-          <Input
-            placeholder="Colocar Observaciones"
-            defaultValue={defaultValueObservation}
-            // keyboardType="numeric"
-            multiline={true}
-            inputContainerStyle={styles.textArea}
-            onChangeText={(text) => formik.setFieldValue("observacion", text)}
-            errorMessage={formik.errors.observacion}
-          />
-        </View>
-        <Modal show={showModal} close={onCloseOpenModal}>
-          {renderComponent}
-        </Modal>
-      </View>
-    </>
+      <InfoFormCrusher />
+    </KeyboardAwareScrollView>
   );
 }
 

@@ -16,6 +16,8 @@ const postStack = {
   post: "Post",
   camera: "Camera",
   form: "Form",
+  polines: "Polines",
+  addpolines: "AddPolines",
 };
 
 const activityStack = {

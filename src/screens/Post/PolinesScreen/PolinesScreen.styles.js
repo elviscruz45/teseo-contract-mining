@@ -68,44 +68,4 @@ export const styles = StyleSheet.create({
     // alignItems: "center",
     // opacity: 0.4,
   },
-  postPhoto: {
-    // height: 700,
-    // width: windowWidth,
-    height: windowWidth * 0.5,
-    width: windowWidth * 0.35,
-    marginTop: 0,
-  },
-  avatar: {
-    marginRight: 20,
-    backgroundColor: "#D7DDE9",
-    zIndex: 10,
-  },
-  equipments: {
-    flexDirection: "row",
-    margin: 10,
-  },
-  name: {
-    fontWeight: "bold",
-  },
-  info: {
-    color: "#828282",
-    paddingRight: 100,
-    marginTop: 3,
-  },
-  content: {
-    marginHorizontal: 10,
-  },
-  textArea: {
-    height: 100,
-    width: windowWidth * 0.6,
-    height: windowWidth * 0.5,
-
-    padding: 0,
-    margin: 0,
-  },
-  btnContainer2: {
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-  },
 });
