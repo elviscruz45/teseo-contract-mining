@@ -1,12 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ActivityScreen } from "../screens";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
+import { getAuth, updateProfile } from "firebase/auth";
 
 export function ActivityStack() {
   const Stack = createNativeStackNavigator();
+  const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
   const navigation = useNavigation();
 
@@ -50,8 +52,8 @@ export function ActivityStack() {
       }}
     >
       <Stack.Screen
-        name={screen.activity.search}
-        component={ConnectedProfileScreen}
+        name={screen.activity.activity}
+        component={ActivityScreen}
         options={{ title: " " }}
       />
       {/* <Stack.Screen

@@ -1,24 +1,20 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { styles } from "./InfoFormCrusher.styles";
+import { styles } from "./GeneralForms.styles";
 import { Input } from "@rneui/themed";
 
-export function InfoFormCrusher() {
+export function GeneralForms(props) {
+  const { formik } = props;
+
   return (
     <View>
       <Text></Text>
       <View style={styles.content}>
         <Input
-          placeholder="Titulo del Evento"
-          onChangeText={() => {
-            console.log("hola");
-          }}
-        />
-        <Input
           placeholder="Nombre del Componente"
           editable={false}
-          onChangeText={() => {
-            console.log("hola");
+          onChangeText={(text) => {
+            formik.setFieldValue("nombreComponente", text);
           }}
           rightIcon={{
             type: "material-community",
@@ -29,8 +25,8 @@ export function InfoFormCrusher() {
         <Input
           placeholder="Supervisor"
           editable={false}
-          onChangeText={() => {
-            console.log("hola");
+          onChangeText={(text) => {
+            formik.setFieldValue("supervisor", text);
           }}
           rightIcon={{
             type: "material-community",
@@ -40,15 +36,15 @@ export function InfoFormCrusher() {
         />
         <Input
           placeholder="Equipo de Trabajo"
-          onChangeText={() => {
-            console.log("hola");
+          onChangeText={(text) => {
+            formik.setFieldValue("equipoTrabajo", text);
           }}
         />
         <Input
           placeholder="Recursos Usados"
           editable={false}
-          onChangeText={() => {
-            console.log("hola");
+          onChangeText={(text) => {
+            formik.setFieldValue("recursos", text);
           }}
           rightIcon={{
             type: "material-community",

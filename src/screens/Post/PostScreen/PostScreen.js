@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { Icon, Avatar } from "@rneui/themed";
+import { Icon, Avatar, SearchBar } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
@@ -25,7 +25,8 @@ function PostScreen(props) {
   const navigation = useNavigation();
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [equipment, setEquipment] = useState(null);
-
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
   const pickImage = async () => {
     if (!equipment) return;
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,6 +57,11 @@ function PostScreen(props) {
 
   return (
     <>
+      <SearchBar
+        placeholder="Busca tu numero de polin o faja"
+        value={searchText}
+        onChangeText={(text) => setSearchText(text)}
+      />
       <View style={styles.equipments}>
         <View>
           <Avatar
@@ -101,29 +107,24 @@ function PostScreen(props) {
         </View>
       </View>
       <Text></Text>
-      <Text></Text>
-      <Text></Text>
-      <Text></Text>
 
-      <View>
-        <FlatList
-          data={equipmentList}
-          renderItem={({ item, index }) => {
-            return (
-              <TouchableOpacity onPress={() => selectAsset(item)}>
-                <View style={styles.equipments}>
-                  <Image source={item.image} style={styles.image} />
-                  <View>
-                    <Text style={styles.name}>{item.tag}</Text>
-                    <Text style={styles.info}>{item.nombre}</Text>
-                    <Text style={styles.info}>{item.caracteristicas}</Text>
-                  </View>
+      <FlatList
+        data={equipmentList}
+        renderItem={({ item, index }) => {
+          return (
+            <TouchableOpacity onPress={() => selectAsset(item)}>
+              <View style={styles.equipments}>
+                <Image source={item.image} style={styles.image} />
+                <View>
+                  <Text style={styles.name}>{item.tag}</Text>
+                  <Text style={styles.info}>{item.nombre}</Text>
+                  <Text style={styles.info}>{item.caracteristicas}</Text>
                 </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
+      />
       <TouchableOpacity
         style={styles.btnContainer3}
         onPress={() => pickImage()}

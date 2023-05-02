@@ -1,12 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SearchScreen } from "../screens";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
+import { getAuth, updateProfile } from "firebase/auth";
 
 export function SearchStack() {
   const Stack = createNativeStackNavigator();
+  const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
   const navigation = useNavigation();
 

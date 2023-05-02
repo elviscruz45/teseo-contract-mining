@@ -18,17 +18,18 @@ import { equipmentList } from "../../../utils/equipmentList";
 
 function HomeScreen() {
   return (
-    <View>
+    <>
       <Text></Text>
 
       <View>
         <FlatList
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
           data={equipmentList}
           renderItem={({ item }) => (
             <View style={styles.textImage}>
               <Image source={item.image} style={styles.roundImage5} />
-              <Text>{item.tag}</Text>
+              <Text style={styles.Texticons}>{item.tag}</Text>
             </View>
           )}
         />
@@ -50,7 +51,7 @@ function HomeScreen() {
                   source={require("../../../../assets/CHI.jpeg")}
                   style={styles.roundImage}
                 />
-                <Text></Text>
+                <Text>C2-CR001</Text>
                 <Image
                   source={require("../../../../assets/Elvis_Cruz_Formal.jpg")}
                   style={styles.roundImage}
@@ -66,37 +67,49 @@ function HomeScreen() {
                 {"2 photos more ...  "}
               </Text>
             </View>
-            <View>
+            <View style={styles.equipments}>
               <Image
                 source={require("../../../../assets/img1.jpeg")}
                 style={styles.postPhoto}
               />
-              <View style={styles.row}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <TouchableOpacity>
-                    <Icon type="material-community" name="thumb-up-outline" />
-                  </TouchableOpacity>
-                  <Text> 15 likes</Text>
-                </View>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <TouchableOpacity>
-                    <Icon
-                      type="material-community"
-                      name="comment-processing-outline"
-                    />
-                  </TouchableOpacity>
-                  <Text> 15 Comments</Text>
-                </View>
-                <Icon type="material-community" name="send-circle-outline" />
+              <View>
+                <Text style={styles.textAreaTitle}>
+                  {"Cambio de MainShaft"}
+                </Text>
+                <Text style={styles.textAreaComment}>
+                  {
+                    "Hola como estas, yo estoy muy bien Hola como estassssqqerqtrqerw, yo estoy muy bien Hola como estas, yo estoy muy bien Hola como estas, yo estoy muy bien Hola como estas, yo estoy muy bien Hola como estas, yo estoy muy bien"
+                  }
+                </Text>
               </View>
-              <Text style={{ margin: 10 }}>
-                {"Hola como estas, yo estoy muy bien"}
-              </Text>
+            </View>
+            <View style={styles.rowlikes}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginRight: 210,
+                }}
+              >
+                <TouchableOpacity>
+                  <Icon type="material-community" name="thumb-up-outline" />
+                </TouchableOpacity>
+                <Text> 15 likes</Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity>
+                  <Icon
+                    type="material-community"
+                    name="comment-processing-outline"
+                  />
+                </TouchableOpacity>
+                <Text> 15 Comments</Text>
+              </View>
             </View>
           </View>
         )}
       />
-    </View>
+    </>
   );
 }
 

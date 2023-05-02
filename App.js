@@ -21,6 +21,8 @@ const store = createStore(rootReducers, {}, composedEnhancers);
 export default function App() {
   return (
     <Provider store={store}>
+      <StatusBar backgroundColor="white" />
+
       <NavigationContainer>
         {/* <AppNavigation /> */}
         <ConnectedLoginNavigator />

@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
   postPhoto: {
     // height: 700,
     // width: windowWidth,
-    height: windowWidth * 0.5,
+    height: windowWidth * 0.45,
     width: windowWidth * 0.35,
     marginTop: 0,
   },
@@ -97,9 +97,8 @@ export const styles = StyleSheet.create({
   },
   textArea: {
     height: 100,
-    width: windowWidth * 0.6,
-    height: windowWidth * 0.5,
-
+    width: windowWidth * 0.58,
+    height: windowWidth * 0.3,
     padding: 0,
     margin: 0,
   },
@@ -107,5 +106,9 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: 10,
     right: 10,
+  },
+  addInformation: {
+    backgroundColor: "#8CBBF1",
+    margin: 20,
   },
 });

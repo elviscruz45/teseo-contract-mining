@@ -7,21 +7,60 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { Icon, Avatar, Input } from "@rneui/themed";
+import { Icon, Avatar, Input, Button } from "@rneui/themed";
 import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import { styles } from "./InformationScreen.styles";
-import { InfoFormCrusher } from "../../../components/Forms/CrusherForms/InforForm/InfoFormCrusher";
+import { GeneralForms } from "../../../components/Forms/GeneralForms/GeneralForms/GeneralForms";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
+import { initialValues, validationSchema } from "./InformationScreen.data";
+import { useFormik } from "formik";
 
 function InformationScreen(props) {
-  console.log(props);
   const navigation = useNavigation();
 
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
+    onSubmit: (formValue) => {
+      try {
+        const newData = formValue;
+        const date = new Date();
+        const monthNames = [
+          "ene.",
+          "feb.",
+          "mar.",
+          "abr.",
+          "may.",
+          "jun.",
+          "jul.",
+          "ago.",
+          "sep.",
+          "oct.",
+          "nov.",
+          "dic.",
+        ];
+        const day = date.getDate();
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
+        newData.userEmail = loginValidation || "Anonimo";
+        newData.createdAt = formattedDate;
+        newData.createdData = new Date().toISOString();
+        newData.ID = `${formValue.numeroFaja}/${formValue.numeroPolin}-${formValue.posicion}`;
+        console.log(formValue);
+      } catch (error) {
+        alert(error);
+      }
+    },
+  });
+
   const goToPolines = () => {
-    console.log("polinesModule");
     navigation.navigate(screen.post.polines);
   };
   return (
@@ -57,16 +96,30 @@ function InformationScreen(props) {
           }}
           style={styles.postPhoto}
         />
-        <Input
-          placeholder="Comentarios"
-          multiline={true}
-          inputContainerStyle={styles.textArea}
-          // onChangeText={(text) => formik.setFieldValue("observacion", text)}
-          // errorMessage={formik.errors.observacion}
-        />
+        <View>
+          <Input
+            placeholder="Titulo del Evento"
+            onChangeText={(text) => {
+              formik.setFieldValue("titulo", text);
+            }}
+          />
+          <Input
+            placeholder="Comentarios"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChangeText={(text) => {
+              formik.setFieldValue("comentarios", text);
+            }} // errorMessage={formik.errors.observacion}
+          />
+        </View>
       </View>
-
-      <InfoFormCrusher />
+      <GeneralForms formik={formik} />
+      <Button
+        title="Agregar Dato"
+        buttonStyle={styles.addInformation}
+        onPress={formik.handleSubmit}
+        loading={formik.isSubmitting}
+      />
     </KeyboardAwareScrollView>
   );
 }
