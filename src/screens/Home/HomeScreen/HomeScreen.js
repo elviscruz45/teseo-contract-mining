@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
@@ -25,11 +26,14 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../../utils";
+import { saveActualPostFirebase } from "../../../actions/post";
 // source={require("../../../../assets/StatisticsGraphic.png")}
 // Icono;
+const windowWidth = Dimensions.get("window").width;
 
-function HomeScreen() {
-  const [posts, setPosts] = useState(null);
+function HomeScreen(props) {
+  const [posts, setPosts] = useState([]);
+  const [isScrolledUp, setIsScrolledUp] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -39,11 +43,25 @@ function HomeScreen() {
         // doc.data() is never undefined for query doc snapshots
         post_array.push(doc.data());
       });
-      setPosts(post_array);
+      const sortedFirestore = post_array.sort(
+        (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+      );
+      setPosts(sortedFirestore);
     }
     fetchData();
-  }, [props.saveActualPostFirebase]);
+  }, [props.saveActualPostFirebase, isScrolledUp]);
 
+  function handleScroll(event) {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    if (offsetY < 0) {
+      setIsScrolledUp(true);
+      console.log("aeaaaa");
+      console.log(isScrolledUp);
+    } else {
+      setIsScrolledUp(false);
+      console.log(isScrolledUp);
+    }
+  }
   return (
     <>
       <Text></Text>
@@ -63,7 +81,9 @@ function HomeScreen() {
       </View>
       <Text></Text>
       <FlatList
-        data={"12345678"}
+        data={posts}
+        onScroll={handleScroll}
+        scrollEventThrottle={100000000}
         renderItem={({ item }) => (
           <View
             style={{
@@ -75,39 +95,31 @@ function HomeScreen() {
             <View style={[styles.row, styles.center]}>
               <View style={[styles.row, styles.center]}>
                 <Image
-                  source={require("../../../../assets/CHI.jpeg")}
+                  source={{ uri: item.fotoUsuarioPerfil }}
                   style={styles.roundImage}
                 />
-                <Text>C2-CR001</Text>
+                <Text>{item.equipoPostDatos.tag}</Text>
                 <Image
-                  source={require("../../../../assets/Elvis_Cruz_Formal.jpg")}
+                  source={{ uri: item.fotoUsuarioPerfil }}
                   style={styles.roundImage}
                 />
-                <Text>Elvis Ronald Cruz Chullo</Text>
+                <Text>{item.nombrePerfil}</Text>
               </View>
             </View>
             <View style={[styles.row, styles.center]}>
               <Text style={{ margin: 5, color: "#5B5B5B" }}>
-                {"Fecha:15 Agosto 2023 14:22 Hr.  "}
-              </Text>
-              <Text style={{ margin: 5, color: "black" }}>
-                {"2 photos more ...  "}
+                {"Fecha:  "}
+                {item.fechaPostFormato}
               </Text>
             </View>
             <View style={styles.equipments}>
               <Image
-                source={require("../../../../assets/img1.jpeg")}
+                source={{ uri: item.fotoPrincipal }}
                 style={styles.postPhoto}
               />
               <View>
-                <Text style={styles.textAreaTitle}>
-                  {"Cambio de MainShaft"}
-                </Text>
-                <Text style={styles.textAreaComment}>
-                  {
-                    "Hola como estas, yo estoy muy bien Hola como estassssqqerqtrqerw, yo estoy muy bien Hola como estas, yo estoy muy bien Hola como estas, yo estoy muy bien Hola como estas, yo estoy muy bien Hola como estas, yo estoy muy bien"
-                  }
-                </Text>
+                <Text style={styles.textAreaTitle}>{item.titulo}</Text>
+                <Text style={styles.textAreaComment}>{item.comentarios}</Text>
               </View>
             </View>
             <View style={styles.rowlikes}>
@@ -115,7 +127,7 @@ function HomeScreen() {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  marginRight: 210,
+                  marginRight: windowWidth * 0.45,
                 }}
               >
                 <TouchableOpacity>
@@ -147,14 +159,5 @@ const mapStateToProps = (reducers) => {
 };
 
 export const ConnectedHomeScreen = connect(mapStateToProps, {
-  // add1,
-  // subtract1,
-  // logout,
-  // post,
-  // uploadPost,
-  // getPosts,
-  // likePost,
-  // unlikePost,
-  // actualCommentId,
-  // actualPostDescription,
+  saveActualPostFirebase,
 })(HomeScreen);
