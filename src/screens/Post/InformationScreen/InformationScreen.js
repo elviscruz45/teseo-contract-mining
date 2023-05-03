@@ -34,6 +34,7 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { equipmentList } from "../../../utils/equipmentList";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
@@ -96,10 +97,13 @@ function InformationScreen(props) {
         // navigation.navigate(screen.home.tab, {
         //   screen: screen.home.home,
         // });
+
         props.saveActualPostFirebase(newData);
+        navigation.navigate(screen.post.post);
         navigation.navigate(screen.home.tab, {
           screen: screen.home.home,
         });
+        alert("Se ha subido correctamente");
       } catch (error) {
         alert(error);
         console.log("error");
@@ -122,6 +126,7 @@ function InformationScreen(props) {
   const goToPolines = () => {
     navigation.navigate(screen.post.polines);
   };
+
   return (
     <KeyboardAwareScrollView>
       <View style={styles.equipments}>
@@ -177,7 +182,7 @@ function InformationScreen(props) {
         title="Agregar Dato"
         buttonStyle={styles.addInformation}
         onPress={formik.handleSubmit}
-        // loading={formik.isSubmitting}
+        loading={formik.isSubmitting}
       />
     </KeyboardAwareScrollView>
   );
@@ -187,6 +192,7 @@ const mapStateToProps = (reducers) => {
   return {
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,
+    ActualPostFirebase: reducers.post.ActualPostFirebase,
   };
 };
 

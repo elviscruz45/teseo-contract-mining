@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   savePhotoUri: "",
   actualEquipment: null,
-  saveActualPostFirebase: null,
+  ActualPostFirebase: null,
 };
 
 export function post(state = INITIAL_STATE, action) {
@@ -19,7 +19,7 @@ export function post(state = INITIAL_STATE, action) {
     case "SAVE_ACTUALPOSTFIREBASE":
       return {
         ...state,
-        saveActualPostFirebase: action.payload,
+        ActualPostFirebase: action.payload,
       };
     default:
       return state;

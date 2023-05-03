@@ -5,21 +5,35 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  StyleSheet,
+  ScrollView,
   Dimensions,
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
 import { equipmentList } from "../../../utils/equipmentList";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
+// source={require("../../../../assets/StatisticsGraphic.png")}
+// Icono;
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isScrolledUp, setIsScrolledUp] = useState({ set: "ok" });
-  console.log("actualpost:", posts);
 
   useEffect(() => {
     async function fetchData() {
@@ -53,7 +67,7 @@ function HomeScreen(props) {
     const result = equipmentList.find((item) => {
       return item.tag == tags;
     });
-    console.log("carga de nuevo6666");
+    console.log("carga de nuevo1");
 
     return result.image;
   }
@@ -150,7 +164,7 @@ function HomeScreen(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    ActualPostFirebase: reducers.post.ActualPostFirebase,
+    saveActualPostFirebase: reducers.post.saveActualPostFirebase,
   };
 };
 
