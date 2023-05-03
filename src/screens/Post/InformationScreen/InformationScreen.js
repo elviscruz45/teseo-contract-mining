@@ -16,16 +16,36 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { initialValues, validationSchema } from "./InformationScreen.data";
+import { saveActualPostFirebase } from "../../../actions/post";
 import { useFormik } from "formik";
+import { getAuth, updateProfile } from "firebase/auth";
+import { db } from "../../../utils";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
+  const { photoURL, displayName, email } = getAuth().currentUser;
+  const [loading, setLoading] = useState(false);
+  const [photo, setPhoto] = useState(null);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
-    onSubmit: (formValue) => {
+    onSubmit: async (formValue) => {
       try {
         const newData = formValue;
         const date = new Date();
@@ -49,16 +69,55 @@ function InformationScreen(props) {
         const hour = date.getHours();
         const minute = date.getMinutes();
         const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
-        newData.userEmail = loginValidation || "Anonimo";
-        newData.createdAt = formattedDate;
-        newData.createdData = new Date().toISOString();
-        newData.ID = `${formValue.numeroFaja}/${formValue.numeroPolin}-${formValue.posicion}`;
-        console.log(formValue);
+        newData.emailPerfil = email || "Anonimo";
+        newData.nombrePerfil = displayName || "Anonimo";
+        newData.fechaPostFormato = formattedDate;
+        newData.fotoUsuarioPerfil = photoURL;
+        console.log("infoFOMMMMMM!", props.savePhotoUri);
+
+        // subiendo la foto o pickimage a firebase Storage y obteniendo la url imageUrl
+        const snapshot = await uploadImage(props.savePhotoUri);
+        const imagePath = snapshot.metadata.fullPath;
+        const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
+        newData.fotoPrincipal = imageUrl;
+        newData.equipoPostDatos = props.actualEquipment;
+        newData.fechaPostISO = new Date().toISOString();
+        newData.likes = [];
+        newData.comentariosUsuarios = [];
+
+        // subir datos a firestore Database
+        const docRef = await addDoc(collection(db, "posts"), newData);
+        newData.idDocFirestoreDB = docRef.id;
+        const RefFirebase = doc(db, "posts", newData.idDocFirestoreDB);
+        await updateDoc(RefFirebase, newData);
+        console.log("formValue", formValue);
+
+        // yendo a Home
+        // navigation.navigate(screen.home.tab, {
+        //   screen: screen.home.home,
+        // });
+        props.saveActualPostFirebase(newData);
+        navigation.navigate(screen.home.tab, {
+          screen: screen.home.home,
+        });
       } catch (error) {
         alert(error);
+        console.log("error");
       }
     },
   });
+
+  const uploadImage = async (uri) => {
+    setLoading(true);
+    const uuid = uuidv4();
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `mainImagePost/${uuid}`);
+    return uploadBytes(storageRef, blob);
+  };
 
   const goToPolines = () => {
     navigation.navigate(screen.post.polines);
@@ -118,17 +177,19 @@ function InformationScreen(props) {
         title="Agregar Dato"
         buttonStyle={styles.addInformation}
         onPress={formik.handleSubmit}
-        loading={formik.isSubmitting}
+        // loading={formik.isSubmitting}
       />
     </KeyboardAwareScrollView>
   );
 }
 
 const mapStateToProps = (reducers) => {
-  return reducers.post;
+  return {
+    savePhotoUri: reducers.post.savePhotoUri,
+    actualEquipment: reducers.post.actualEquipment,
+  };
 };
 
-export const ConnectedInformationScreen = connect(
-  mapStateToProps,
-  {}
-)(InformationScreen);
+export const ConnectedInformationScreen = connect(mapStateToProps, {
+  saveActualPostFirebase,
+})(InformationScreen);

@@ -34,6 +34,7 @@ export function SearchScreen(props) {
   useEffect(() => {
     setSearchResults(equipmentList);
   }, []);
+
   useEffect(() => {
     const result = equipmentList.filter((item) => {
       const re = new RegExp(searchText, "ig");

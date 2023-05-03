@@ -19,3 +19,14 @@ export const saveActualEquipment = (item) => async (dispatch) => {
     alert(error.message);
   }
 };
+
+export const saveActualPostFirebase = (item) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SAVE_ACTUALPOSTFIREBASE",
+      payload: item,
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};

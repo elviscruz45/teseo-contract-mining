@@ -18,6 +18,8 @@ import { screen } from "../../../utils";
 import * as ImagePicker from "expo-image-picker";
 import { equipmentList } from "../../../utils/equipmentList";
 import { getAuth, updateProfile } from "firebase/auth";
+import { savePhotoUri } from "../../../actions/post";
+import * as ImageManipulator from "expo-image-manipulator";
 
 function PostScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
@@ -35,7 +37,16 @@ function PostScreen(props) {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
+    const resizedPhoto = await ImageManipulator.manipulateAsync(
+      result.assets[0].uri,
+      [{ resize: { width: 800 } }],
+      { compress: 0.1, format: "jpeg", base64: true }
+    );
+
+    console.log("uriiiii", resizedPhoto.uri);
+    props.savePhotoUri(resizedPhoto.uri);
+    navigation.navigate(screen.post.form);
+
     if (!result.canceled) {
       console.log("Upload Image");
     }
@@ -52,7 +63,6 @@ function PostScreen(props) {
   const selectAsset = (equipment) => {
     setEquipment(equipment);
     props.saveActualEquipment(equipment);
-    console.log(props);
   };
 
   return (
@@ -155,4 +165,5 @@ const mapStateToProps = (reducers) => {
 
 export const ConnectedPostScreen = connect(mapStateToProps, {
   saveActualEquipment,
+  savePhotoUri,
 })(PostScreen);

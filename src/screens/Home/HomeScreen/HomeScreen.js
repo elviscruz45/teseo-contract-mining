@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -12,11 +12,38 @@ import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
 import { equipmentList } from "../../../utils/equipmentList";
-
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../../../utils";
 // source={require("../../../../assets/StatisticsGraphic.png")}
 // Icono;
 
 function HomeScreen() {
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const querySnapshot = await getDocs(collection(db, "posts"));
+      const post_array = [];
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        post_array.push(doc.data());
+      });
+      setPosts(post_array);
+    }
+    fetchData();
+  }, [props.saveActualPostFirebase]);
+
   return (
     <>
       <Text></Text>
@@ -115,16 +142,7 @@ function HomeScreen() {
 
 const mapStateToProps = (reducers) => {
   return {
-    // count: reducers.reducer1.count,
-    // user_login: reducers.user.user_login,
-    // upload_post: reducers.post.description,
-    // bio: reducers.user.bio,
-    // user_photo: reducers.user.user_photo,
-    // email: reducers.user.email,
-    // uid: reducers.user.uid,
-    // post_list: reducers.post.post_list,
-    // equipment_photo: reducers.user.equipment_photo,
-    // equipmentname: reducers.user.equipmentname,
+    saveActualPostFirebase: reducers.post.saveActualPostFirebase,
   };
 };
 
