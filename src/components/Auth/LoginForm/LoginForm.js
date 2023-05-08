@@ -73,7 +73,7 @@ function LoginForm(props) {
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
         onPress={formik.handleSubmit}
-        // loading={formik.isSubmitting}
+        loading={formik.isSubmitting}
       />
     </View>
   );
