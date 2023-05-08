@@ -20,7 +20,6 @@ function InfoUser(props) {
   const [renderComponent, setRenderComponent] = useState(null);
 
   const user = getAuth().currentUser;
-  console.log("prospInfoUser", props);
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -57,7 +56,6 @@ function InfoUser(props) {
 
     setAvatar(imageUrl);
     props.update_firebasePhoto(imageUrl);
-    console.log("propsInfoUsers", props);
     setLoading(false);
   };
 

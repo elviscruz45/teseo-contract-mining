@@ -13,7 +13,7 @@ function HomeStack(props) {
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
-  const { uid, photoURL, displayName, email } = getAuth().currentUser;
+  const { uid, photoURL, displayName, email } = getAuth().currentUser; //conectado con auth
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {

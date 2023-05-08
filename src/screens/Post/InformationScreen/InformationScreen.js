@@ -74,19 +74,28 @@ function InformationScreen(props) {
         newData.nombrePerfil = displayName || "Anonimo";
         newData.fechaPostFormato = formattedDate;
         newData.fotoUsuarioPerfil = photoURL;
-        console.log("infoFOMMMMMM!", props.savePhotoUri);
 
         // subiendo la foto o pickimage a firebase Storage y obteniendo la url imageUrl
         const snapshot = await uploadImage(props.savePhotoUri);
         const imagePath = snapshot.metadata.fullPath;
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
+
+        //subir pdf a firebase Storage y obteniendo la url imageUrl
+        const snapshotPDF = await uploadPdf(formValue.pdfFile);
+        const imagePathPDF = snapshotPDF.metadata.fullPath;
+        const imageUrlPDF = await getDownloadURL(
+          ref(getStorage(), imagePathPDF)
+        );
+
+        //preparando datos para subir a  firestore Database
+        newData.pdfPrincipal = imageUrlPDF;
         newData.fotoPrincipal = imageUrl;
         newData.equipoPostDatos = props.actualEquipment;
         newData.fechaPostISO = new Date().toISOString();
         newData.likes = [];
         newData.comentariosUsuarios = [];
 
-        // subir datos a firestore Database
+        //
         const docRef = await addDoc(collection(db, "posts"), newData);
         newData.idDocFirestoreDB = docRef.id;
         const RefFirebase = doc(db, "posts", newData.idDocFirestoreDB);
@@ -110,6 +119,21 @@ function InformationScreen(props) {
       }
     },
   });
+
+  const uploadPdf = async (uri) => {
+    setLoading(true);
+    const uuid = uuidv4();
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const fileSize = blob.size;
+    if (fileSize > 5 * 1024 * 1024) {
+      throw new Error("File size exceeds 5MB");
+    }
+    const storage = getStorage();
+    const storageRef = ref(storage, `pdfPost/${uuid}`);
+    return uploadBytes(storageRef, blob);
+  };
 
   const uploadImage = async (uri) => {
     setLoading(true);

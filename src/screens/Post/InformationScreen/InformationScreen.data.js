@@ -7,6 +7,7 @@ export function initialValues() {
     supervisor: "",
     equipoTrabajo: "",
     recursos: "",
+    pdfFile: "",
   };
 }
 

@@ -43,7 +43,6 @@ function PostScreen(props) {
       { compress: 0.1, format: "jpeg", base64: true }
     );
 
-    console.log("uriiiii", resizedPhoto.uri);
     props.savePhotoUri(resizedPhoto.uri);
     navigation.navigate(screen.post.form);
 
@@ -55,7 +54,6 @@ function PostScreen(props) {
 
   const camera = () => {
     if (!equipment) return;
-    console.log("camera");
     navigation.navigate(screen.post.camera);
     setEquipment(null);
   };

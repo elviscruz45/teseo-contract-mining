@@ -51,12 +51,10 @@ export function PolinesScreen(props) {
   }, [data]);
 
   const goToInformation = () => {
-    console.log("goToInformation222");
     navigation.navigate(screen.post.addpolines);
   };
 
   const goToEdit = (item, index) => {
-    console.log("Edit");
     navigation.navigate(screen.addinformation.addInformation, {
       EditData: { ...item, Index: index },
     });
@@ -88,9 +86,6 @@ export function PolinesScreen(props) {
   const sendToFirebase = async (dataList) => {
     if (dataList.length == 0) return;
     try {
-      console.log("sendToFirebase");
-      console.log(dataList);
-
       const newData = { dataList: dataList };
       newData.id = uuid();
       newData.createdData = new Date().toISOString();

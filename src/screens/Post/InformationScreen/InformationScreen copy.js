@@ -18,7 +18,6 @@ import { db } from "../../../utils";
 import { connect } from "react-redux";
 
 function InformationScreen(props) {
-  console.log("holaBROOO");
   const [dataList, setDataList] = useState([]);
   const { navigation, route } = props;
   const [data, setData] = useState();
@@ -57,7 +56,6 @@ function InformationScreen(props) {
   };
 
   const goToEdit = (item, index) => {
-    console.log("Edit");
     navigation.navigate(screen.addinformation.addInformation, {
       EditData: { ...item, Index: index },
     });
@@ -83,15 +81,11 @@ function InformationScreen(props) {
       ],
       { cancelable: false }
     );
-    console.log("Delete");
   };
 
   const sendToFirebase = async (dataList) => {
     if (dataList.length == 0) return;
     try {
-      console.log("sendToFirebase");
-      console.log(dataList);
-
       const newData = { dataList: dataList };
       newData.id = uuid();
       newData.createdData = new Date().toISOString();

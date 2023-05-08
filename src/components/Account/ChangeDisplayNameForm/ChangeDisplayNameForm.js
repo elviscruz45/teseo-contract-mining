@@ -18,12 +18,10 @@ function ChangeDisplayNameForm(props) {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        console.log(formValue);
         const { displayName } = formValue;
         const currentUser = getAuth().currentUser;
         await updateProfile(currentUser, { displayName });
         props.update_firebaseUserName(displayName);
-        console.log(props);
         onClose();
       } catch (error) {
         Toast.show({

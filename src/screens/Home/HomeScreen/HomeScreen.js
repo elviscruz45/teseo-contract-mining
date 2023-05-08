@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  Linking,
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
@@ -19,7 +20,6 @@ const windowWidth = Dimensions.get("window").width;
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isScrolledUp, setIsScrolledUp] = useState({ set: "ok" });
-  console.log("actualpost:", posts);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +41,6 @@ function HomeScreen(props) {
     const offsetY = event.nativeEvent.contentOffset.y;
     if (offsetY < -5) {
       setIsScrolledUp({ set: "ok" });
-      console.log("aeaaaa");
       console.log(isScrolledUp);
     } else {
       // setIsScrolledUp(false);
@@ -53,9 +52,20 @@ function HomeScreen(props) {
     const result = equipmentList.find((item) => {
       return item.tag == tags;
     });
-    console.log("carga de nuevo6666");
 
     return result.image;
+  }
+
+  async function UploadFile(uri) {
+    Linking.canOpenURL(uri)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(uri);
+        } else {
+          console.log("Unable to open PDF document");
+        }
+      })
+      .catch((error) => console.log("Error opening PDF document", error));
   }
 
   return (
@@ -107,6 +117,12 @@ function HomeScreen(props) {
                 {"Fecha:  "}
                 {item.fechaPostFormato}
               </Text>
+              {item.pdfPrincipal && (
+                <TouchableOpacity onPress={() => UploadFile(item.pdfPrincipal)}>
+                  <Icon type="material-community" name="paperclip" />
+                  <Text>Archivo Adjunto</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.equipments}>
               <Image

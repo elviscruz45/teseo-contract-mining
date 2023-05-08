@@ -55,7 +55,6 @@ function HomeScreen(props) {
     const offsetY = event.nativeEvent.contentOffset.y;
     if (offsetY < -5) {
       setIsScrolledUp({ set: "ok" });
-      console.log("aeaaaa");
       console.log(isScrolledUp);
     } else {
       // setIsScrolledUp(false);

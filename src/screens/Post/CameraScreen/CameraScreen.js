@@ -81,7 +81,7 @@ function CameraScreen(props) {
             <View
               style={{
                 borderWidth: 2,
-                borderRadius: "50%",
+                borderRadius: 30,
                 borderColor: "white",
                 height: 50,
                 width: 50,
@@ -93,7 +93,7 @@ function CameraScreen(props) {
               <View
                 style={{
                   borderWidth: 2,
-                  borderRadius: "50%",
+                  borderRadius: 30,
                   borderColor: "white",
                   height: 40,
                   width: 40,

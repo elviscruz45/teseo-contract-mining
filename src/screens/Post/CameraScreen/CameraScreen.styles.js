@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     width: 200,
   },
   facebookButton: {
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#3b5998",
     borderWidth: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     width: 200,
   },
   border: {
@@ -62,14 +62,14 @@ export const styles = StyleSheet.create({
   },
 
   cameraButton: {
-    borderRadius: 50,
+    // borderRadius: 50,
     alignSelf: "flex-end",
     marginLeft: 80,
   },
   roundImage: {
     width: 40,
     height: 40,
-    borderRadius: 20,
+    // borderRadius: 20,
     margin: 5,
   },
 
@@ -88,7 +88,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     width: 125,
   },
   bordercomment: {
@@ -134,7 +134,7 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    borderRadius: 50,
+    // borderRadius: 50,
     fontSize: 16,
   },
   btnContainer1: {
@@ -150,7 +150,7 @@ export const styles = StyleSheet.create({
   roundImageUpload: {
     width: 50,
     height: 50,
-    borderRadius: 50, // half of width and height
+    // borderRadius: 50, // half of width and height
   },
 });
 

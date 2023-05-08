@@ -28,10 +28,8 @@ function LoginForm(props) {
           formValue.email,
           formValue.password
         );
-        console.log(props);
         props.update_firebaseUserUid(userCredential.user.uid);
         // navigation.navigate(screen.account.register);
-        console.log(props);
       } catch (error) {
         alert("Usuario o Contraseña incorrecta");
         Toast.show({
@@ -75,7 +73,7 @@ function LoginForm(props) {
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
         onPress={formik.handleSubmit}
-        loading={formik.isSubmitting}
+        // loading={formik.isSubmitting}
       />
     </View>
   );
