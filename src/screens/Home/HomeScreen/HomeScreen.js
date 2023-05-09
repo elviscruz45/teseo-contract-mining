@@ -16,6 +16,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/LoadingSpinner";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
@@ -27,18 +29,29 @@ function HomeScreen(props) {
 
   useEffect(() => {
     async function fetchData() {
-      const querySnapshot = await getDocs(collection(db, "posts"));
-      console.log("useEffect7");
-      const post_array = [];
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        post_array.push(doc.data());
-      });
-      const sortedFirestore = post_array.sort(
-        (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
-      );
-      setPosts(sortedFirestore);
-      setIsLoading(false);
+      // Try to retrieve data from AsyncStorage
+      const storedPosts = await AsyncStorage.getItem("posts");
+
+      if (storedPosts) {
+        console.log("pasa por el asyncStorage");
+        setPosts(JSON.parse(storedPosts));
+        setIsLoading(false);
+      } else {
+        const querySnapshot = await getDocs(collection(db, "posts"));
+        console.log("useEffect7");
+        const post_array = [];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          post_array.push(doc.data());
+        });
+        const sortedFirestore = post_array.sort(
+          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+        );
+        setPosts(sortedFirestore);
+        setIsLoading(false);
+        // Store the data in AsyncStorage
+        await AsyncStorage.setItem("posts", JSON.stringify(sortedFirestore));
+      }
     }
     fetchData();
   }, []);
