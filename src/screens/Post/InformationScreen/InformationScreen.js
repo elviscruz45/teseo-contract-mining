@@ -81,17 +81,21 @@ function InformationScreen(props) {
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
         //subir pdf a firebase Storage y obteniendo la url imageUrl
-        const snapshotPDF = await uploadPdf(formValue.pdfFile);
-        const imagePathPDF = snapshotPDF.metadata.fullPath;
-        const imageUrlPDF = await getDownloadURL(
-          ref(getStorage(), imagePathPDF)
-        );
+
+        if (formValue.pdfFile) {
+          const snapshotPDF = await uploadPdf(formValue.pdfFile);
+          const imagePathPDF = snapshotPDF.metadata.fullPath;
+          var imageUrlPDF = await getDownloadURL(
+            ref(getStorage(), imagePathPDF)
+          );
+        }
 
         //preparando datos para subir a  firestore Database
-        newData.pdfPrincipal = imageUrlPDF;
+        newData.pdfPrincipal = imageUrlPDF || "";
         newData.fotoPrincipal = imageUrl;
         newData.equipoPostDatos = props.actualEquipment;
         newData.fechaPostISO = new Date().toISOString();
+        newData.createdAt = new Date();
         newData.likes = [];
         newData.comentariosUsuarios = [];
 

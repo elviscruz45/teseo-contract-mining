@@ -84,7 +84,7 @@ export function GeneralForms(props) {
 
         <Input
           value={pickedDocument}
-          placeholder="Adjuntad PDF"
+          placeholder="Adjuntar PDF"
           multiline={true}
           editable={false}
           onChangeText={(text) => {

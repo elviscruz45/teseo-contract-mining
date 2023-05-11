@@ -25,11 +25,13 @@ import {
 } from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
+import { screen } from "../../../utils";
 
 const windowWidth = Dimensions.get("window").width;
 export function SearchScreen(props) {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     setSearchResults(equipmentList);
@@ -42,6 +44,14 @@ export function SearchScreen(props) {
     });
     setSearchResults(result);
   }, [searchText]);
+
+  const selectAsset = (item) => {
+    console.log(item);
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.item,
+      params: { Item: item },
+    });
+  };
 
   return (
     <>

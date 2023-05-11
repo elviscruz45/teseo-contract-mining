@@ -9,6 +9,7 @@ const homeStack = {
 const searchStack = {
   tab: "SearchTab",
   search: "Search",
+  item: "Item",
 };
 
 const postStack = {

@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SearchScreen } from "../screens";
+import { ItemScreen } from "../screens/Search/ItemScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -56,12 +57,12 @@ export function SearchStack() {
         component={SearchScreen}
         options={{ title: " " }}
       />
-      {/* <Stack.Screen
-        name={screen.homestack.data}
-        component={DataScreen}
-        options={{ title: "Conveyor Belt" }}
-      />
       <Stack.Screen
+        name={screen.search.item}
+        component={ItemScreen}
+        options={{ title: "Item" }}
+      />
+      {/* <Stack.Screen
         name={screen.homestack.graphic}
         component={GraphicScreen}
         options={{ title: "Conveyor Belt" }}

@@ -12,67 +12,60 @@ import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
 import { equipmentList } from "../../../utils/equipmentList";
-import {
-  collection,
-  getDocs,
-  doc,
-  onSnapshot,
-  query,
-  where,
-  limit,
-  startAfter,
-  orderBy,
-  getDoc,
-} from "firebase/firestore";
+import { collection, getDocs, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/LoadingSpinner";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { screen } from "../../../utils";
-// import { orderBy } from "lodash";
-import { useNavigation } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  const [posts2, setPosts2] = useState([]);
+  console.log("inicial", posts);
+  const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   const [isScrolledUp, setIsScrolledUp] = useState(false);
-  // const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
-  const navigation = useNavigation();
 
   useEffect(() => {
     async function fetchData() {
-      console.log("useofuseEffect");
       // Try to retrieve data from AsyncStorage
-      const q = query(
-        collection(db, "posts")
-        // limit(5),
-        // startAfter(lastDocSnapshot.get("fechaPostISO")),
-        // orderBy("fechaPostISO", "desc")
-        // where("emailPerfil", "==", "elviscruz45@gmail.com")
-      );
-      const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
-        const lista = [];
-        querySnapshotFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
+      // const storedPosts = await AsyncStorage.getItem("posts");
 
-        const sortedFirestore = lista.sort(
-          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
-        );
-
-        setPosts2(sortedFirestore);
-
-        // setPosts2((prevPosts) => [...prevPosts, ...sortedFirestore]);
-        // const lastDoc =
-        //   querySnapshotFirebase.docs[querySnapshotFirebase.docs.length - 1];
-        // setLastDocSnapshot(lastDoc);
+      // if (storedPosts) {
+      //   console.log("pasa por el asyncStorage");
+      //   setPosts(JSON.parse(storedPosts));
+      //   setIsLoading(false);
+      // } else {
+      const querySnapshot = await getDocs(collection(db, "posts"));
+      console.log("useEffect7");
+      const post_array = [];
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        post_array.push(doc.data());
       });
+      const sortedFirestore = post_array.sort(
+        (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+      );
+      setPosts(sortedFirestore);
       setIsLoading(false);
+      // Store the data in AsyncStorage
+      // await AsyncStorage.setItem("posts", JSON.stringify(sortedFirestore));
+      // }
     }
     fetchData();
   }, []);
+
+  function handleScroll(event) {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    if (offsetY < -5) {
+      setIsScrolledUp(true);
+      console.log(isScrolledUp);
+    } else {
+      setIsScrolledUp(false);
+      console.log(isScrolledUp);
+    }
+  }
 
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
@@ -93,15 +86,6 @@ function HomeScreen(props) {
       })
       .catch((error) => console.log("Error opening PDF document", error));
   }
-
-  const selectAsset = (item) => {
-    console.log(item);
-    navigation.navigate(screen.search.tab, {
-      screen: screen.search.item,
-      params: { Item: item },
-    });
-  };
-
   if (isLoading) {
     return <LoadingSpinner />;
   } else {
@@ -116,40 +100,33 @@ function HomeScreen(props) {
             showsHorizontalScrollIndicator={false}
             data={equipmentList}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => selectAsset(item)}>
-                <View style={styles.textImage}>
-                  <Image source={item.image} style={styles.roundImage5} />
-                  <Text style={styles.Texticons}>{item.tag}</Text>
-                </View>
-              </TouchableOpacity>
+              <View style={styles.textImage}>
+                <Image source={item.image} style={styles.roundImage5} />
+                <Text style={styles.Texticons}>{item.tag}</Text>
+              </View>
             )}
           />
         </View>
         <Text></Text>
         <FlatList
-          data={posts2}
+          data={posts}
+          onScroll={handleScroll}
           scrollEventThrottle={100000000}
           renderItem={({ item }) => (
             <View
               style={{
                 borderBottomWidth: 2,
-                borderBottomColor: "#8CBBF1",
+                borderBottomColor: "#E35622",
                 margin: 2,
               }}
             >
               <View style={[styles.row, styles.center]}>
                 <View style={[styles.row, styles.center]}>
-                  <TouchableOpacity
-                    onPress={() => selectAsset(item.equipoPostDatos)}
-                    style={[styles.row, styles.center]}
-                  >
-                    <Image
-                      source={chooseImageEquipment(item.equipoPostDatos.tag)}
-                      style={styles.roundImage}
-                    />
-                    <Text>{item.equipoPostDatos.tag}</Text>
-                  </TouchableOpacity>
-
+                  <Image
+                    source={chooseImageEquipment(item.equipoPostDatos.tag)}
+                    style={styles.roundImage}
+                  />
+                  <Text>{item.equipoPostDatos.tag}</Text>
                   <Image
                     source={{ uri: item.fotoUsuarioPerfil }}
                     style={styles.roundImage}
@@ -186,13 +163,13 @@ function HomeScreen(props) {
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    marginRight: windowWidth * 0.4,
+                    marginRight: windowWidth * 0.45,
                   }}
                 >
                   <TouchableOpacity>
                     <Icon type="material-community" name="thumb-up-outline" />
                   </TouchableOpacity>
-                  <Text> 15 Me gusta</Text>
+                  <Text> 15 likes</Text>
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TouchableOpacity>
@@ -201,7 +178,7 @@ function HomeScreen(props) {
                       name="comment-processing-outline"
                     />
                   </TouchableOpacity>
-                  <Text> 15 Comentarios</Text>
+                  <Text> 15 Comments</Text>
                 </View>
               </View>
             </View>
