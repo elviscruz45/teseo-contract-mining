@@ -41,38 +41,34 @@ function HomeScreen(props) {
   // const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    async function fetchData() {
-      console.log("useofuseEffect");
-      // Try to retrieve data from AsyncStorage
-      const q = query(
-        collection(db, "posts")
-        // limit(5),
-        // startAfter(lastDocSnapshot.get("fechaPostISO")),
-        // orderBy("fechaPostISO", "desc")
-        // where("emailPerfil", "==", "elviscruz45@gmail.com")
-      );
-      const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
-        const lista = [];
-        querySnapshotFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     console.log("useofuseEffect");
+  //     // Try to retrieve data from AsyncStorage
+  //     const q = query(
+  //       collection(db, "posts")
+  //       // limit(5),
+  //       // startAfter(lastDocSnapshot.get("fechaPostISO")),
+  //       // orderBy("fechaPostISO", "desc")
+  //       // where("emailPerfil", "==", "elviscruz45@gmail.com")
+  //     );
+  //     const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+  //       const lista = [];
+  //       querySnapshotFirebase.forEach((doc) => {
+  //         lista.push(doc.data());
+  //       });
 
-        const sortedFirestore = lista.sort(
-          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
-        );
+  //       const sortedFirestore = lista.sort(
+  //         (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+  //       );
 
-        setPosts2(sortedFirestore);
+  //       setPosts2(sortedFirestore);
 
-        // setPosts2((prevPosts) => [...prevPosts, ...sortedFirestore]);
-        // const lastDoc =
-        //   querySnapshotFirebase.docs[querySnapshotFirebase.docs.length - 1];
-        // setLastDocSnapshot(lastDoc);
-      });
-      setIsLoading(false);
-    }
-    fetchData();
-  }, []);
+  //     });
+  //     setIsLoading(false);
+  //   }
+  //   fetchData();
+  // }, []);
 
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
@@ -109,7 +105,6 @@ function HomeScreen(props) {
       <>
         {console.log("carga1")}
         <Text></Text>
-
         <View>
           <FlatList
             horizontal={true}
@@ -186,7 +181,7 @@ function HomeScreen(props) {
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    marginRight: windowWidth * 0.4,
+                    marginRight: windowWidth * 0.35,
                   }}
                 >
                   <TouchableOpacity>

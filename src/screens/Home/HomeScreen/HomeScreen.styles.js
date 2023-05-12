@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   containerFlatListView1: {
     borderBottomWidth: 2,
-    borderBottomColor: "#E35622",
+    borderBottomColor: "#8CBBF1",
     margin: 2,
   },
   row: {

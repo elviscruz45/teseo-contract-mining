@@ -60,7 +60,7 @@ export function SearchStack() {
       <Stack.Screen
         name={screen.search.item}
         component={ItemScreen}
-        options={{ title: "Item" }}
+        options={{ title: " " }}
       />
       {/* <Stack.Screen
         name={screen.homestack.graphic}
