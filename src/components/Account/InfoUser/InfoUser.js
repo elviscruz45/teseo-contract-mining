@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Avatar, Text } from "@rneui/themed";
+import { Avatar, Text, Icon } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -11,13 +11,10 @@ import { connect } from "react-redux";
 import { update_firebasePhoto } from "../../../actions/profile";
 
 function InfoUser(props) {
-  // const { setLoading, setLoadingText } = props;
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
-  const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [avatar, setAvatar] = useState(photoURL);
-  const [showModal, setShowModal] = useState(false);
-  const [renderComponent, setRenderComponent] = useState(null);
+  const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
   const user = getAuth().currentUser;
   const changeAvatar = async () => {
@@ -59,14 +56,6 @@ function InfoUser(props) {
     setLoading(false);
   };
 
-  const update_Name = () => {
-    setRenderComponent(
-      <ConnectedChangeDisplayNameForm onClose={onCloseOpenModal} />
-    );
-    setShowModal(true);
-  };
-  const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
-
   return (
     <View style={styles.content}>
       <Avatar
@@ -80,21 +69,22 @@ function InfoUser(props) {
       </Avatar>
 
       <View>
-        <TouchableOpacity onPress={update_Name}>
-          <Text style={styles.displayName}>{displayName || "Anónimo"}</Text>
-        </TouchableOpacity>
+        {props.profile.displayNameform && (
+          <Text style={styles.displayName}>
+            {props.profile.displayNameform}
+          </Text>
+        )}
 
         <Text>{email}</Text>
+        {props.profile.cargo && <Text>{props.profile.cargo}</Text>}
+        {props.profile.descripcion && <Text>{props.profile.descripcion}</Text>}
       </View>
-      <Modal show={showModal} close={onCloseOpenModal}>
-        {renderComponent}
-      </Modal>
     </View>
   );
 }
 
 const mapStateToProps = (reducers) => {
-  return reducers.profile;
+  return { profile: reducers.profile.firebase_user_name };
 };
 
 export const ConnectedInfoUser = connect(mapStateToProps, {

@@ -13,6 +13,7 @@ import reduxThunk from "redux-thunk";
 import { rootReducers } from "./src/reducers";
 import { AppNavigation } from "./src/navigation/AppNavigation";
 import { ConnectedLoginNavigator } from "./src/navigation/LoginNavigator";
+
 LogBox.ignoreAllLogs();
 
 const composedEnhancers = compose(applyMiddleware(reduxThunk));

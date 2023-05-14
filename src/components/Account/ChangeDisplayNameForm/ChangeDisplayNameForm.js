@@ -8,20 +8,47 @@ import { initialValues, validationSchema } from "./ChangeDisplayNameForm.data";
 import { styles } from "./ChangeDisplayNameForm.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserName } from "../../../actions/profile";
-
+import { db } from "../../../utils";
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  deleteDoc,
+  getDoc,
+} from "firebase/firestore";
 function ChangeDisplayNameForm(props) {
   const { onClose } = props;
+  const { photoURL, displayName, email, uid } = getAuth().currentUser;
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      const newData = formValue;
+
       try {
-        const { displayName } = formValue;
-        const currentUser = getAuth().currentUser;
-        await updateProfile(currentUser, { displayName });
-        props.update_firebaseUserName(displayName);
+        //Update of Authentication Firebase
+        const currentLoginUser = getAuth().currentUser;
+        await updateProfile(currentLoginUser, {
+          displayName: newData.displayNameform,
+        });
+
+        //sign up the users in Firestore Database
+        newData.photoURL = photoURL;
+        newData.email = email;
+        newData.uid = uid;
+
+        ///checking up if there are data in users
+        const docRef = doc(collection(db, "users"), newData.uid);
+        await setDoc(docRef, newData);
+        props.update_firebaseUserName(newData);
         onClose();
       } catch (error) {
         Toast.show({
@@ -42,14 +69,36 @@ function ChangeDisplayNameForm(props) {
           name: "account-circle-outline",
           color: "#c2c2c2",
         }}
-        onChangeText={(text) => formik.setFieldValue("displayName", text)}
-        errorMessage={formik.errors.displayName}
+        onChangeText={(text) => formik.setFieldValue("displayNameform", text)}
+        errorMessage={formik.errors.displayNameform}
+      />
+      <Input
+        placeholder="Escribe tu cargo"
+        rightIcon={{
+          type: "material-community",
+          name: "account-circle-outline",
+          color: "#c2c2c2",
+        }}
+        onChangeText={(text) => formik.setFieldValue("cargo", text)}
+        errorMessage={formik.errors.cargo}
+      />
+      <Input
+        placeholder="Describete"
+        multiline={true}
+        rightIcon={{
+          type: "material-community",
+          name: "account-circle-outline",
+          color: "#c2c2c2",
+        }}
+        onChangeText={(text) => formik.setFieldValue("descripcion", text)}
+        // errorMessage={formik.errors.displayName}
       />
       <Button
-        title="Cambiar nombre y apellidos"
+        title="Actualizar"
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
         onPress={formik.handleSubmit}
+        // onPress={() => console.log("holaaaa")}
         loading={formik.isSubmitting}
       />
     </View>
@@ -60,7 +109,6 @@ const mapStateToProps = (reducers) => {
   return reducers.profile;
 };
 
-// export default connect(mapStateToProps, { update_firebaseUserUid })(LoginForm);
 export const ConnectedChangeDisplayNameForm = connect(mapStateToProps, {
   update_firebaseUserName,
 })(ChangeDisplayNameForm);

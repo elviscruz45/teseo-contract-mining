@@ -133,28 +133,35 @@ function PostScreen(props) {
           );
         }}
       />
-      <TouchableOpacity
-        style={styles.btnContainer3}
-        onPress={() => pickImage()}
-      >
-        <Image
-          source={require("../../../../assets/AddImage.png")}
-          style={styles.roundImageUpload}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btnContainer2} onPress={() => camera()}>
-        <Image
-          source={require("../../../../assets/TakePhoto2.png")}
-          style={styles.roundImageUpload}
-        />
-      </TouchableOpacity>
+      {props.profile && (
+        <>
+          <TouchableOpacity
+            style={styles.btnContainer3}
+            onPress={() => pickImage()}
+          >
+            <Image
+              source={require("../../../../assets/AddImage.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer2}
+            onPress={() => camera()}
+          >
+            <Image
+              source={require("../../../../assets/TakePhoto2.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+        </>
+      )}
     </>
   );
 }
 
 const mapStateToProps = (reducers) => {
   return {
-    firebase_user_name: reducers.profile.firebase_user_name,
+    profile: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,

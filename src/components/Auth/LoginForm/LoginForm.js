@@ -10,6 +10,21 @@ import { initialValues, validationSchema } from "./LoginForm.data";
 import { styles } from "./LoginForm.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
+import { update_firebaseUserName } from "../../../actions/profile";
+import { db } from "../../../utils";
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  deleteDoc,
+  getDoc,
+} from "firebase/firestore";
 
 function LoginForm(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +44,14 @@ function LoginForm(props) {
           formValue.password
         );
         props.update_firebaseUserUid(userCredential.user.uid);
-        // navigation.navigate(screen.account.register);
+        const user_uid = userCredential.user.uid;
+        const docRef = doc(db, "users", user_uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          props.update_firebaseUserName(docSnap.data());
+        } else {
+          alert("Actualice sus datos en el perfil para comenzar");
+        }
       } catch (error) {
         alert("Usuario o Contraseña incorrecta");
         Toast.show({
@@ -85,4 +107,5 @@ const mapStateToProps = (reducers) => {
 
 export const ConnectedLoginForm = connect(mapStateToProps, {
   update_firebaseUserUid,
+  update_firebaseUserName,
 })(LoginForm);

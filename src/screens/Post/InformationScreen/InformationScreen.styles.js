@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
   info: {
     color: "#828282",
     paddingRight: 100,
-    marginTop: 3,
+    marginTop: 13,
   },
   radioCard: {
     margin: 3,

@@ -11,6 +11,7 @@ export function ModalScreen(props) {
     setItem({ ...this.state, showModal: false });
     // this.props.photo_location(location);
   };
+
   return (
     <Modal animationType="slide" transparent={false} visible={show}>
       <SafeAreaView style={[styles.container, styles.center]}>

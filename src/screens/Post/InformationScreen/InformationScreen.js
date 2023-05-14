@@ -104,7 +104,6 @@ function InformationScreen(props) {
         newData.idDocFirestoreDB = docRef.id;
         const RefFirebase = doc(db, "posts", newData.idDocFirestoreDB);
         await updateDoc(RefFirebase, newData);
-        console.log("formValue", formValue);
 
         // yendo a Home
         // navigation.navigate(screen.home.tab, {
