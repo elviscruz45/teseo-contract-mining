@@ -111,3 +111,23 @@ export const chancadoraSecundaria = [
 // export const Faja = [];
 // export const MolinoBolas = [];
 // export const Zaranda = [];
+
+export const recursos = [
+  {
+    parent: "EQUIPO MOVIL",
+    value: "EQUIPO MOVIL",
+    disabled: true,
+  },
+  { parent: "EQUIPO MOVIL", value: "Grua 12 Tn" },
+  { parent: "EQUIPO MOVIL", value: "Grua 35 Tn" },
+  { parent: "EQUIPO MOVIL", value: "Grua 100 Tn" },
+  { parent: "EQUIPO MOVIL", value: "Grua 150 Tn" },
+
+  {
+    parent: "EQUIPO ESTACIONARIO",
+    value: "EQUIPO ESTACIONARIO",
+    disabled: true,
+  },
+  { parent: "EQUIPO ESTACIONARIO", value: "Puente Grua" },
+  { parent: "EQUIPO ESTACIONARIO", value: "Gib Crane" },
+];

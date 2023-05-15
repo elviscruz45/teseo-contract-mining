@@ -9,46 +9,32 @@ import {
   validationSchema,
 } from "./ChangeDisplaySupervisor.data";
 import { styles } from "./ChangeDisplaySupervisor.styles";
-import { Pickermode } from "./Pickermode";
+import { SelectExample } from "./Selection";
 
 export function ChangeDisplaySupervisor(props) {
-  const { onClose, formik } = props;
+  const { onClose, formik, handleSupervisor } = props;
   const formik2 = useFormik({
     initialValues: initialValues(),
-    // validationSchema: validationSchema(),
+    validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: (formValue) => {
+      const supervisor = formValue.Supervisor;
+      formik.setFieldValue("supervisor", supervisor);
+      handleSupervisor(supervisor);
       onClose();
-      const posicion = `${formValue.Position}`;
-      handlerenderComponentPosition(posicion);
-      formik.setFieldValue("posicion", posicion);
-
-      // try {
-      //   const { displayName } = formValue;
-      //   const currentUser = getAuth().currentUser;
-      //   await updateProfile(currentUser, { displayName });
-      //   onReload();
-      //   onClose();
-      // } catch (error) {
-      //   Toast.show({
-      //     type: "error",
-      //     position: "bottom",
-      //     text1: "Error al cambiar el nombre y apellidos",
-      //   });
-      // }
     },
   });
 
   return (
     <View>
       <View style={styles.content}>
-        <Pickermode formik2={formik2} />
+        <SelectExample formik={formik2} />
         <Button
           title="Aceptar"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={formik2.handleSubmit}
-          // loading={formik.isSubmitting}
+          loading={formik2.isSubmitting}
         />
       </View>
     </View>

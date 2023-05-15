@@ -164,14 +164,16 @@ function InformationScreen(props) {
           icon={{ type: "material", name: "person" }}
           source={props.actualEquipment?.image}
         ></Avatar>
-        <Icon
-          reverse
-          type="material-community"
-          name="plus"
-          color="#8CBBF1"
-          containerStyle={styles.btnContainer2}
-          onPress={goToPolines}
-        />
+        {props.actualEquipment.clase == "faja" && (
+          <Icon
+            reverse
+            type="material-community"
+            name="plus"
+            color="#8CBBF1"
+            containerStyle={styles.btnContainer2}
+            onPress={goToPolines}
+          />
+        )}
         <View>
           <Text></Text>
           <Text style={styles.name}>

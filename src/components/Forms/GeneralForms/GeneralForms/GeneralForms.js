@@ -16,6 +16,11 @@ export function GeneralForms(props) {
   const { formik } = props;
   const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
+  const [nombreComponente, setNombreComponente] = useState(null);
+  const [supervisor, setSupervisor] = useState(null);
+  const [equipoTrabajo, setEquipoTrabajo] = useState(null);
+  const [recursos, setRecursos] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
 
   const pickDocument = async () => {
@@ -36,21 +41,54 @@ export function GeneralForms(props) {
 
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
+  function handleNombreComponente(value) {
+    setNombreComponente(value);
+  }
+  function handleSupervisor(value) {
+    setSupervisor(value);
+  }
+  function handleEquipoTrabajo(value) {
+    setEquipoTrabajo(value);
+  }
+  function handleRecursos(value) {
+    setRecursos(value);
+  }
+
   const selectComponent = (key) => {
     if (key === "nombreComponente") {
-      setRenderComponent(<SelectExample />);
+      setRenderComponent(
+        <ChangeDisplayComponent
+          onClose={onCloseOpenModal}
+          formik={formik}
+          handleNombreComponente={handleNombreComponente}
+        />
+      );
     }
     if (key === "supervisor") {
-      setRenderComponent(<MultiSelectExample />);
+      setRenderComponent(
+        <ChangeDisplaySupervisor
+          onClose={onCloseOpenModal}
+          formik={formik}
+          handleSupervisor={handleSupervisor}
+        />
+      );
     }
     if (key === "equipoTrabajo") {
       setRenderComponent(
-        <ChangeDisplayEquipo onClose={onCloseOpenModal} formik={formik} />
+        <ChangeDisplayEquipo
+          onClose={onCloseOpenModal}
+          formik={formik}
+          handleEquipoTrabajo={handleEquipoTrabajo}
+        />
       );
     }
     if (key === "recursos") {
       setRenderComponent(
-        <ChangeDisplayRecursos onClose={onCloseOpenModal} formik={formik} />
+        <ChangeDisplayRecursos
+          onClose={onCloseOpenModal}
+          formik={formik}
+          handleRecursos={handleRecursos}
+        />
       );
     }
     onCloseOpenModal();
@@ -61,6 +99,7 @@ export function GeneralForms(props) {
       <Text></Text>
       <View style={styles.content}>
         <Input
+          value={nombreComponente}
           placeholder="Nombre del Componente"
           // editable={false}
           onChangeText={(text) => {
@@ -73,6 +112,7 @@ export function GeneralForms(props) {
           }}
         />
         <Input
+          value={supervisor}
           placeholder="Supervisor"
           // editable={false}
           onChangeText={(text) => {
@@ -85,7 +125,9 @@ export function GeneralForms(props) {
           }}
         />
         <Input
+          value={equipoTrabajo}
           placeholder="Equipo de Trabajo"
+          multiline={true}
           onChangeText={(text) => {
             formik.setFieldValue("equipoTrabajo", text);
           }}
@@ -96,7 +138,9 @@ export function GeneralForms(props) {
           }}
         />
         <Input
+          value={recursos}
           placeholder="Recursos Usados"
+          multiline={true}
           // editable={false}
           onChangeText={(text) => {
             formik.setFieldValue("recursos", text);

@@ -174,6 +174,17 @@ function HomeScreen(props) {
                 <View>
                   <Text style={styles.textAreaTitle}>{item.titulo}</Text>
                   <Text style={styles.textAreaComment}>{item.comentarios}</Text>
+                  <Text style={styles.textAreaTitle}>Datos Adicionales: </Text>
+                  <Text style={styles.textAreaComment}>
+                    {"Componente:"}
+                    {item.nombreComponente}
+                    {", Supervisor:"}
+                    {item.supervisor}
+                    {", Equipo de Trabajo:"}
+                    {item.equipoTrabajo}
+                    {", Recursos:"}
+                    {item.recursos}
+                  </Text>
                 </View>
               </View>
               <View style={styles.rowlikes}>
