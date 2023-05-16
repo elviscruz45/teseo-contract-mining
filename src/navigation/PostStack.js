@@ -7,7 +7,8 @@ import { ConnectedPostScreen } from "../screens";
 import { getAuth, updateProfile } from "firebase/auth";
 import { ConnectedCameraScreen } from "../screens";
 import { ConnectedInformationScreen } from "../screens";
-import { PolinesScreen } from "../screens";
+// import { PolinesScreen } from "../screens";
+import { ConnectedPolinesScreen } from "../screens";
 import { PolinesAddInformationScreen } from "../screens/Post/PolinesAddInformationScreen";
 import { useNavigation } from "@react-navigation/native";
 
@@ -72,7 +73,7 @@ export function PostStack() {
       />
       <Stack.Screen
         name={screen.post.polines}
-        component={PolinesScreen}
+        component={ConnectedPolinesScreen}
         options={{ title: "Polines" }}
       />
       <Stack.Screen

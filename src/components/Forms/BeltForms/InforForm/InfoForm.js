@@ -11,8 +11,9 @@ import { ChangeDisplayPosition } from "../ChangePosition";
 import { ChangeDisplayCondition } from "../ChangeCondition";
 import { ChangeDisplayPriority } from "../ChangePriority";
 import { initialValues } from "../ChangeDisplayBelt/ChangeDisplayBelt.data";
+import { connect } from "react-redux";
 
-export function InfoForm(props) {
+function InfoFormPolin(props) {
   const { formik, CopyBeltNumber, EditData } = props;
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -139,21 +140,12 @@ export function InfoForm(props) {
       <View style={styles.content}>
         <Input
           placeholder="Numero de Faja"
-          defaultValue={defaultValueFaja}
+          value={props.actualEquipment.tag}
           editable={false}
-          onChangeText={() =>
-            formik.setFieldValue(
-              "numeroFaja",
-              defaultValueFaja || CopyBeltNumber.numeroFaja
-            )
-          }
-          errorMessage={formik.errors.numeroFaja}
-          rightIcon={{
-            type: "material-community",
-            name: "tag-multiple-outline",
-            // color: getColorIconMap(formik),
-            onPress: () => selectComponent("numeroFaja"),
-          }}
+          // onChangeText={(text) =>
+          //   formik.setFieldValue("numeroFaja", props.actualEquipment.tag)
+          // }
+          // errorMessage={formik.errors.numeroFaja}
         />
         <Input
           placeholder="Zona/Tipo"
@@ -252,3 +244,11 @@ export function InfoForm(props) {
     </View>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    actualEquipment: reducers.post.actualEquipment,
+  };
+};
+
+export const InfoForm = connect(mapStateToProps, {})(InfoFormPolin);

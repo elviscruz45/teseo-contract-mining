@@ -3,7 +3,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Aler,
+  Alert,
   ImageBackground,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
@@ -12,22 +12,21 @@ import { styles } from "./PolinesScreen.styles";
 import { map, filter } from "lodash";
 import { doc, setDoc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
-import { db } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
+import { db } from "../../../utils";
+import { connect } from "react-redux";
 
-export function PolinesScreen(props) {
+function PolinesScreen(props) {
   const navigation = useNavigation();
   const { route } = props;
 
   const [dataList, setDataList] = useState([]);
   const [data, setData] = useState();
-  const dataID = data?.numeroFaja + data?.numeroPolin + data?.posicion || "";
+  const dataID = data?.numeroPolin + data?.posicion || "";
   const lastListData = dataList.slice(-1)[0];
   const lastListDataID =
-    lastListData?.numeroFaja +
-      lastListData?.numeroPolin +
-      lastListData?.posicion || "";
+    lastListData?.numeroPolin + lastListData?.posicion || "";
 
   useEffect(() => {
     if (route.params) {
@@ -51,11 +50,13 @@ export function PolinesScreen(props) {
   }, [data]);
 
   const goToInformation = () => {
-    navigation.navigate(screen.post.addpolines);
+    navigation.navigate(screen.post.addpolines, {
+      CopyBeltNumber: data || "",
+    });
   };
 
   const goToEdit = (item, index) => {
-    navigation.navigate(screen.addinformation.addInformation, {
+    navigation.navigate(screen.post.addpolines, {
       EditData: { ...item, Index: index },
     });
     const result = filter(dataList, (data, index) => data !== item);
@@ -78,9 +79,8 @@ export function PolinesScreen(props) {
           },
         },
       ],
-      { cancelable: false }
+      { cancelable: true }
     );
-    console.log("Delete");
   };
 
   const sendToFirebase = async (dataList) => {
@@ -89,15 +89,10 @@ export function PolinesScreen(props) {
       const newData = { dataList: dataList };
       newData.id = uuid();
       newData.createdData = new Date().toISOString();
-
-      await setDoc(doc(db, "Polines-Data", newData.id), newData);
-
+      newData.tagFaja = props.actualEquipment.tag;
+      await setDoc(doc(db, "idlers", newData.id), newData);
       alert("Se han enviado los datos correctamente a la nube");
-      navigation.navigate(screen.homestack.tab, {
-        screen: screen.homestack.home,
-        params: { data: newData },
-      });
-
+      navigation.navigate(screen.post.form, { data: newData });
       setDataList([]);
     } catch (error) {
       alert(error);
@@ -189,7 +184,7 @@ export function PolinesScreen(props) {
                 <View>
                   <View style={{ flexDirection: "row" }}>
                     <Text style={{ fontWeight: "bold" }}>NumeroFaja: </Text>
-                    <Text>{item.numeroFaja} </Text>
+                    <Text>{props.actualEquipment.tag} </Text>
                     <Text style={{ fontWeight: "bold" }}> Polin:</Text>
                     <Text>{item.numeroPolin}</Text>
                     <View style={{ flexDirection: "row" }}>
@@ -235,6 +230,7 @@ export function PolinesScreen(props) {
                       {item.observacion}
                     </Text>
                   </View>
+
                   <View
                     style={{
                       flexDirection: "row",
@@ -290,3 +286,14 @@ export function PolinesScreen(props) {
     </>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    actualEquipment: reducers.post.actualEquipment,
+  };
+};
+
+export const ConnectedPolinesScreen = connect(
+  mapStateToProps,
+  {}
+)(PolinesScreen);

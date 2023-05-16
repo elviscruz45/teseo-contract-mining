@@ -12,8 +12,11 @@ import { screen } from "../../../utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { InfoForm } from "../../../components/Forms/BeltForms/InforForm/InfoForm";
 import { getAuth, updateProfile } from "firebase/auth";
+import { connect } from "react-redux";
 
-export function PolinesAddInformationScreen() {
+function PolinesAddInformationScreenData(props) {
+  const { route } = props;
+
   const { displayName } = getAuth().currentUser;
 
   const navigation = useNavigation();
@@ -51,7 +54,9 @@ export function PolinesAddInformationScreen() {
         newData.createdAt = formattedDate;
         newData.createdData = new Date().toISOString();
 
-        newData.ID = `${formValue.numeroFaja}/${formValue.numeroPolin}-${formValue.posicion}`;
+        newData.ID = `${props.actualEquipment.tag}/${formValue.numeroPolin}-${formValue.posicion}`;
+        newData.numeroFaja = props.actualEquipment.tag;
+
         navigation.navigate(screen.post.polines, {
           formData: newData,
         });
@@ -66,8 +71,8 @@ export function PolinesAddInformationScreen() {
       <View>
         <InfoForm
           formik={formik}
-          // CopyBeltNumber={route.params.CopyBeltNumber}
-          // EditData={route.params.EditData}
+          CopyBeltNumber={route.params.CopyBeltNumber}
+          EditData={route.params.EditData}
         />
         <Button
           title="Agregar Dato"
@@ -79,3 +84,14 @@ export function PolinesAddInformationScreen() {
     </KeyboardAwareScrollView>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    actualEquipment: reducers.post.actualEquipment,
+  };
+};
+
+export const PolinesAddInformationScreen = connect(
+  mapStateToProps,
+  {}
+)(PolinesAddInformationScreenData);
