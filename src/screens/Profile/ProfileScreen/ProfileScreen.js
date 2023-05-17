@@ -13,6 +13,7 @@ import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
 import { update_firebaseUserName } from "../../../actions/profile";
+
 function ProfileScreen(props) {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");

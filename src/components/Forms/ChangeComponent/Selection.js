@@ -8,7 +8,6 @@ export const SelectExample = (props) => {
 
   function saveProperty(itemValue) {
     formik.setFieldValue("Componente", itemValue);
-    console.log(itemValue);
   }
 
   return (

@@ -10,7 +10,6 @@ export const MultiSelectExample = (props) => {
 
   function saveProperty(itemValue) {
     formik.setFieldValue("recursos", itemValue.join(","));
-    console.log(itemValue);
   }
 
   return (

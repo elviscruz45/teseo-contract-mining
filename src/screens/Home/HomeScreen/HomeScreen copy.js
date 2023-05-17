@@ -51,22 +51,10 @@ function HomeScreen(props) {
     fetchData();
   }, [isScrolledUp]);
 
-  function handleScroll(event) {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    if (offsetY < -5) {
-      setIsScrolledUp({ set: "ok" });
-      console.log(isScrolledUp);
-    } else {
-      // setIsScrolledUp(false);
-      console.log(isScrolledUp);
-    }
-  }
-
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
       return item.tag == tags;
     });
-    console.log("carga de nuevo1");
 
     return result.image;
   }
@@ -91,8 +79,6 @@ function HomeScreen(props) {
       <Text></Text>
       <FlatList
         data={posts}
-        onScroll={handleScroll}
-        scrollEventThrottle={100000000}
         renderItem={({ item }) => (
           <View
             style={{

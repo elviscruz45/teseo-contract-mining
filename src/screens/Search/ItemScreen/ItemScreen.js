@@ -31,6 +31,7 @@ import {
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
+import { screen } from "../../../utils";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -45,7 +46,6 @@ export function ItemScreen(props) {
     },
   } = props;
   const navigation = useNavigation();
-  console.log(props.route.params.Item);
 
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
@@ -56,7 +56,6 @@ export function ItemScreen(props) {
 
   useEffect(() => {
     async function fetchData() {
-      console.log("useofuseEffect");
       const q = query(
         collection(db, "posts"),
         where("equipoTag", "==", Item.tag)
@@ -88,12 +87,10 @@ export function ItemScreen(props) {
     });
   };
 
-  const polinesDetail = (item) => {
-    console.log("polines");
-    // navigation.navigate(screen.search.tab, {
-    //   screen: screen.search.detail,
-    //   params: { Item: item },
-    // });
+  const polinesDetail = () => {
+    navigation.navigate(screen.search.polines, {
+      dataReport: Item,
+    });
   };
 
   async function UploadFile(uri) {
@@ -102,10 +99,10 @@ export function ItemScreen(props) {
         if (supported) {
           Linking.openURL(uri);
         } else {
-          console.log("Unable to open PDF document");
+          alert("Unable to open PDF document");
         }
       })
-      .catch((error) => console.log("Error opening PDF document", error));
+      .catch((error) => alert("Error opening PDF document", error));
   }
 
   return (
@@ -151,13 +148,14 @@ export function ItemScreen(props) {
         </View>
       </View>
       <Text></Text>
-      {/* Item.clase == "faja"? 
+      {Item.clase == "faja" ? (
         <Button
           title="Estado de los Polines"
           buttonStyle={styles.btnActualizarStyles}
           titleStyle={styles.btnTextStyle}
           onPress={polinesDetail}
-        /> */}
+        />
+      ) : null}
 
       <FlatList
         data={post}

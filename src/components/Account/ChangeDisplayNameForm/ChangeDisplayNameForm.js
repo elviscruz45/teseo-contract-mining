@@ -9,6 +9,8 @@ import { styles } from "./ChangeDisplayNameForm.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserName } from "../../../actions/profile";
 import { db } from "../../../utils";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import {
   collection,
   doc,
@@ -61,47 +63,50 @@ function ChangeDisplayNameForm(props) {
   });
 
   return (
-    <View style={styles.content}>
-      <Input
-        placeholder="Nombre y apellidos"
-        rightIcon={{
-          type: "material-community",
-          name: "account-circle-outline",
-          color: "#c2c2c2",
-        }}
-        onChangeText={(text) => formik.setFieldValue("displayNameform", text)}
-        errorMessage={formik.errors.displayNameform}
-      />
-      <Input
-        placeholder="Escribe tu cargo"
-        rightIcon={{
-          type: "material-community",
-          name: "account-circle-outline",
-          color: "#c2c2c2",
-        }}
-        onChangeText={(text) => formik.setFieldValue("cargo", text)}
-        errorMessage={formik.errors.cargo}
-      />
-      <Input
-        placeholder="Describete"
-        multiline={true}
-        rightIcon={{
-          type: "material-community",
-          name: "account-circle-outline",
-          color: "#c2c2c2",
-        }}
-        onChangeText={(text) => formik.setFieldValue("descripcion", text)}
-        // errorMessage={formik.errors.displayName}
-      />
-      <Button
-        title="Actualizar"
-        containerStyle={styles.btnContainer}
-        buttonStyle={styles.btn}
-        onPress={formik.handleSubmit}
-        // onPress={() => console.log("holaaaa")}
-        loading={formik.isSubmitting}
-      />
-    </View>
+    <>
+      {/* <View style={styles.content}> */}
+      <KeyboardAwareScrollView>
+        <Input
+          placeholder="Nombre y apellidos"
+          rightIcon={{
+            type: "material-community",
+            name: "account-circle-outline",
+            color: "#c2c2c2",
+          }}
+          onChangeText={(text) => formik.setFieldValue("displayNameform", text)}
+          errorMessage={formik.errors.displayNameform}
+        />
+        <Input
+          placeholder="Escribe tu cargo"
+          rightIcon={{
+            type: "material-community",
+            name: "account-circle-outline",
+            color: "#c2c2c2",
+          }}
+          onChangeText={(text) => formik.setFieldValue("cargo", text)}
+          errorMessage={formik.errors.cargo}
+        />
+        <Input
+          placeholder="Describete"
+          multiline={true}
+          rightIcon={{
+            type: "material-community",
+            name: "account-circle-outline",
+            color: "#c2c2c2",
+          }}
+          onChangeText={(text) => formik.setFieldValue("descripcion", text)}
+          // errorMessage={formik.errors.displayName}
+        />
+        <Button
+          title="Actualizar"
+          containerStyle={styles.btnContainer}
+          buttonStyle={styles.btn}
+          onPress={formik.handleSubmit}
+          loading={formik.isSubmitting}
+        />
+        {/* </View> */}
+      </KeyboardAwareScrollView>
+    </>
   );
 }
 

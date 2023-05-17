@@ -16,7 +16,6 @@ function CameraScreen(props) {
   //   validationSchema: validationSchema(),
   //   validateOnChange: false,
   //   onSubmit: async (formValue) => {
-  //     console.log(formValue);
   //   },
   // });
   const [type, setType] = useState(CameraType.back);

@@ -118,7 +118,6 @@ function InformationScreen(props) {
         alert("Se ha subido correctamente");
       } catch (error) {
         alert(error);
-        console.log("error");
       }
     },
   });

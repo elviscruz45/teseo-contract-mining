@@ -39,7 +39,6 @@ export const SelectExample = (props) => {
 
   function saveProperty(itemValue) {
     formik.setFieldValue("Supervisor", itemValue);
-    console.log(itemValue);
   }
 
   return (

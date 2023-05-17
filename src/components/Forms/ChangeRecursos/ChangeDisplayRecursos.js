@@ -18,7 +18,6 @@ export function ChangeDisplayRecursos(props) {
       const recursos = formValue.recursos;
       formik.setFieldValue("recursos", recursos);
       handleRecursos(recursos);
-      console.log(recursos);
       onClose();
     },
   });

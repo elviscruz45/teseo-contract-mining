@@ -21,7 +21,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  console.log("inicial", posts);
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

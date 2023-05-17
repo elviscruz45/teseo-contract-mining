@@ -35,7 +35,7 @@ export function GeneralForms(props) {
         setPickedDocument(null);
       }
     } catch (err) {
-      console.log("Error picking document", err);
+      alert("Error picking document", err);
     }
   };
 

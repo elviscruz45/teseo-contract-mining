@@ -43,7 +43,6 @@ function HomeScreen(props) {
 
   useEffect(() => {
     async function fetchData() {
-      console.log("useofuseEffect");
       // Try to retrieve data from AsyncStorage
       const q = query(
         collection(db, "posts")
@@ -83,14 +82,13 @@ function HomeScreen(props) {
         if (supported) {
           Linking.openURL(uri);
         } else {
-          console.log("Unable to open PDF document");
+          alert("Unable to open PDF document");
         }
       })
-      .catch((error) => console.log("Error opening PDF document", error));
+      .catch((error) => alert("Error opening PDF document", error));
   }
 
   const selectAsset = (item) => {
-    console.log(item);
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: item },
@@ -102,7 +100,6 @@ function HomeScreen(props) {
   } else {
     return (
       <>
-        {console.log("carga1")}
         <Text></Text>
         <View>
           <FlatList

@@ -11,6 +11,7 @@ const searchStack = {
   search: "Search",
   item: "Item",
   detail: "Detail",
+  polines: "Polines",
 };
 
 const postStack = {
