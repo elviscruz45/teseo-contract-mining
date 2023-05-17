@@ -80,13 +80,13 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
-    marginLeft: windowWidth / 4 + 50,
+    marginLeft: windowWidth / 8,
   },
   info: {
     color: "#828282",
     paddingRight: 100,
     marginTop: 3,
-    marginLeft: windowWidth / 4,
+    marginLeft: windowWidth / 32,
   },
   titleText: {
     fontSize: 24,
@@ -128,6 +128,7 @@ export const styles = StyleSheet.create({
   image2: {
     width: "15%",
     height: 55,
+    borderRadius: 10,
   },
   equipments2: {
     flexDirection: "row",
@@ -140,5 +141,54 @@ export const styles = StyleSheet.create({
     color: "#828282",
     paddingRight: 100,
     marginTop: 3,
+  },
+  row: {
+    flexDirection: "row",
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 0,
+  },
+  roundImage: { width: 100, height: 100, borderRadius: 50, margin: 5 },
+
+  buttonFollow: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    elevation: 1,
+    backgroundColor: "red",
+  },
+  buttonUnfollow: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    elevation: 1,
+    backgroundColor: "black",
+  },
+  textFollow: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+  btnActualizarStyles: {
+    marginTop: 30,
+    paddingVertical: 10,
+    borderRadius: 0,
+    backgroundColor: "#8CBBF1",
+    borderTopWidth: 1,
+    borderTopColor: "#e3e3e3",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e3e3e3",
+  },
+  btnTextStyle: {
+    color: "#ffff",
+    fontWeight: "bold",
   },
 });

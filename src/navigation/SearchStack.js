@@ -6,6 +6,7 @@ import { ItemScreen } from "../screens/Search/ItemScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { getAuth, updateProfile } from "firebase/auth";
+import { ConnectedDetailScreen } from "../screens/Search/DetailScreen/DetailScreen";
 
 export function SearchStack() {
   const Stack = createNativeStackNavigator();
@@ -62,17 +63,11 @@ export function SearchStack() {
         component={ItemScreen}
         options={{ title: " " }}
       />
-      {/* <Stack.Screen
-        name={screen.homestack.graphic}
-        component={GraphicScreen}
-        options={{ title: "Conveyor Belt" }}
-      />
-
       <Stack.Screen
-        name={screen.homestack.changes}
-        component={ChangesScreen}
-        options={{ title: "Conveyor Belt" }}
-      /> */}
+        name={screen.search.detail}
+        component={ConnectedDetailScreen}
+        options={{ title: " " }}
+      />
     </Stack.Navigator>
   );
 }

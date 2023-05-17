@@ -10,9 +10,11 @@ import {
   Keyboard,
   TouchableOpacity,
   Image,
+  Pressable,
+  Linking,
 } from "react-native";
 import { styles } from "./ItemScreen.styles";
-import { SearchBar, Icon } from "@rneui/themed";
+import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import {
   collection,
@@ -35,6 +37,7 @@ const windowWidth = Dimensions.get("window").width;
 export function ItemScreen(props) {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [follow, setFollow] = useState(false);
 
   const {
     route: {
@@ -75,42 +78,105 @@ export function ItemScreen(props) {
     fetchData();
   }, []);
 
-  return (
-    <View style={styles.item}>
-      <Image
-        source={chooseImageEquipment(props.route.params.Item.tag)}
-        style={styles.image}
-      />
-      <View>
-        <Text></Text>
-        <Text style={styles.name}>{Item.tag}</Text>
-        <Text style={styles.info}>
-          {"Nombre:  "} {Item.nombre}
-        </Text>
-        <Text style={styles.info}>
-          {"Clase:  "} {Item.clase}
-        </Text>
-        <Text style={styles.info}>
-          {"Marca:  "} {Item.marca}
-        </Text>
-        <Text style={styles.info}>
-          {"Tonelaje:  "} {Item.tonelaje}
-        </Text>
-        <Text style={styles.info}>
-          {"Tamano:  "} {Item.tamano}
-        </Text>
+  const pressFollow = (item) => {
+    setFollow((prev) => !prev);
+  };
+  const selectAsset = (item) => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.detail,
+      params: { Item: item },
+    });
+  };
 
-        <Text style={styles.info}>
-          {"Caracteristica:  "} {Item.caracteristicas}
-        </Text>
-        <Text style={styles.info}>
-          {"Datos Adicionales:  "} {Item.datos_adicionales}
-        </Text>
-        <FlatList
-          data={post}
-          renderItem={({ item, index }) => {
-            return (
-              <TouchableOpacity onPress={() => selectAsset(item)}>
+  const polinesDetail = (item) => {
+    console.log("polines");
+    // navigation.navigate(screen.search.tab, {
+    //   screen: screen.search.detail,
+    //   params: { Item: item },
+    // });
+  };
+
+  async function UploadFile(uri) {
+    Linking.canOpenURL(uri)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(uri);
+        } else {
+          console.log("Unable to open PDF document");
+        }
+      })
+      .catch((error) => console.log("Error opening PDF document", error));
+  }
+
+  return (
+    <>
+      <View style={[styles.row, styles.center]}>
+        <View>
+          <Image
+            source={chooseImageEquipment(props.route.params.Item.tag)}
+            style={styles.roundImage}
+          />
+          {follow ? (
+            <Pressable style={styles.buttonUnfollow} onPress={pressFollow}>
+              <Text style={styles.textFollow}>Follow</Text>
+            </Pressable>
+          ) : (
+            <Pressable style={styles.buttonFollow} onPress={pressFollow}>
+              <Text style={styles.textFollow}>Following</Text>
+            </Pressable>
+          )}
+        </View>
+        <View>
+          <Text></Text>
+          <Text style={styles.name}>{Item.tag}</Text>
+          <Text style={styles.info}>
+            {"Nombre:  "} {Item.nombre}
+          </Text>
+          <Text style={styles.info}>
+            {"Marca:  "} {Item.marca}
+          </Text>
+          <Text style={styles.info}>
+            {"Tonelaje:  "} {Item.tonelaje}
+          </Text>
+          <Text style={styles.info}>
+            {"Tamano:  "} {Item.tamano}
+          </Text>
+
+          <Text style={styles.info}>
+            {"Caracteristica:  "} {Item.caracteristicas}
+          </Text>
+          <Text style={styles.info}>
+            {"Datos Adicionales:  "} {Item.datos_adicionales}
+          </Text>
+        </View>
+      </View>
+      <Text></Text>
+      {/* Item.clase == "faja"? 
+        <Button
+          title="Estado de los Polines"
+          buttonStyle={styles.btnActualizarStyles}
+          titleStyle={styles.btnTextStyle}
+          onPress={polinesDetail}
+        /> */}
+
+      <FlatList
+        data={post}
+        renderItem={({ item, index }) => {
+          return (
+            <TouchableOpacity onPress={() => selectAsset(item)}>
+              <View
+                style={{
+                  borderBottomWidth: 2,
+                  borderColor: "#8CBBF1",
+                }}
+              />
+              <View
+                style={{
+                  borderBottomWidth: 2,
+                  borderColor: "#8CBBF1",
+                  margin: 2,
+                }}
+              >
                 <View style={styles.equipments2}>
                   <Image
                     source={{ uri: item.fotoPrincipal }}
@@ -121,12 +187,19 @@ export function ItemScreen(props) {
                     <Text style={styles.info2}>{item.comentarios}</Text>
                     <Text style={styles.info2}>{item.fechaPostFormato}</Text>
                   </View>
+                  {item.pdfPrincipal && (
+                    <TouchableOpacity
+                      onPress={() => UploadFile(item.pdfPrincipal)}
+                    >
+                      <Icon type="material-community" name="paperclip" />
+                    </TouchableOpacity>
+                  )}
                 </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-    </View>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </>
   );
 }

@@ -100,7 +100,6 @@ function InformationScreen(props) {
         newData.likes = [];
         newData.comentariosUsuarios = [];
 
-        //
         const docRef = await addDoc(collection(db, "posts"), newData);
         newData.idDocFirestoreDB = docRef.id;
         const RefFirebase = doc(db, "posts", newData.idDocFirestoreDB);

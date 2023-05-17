@@ -114,6 +114,7 @@ export const styles = StyleSheet.create({
   image: {
     width: "15%",
     height: 55,
+    borderRadius: 10,
   },
   equipments: {
     flexDirection: "row",

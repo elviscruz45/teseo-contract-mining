@@ -10,6 +10,7 @@ const searchStack = {
   tab: "SearchTab",
   search: "Search",
   item: "Item",
+  detail: "Detail",
 };
 
 const postStack = {

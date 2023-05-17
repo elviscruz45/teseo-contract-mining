@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     width: 200,
   },
   facebookButton: {
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#3b5998",
     borderWidth: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     width: 200,
   },
   border: {
@@ -62,14 +62,14 @@ export const styles = StyleSheet.create({
   },
 
   cameraButton: {
-    borderRadius: 50,
+    // borderRadius: 50,
     alignSelf: "flex-end",
     marginLeft: 80,
   },
   roundImage: {
     width: 40,
     height: 40,
-    borderRadius: 20,
+    // borderRadius: 20,
     margin: 5,
   },
 
@@ -88,7 +88,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    borderRadius: 5,
+    // borderRadius: 5,
     width: 125,
   },
   bordercomment: {
@@ -134,49 +134,42 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     borderColor: "#d3d3d3",
     borderWidth: 1,
-    borderRadius: 50,
+    // borderRadius: 50,
     fontSize: 16,
   },
   btnContainer1: {
-    // position: "absolute",
-    top: 30,
-    right: width * 0.2,
+    position: "absolute",
+    bottom: 80,
+    right: 10,
   },
   btnContainer2: {
     position: "absolute",
     bottom: 10,
     right: 10,
   },
-  btnContainer3: {
-    position: "absolute",
-    bottom: 80,
-    right: 10,
-  },
   roundImageUpload: {
     width: 50,
     height: 50,
-    borderRadius: 50, // half of width and height
+    // borderRadius: 50, // half of width and height
   },
-  image: {
-    width: "15%",
-    height: 55,
-    borderRadius: 10,
+});
+
+export const styles2 = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
   },
-  avatar: {
-    marginRight: 20,
-    backgroundColor: "#D7DDE9",
-    zIndex: 10,
+  camera: {
+    flex: 1,
   },
-  equipments: {
+  buttonContainer: {
+    flex: 1,
     flexDirection: "row",
-    margin: 10,
+    backgroundColor: "transparent",
+    margin: 64,
   },
-  name: {
-    fontWeight: "bold",
-  },
-  info: {
-    color: "#828282",
-    paddingRight: 100,
-    marginTop: 3,
+  button: {
+    alignSelf: "flex-end",
+    alignItems: "center",
   },
 });

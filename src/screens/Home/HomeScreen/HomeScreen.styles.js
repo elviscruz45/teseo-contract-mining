@@ -38,6 +38,7 @@ export const styles = StyleSheet.create({
     height: windowWidth * 0.45,
     width: windowWidth * 0.35,
     marginTop: 0,
+    borderRadius: 15,
   },
   container2: {
     flex: 1,
