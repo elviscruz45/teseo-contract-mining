@@ -46,7 +46,6 @@ export function SearchScreen(props) {
   }, [searchText]);
 
   const selectAsset = (item) => {
-    console.log(item);
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: item },

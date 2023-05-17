@@ -94,6 +94,7 @@ function InformationScreen(props) {
         newData.pdfPrincipal = imageUrlPDF || "";
         newData.fotoPrincipal = imageUrl;
         newData.equipoPostDatos = props.actualEquipment;
+        newData.equipoTag = props.actualEquipment.tag;
         newData.fechaPostISO = new Date().toISOString();
         newData.createdAt = new Date();
         newData.likes = [];

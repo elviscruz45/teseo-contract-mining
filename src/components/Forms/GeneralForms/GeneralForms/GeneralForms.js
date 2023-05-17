@@ -101,7 +101,7 @@ export function GeneralForms(props) {
         <Input
           value={nombreComponente}
           placeholder="Nombre del Componente"
-          // editable={false}
+          editable={false}
           onChangeText={(text) => {
             formik.setFieldValue("nombreComponente", text);
           }}
@@ -114,7 +114,7 @@ export function GeneralForms(props) {
         <Input
           value={supervisor}
           placeholder="Supervisor"
-          // editable={false}
+          editable={false}
           onChangeText={(text) => {
             formik.setFieldValue("supervisor", text);
           }}
@@ -128,6 +128,7 @@ export function GeneralForms(props) {
           value={equipoTrabajo}
           placeholder="Equipo de Trabajo"
           multiline={true}
+          editable={false}
           onChangeText={(text) => {
             formik.setFieldValue("equipoTrabajo", text);
           }}
@@ -140,6 +141,7 @@ export function GeneralForms(props) {
         <Input
           value={recursos}
           placeholder="Recursos Usados"
+          editable={false}
           multiline={true}
           // editable={false}
           onChangeText={(text) => {

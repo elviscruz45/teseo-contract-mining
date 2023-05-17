@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: windowWidth,
-    height: 280,
+    // height: 280,
     // marginRight: 15,
     // marginTop: 0,
   },
@@ -124,5 +124,21 @@ export const styles = StyleSheet.create({
   item: {
     // flexDirection: "row",
     margin: 10,
+  },
+  image2: {
+    width: "15%",
+    height: 55,
+  },
+  equipments2: {
+    flexDirection: "row",
+    margin: 10,
+  },
+  name2: {
+    fontWeight: "bold",
+  },
+  info2: {
+    color: "#828282",
+    paddingRight: 100,
+    marginTop: 3,
   },
 });

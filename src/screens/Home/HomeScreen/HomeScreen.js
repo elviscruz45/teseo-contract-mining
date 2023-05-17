@@ -63,7 +63,6 @@ function HomeScreen(props) {
   //       );
 
   //       setPosts2(sortedFirestore);
-
   //     });
   //     setIsLoading(false);
   //   }

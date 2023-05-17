@@ -16,18 +16,26 @@ import { SearchBar, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import {
   collection,
-  query,
-  startAt,
-  endAt,
-  limit,
-  orderBy,
   getDocs,
+  doc,
+  onSnapshot,
+  query,
+  where,
+  limit,
+  startAfter,
+  orderBy,
+  getDoc,
 } from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
+import { db } from "../../../utils";
 
 const windowWidth = Dimensions.get("window").width;
+
 export function ItemScreen(props) {
+  const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   const {
     route: {
       params: { Item },
@@ -40,9 +48,33 @@ export function ItemScreen(props) {
     const result = equipmentList.find((item) => {
       return item.tag == tags;
     });
-
     return result.image;
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      console.log("useofuseEffect");
+      const q = query(
+        collection(db, "posts"),
+        where("equipoTag", "==", Item.tag)
+      );
+      const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+        const lista = [];
+        querySnapshotFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
+
+        const sortedFirestore = lista.sort(
+          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+        );
+
+        setPost(sortedFirestore);
+      });
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.item}>
       <Image
@@ -74,6 +106,26 @@ export function ItemScreen(props) {
         <Text style={styles.info}>
           {"Datos Adicionales:  "} {Item.datos_adicionales}
         </Text>
+        <FlatList
+          data={post}
+          renderItem={({ item, index }) => {
+            return (
+              <TouchableOpacity onPress={() => selectAsset(item)}>
+                <View style={styles.equipments2}>
+                  <Image
+                    source={{ uri: item.fotoPrincipal }}
+                    style={styles.image2}
+                  />
+                  <View>
+                    <Text style={styles.name2}>{item.titulo}</Text>
+                    <Text style={styles.info2}>{item.comentarios}</Text>
+                    <Text style={styles.info2}>{item.fechaPostFormato}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
     </View>
   );
