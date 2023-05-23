@@ -69,15 +69,15 @@ function InfoUser(props) {
       </Avatar>
 
       <View>
-        {props.profile.displayNameform && (
+        {props.profile?.displayNameform && (
           <Text style={styles.displayName}>
             {props.profile.displayNameform}
           </Text>
         )}
 
         <Text>{email}</Text>
-        {props.profile.cargo && <Text>{props.profile.cargo}</Text>}
-        {props.profile.descripcion && <Text>{props.profile.descripcion}</Text>}
+        {props.profile?.cargo && <Text>{props.profile.cargo}</Text>}
+        {props.profile?.descripcion && <Text>{props.profile.descripcion}</Text>}
       </View>
     </View>
   );
