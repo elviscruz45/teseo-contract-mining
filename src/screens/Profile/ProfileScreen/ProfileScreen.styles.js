@@ -34,4 +34,9 @@ export const styles = StyleSheet.create({
     // marginLeft: 15,
     // paddingRight: 40,
   },
+  btnContainer2: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+  },
 });
