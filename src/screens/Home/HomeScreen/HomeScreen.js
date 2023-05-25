@@ -41,32 +41,32 @@ function HomeScreen(props) {
   // const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // Try to retrieve data from AsyncStorage
-  //     const q = query(
-  //       collection(db, "posts")
-  //       // limit(5),
-  //       // startAfter(lastDocSnapshot.get("fechaPostISO")),
-  //       // orderBy("fechaPostISO", "desc")
-  //       // where("emailPerfil", "==", "elviscruz45@gmail.com")
-  //     );
-  //     const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
-  //       const lista = [];
-  //       querySnapshotFirebase.forEach((doc) => {
-  //         lista.push(doc.data());
-  //       });
+  useEffect(() => {
+    async function fetchData() {
+      // Try to retrieve data from AsyncStorage
+      const q = query(
+        collection(db, "posts")
+        // limit(5),
+        // startAfter(lastDocSnapshot.get("fechaPostISO")),
+        // orderBy("fechaPostISO", "desc")
+        // where("emailPerfil", "==", "elviscruz45@gmail.com")
+      );
+      const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+        const lista = [];
+        querySnapshotFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
 
-  //       const sortedFirestore = lista.sort(
-  //         (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
-  //       );
+        const sortedFirestore = lista.sort(
+          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+        );
 
-  //       setPosts2(sortedFirestore);
-  //     });
-  //     setIsLoading(false);
-  //   }
-  //   fetchData();
-  // }, []);
+        setPosts2(sortedFirestore);
+      });
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
 
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
