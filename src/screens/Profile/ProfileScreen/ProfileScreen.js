@@ -47,10 +47,6 @@ function ProfileScreen(props) {
       post_array.push(doc.data());
     });
 
-    const dataset = [
-      { name: "John", age: 30 },
-      { name: "Jane", age: 25 },
-    ];
     const worksheet = XLSX.utils.json_to_sheet(post_array);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
@@ -74,34 +70,36 @@ function ProfileScreen(props) {
   };
 
   return (
-    <View>
-      <ConnectedInfoUser />
+    <>
+      <View>
+        <ConnectedInfoUser />
 
-      <Button
-        title="Actualizar Informacion"
-        buttonStyle={styles.btnActualizarStyles}
-        titleStyle={styles.btnTextStyle}
-        onPress={update_Data}
-      />
+        <Button
+          title="Actualizar Informacion"
+          buttonStyle={styles.btnActualizarStyles}
+          titleStyle={styles.btnTextStyle}
+          onPress={update_Data}
+        />
 
-      <Button
-        title="Cerrar sesión"
-        buttonStyle={styles.btncerrarStyles}
-        titleStyle={styles.btnTextStyle}
-        onPress={logout}
-      />
-      <Modal show={showModal} close={onCloseOpenModal}>
-        {renderComponent}
-      </Modal>
+        <Button
+          title="Cerrar sesión"
+          buttonStyle={styles.btncerrarStyles}
+          titleStyle={styles.btnTextStyle}
+          onPress={logout}
+        />
+        <Modal show={showModal} close={onCloseOpenModal}>
+          {renderComponent}
+        </Modal>
+      </View>
       <Icon
         reverse
         type="material-community"
-        name="plus"
+        name="file-excel"
         color="#8CBBF1"
         containerStyle={styles.btnContainer2}
         onPress={getExcel}
       />
-    </View>
+    </>
   );
 }
 

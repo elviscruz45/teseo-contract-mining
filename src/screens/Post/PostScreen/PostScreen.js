@@ -66,7 +66,7 @@ function PostScreen(props) {
   return (
     <>
       <SearchBar
-        placeholder="Busca tu numero de polin o faja"
+        placeholder="Buscar Equipo"
         value={searchText}
         onChangeText={(text) => setSearchText(text)}
       />
