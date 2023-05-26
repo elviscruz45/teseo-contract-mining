@@ -8,6 +8,8 @@ import { ChangeDisplayComponent } from "../../ChangeComponent/ChangeDisplayCompo
 import { ChangeDisplayEquipo } from "../../ChangeEquipo/ChangeDisplayEquipo";
 import { ChangeDisplayRecursos } from "../../ChangeRecursos/ChangeDisplayRecursos";
 import { ChangeDisplaySupervisor } from "../../ChangeSupervisor/ChangeDisplaySupervisor";
+import { ChangeDisplayEtapa } from "../../ChangeEtapa/ChangeDisplayEtapa";
+import { ChangeDisplayTipo } from "../../ChangeTipo/ChangeDisplayTipo";
 import { Modal } from "../../../shared/Modal/Modal";
 import { SelectExample } from "../../../shared/Selection";
 import { MultiSelectExample } from "../../../shared/MultiSelection";
@@ -20,7 +22,8 @@ export function GeneralForms(props) {
   const [supervisor, setSupervisor] = useState(null);
   const [equipoTrabajo, setEquipoTrabajo] = useState(null);
   const [recursos, setRecursos] = useState(null);
-
+  const [etapa, setEtapa] = useState(null);
+  const [tipo, setTipo] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const pickDocument = async () => {
@@ -53,8 +56,31 @@ export function GeneralForms(props) {
   function handleRecursos(value) {
     setRecursos(value);
   }
-
+  function handleEtapa(value) {
+    setEtapa(value);
+  }
+  function handleTipo(value) {
+    setTipo(value);
+  }
   const selectComponent = (key) => {
+    if (key === "etapa") {
+      setRenderComponent(
+        <ChangeDisplayEtapa
+          onClose={onCloseOpenModal}
+          formik={formik}
+          handleEtapa={handleEtapa}
+        />
+      );
+    }
+    if (key === "tipo") {
+      setRenderComponent(
+        <ChangeDisplayTipo
+          onClose={onCloseOpenModal}
+          formik={formik}
+          handleTipo={handleTipo}
+        />
+      );
+    }
     if (key === "nombreComponente") {
       setRenderComponent(
         <ChangeDisplayComponent
@@ -96,8 +122,35 @@ export function GeneralForms(props) {
 
   return (
     <View>
-      <Text></Text>
       <View style={styles.content}>
+        <Text style={styles.content}>Detalles del Evento:</Text>
+
+        <Input
+          value={etapa}
+          placeholder="Etapa del Evento"
+          editable={false}
+          onChangeText={(text) => {
+            formik.setFieldValue("etapa", text);
+          }}
+          rightIcon={{
+            type: "material-community",
+            name: "arrow-right-circle-outline",
+            onPress: () => selectComponent("etapa"),
+          }}
+        />
+        <Input
+          value={tipo}
+          placeholder="Descripcion del Evento"
+          editable={false}
+          onChangeText={(text) => {
+            formik.setFieldValue("tipo", text);
+          }}
+          rightIcon={{
+            type: "material-community",
+            name: "arrow-right-circle-outline",
+            onPress: () => selectComponent("tipo"),
+          }}
+        />
         <Input
           value={nombreComponente}
           placeholder="Nombre del Componente"
@@ -111,6 +164,8 @@ export function GeneralForms(props) {
             onPress: () => selectComponent("nombreComponente"),
           }}
         />
+        <Text style={styles.content}>Equipo y Recursos de trabajo:</Text>
+
         <Input
           value={supervisor}
           placeholder="Supervisor"
@@ -153,6 +208,8 @@ export function GeneralForms(props) {
             onPress: () => selectComponent("recursos"),
           }}
         />
+        <Text style={styles.content}>Archivos:</Text>
+
         <Input
           value={pickedDocument}
           placeholder="Adjuntar PDF"

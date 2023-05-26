@@ -3,6 +3,8 @@ export function initialValues() {
   return {
     titulo: "",
     comentarios: "",
+    etapa: "",
+    tipo: "",
     nombreComponente: "",
     supervisor: "",
     equipoTrabajo: "",

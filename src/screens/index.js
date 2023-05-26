@@ -1,4 +1,4 @@
-export * from "./Activity";
+export * from "./Report";
 export * from "./Home";
 export * from "./Post";
 export * from "./Profile";

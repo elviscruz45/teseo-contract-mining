@@ -93,8 +93,9 @@ function InformationScreen(props) {
         //preparando datos para subir a  firestore Database
         newData.pdfPrincipal = imageUrlPDF || "";
         newData.fotoPrincipal = imageUrl;
-        newData.equipoPostDatos = props.actualEquipment;
         newData.equipoTag = props.actualEquipment.tag;
+        newData.equipoNombre = props.actualEquipment.nombre;
+        newData.claseEquipo = props.actualEquipment.clase;
         newData.fechaPostISO = new Date().toISOString();
         newData.createdAt = new Date();
         newData.likes = [];

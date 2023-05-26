@@ -1,17 +1,14 @@
 import { View, Text, ImageBackground } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import React from "react";
 import { Icon } from "@rneui/themed";
 import { screen } from "../utils";
 import { ConnectedHomeStack } from "./HomeStack";
 import { PostStack } from "./PostStack";
-import { ActivityStack } from "./ActivityStack";
 import { ProfileStack } from "./ProfileStack";
 import { SearchStack } from "./SearchStack";
 import { styles } from "./Navigation.styles";
-
-// const backgroundImage = require("../../assets/cerro3.jpeg");
+import { ReportStack } from "./ReportStack";
 
 export function AppNavigation() {
   const Tab = createBottomTabNavigator();
@@ -32,9 +29,9 @@ export function AppNavigation() {
         options={{ title: "Inicio" }}
       />
       <Tab.Screen
-        name={screen.search.tab}
-        component={SearchStack}
-        options={{ title: "Buscar" }}
+        name={screen.report.tab}
+        component={ReportStack}
+        options={{ title: "Reportes" }}
       />
       <Tab.Screen
         name={screen.post.tab}
@@ -42,10 +39,11 @@ export function AppNavigation() {
         options={{ title: "Publicar" }}
       />
       <Tab.Screen
-        name={screen.activity.tab}
-        component={ActivityStack}
-        options={{ title: "Actividad" }}
+        name={screen.search.tab}
+        component={SearchStack}
+        options={{ title: "Buscar" }}
       />
+
       <Tab.Screen
         name={screen.profile.tab}
         component={ProfileStack}
@@ -61,7 +59,9 @@ function screenOptions(route, color, size) {
   if (route.name === screen.home.tab) {
     iconName = "home-outline";
   }
-
+  if (route.name === screen.report.tab) {
+    iconName = "chart-bell-curve";
+  }
   if (route.name === screen.search.tab) {
     iconName = "magnify";
   }
@@ -69,9 +69,7 @@ function screenOptions(route, color, size) {
   if (route.name === screen.post.tab) {
     iconName = "plus-circle-outline";
   }
-  if (route.name === screen.activity.tab) {
-    iconName = "human-greeting-proximity";
-  }
+
   if (route.name === screen.profile.tab) {
     iconName = "account-outline";
   }

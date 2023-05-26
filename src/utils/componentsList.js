@@ -131,3 +131,34 @@ export const recursos = [
   { parent: "EQUIPO ESTACIONARIO", value: "Puente Grua" },
   { parent: "EQUIPO ESTACIONARIO", value: "Gib Crane" },
 ];
+
+export const Etapa = [
+  {
+    parent: "EQUIPO MOVIL",
+    value: "ETAPA",
+    disabled: true,
+  },
+  { parent: "ETAPA", value: "Inicio" },
+  { parent: "ETAPA", value: "En Proceso" },
+  { parent: "ETAPA", value: "Fin" },
+];
+
+export const Tipo = [
+  {
+    parent: "TIPO MANTENIMIENTO",
+    value: "TIPO MANTENIMIENTO",
+    disabled: true,
+  },
+  { parent: "TIPO MANTENIMIENTO", value: "Preventivo" },
+  { parent: "TIPO MANTENIMIENTO", value: "Correctivo" },
+
+  {
+    parent: "TIPO FALLAS",
+    value: "TIPO FALLAS",
+    disabled: true,
+  },
+  { parent: "TIPO FALLAS", value: "Mecanica" },
+  { parent: "TIPO FALLAS", value: "Hidraulica" },
+  { parent: "TIPO FALLAS", value: "Electrica" },
+  { parent: "TIPO FALLAS", value: "Operativa" },
+];

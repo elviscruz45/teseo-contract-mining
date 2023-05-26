@@ -23,9 +23,9 @@ const postStack = {
   addpolines: "AddPolines",
 };
 
-const activityStack = {
-  tab: "ActivityTab",
-  activity: "Activity",
+const reportStack = {
+  tab: "ReportTab",
+  report: "Report",
   login: "Login",
   register: "Register",
 };
@@ -41,6 +41,6 @@ export const screen = {
   home: homeStack,
   search: searchStack,
   post: postStack,
-  activity: activityStack,
+  report: reportStack,
   profile: profileStack,
 };

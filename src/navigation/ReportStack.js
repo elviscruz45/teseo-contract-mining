@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ActivityScreen } from "../screens";
+import { ReportScreen } from "../screens";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { getAuth, updateProfile } from "firebase/auth";
 
-export function ActivityStack() {
+export function ReportStack() {
   const Stack = createNativeStackNavigator();
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
@@ -52,8 +52,8 @@ export function ActivityStack() {
       }}
     >
       <Stack.Screen
-        name={screen.activity.activity}
-        component={ActivityScreen}
+        name={screen.report.report}
+        component={ReportScreen}
         options={{ title: " " }}
       />
       {/* <Stack.Screen
