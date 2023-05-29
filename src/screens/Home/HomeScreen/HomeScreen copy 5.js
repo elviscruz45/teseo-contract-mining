@@ -203,7 +203,7 @@ function HomeScreen(props) {
                   <TouchableOpacity>
                     <Icon type="material-community" name="thumb-up-outline" />
                   </TouchableOpacity>
-                  <Text> 0 Me gusta</Text>
+                  <Text> 15 Me gusta</Text>
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TouchableOpacity>
@@ -212,7 +212,7 @@ function HomeScreen(props) {
                       name="comment-processing-outline"
                     />
                   </TouchableOpacity>
-                  <Text> 0 Comentarios</Text>
+                  <Text> 15 Comentarios</Text>
                 </View>
               </View>
             </View>

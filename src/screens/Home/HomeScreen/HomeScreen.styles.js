@@ -57,13 +57,26 @@ export const styles = StyleSheet.create({
   },
   textAreaComment: {
     width: windowWidth * 0.6,
-    height: windowWidth * 0.3,
+    height: windowWidth * 0.2,
     // padding: 0,
+    marginLeft: 10,
+  },
+  textAreaCommentplus: {
+    width: windowWidth * 0.6,
+    // height: windowWidth * 0.3,
+    // padding: 0,
+    // color: "#DB4545",
     marginLeft: 10,
   },
   textAreaTitle: {
     width: windowWidth * 0.6,
     marginLeft: 10,
     fontWeight: "bold",
+  },
+  textAreaTitleplus: {
+    width: windowWidth * 0.6,
+    marginLeft: 10,
+    fontWeight: "bold",
+    color: "#DB4545",
   },
 });

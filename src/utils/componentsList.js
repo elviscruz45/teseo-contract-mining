@@ -161,4 +161,18 @@ export const Tipo = [
   { parent: "TIPO FALLAS", value: "Hidraulica" },
   { parent: "TIPO FALLAS", value: "Electrica" },
   { parent: "TIPO FALLAS", value: "Operativa" },
+  { parent: "TIPO FALLAS", value: "Instrumentacion" },
+  {
+    parent: "POSIBLE CAUSA",
+    value: "POSIBLE CAUSA",
+    disabled: true,
+  },
+  { parent: "POSIBLE CAUSA", value: "Fatiga" },
+  { parent: "POSIBLE CAUSA", value: "Desgaste" },
+  { parent: "POSIBLE CAUSA", value: "Corrosion" },
+  { parent: "POSIBLE CAUSA", value: "Deformacion" },
+  { parent: "POSIBLE CAUSA", value: "Seleccion de Material" },
+  { parent: "POSIBLE CAUSA", value: "Corto Circuito" },
+  { parent: "POSIBLE CAUSA", value: "Sobrecarga" },
+  { parent: "POSIBLE CAUSA", value: "Otro" },
 ];

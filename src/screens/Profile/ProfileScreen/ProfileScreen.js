@@ -9,12 +9,7 @@ import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
 import { update_firebaseUserName } from "../../../actions/profile";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../utils";
-import XLSX from "xlsx";
-import * as FileSystem from "expo-file-system";
-import { Buffer } from "buffer";
-import * as Sharing from "expo-sharing";
+import { getExcelGLobal } from "../../../utils/excelData";
 
 function ProfileScreen(props) {
   const [loading, setLoading] = useState(false);
@@ -39,35 +34,6 @@ function ProfileScreen(props) {
     setShowModal(true);
   };
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
-
-  const getExcel = async () => {
-    const querySnapshot = await getDocs(collection(db, "posts"));
-    const post_array = [];
-    querySnapshot.forEach((doc) => {
-      post_array.push(doc.data());
-    });
-
-    const worksheet = XLSX.utils.json_to_sheet(post_array);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    const excelFileBuffer = XLSX.write(workbook, {
-      type: "array",
-      bookType: "xlsx",
-    });
-
-    const base64String = Buffer.from(excelFileBuffer).toString("base64");
-    const fileUri = `${FileSystem.cacheDirectory}dataset.xlsx`;
-
-    try {
-      await FileSystem.writeAsStringAsync(fileUri, base64String, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
-      Sharing.shareAsync(fileUri);
-    } catch (error) {
-      console.log("Error creating Excel file:", error);
-    }
-  };
 
   return (
     <>
@@ -97,7 +63,7 @@ function ProfileScreen(props) {
         name="file-excel"
         color="#8CBBF1"
         containerStyle={styles.btnContainer2}
-        onPress={getExcel}
+        onPress={getExcelGLobal}
       />
     </>
   );

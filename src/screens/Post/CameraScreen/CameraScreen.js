@@ -65,7 +65,6 @@ function CameraScreen(props) {
   }
 
   return (
-    // <SafeAreaView style={{ flex: 1 }}>
     <View style={styles2.container}>
       <Camera style={styles2.camera} type={type} ref={cameraRef}>
         <View style={styles2.buttonContainer}>
@@ -104,7 +103,6 @@ function CameraScreen(props) {
         </View>
       </Camera>
     </View>
-    // </SafeAreaView>
   );
 }
 

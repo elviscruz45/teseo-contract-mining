@@ -2,12 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
-  ImageBackground,
-  ScrollView,
   FlatList,
   Dimensions,
-  TouchableWithoutFeedback,
-  Keyboard,
   TouchableOpacity,
   Image,
   Pressable,
@@ -16,26 +12,18 @@ import {
 import { styles } from "./ItemScreen.styles";
 import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import {
-  collection,
-  getDocs,
-  doc,
-  onSnapshot,
-  query,
-  where,
-  limit,
-  startAfter,
-  orderBy,
-  getDoc,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
 import { screen } from "../../../utils";
+import { getExcelEquipo } from "../../../utils/excelData";
+import { connect } from "react-redux";
+import { saveActualEquipment } from "../../../actions/post";
 
 const windowWidth = Dimensions.get("window").width;
 
-export function ItemScreen(props) {
+function ItemScreenNotRedux(props) {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [follow, setFollow] = useState(false);
@@ -46,6 +34,15 @@ export function ItemScreen(props) {
     },
   } = props;
   const navigation = useNavigation();
+
+  const goToPublicar = () => {
+    props.saveActualEquipment(Item);
+
+    navigation.navigate(screen.post.tab, {
+      screen: screen.post.camera,
+      params: { Item: Item },
+    });
+  };
 
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
@@ -147,6 +144,7 @@ export function ItemScreen(props) {
           </Text>
         </View>
       </View>
+
       <Text></Text>
       {Item.clase == "faja" ? (
         <Button
@@ -198,6 +196,35 @@ export function ItemScreen(props) {
           );
         }}
       />
+      <Icon
+        reverse
+        type="material-community"
+        name="plus-circle-outline"
+        color="#8CBBF1"
+        containerStyle={styles.btnContainer2}
+        onPress={() => goToPublicar(Item.tag)}
+      />
+      <Icon
+        reverse
+        type="material-community"
+        name="file-excel"
+        color="#8CBBF1"
+        containerStyle={styles.btnContainer3}
+        onPress={() => getExcelEquipo(Item.tag)}
+      />
     </>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    profile: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    savePhotoUri: reducers.post.savePhotoUri,
+    actualEquipment: reducers.post.actualEquipment,
+  };
+};
+
+export const ItemScreen = connect(mapStateToProps, {
+  saveActualEquipment,
+})(ItemScreenNotRedux);

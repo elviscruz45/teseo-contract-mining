@@ -191,4 +191,14 @@ export const styles = StyleSheet.create({
     color: "#ffff",
     fontWeight: "bold",
   },
+  btnContainer2: {
+    position: "absolute",
+    bottom: windowHeight * 0.65,
+    right: 10,
+  },
+  btnContainer3: {
+    position: "absolute",
+    bottom: windowHeight * 0.01,
+    right: 10,
+  },
 });
