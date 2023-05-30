@@ -56,7 +56,7 @@ export function SearchScreen(props) {
   return (
     <>
       <SearchBar
-        placeholder="Busca tu numero de polin o faja"
+        placeholder="Buscar Equipo"
         value={searchText}
         onChangeText={(text) => setSearchText(text)}
       />
@@ -69,10 +69,10 @@ export function SearchScreen(props) {
           return (
             <TouchableOpacity onPress={() => selectAsset(item)}>
               <View style={styles.equipments}>
-                <Image
+                <ImageExpo
                   source={item.image}
                   style={styles.image}
-                  // cachePolicy={"memory-disk"}
+                  cachePolicy={"memory-disk"}
                 />
                 <View>
                   <Text style={styles.name}>{item.tag}</Text>

@@ -25,7 +25,6 @@ function PostScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
   const [photos, setPhotos] = useState([]);
   const navigation = useNavigation();
-  // const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [equipment, setEquipment] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);

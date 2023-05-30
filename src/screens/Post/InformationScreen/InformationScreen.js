@@ -38,7 +38,6 @@ import { equipmentList } from "../../../utils/equipmentList";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
-  const { photoURL, displayName, email } = getAuth().currentUser;
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
 
@@ -70,10 +69,10 @@ function InformationScreen(props) {
         const hour = date.getHours();
         const minute = date.getMinutes();
         const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
-        newData.emailPerfil = email || "Anonimo";
-        newData.nombrePerfil = displayName || "Anonimo";
+        newData.emailPerfil = props.email || "Anonimo";
+        newData.nombrePerfil = props.firebase_user_name || "Anonimo";
         newData.fechaPostFormato = formattedDate;
-        newData.fotoUsuarioPerfil = photoURL;
+        newData.fotoUsuarioPerfil = props.user_photo;
 
         // subiendo la foto o pickimage a firebase Storage y obteniendo la url imageUrl
         const snapshot = await uploadImage(props.savePhotoUri);
@@ -223,6 +222,12 @@ const mapStateToProps = (reducers) => {
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,
     ActualPostFirebase: reducers.post.ActualPostFirebase,
+
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
   };
 };
 

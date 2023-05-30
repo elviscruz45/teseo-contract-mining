@@ -6,11 +6,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { getAuth, updateProfile } from "firebase/auth";
 import { Image as ImageExpo } from "expo-image";
+import { connect } from "react-redux";
 
-export function ReportStack() {
+function ReportStackBare() {
   const Stack = createNativeStackNavigator();
-  const { uid, photoURL, displayName, email } = getAuth().currentUser;
-
   const navigation = useNavigation();
 
   const home_screen = () => {
@@ -40,7 +39,7 @@ export function ReportStack() {
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
             <ImageExpo
-              source={{ uri: photoURL }}
+              source={{ uri: props.user_photo }}
               style={{
                 width: 40,
                 height: 40,
@@ -77,3 +76,18 @@ export function ReportStack() {
     </Stack.Navigator>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+
+    savePhotoUri: reducers.post.savePhotoUri,
+    actualEquipment: reducers.post.actualEquipment,
+  };
+};
+
+export const ReportStack = connect(mapStateToProps, {})(ReportStackBare);

@@ -5,14 +5,13 @@ import { SearchScreen } from "../screens";
 import { ItemScreen } from "../screens/Search/ItemScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
-import { getAuth, updateProfile } from "firebase/auth";
 import { ConnectedDetailScreen } from "../screens/Search/DetailScreen/DetailScreen";
 import { PolinesScreen } from "../screens/Search/DataScreen/DataScreen";
 import { Image as ImageExpo } from "expo-image";
+import { connect } from "react-redux";
 
-export function SearchStack() {
+function SearchStackBare() {
   const Stack = createNativeStackNavigator();
-  const { uid, photoURL, displayName, email } = getAuth().currentUser;
 
   const navigation = useNavigation();
 
@@ -43,7 +42,7 @@ export function SearchStack() {
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
             <ImageExpo
-              source={{ uri: photoURL }}
+              source={{ uri: props.user_photo }}
               style={{
                 width: 40,
                 height: 40,
@@ -80,3 +79,18 @@ export function SearchStack() {
     </Stack.Navigator>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+
+    savePhotoUri: reducers.post.savePhotoUri,
+    actualEquipment: reducers.post.actualEquipment,
+  };
+};
+
+export const SearchStack = connect(mapStateToProps, {})(SearchStackBare);

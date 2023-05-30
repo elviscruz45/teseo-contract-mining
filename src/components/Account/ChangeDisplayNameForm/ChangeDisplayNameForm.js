@@ -14,7 +14,6 @@ import { update_firebaseProfile } from "../../../actions/profile";
 
 function ChangeDisplayNameForm(props) {
   const { onClose } = props;
-  const { photoURL, displayName, email, uid } = getAuth().currentUser;
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -31,9 +30,9 @@ function ChangeDisplayNameForm(props) {
         });
 
         //sign up the users in Firestore Database
-        newData.photoURL = photoURL;
-        newData.email = email;
-        newData.uid = uid;
+        newData.photoURL = props.user_photo;
+        newData.email = props.email;
+        newData.uid = props.uid;
 
         ///checking up if there are data in users
         const docRef = doc(collection(db, "users"), newData.uid);
@@ -97,7 +96,16 @@ function ChangeDisplayNameForm(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return reducers.profile;
+  return {
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+
+    savePhotoUri: reducers.post.savePhotoUri,
+    actualEquipment: reducers.post.actualEquipment,
+  };
 };
 
 export const ConnectedChangeDisplayNameForm = connect(mapStateToProps, {
