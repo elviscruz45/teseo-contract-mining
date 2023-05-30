@@ -10,7 +10,7 @@ import { PolinesScreen } from "../screens/Search/DataScreen/DataScreen";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 
-function SearchStackBare() {
+function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
 
   const navigation = useNavigation();

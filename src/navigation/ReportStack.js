@@ -8,7 +8,7 @@ import { getAuth, updateProfile } from "firebase/auth";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 
-function ReportStackBare() {
+function ReportStackBare(props) {
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
