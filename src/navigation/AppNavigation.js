@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { View, Text, ImageBackground } from "react-native";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "@rneui/themed";
 import { screen } from "../utils";
@@ -9,7 +8,6 @@ import { ProfileStack } from "./ProfileStack";
 import { SearchStack } from "./SearchStack";
 import { styles } from "./Navigation.styles";
 import { ReportStack } from "./ReportStack";
-import { useNavigation } from "@react-navigation/native";
 
 export function AppNavigation() {
   const Tab = createBottomTabNavigator();

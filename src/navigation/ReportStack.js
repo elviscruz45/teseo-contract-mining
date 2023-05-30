@@ -5,6 +5,7 @@ import { ReportScreen } from "../screens";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { getAuth, updateProfile } from "firebase/auth";
+import { Image as ImageExpo } from "expo-image";
 
 export function ReportStack() {
   const Stack = createNativeStackNavigator();
@@ -38,7 +39,7 @@ export function ReportStack() {
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
-            <Image
+            <ImageExpo
               source={{ uri: photoURL }}
               style={{
                 width: 40,
@@ -46,6 +47,7 @@ export function ReportStack() {
                 borderRadius: 20,
                 margin: 0,
               }}
+              cachePolicy={"memory-disk"}
             />
           </TouchableOpacity>
         ),

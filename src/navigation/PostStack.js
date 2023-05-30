@@ -11,10 +11,11 @@ import { ConnectedInformationScreen } from "../screens";
 import { ConnectedPolinesScreen } from "../screens";
 import { PolinesAddInformationScreen } from "../screens/Post/PolinesAddInformationScreen";
 import { useNavigation } from "@react-navigation/native";
+import { Image as ImageExpo } from "expo-image";
+import { connect } from "react-redux";
 
-export function PostStack() {
+function PostStackBare(props) {
   const Stack = createNativeStackNavigator();
-  const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const navigation = useNavigation();
 
   const home_screen = () => {
@@ -43,14 +44,15 @@ export function PostStack() {
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
-            <Image
-              source={{ uri: photoURL }}
+            <ImageExpo
+              source={{ uri: props.user_photo }}
               style={{
                 width: 40,
                 height: 40,
                 borderRadius: 20,
                 margin: 0,
               }}
+              cachePolicy={"memory-disk"}
             />
           </TouchableOpacity>
         ),
@@ -84,3 +86,9 @@ export function PostStack() {
     </Stack.Navigator>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return reducers.profile;
+};
+
+export const PostStack = connect(mapStateToProps, {})(PostStackBare);

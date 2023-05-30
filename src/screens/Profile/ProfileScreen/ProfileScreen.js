@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
-import { update_firebaseUserName } from "../../../actions/profile";
 import { getExcelGLobal } from "../../../utils/excelData";
+import { update_firebaseProfile } from "../../../actions/profile";
 
 function ProfileScreen(props) {
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ function ProfileScreen(props) {
     const auth = getAuth();
     await signOut(auth);
     props.update_firebaseUserUid("");
-    props.update_firebaseUserName("");
+    props.update_firebaseProfile("");
   };
 
   const update_Data = () => {
@@ -75,5 +75,5 @@ const mapStateToProps = (reducers) => {
 
 export const ConnectedProfileScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
-  update_firebaseUserName,
+  update_firebaseProfile,
 })(ProfileScreen);

@@ -8,6 +8,8 @@ import { screen } from "../utils";
 import { getAuth, updateProfile } from "firebase/auth";
 import { ConnectedDetailScreen } from "../screens/Search/DetailScreen/DetailScreen";
 import { PolinesScreen } from "../screens/Search/DataScreen/DataScreen";
+import { Image as ImageExpo } from "expo-image";
+
 export function SearchStack() {
   const Stack = createNativeStackNavigator();
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
@@ -40,7 +42,7 @@ export function SearchStack() {
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
-            <Image
+            <ImageExpo
               source={{ uri: photoURL }}
               style={{
                 width: 40,
@@ -48,6 +50,7 @@ export function SearchStack() {
                 borderRadius: 20,
                 margin: 0,
               }}
+              cachePolicy={"memory-disk"}
             />
           </TouchableOpacity>
         ),

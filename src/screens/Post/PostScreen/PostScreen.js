@@ -25,7 +25,7 @@ function PostScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
   const [photos, setPhotos] = useState([]);
   const navigation = useNavigation();
-  const { uid, photoURL, displayName, email } = getAuth().currentUser;
+  // const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [equipment, setEquipment] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
@@ -77,11 +77,13 @@ function PostScreen(props) {
             rounded
             containerStyle={styles.avatar}
             icon={{ type: "material", name: "person" }}
-            source={{ uri: photoURL }}
+            source={{ uri: props.user_photo }}
           ></Avatar>
           <View>
-            <Text style={styles.name}>{displayName || "Anónimo"}</Text>
-            <Text style={styles.info}>{email}</Text>
+            <Text style={styles.name}>
+              {props.firebase_user_name || "Anónimo"}
+            </Text>
+            <Text style={styles.info}>{props.email}</Text>
           </View>
         </View>
         <View>
@@ -133,7 +135,7 @@ function PostScreen(props) {
           );
         }}
       />
-      {props.profile && (
+      {props.firebase_user_name && (
         <>
           <TouchableOpacity
             style={styles.btnContainer3}
@@ -161,8 +163,12 @@ function PostScreen(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    profile: reducers.profile.firebase_user_name,
+    firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,
   };

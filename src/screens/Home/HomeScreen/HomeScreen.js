@@ -2,35 +2,23 @@ import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
-  Image,
   FlatList,
   TouchableOpacity,
   Dimensions,
+  Image,
   Linking,
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
 import { equipmentList } from "../../../utils/equipmentList";
-import {
-  collection,
-  getDocs,
-  doc,
-  onSnapshot,
-  query,
-  where,
-  limit,
-  startAfter,
-  orderBy,
-  getDoc,
-} from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/LoadingSpinner";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { screen } from "../../../utils";
-// import { orderBy } from "lodash";
 import { useNavigation } from "@react-navigation/native";
+import { Image as ImageExpo } from "expo-image";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -38,19 +26,12 @@ function HomeScreen(props) {
   const [posts2, setPosts2] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isScrolledUp, setIsScrolledUp] = useState(false);
-  // const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
     async function fetchData() {
       // Try to retrieve data from AsyncStorage
-      const q = query(
-        collection(db, "posts")
-        // limit(5),
-        // startAfter(lastDocSnapshot.get("fechaPostISO")),
-        // orderBy("fechaPostISO", "desc")
-        // where("emailPerfil", "==", "elviscruz45@gmail.com")
-      );
+      const q = query(collection(db, "posts"));
       const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
         const lista = [];
         querySnapshotFirebase.forEach((doc) => {
@@ -109,7 +90,11 @@ function HomeScreen(props) {
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => selectAsset(item)}>
                 <View style={styles.textImage}>
-                  <Image source={item.image} style={styles.roundImage5} />
+                  <ImageExpo
+                    source={item.image}
+                    style={styles.roundImage5}
+                    cachePolicy={"memory-disk"}
+                  />
                   <Text style={styles.Texticons}>{item.tag}</Text>
                 </View>
               </TouchableOpacity>
@@ -134,16 +119,18 @@ function HomeScreen(props) {
                     onPress={() => selectAsset(item.equipoPostDatos)}
                     style={[styles.row, styles.center]}
                   >
-                    <Image
+                    <ImageExpo
                       source={chooseImageEquipment(item.equipoPostDatos?.tag)}
                       style={styles.roundImage}
+                      cachePolicy={"memory-disk"}
                     />
                     <Text>{item.equipoPostDatos?.tag}</Text>
                   </TouchableOpacity>
 
-                  <Image
+                  <ImageExpo
                     source={{ uri: item.fotoUsuarioPerfil }}
                     style={styles.roundImage}
+                    cachePolicy={"memory-disk"}
                   />
                   <Text>{item.nombrePerfil}</Text>
                 </View>
@@ -163,9 +150,10 @@ function HomeScreen(props) {
                 )}
               </View>
               <View style={styles.equipments}>
-                <Image
+                <ImageExpo
                   source={{ uri: item.fotoPrincipal }}
                   style={styles.postPhoto}
+                  cachePolicy={"memory-disk"}
                 />
                 <View>
                   <Text style={styles.textAreaTitle}>{item.titulo}</Text>

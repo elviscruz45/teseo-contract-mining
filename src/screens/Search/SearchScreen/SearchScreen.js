@@ -26,6 +26,7 @@ import {
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
 import { screen } from "../../../utils";
+import { Image as ImageExpo } from "expo-image";
 
 const windowWidth = Dimensions.get("window").width;
 export function SearchScreen(props) {
@@ -68,7 +69,11 @@ export function SearchScreen(props) {
           return (
             <TouchableOpacity onPress={() => selectAsset(item)}>
               <View style={styles.equipments}>
-                <Image source={item.image} style={styles.image} />
+                <Image
+                  source={item.image}
+                  style={styles.image}
+                  // cachePolicy={"memory-disk"}
+                />
                 <View>
                   <Text style={styles.name}>{item.tag}</Text>
                   <Text style={styles.info}>{item.nombre}</Text>

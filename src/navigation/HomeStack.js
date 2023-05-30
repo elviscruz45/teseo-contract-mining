@@ -8,12 +8,24 @@ import { connect } from "react-redux";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { Image as ImageExpo } from "expo-image";
+import { update_firebasePhoto } from "../actions/profile";
+import { update_firebaseUserName } from "../actions/profile";
+import { update_firebaseEmail } from "../actions/profile";
+import { update_firebaseUid } from "../actions/profile";
+import { update_firebaseProfile } from "../actions/profile";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
-  const { uid, photoURL, displayName, email } = getAuth().currentUser; //conectado con auth
+  useEffect(() => {
+    const { uid, photoURL, displayName, email } = getAuth().currentUser;
+    props.update_firebasePhoto(photoURL);
+    props.update_firebaseUserName(displayName);
+    props.update_firebaseEmail(email);
+    props.update_firebaseUid(uid);
+  }, []);
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {
@@ -40,14 +52,15 @@ function HomeStack(props) {
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => profile_screen()}>
-            <Image
-              source={{ uri: photoURL }}
+            <ImageExpo
+              source={{ uri: props.user_photo }}
               style={{
                 width: 40,
                 height: 40,
                 borderRadius: 20,
                 margin: 0,
               }}
+              cachePolicy={"memory-disk"}
             />
           </TouchableOpacity>
         ),
@@ -59,17 +72,6 @@ function HomeStack(props) {
         options={{ title: " " }}
       />
       {/* <Stack.Screen
-        name={screen.homestack.data}
-        component={DataScreen}
-        options={{ title: "Conveyor Belt" }}
-      />
-      <Stack.Screen
-        name={screen.homestack.graphic}
-        component={GraphicScreen}
-        options={{ title: "Conveyor Belt" }}
-      />
-
-      <Stack.Screen
         name={screen.homestack.changes}
         component={ChangesScreen}
         options={{ title: "Conveyor Belt" }}
@@ -79,9 +81,22 @@ function HomeStack(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return reducers.profile;
+  return {
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+
+    savePhotoUri: reducers.post.savePhotoUri,
+    actualEquipment: reducers.post.actualEquipment,
+  };
 };
 
 export const ConnectedHomeStack = connect(mapStateToProps, {
-  // update_firebaseUserUid,
+  update_firebasePhoto,
+  update_firebaseUserName,
+  update_firebaseEmail,
+  update_firebaseUid,
+  update_firebaseProfile,
 })(HomeStack);

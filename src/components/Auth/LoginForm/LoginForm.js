@@ -10,21 +10,9 @@ import { initialValues, validationSchema } from "./LoginForm.data";
 import { styles } from "./LoginForm.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
-import { update_firebaseUserName } from "../../../actions/profile";
+import { update_firebaseProfile } from "../../../actions/profile";
 import { db } from "../../../utils";
-import {
-  collection,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  serverTimestamp,
-  arrayUnion,
-  arrayRemove,
-  setDoc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 function LoginForm(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +36,7 @@ function LoginForm(props) {
         const docRef = doc(db, "users", user_uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          props.update_firebaseUserName(docSnap.data());
+          props.update_firebaseProfile(docSnap.data());
         } else {
           alert("Actualice sus datos en el perfil para comenzar");
         }
@@ -107,5 +95,5 @@ const mapStateToProps = (reducers) => {
 
 export const ConnectedLoginForm = connect(mapStateToProps, {
   update_firebaseUserUid,
-  update_firebaseUserName,
+  update_firebaseProfile,
 })(LoginForm);

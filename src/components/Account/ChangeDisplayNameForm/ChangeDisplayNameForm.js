@@ -7,23 +7,11 @@ import Toast from "react-native-toast-message";
 import { initialValues, validationSchema } from "./ChangeDisplayNameForm.data";
 import { styles } from "./ChangeDisplayNameForm.styles";
 import { connect } from "react-redux";
-import { update_firebaseUserName } from "../../../actions/profile";
 import { db } from "../../../utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { update_firebaseProfile } from "../../../actions/profile";
 
-import {
-  collection,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  serverTimestamp,
-  arrayUnion,
-  arrayRemove,
-  setDoc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore";
 function ChangeDisplayNameForm(props) {
   const { onClose } = props;
   const { photoURL, displayName, email, uid } = getAuth().currentUser;
@@ -50,7 +38,7 @@ function ChangeDisplayNameForm(props) {
         ///checking up if there are data in users
         const docRef = doc(collection(db, "users"), newData.uid);
         await setDoc(docRef, newData);
-        props.update_firebaseUserName(newData);
+        props.update_firebaseProfile(newData);
         onClose();
       } catch (error) {
         Toast.show({
@@ -64,7 +52,6 @@ function ChangeDisplayNameForm(props) {
 
   return (
     <>
-      {/* <View style={styles.content}> */}
       <KeyboardAwareScrollView>
         <Input
           placeholder="Nombre y apellidos"
@@ -104,7 +91,6 @@ function ChangeDisplayNameForm(props) {
           onPress={formik.handleSubmit}
           loading={formik.isSubmitting}
         />
-        {/* </View> */}
       </KeyboardAwareScrollView>
     </>
   );
@@ -115,5 +101,5 @@ const mapStateToProps = (reducers) => {
 };
 
 export const ConnectedChangeDisplayNameForm = connect(mapStateToProps, {
-  update_firebaseUserName,
+  update_firebaseProfile,
 })(ChangeDisplayNameForm);
