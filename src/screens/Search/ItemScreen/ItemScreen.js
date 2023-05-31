@@ -9,6 +9,7 @@ import {
   Pressable,
   Linking,
 } from "react-native";
+import { Image as ImageExpo } from "expo-image";
 import { styles } from "./ItemScreen.styles";
 import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +21,8 @@ import { screen } from "../../../utils";
 import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
+import { getAuth, updateProfile } from "firebase/auth";
+import { v4 as uuid } from "uuid";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -75,7 +78,11 @@ function ItemScreenNotRedux(props) {
   }, []);
 
   const pressFollow = (item) => {
+    const Auth = getAuth().currentUser;
     setFollow((prev) => !prev);
+
+    try {
+    } catch {}
   };
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
@@ -111,12 +118,12 @@ function ItemScreenNotRedux(props) {
             style={styles.roundImage}
           />
           {follow ? (
-            <Pressable style={styles.buttonUnfollow} onPress={pressFollow}>
-              <Text style={styles.textFollow}>Follow</Text>
-            </Pressable>
-          ) : (
             <Pressable style={styles.buttonFollow} onPress={pressFollow}>
               <Text style={styles.textFollow}>Following</Text>
+            </Pressable>
+          ) : (
+            <Pressable style={styles.buttonUnfollow} onPress={pressFollow}>
+              <Text style={styles.textFollow}>Follow</Text>
             </Pressable>
           )}
         </View>
@@ -174,9 +181,10 @@ function ItemScreenNotRedux(props) {
                 }}
               >
                 <View style={styles.equipments2}>
-                  <Image
+                  <ImageExpo
                     source={{ uri: item.fotoPrincipal }}
                     style={styles.image2}
+                    cachePolicy={"memory-disk"}
                   />
                   <View>
                     <Text style={styles.name2}>{item.titulo}</Text>
