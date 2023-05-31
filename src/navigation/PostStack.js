@@ -34,11 +34,11 @@ function PostStackBare(props) {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
-        headerLeft: () => (
+        headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
               source={require("../../assets/logoTeseo1.png")}
-              style={{ width: 90, height: 18 }}
+              style={{ width: 90, height: 18, marginLeft: 0 }}
             />
           </TouchableOpacity>
         ),
@@ -61,27 +61,53 @@ function PostStackBare(props) {
       <Stack.Screen
         name={screen.post.post}
         component={ConnectedPostScreen}
-        options={{ title: " " }}
+        options={{
+          title: " ",
+        }}
       />
       <Stack.Screen
         name={screen.post.camera}
         component={ConnectedCameraScreen}
-        options={{ title: " " }}
+        options={{
+          title: " ",
+          headerTransparent: false,
+          headerShown: true,
+          headerBackTitle: "Home",
+          headerTintColor: "black",
+        }}
       />
       <Stack.Screen
         name={screen.post.form}
         component={ConnectedInformationScreen}
-        options={{ title: "Formulario" }}
+        options={{
+          title: " ",
+          headerTransparent: false,
+          headerShown: true,
+          headerBackTitle: "Home",
+          headerTintColor: "black",
+        }}
       />
       <Stack.Screen
         name={screen.post.polines}
         component={ConnectedPolinesScreen}
-        options={{ title: "Polines" }}
+        options={{
+          title: " ",
+          headerTransparent: false,
+          headerShown: true,
+          headerBackTitle: "Home",
+          headerTintColor: "black",
+        }}
       />
       <Stack.Screen
         name={screen.post.addpolines}
         component={PolinesAddInformationScreen}
-        options={{ title: "AddPolines" }}
+        options={{
+          title: " ",
+          headerTransparent: false,
+          headerShown: true,
+          headerBackTitle: "Home",
+          headerTintColor: "black",
+        }}
       />
     </Stack.Navigator>
   );

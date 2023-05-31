@@ -31,7 +31,7 @@ function SearchStackBare(props) {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
-        headerLeft: () => (
+        headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
               source={require("../../assets/logoTeseo1.png")}

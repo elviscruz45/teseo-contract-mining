@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
-  Image,
   Linking,
 } from "react-native";
 import { connect } from "react-redux";

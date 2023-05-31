@@ -1,6 +1,6 @@
 export const equipmentList = [
   {
-    nombre: "Chandora Primaria",
+    nombre: "Chancadora Primaria",
     marca: "FL-Smith",
     caracteristicas: "85x118",
     tag: "C2-CR001",
@@ -26,7 +26,7 @@ export const equipmentList = [
     clase: "molino",
   },
   {
-    nombre: "Chandora Secundaria",
+    nombre: "Chancadora Secundaria",
     marca: "FL-Smith",
     caracteristicas: "85x118",
     tag: "C2-CR021",
@@ -91,7 +91,7 @@ export const equipmentList = [
     clase: "ambiente",
   },
   {
-    nombre: "Chandora Primaria",
+    nombre: "Chancadora Primaria",
     marca: "FL-Smith",
     caracteristicas: "85x118",
     tag: "C1-CR001",
@@ -117,7 +117,7 @@ export const equipmentList = [
     clase: "molino",
   },
   {
-    nombre: "Chandora Secundaria",
+    nombre: "Chancadora Secundaria",
     marca: "FL-Smith",
     caracteristicas: "85x118",
     tag: "C1-CR021",
