@@ -87,6 +87,13 @@ function ItemScreenNotRedux(props) {
     });
   };
 
+  const comentPost = (item) => {
+    navigation.navigate(screen.home.tab, {
+      screen: screen.home.comment,
+      params: { Item: item },
+    });
+  };
+
   const polinesDetail = () => {
     navigation.navigate(screen.search.polines, {
       dataReport: Item,
@@ -162,7 +169,7 @@ function ItemScreenNotRedux(props) {
         data={post}
         renderItem={({ item, index }) => {
           return (
-            <TouchableOpacity onPress={() => selectAsset(item)}>
+            <TouchableOpacity onPress={() => comentPost(item)}>
               <View
                 style={{
                   borderBottomWidth: 2,

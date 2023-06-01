@@ -240,7 +240,7 @@ function HomeScreen(props) {
                         name="comment-processing-outline"
                       />
                     </TouchableOpacity>
-                    <Text> 0 Comentarios</Text>
+                    <Text> {item.comentariosUsuarios.length} Comentarios</Text>
                   </View>
                 </View>
               </View>

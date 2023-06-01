@@ -193,7 +193,7 @@ export const styles = StyleSheet.create({
   },
   btnContainer2: {
     position: "absolute",
-    bottom: windowHeight * 0.65,
+    bottom: windowHeight * 0.08,
     right: 10,
   },
   btnContainer3: {

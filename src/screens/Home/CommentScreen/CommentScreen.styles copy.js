@@ -20,42 +20,14 @@ export const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
-  center: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginRight: 5,
-  },
-  row2: {
-    flexDirection: "row",
-  },
-  center2: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginRight: 5,
-    marginTop: 5,
-    fontWeight: "200",
-  },
-  row3: {
-    flexDirection: "row",
-  },
-  center3: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginRight: 5,
-    marginLeft: 50,
-    marginTop: 0,
-  },
-  center4: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: -25,
-
-    marginRight: 5,
-    fontWeight: "300",
-  },
   rowlikes: {
     flexDirection: "row",
     margin: 10,
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 0,
   },
   roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
   roundImage5: { width: 60, height: 60, borderRadius: 30, marginLeft: 20 },
@@ -109,10 +81,9 @@ export const styles = StyleSheet.create({
   commentContainer: {
     flexDirection: "row",
     alignItems: "center",
-    // paddingHorizontal: 5,
-    marginRight: 5,
-    // borderTopWidth: 1,
-    // borderTopColor: "lightgray",
+    paddingHorizontal: 10,
+    borderTopWidth: 1,
+    borderTopColor: "lightgray",
   },
   input: {
     flex: 1,
@@ -123,7 +94,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
   sendButton: {
-    backgroundColor: "#8CBBF1",
+    backgroundColor: "blue",
     borderRadius: 20,
     padding: 10,
   },

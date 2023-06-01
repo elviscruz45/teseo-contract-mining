@@ -84,11 +84,6 @@ function CommentScreen(props) {
 
   const handleSendComment = async (comment) => {
     // Send the comment to Firebase
-    // Check if the comment parameter is empty or contains only spaces
-    if (comment.trim() === "") {
-      return; // Do not proceed further
-    }
-
     const PostRef = doc(db, "posts", Item.idDocFirestoreDB);
     const commentObj = {
       comment: comment,
@@ -130,7 +125,7 @@ function CommentScreen(props) {
 
         <View style={styles.commentContainer}>
           <ImageExpo
-            source={{ uri: props.user_photo }}
+            source={{ uri: Item.fotoUsuarioPerfil }}
             style={styles.roundImage}
             cachePolicy={"memory-disk"}
           />
@@ -145,7 +140,7 @@ function CommentScreen(props) {
             onPress={() => handleSendComment(comment)}
             style={styles.sendButton}
           >
-            <Feather name="send" size={16} color="white" />
+            <Feather name="send" size={24} color="white" />
           </TouchableOpacity>
         </View>
 
@@ -162,7 +157,13 @@ function CommentScreen(props) {
             };
 
             return (
-              <View>
+              <View
+                style={{
+                  borderBottomWidth: 2,
+                  borderBottomColor: "#8CBBF1",
+                  margin: 2,
+                }}
+              >
                 <View style={[styles.row, styles.center]}>
                   <View style={[styles.row, styles.center]}>
                     <ImageExpo
@@ -172,16 +173,26 @@ function CommentScreen(props) {
                       style={styles.roundImage}
                       cachePolicy={"memory-disk"}
                     />
-                    <Text style={styles.center2}>{item.commenterName}</Text>
+                    <Text>{item.commenterName}</Text>
                   </View>
 
-                  <Text style={styles.center2}>
+                  <Text>
                     {new Date(item.date).toLocaleString(undefined, options)}
                   </Text>
                 </View>
-                <View style={styles.center3}>
-                  <Text style={styles.center4}>{item.comment}</Text>
+                <Text>{item.comment}</Text>
+
+                <View style={styles.equipments}></View>
+                <View style={styles.rowlikes}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginRight: windowWidth * 0.35,
+                    }}
+                  ></View>
                 </View>
+                <Text>{item.comment}</Text>
               </View>
             );
           }}
