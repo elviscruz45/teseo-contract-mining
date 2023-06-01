@@ -1,6 +1,7 @@
 const homeStack = {
   tab: "HomeTab",
   home: "Home",
+  comment: "Comment",
   graphic: "Graphic",
   data: "Data",
   changes: "Changes",

@@ -78,11 +78,7 @@ function ItemScreenNotRedux(props) {
   }, []);
 
   const pressFollow = (item) => {
-    const Auth = getAuth().currentUser;
     setFollow((prev) => !prev);
-
-    try {
-    } catch {}
   };
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {

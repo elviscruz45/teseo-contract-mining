@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { ConnectedHomeScreen } from "../screens";
+import { ConnectedCommentScreen } from "../screens";
 import { styles } from "./Navigation.styles";
 import { connect } from "react-redux";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -42,7 +43,7 @@ function HomeStack(props) {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
-        headerLeft: () => (
+        headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
               source={require("../../assets/logoTeseo1.png")}
@@ -71,11 +72,11 @@ function HomeStack(props) {
         component={ConnectedHomeScreen}
         options={{ title: " " }}
       />
-      {/* <Stack.Screen
-        name={screen.homestack.changes}
-        component={ChangesScreen}
-        options={{ title: "Conveyor Belt" }}
-      /> */}
+      <Stack.Screen
+        name={screen.home.comment}
+        component={ConnectedCommentScreen}
+        options={{ title: "Comentarios" }}
+      />
     </Stack.Navigator>
   );
 }
