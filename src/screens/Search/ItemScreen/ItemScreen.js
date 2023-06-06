@@ -170,19 +170,8 @@ function ItemScreenNotRedux(props) {
         renderItem={({ item, index }) => {
           return (
             <TouchableOpacity onPress={() => comentPost(item)}>
-              <View
-                style={{
-                  borderBottomWidth: 2,
-                  borderColor: "#8CBBF1",
-                }}
-              />
-              <View
-                style={{
-                  borderBottomWidth: 2,
-                  borderColor: "#8CBBF1",
-                  margin: 2,
-                }}
-              >
+              <View />
+              <View>
                 <View style={styles.equipments2}>
                   <ImageExpo
                     source={{ uri: item.fotoPrincipal }}
@@ -197,6 +186,7 @@ function ItemScreenNotRedux(props) {
                   {item.pdfPrincipal && (
                     <TouchableOpacity
                       onPress={() => UploadFile(item.pdfPrincipal)}
+                      style={styles.attachedElement}
                     >
                       <Icon type="material-community" name="paperclip" />
                     </TouchableOpacity>

@@ -39,4 +39,26 @@ export const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
   },
+  image2: {
+    width: "15%",
+    height: 55,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  equipments2: {
+    flexDirection: "row",
+    marginHorizontal: 5,
+  },
+  name2: {
+    fontWeight: "bold",
+  },
+  info2: {
+    color: "#828282",
+    paddingRight: 100,
+    marginTop: 3,
+  },
+  attachedElement: {
+    position: "absolute", // Add position: "absolute" to position the component
+    right: 20, //
+  },
 });

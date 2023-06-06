@@ -56,7 +56,7 @@ function CommentScreen(props) {
       setIsLoading(false);
     }
     fetchData();
-  }, []);
+  }, [Item]);
 
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {

@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableOpacity,
   Image,
+  Pressable,
 } from "react-native";
 import { styles } from "./SearchScreen.styles";
 import { SearchBar, Icon } from "@rneui/themed";
@@ -53,6 +54,10 @@ export function SearchScreen(props) {
     });
   };
 
+  const pressFollow = (item) => {
+    // setFollow((prev) => !prev);
+  };
+
   return (
     <>
       <SearchBar
@@ -74,11 +79,24 @@ export function SearchScreen(props) {
                   style={styles.image}
                   cachePolicy={"memory-disk"}
                 />
+
                 <View>
                   <Text style={styles.name}>{item.tag}</Text>
                   <Text style={styles.info}>{item.nombre}</Text>
                   <Text style={styles.info}>{item.caracteristicas}</Text>
                 </View>
+                {false ? (
+                  <Pressable style={styles.buttonFollow} onPress={pressFollow}>
+                    <Text style={styles.textFollow}>Following</Text>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={styles.buttonUnfollow}
+                    onPress={pressFollow}
+                  >
+                    <Text style={styles.textFollow}>Follow</Text>
+                  </Pressable>
+                )}
               </View>
             </TouchableOpacity>
           );

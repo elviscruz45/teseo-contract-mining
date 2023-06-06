@@ -119,5 +119,35 @@ export const styles = StyleSheet.create({
   equipments: {
     flexDirection: "row",
     margin: 10,
+    width: "100%",
+    alignItems: "center", // Align contents vertically
+  },
+  buttonFollow: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    elevation: 1,
+    backgroundColor: "red",
+  },
+  buttonUnfollow: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 4,
+    // elevation: 1,
+    backgroundColor: "black",
+    marginLeft: 20,
+    position: "absolute", // Add position: "absolute" to position the component
+    right: 20, // Set left: 0 to align it to the left side of the screen
+  },
+  textFollow: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
   },
 });

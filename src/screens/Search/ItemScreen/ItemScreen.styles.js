@@ -129,10 +129,13 @@ export const styles = StyleSheet.create({
     width: "15%",
     height: 55,
     borderRadius: 10,
+    marginBottom: 15,
+
+    marginEnd: 3,
   },
   equipments2: {
     flexDirection: "row",
-    margin: 10,
+    marginHorizontal: 5,
   },
   name2: {
     fontWeight: "bold",
@@ -200,5 +203,9 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: windowHeight * 0.01,
     right: 10,
+  },
+  attachedElement: {
+    position: "absolute", // Add position: "absolute" to position the component
+    right: 20, //
   },
 });
