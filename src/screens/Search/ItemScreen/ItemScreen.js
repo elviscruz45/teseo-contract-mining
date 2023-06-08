@@ -33,14 +33,16 @@ import { saveActualEquipment } from "../../../actions/post";
 import { getAuth, updateProfile } from "firebase/auth";
 import { v4 as uuid } from "uuid";
 import { EquipmentListUpper } from "../../../actions/home";
+import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 
 const windowWidth = Dimensions.get("window").width;
-
 function ItemScreenNotRedux(props) {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
-
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [removeFilter, setRemoveFilter] = useState(true);
   //Retrieve data Item that comes from the previous screen
 
   const {
@@ -49,6 +51,19 @@ function ItemScreenNotRedux(props) {
     },
   } = props;
   const navigation = useNavigation();
+
+  //Changing the value to activate again the filter to rende the posts
+  const filter = (start, end) => {
+    console.log(start, end);
+    setStartDate(start);
+    setEndDate(end);
+  };
+  const quitfilter = (start, end) => {
+    setRemoveFilter((prev) => !prev);
+    setStartDate(null);
+    setStartDate(null);
+    console.log(removeFilter);
+  };
 
   //Using navigation.navigate I send it to another screen (post)
   const goToPublicar = () => {
@@ -71,27 +86,50 @@ function ItemScreenNotRedux(props) {
   //This hook used to retrieve post data from Firebase and sorted by date
   useEffect(() => {
     async function fetchData() {
-      const q = query(
-        collection(db, "posts"),
-        where("equipoTag", "==", Item.tag)
-      );
-      onSnapshot(q, (itemFirebase) => {
-        const lista = [];
-        itemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-
-        const sortedFirestore = lista.sort(
-          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+      if (startDate && endDate) {
+        const q = query(
+          collection(db, "posts"),
+          where("equipoTag", "==", Item.tag),
+          where("createdAt", ">=", startDate),
+          where("createdAt", "<=", endDate)
         );
+        onSnapshot(q, (itemFirebase) => {
+          const lista = [];
+          itemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
 
-        setPost(sortedFirestore);
-      });
-      setIsLoading(false);
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
+        });
+        setIsLoading(false);
+      } else if (removeFilter === true || removeFilter === false) {
+        console.log("removeFilter");
+        const q = query(
+          collection(db, "posts"),
+          where("equipoTag", "==", Item.tag)
+        );
+        onSnapshot(q, (itemFirebase) => {
+          const lista = [];
+          itemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
+        });
+        setIsLoading(false);
+      }
     }
 
     fetchData();
-  }, []);
+  }, [startDate, endDate, removeFilter]);
 
   //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
   useEffect(() => {
@@ -203,6 +241,7 @@ function ItemScreenNotRedux(props) {
           onPress={polinesDetail}
         />
       ) : null}
+      <DateScreen filterButton={filter} quitFilterButton={quitfilter} />
 
       <FlatList
         data={post}

@@ -15,6 +15,7 @@ import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
+import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 
 function ProfileScreen(props) {
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,9 @@ function ProfileScreen(props) {
   const [renderComponent, setRenderComponent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState(null);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [removeFilter, setRemoveFilter] = useState(true);
   const navigation = useNavigation();
 
   const onReload = () => setReload((prevState) => !prevState);
@@ -43,28 +47,65 @@ function ProfileScreen(props) {
   };
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
+  //Changing the value to activate again the filter to rende the posts
+  const filter = (start, end) => {
+    console.log(start, end);
+    setStartDate(start);
+    setEndDate(end);
+  };
+  const quitfilter = (start, end) => {
+    setRemoveFilter((prev) => !prev);
+    setStartDate(null);
+    setStartDate(null);
+    console.log(removeFilter);
+  };
+
   useEffect(() => {
     async function fetchData() {
-      const q = query(
-        collection(db, "posts"),
-        where("emailPerfil", "==", props.email)
-      );
-      const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
-        const lista = [];
-        querySnapshotFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-
-        const sortedFirestore = lista.sort(
-          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+      if (startDate && endDate) {
+        const q = query(
+          collection(db, "posts"),
+          where("emailPerfil", "==", props.email),
+          where("createdAt", ">=", startDate),
+          where("createdAt", "<=", endDate)
         );
+        const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+          const lista = [];
+          querySnapshotFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
 
-        setPost(sortedFirestore);
-      });
-      setIsLoading(false);
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
+        });
+        setIsLoading(false);
+      } else if (removeFilter === true || removeFilter === false) {
+        const q = query(
+          collection(db, "posts"),
+          where("emailPerfil", "==", props.email)
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+          const lista = [];
+          querySnapshotFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
+        });
+        setIsLoading(false);
+      }
     }
+
     fetchData();
-  }, []);
+  }, [startDate, endDate, removeFilter]);
+
   const comentPost = (item) => {
     navigation.navigate(screen.home.tab, {
       screen: screen.home.comment,
@@ -112,7 +153,7 @@ function ProfileScreen(props) {
         containerStyle={styles.btnContainer2}
         onPress={getExcelGLobal}
       />
-
+      <ProfileDateScreen filterButton={filter} quitFilterButton={quitfilter} />
       <FlatList
         data={post}
         renderItem={({ item, index }) => {

@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   globalStylesTab: {
-    backgroundColor: "#F7F8FC",
+    // backgroundColor: "#F7F8FC",
+    backgroundColor: "white",
   },
   globalStylesStack: {
     backgroundColor: "#F7F8FC",

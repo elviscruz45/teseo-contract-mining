@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
   },
   subtitleForm: {
     color: "blue",
-    fontSize: 20,
-    fontWeight: "400",
+    fontSize: 18,
+    fontWeight: "500",
+    marginLeft: 9,
   },
 });

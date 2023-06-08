@@ -181,8 +181,8 @@ export const styles = StyleSheet.create({
     color: "white",
   },
   btnActualizarStyles: {
-    marginTop: 30,
-    paddingVertical: 10,
+    // marginTop: 30,
+    // paddingVertical: 10,
     borderRadius: 0,
     backgroundColor: "#8CBBF1",
     borderTopWidth: 1,
