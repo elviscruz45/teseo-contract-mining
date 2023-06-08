@@ -65,6 +65,13 @@ function HomeScreen(props) {
   }, [props.equipmentListHeader]);
 
   //This function retrieve the image file to render equipments from the header horizontal bar
+  // function chooseImageEquipment(tags) {
+  //   const result = equipmentList.find((item) => {
+  //     return item.tag == tags;
+  //   });
+  //   return result.image;
+  // }
+
   const chooseImageEquipment = useCallback((tags) => {
     const result = equipmentList.find((item) => {
       return item.tag === tags;
@@ -73,6 +80,18 @@ function HomeScreen(props) {
   }, []);
 
   //---This is used to get the attached file in the post that contain an attached file---
+  // async function UploadFile(uri) {
+  //   Linking.canOpenURL(uri)
+  //     .then((supported) => {
+  //       if (supported) {
+  //         Linking.openURL(uri);
+  //       } else {
+  //         alert("Unable to open PDF document");
+  //       }
+  //     })
+  //     .catch((error) => alert("Error opening PDF document", error));
+  // }
+
   const uploadFile = useCallback(async (uri) => {
     try {
       const supported = await Linking.canOpenURL(uri);
@@ -87,6 +106,14 @@ function HomeScreen(props) {
   }, []);
 
   //----this goes to another screen using the params given in this screen, useCallBack---
+
+  // const selectAsset = (item) => {
+  //   navigation.navigate(screen.search.tab, {
+  //     screen: screen.search.item,
+  //     params: { Item: item },
+  //   });
+  // };
+
   const selectAsset = useCallback(
     (item) => {
       navigation.navigate(screen.search.tab, {
@@ -98,6 +125,20 @@ function HomeScreen(props) {
   );
 
   //---activate like/unlike Post using useCallback--------
+  // const likePost = async (item) => {
+  //   const PostRef = doc(db, "posts", item.idDocFirestoreDB);
+
+  //   if (item.likes.includes(props.email)) {
+  //     await updateDoc(PostRef, {
+  //       likes: arrayRemove(props.email),
+  //     });
+  //   } else {
+  //     await updateDoc(PostRef, {
+  //       likes: arrayUnion(props.email),
+  //     });
+  //   }
+  // };
+
   const likePost = useCallback(
     async (item) => {
       const postRef = doc(db, "posts", item.idDocFirestoreDB);
@@ -116,6 +157,13 @@ function HomeScreen(props) {
   );
 
   //--To goes to comment screen using callBack-----
+  // const comentPost = (item) => {
+  //   navigation.navigate(screen.home.tab, {
+  //     screen: screen.home.comment,
+  //     params: { Item: item },
+  //   });
+  // };
+
   const commentPost = useCallback(
     (item) => {
       navigation.navigate(screen.home.tab, {
@@ -143,6 +191,7 @@ function HomeScreen(props) {
                   margin: 2,
                   borderBottomWidth: 5,
                   borderBottomColor: "white",
+                  // backgroundColor: "white",
                 }}
               >
                 <View style={[styles.row, styles.center]}>

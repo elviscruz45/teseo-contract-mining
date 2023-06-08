@@ -186,6 +186,7 @@ function ProfileScreen(props) {
             </TouchableOpacity>
           );
         }}
+        keyExtractor={(item) => item.idDocFirestoreDB}
       />
     </>
   );

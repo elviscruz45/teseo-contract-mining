@@ -137,6 +137,7 @@ function SearchScreenNoRedux(props) {
             </TouchableOpacity>
           );
         }}
+        keyExtractor={(item) => item.tag}
       />
     </>
   );

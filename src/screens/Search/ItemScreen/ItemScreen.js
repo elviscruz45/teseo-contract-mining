@@ -274,6 +274,7 @@ function ItemScreenNotRedux(props) {
             </TouchableOpacity>
           );
         }}
+        keyExtractor={(item) => item.idDocFirestoreDB}
       />
       <Icon
         reverse
