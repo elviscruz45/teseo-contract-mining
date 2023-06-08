@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    paddingVertical: 30,
+    paddingVertical: 5,
   },
   avatar: {
     marginRight: 20,

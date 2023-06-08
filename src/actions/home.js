@@ -30,3 +30,14 @@ export const comentaryPost = (uri) => async (dispatch) => {
     alert(error.message);
   }
 };
+
+export const EquipmentListUpper = (list) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "EQUIPMENTLISTUPPER",
+      payload: list,
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};

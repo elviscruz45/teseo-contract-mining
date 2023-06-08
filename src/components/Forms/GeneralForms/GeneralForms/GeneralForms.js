@@ -123,7 +123,7 @@ export function GeneralForms(props) {
   return (
     <View>
       <View style={styles.content}>
-        <Text style={styles.content}>Detalles del Evento:</Text>
+        <Text style={styles.subtitleForm}>Detalles del Evento:</Text>
 
         <Input
           value={etapa}
@@ -164,7 +164,7 @@ export function GeneralForms(props) {
             onPress: () => selectComponent("nombreComponente"),
           }}
         />
-        <Text style={styles.content}>Equipo y Recursos de trabajo:</Text>
+        <Text style={styles.subtitleForm}>Equipo y Recursos de trabajo:</Text>
 
         <Input
           value={supervisor}

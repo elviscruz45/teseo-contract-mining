@@ -13,7 +13,16 @@ import { Image as ImageExpo } from "expo-image";
 import { styles } from "./ItemScreen.styles";
 import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
@@ -23,13 +32,16 @@ import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
 import { getAuth, updateProfile } from "firebase/auth";
 import { v4 as uuid } from "uuid";
+import { EquipmentListUpper } from "../../../actions/home";
 
 const windowWidth = Dimensions.get("window").width;
 
 function ItemScreenNotRedux(props) {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [follow, setFollow] = useState(false);
+  const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
+
+  //Retrieve data Item that comes from the previous screen
 
   const {
     route: {
@@ -38,6 +50,7 @@ function ItemScreenNotRedux(props) {
   } = props;
   const navigation = useNavigation();
 
+  //Using navigation.navigate I send it to another screen (post)
   const goToPublicar = () => {
     props.saveActualEquipment(Item);
 
@@ -47,6 +60,7 @@ function ItemScreenNotRedux(props) {
     });
   };
 
+  //This function is used to retrive the image file to the icon
   function chooseImageEquipment(tags) {
     const result = equipmentList.find((item) => {
       return item.tag == tags;
@@ -54,15 +68,16 @@ function ItemScreenNotRedux(props) {
     return result.image;
   }
 
+  //This hook used to retrieve post data from Firebase and sorted by date
   useEffect(() => {
     async function fetchData() {
       const q = query(
         collection(db, "posts"),
         where("equipoTag", "==", Item.tag)
       );
-      const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+      onSnapshot(q, (itemFirebase) => {
         const lista = [];
-        querySnapshotFirebase.forEach((doc) => {
+        itemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
 
@@ -74,19 +89,41 @@ function ItemScreenNotRedux(props) {
       });
       setIsLoading(false);
     }
+
     fetchData();
   }, []);
 
-  const pressFollow = (item) => {
-    setFollow((prev) => !prev);
-  };
-  const selectAsset = (item) => {
-    navigation.navigate(screen.search.tab, {
-      screen: screen.search.detail,
-      params: { Item: item },
-    });
-  };
+  //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
+  useEffect(() => {
+    async function fetchEquipmentData() {
+      const q = query(collection(db, "users"), where("uid", "==", props.uid));
 
+      onSnapshot(q, (itemFirebase) => {
+        const lista = [];
+        itemFirebase.forEach((doc) => {
+          lista.push(doc.data().EquipmentFavorities);
+        });
+        setFirestoreEquipmentLiked(lista.flat());
+        props.EquipmentListUpper(lista.flat());
+      });
+    }
+    fetchEquipmentData();
+  }, []);
+
+  //this function add/remove to firebase Users Collection => EquipmentFavorities
+  const pressFollow = async () => {
+    const PostRef = doc(db, "users", props.uid);
+    if (firestoreEquipmentLiked?.includes(Item.tag)) {
+      await updateDoc(PostRef, {
+        EquipmentFavorities: arrayRemove(Item.tag),
+      });
+    } else {
+      await updateDoc(PostRef, {
+        EquipmentFavorities: arrayUnion(Item.tag),
+      });
+    }
+  };
+  //this function goes to homeTab=>commentScreen
   const comentPost = (item) => {
     navigation.navigate(screen.home.tab, {
       screen: screen.home.comment,
@@ -94,12 +131,14 @@ function ItemScreenNotRedux(props) {
     });
   };
 
+  //this function goes to PolinesScreen
   const polinesDetail = () => {
     navigation.navigate(screen.search.polines, {
       dataReport: Item,
     });
   };
 
+  //This is used to get the attached file in the post that contain an attached file
   async function UploadFile(uri) {
     Linking.canOpenURL(uri)
       .then((supported) => {
@@ -120,13 +159,13 @@ function ItemScreenNotRedux(props) {
             source={chooseImageEquipment(props.route.params.Item.tag)}
             style={styles.roundImage}
           />
-          {follow ? (
+          {props.equipmentListHeader.includes(Item.tag) ? (
             <Pressable style={styles.buttonFollow} onPress={pressFollow}>
-              <Text style={styles.textFollow}>Following</Text>
+              <Text style={styles.textFollow}>Siguiendo</Text>
             </Pressable>
           ) : (
             <Pressable style={styles.buttonUnfollow} onPress={pressFollow}>
-              <Text style={styles.textFollow}>Follow</Text>
+              <Text style={styles.textFollow}>Seguir</Text>
             </Pressable>
           )}
         </View>
@@ -223,9 +262,12 @@ const mapStateToProps = (reducers) => {
     user_photo: reducers.profile.user_photo,
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,
+    uid: reducers.profile.uid,
+    equipmentListHeader: reducers.home.equipmentList,
   };
 };
 
 export const ItemScreen = connect(mapStateToProps, {
   saveActualEquipment,
+  EquipmentListUpper,
 })(ItemScreenNotRedux);

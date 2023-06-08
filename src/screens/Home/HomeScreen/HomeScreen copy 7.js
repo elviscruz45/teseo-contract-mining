@@ -32,17 +32,16 @@ import { HeaderScreen } from "../../../components/Home";
 import { EquipmentListUpper } from "../../../actions/home";
 
 const windowWidth = Dimensions.get("window").width;
+let q;
 
 function HomeScreen(props) {
   const [posts2, setPosts2] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
 
   useEffect(() => {
     async function fetchData() {
-      let q;
-      if (props.equipmentListHeader.length > 0) {
+      if (props.equipmentListHeader) {
         q = query(
           collection(db, "posts"),
           where("equipoTag", "in", props.equipmentListHeader)
@@ -50,6 +49,7 @@ function HomeScreen(props) {
       } else {
         q = query(collection(db, "posts"));
       }
+
       onSnapshot(q, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
@@ -114,11 +114,12 @@ function HomeScreen(props) {
     });
   };
 
-  if (isLoading) {
+  if (!props.equipmentListHeader) {
     return <LoadingSpinner />;
   } else {
     return (
       <>
+        {console.log("home")}
         <Text></Text>
         <HeaderScreen />
         <Text></Text>
@@ -129,9 +130,7 @@ function HomeScreen(props) {
               <View
                 style={{
                   margin: 2,
-                  borderBottomWidth: 5,
-                  borderBottomColor: "white",
-                  // backgroundColor: "white",
+                  backgroundColor: "white",
                 }}
               >
                 <View style={[styles.row, styles.center]}>

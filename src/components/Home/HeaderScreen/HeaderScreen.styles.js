@@ -67,7 +67,6 @@ export const styles = StyleSheet.create({
     // padding: 0,
     // color: "#DB4545",
     marginLeft: 10,
-    fontWeight: "200",
   },
   textAreaTitle: {
     width: windowWidth * 0.6,
@@ -78,8 +77,7 @@ export const styles = StyleSheet.create({
     width: windowWidth * 0.6,
     marginLeft: 10,
     fontWeight: "bold",
-    color: "black",
-    fontWeight: "400",
+    color: "#DB4545",
   },
   avatar: {
     marginRight: 20,

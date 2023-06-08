@@ -40,16 +40,26 @@ function HomeScreen(props) {
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
 
   useEffect(() => {
+    function fetchEquipmentData() {
+      const q = query(collection(db, "users"), where("uid", "==", props.uid));
+      onSnapshot(q, (querySnapshotFirebase) => {
+        const lista = [];
+        querySnapshotFirebase.forEach((doc) => {
+          lista.push(doc.data().EquipmentFavorities);
+        });
+        setFirestoreEquipmentLiked(lista.flat());
+        props.EquipmentListUpper(lista.flat());
+      });
+    }
+    fetchEquipmentData();
+  }, []);
+
+  useEffect(() => {
     async function fetchData() {
-      let q;
-      if (props.equipmentListHeader.length > 0) {
-        q = query(
-          collection(db, "posts"),
-          where("equipoTag", "in", props.equipmentListHeader)
-        );
-      } else {
-        q = query(collection(db, "posts"));
-      }
+      let q = query(
+        collection(db, "posts"),
+        where("equipoTag", "in", firestoreEquipmentLiked)
+      );
       onSnapshot(q, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
@@ -63,7 +73,7 @@ function HomeScreen(props) {
       setIsLoading(false);
     }
     fetchData();
-  }, [props.equipmentListHeader]);
+  }, []);
 
   //This function retrieve the image file to render equipments from the header horizontal bar
   function chooseImageEquipment(tags) {
@@ -114,11 +124,12 @@ function HomeScreen(props) {
     });
   };
 
-  if (isLoading) {
+  if (!firestoreEquipmentLiked) {
     return <LoadingSpinner />;
   } else {
     return (
       <>
+        {console.log("home")}
         <Text></Text>
         <HeaderScreen />
         <Text></Text>
@@ -129,9 +140,7 @@ function HomeScreen(props) {
               <View
                 style={{
                   margin: 2,
-                  borderBottomWidth: 5,
-                  borderBottomColor: "white",
-                  // backgroundColor: "white",
+                  backgroundColor: "white",
                 }}
               >
                 <View style={[styles.row, styles.center]}>

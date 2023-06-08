@@ -73,26 +73,37 @@ function ProfileScreen(props) {
   };
   return (
     <>
+      <Text></Text>
+
       <View>
         <ConnectedInfoUser />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            title="Editar"
+            buttonStyle={styles.btnActualizarStyles}
+            titleStyle={styles.btnTextStyle}
+            onPress={update_Data}
+          />
 
-        <Button
-          title="Actualizar Informacion"
-          buttonStyle={styles.btnActualizarStyles}
-          titleStyle={styles.btnTextStyle}
-          onPress={update_Data}
-        />
-
-        <Button
-          title="Cerrar sesión"
-          buttonStyle={styles.btncerrarStyles}
-          titleStyle={styles.btnTextStyle}
-          onPress={logout}
-        />
+          <Button
+            title="Cerrar "
+            buttonStyle={styles.btncerrarStyles}
+            titleStyle={styles.btnTextStyle}
+            onPress={logout}
+          />
+        </View>
         <Modal show={showModal} close={onCloseOpenModal}>
           {renderComponent}
         </Modal>
       </View>
+      <Text></Text>
+      <Text></Text>
+
       <Icon
         reverse
         type="material-community"
@@ -107,7 +118,6 @@ function ProfileScreen(props) {
         renderItem={({ item, index }) => {
           return (
             <TouchableOpacity onPress={() => comentPost(item)}>
-              <View />
               <View>
                 <View style={styles.equipments2}>
                   <ImageExpo

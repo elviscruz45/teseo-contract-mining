@@ -1,3 +1,46 @@
+export const equipmentEmpty = [
+  {
+    nombre: "Vacio",
+    marca: "FL-Smith",
+    caracteristicas: "85x118",
+    tag: "Vacio",
+    tamano: "23x118",
+    tonelaje: "118",
+    datos_adicionales: "datos adicionales",
+    image: require("../../assets/equipmentplant/ImageIcons/empty.jpeg"),
+    // pdfManual: require("./path/to/file.pdf"),
+    // pdfPlanos: require("./path/to/file.pdf"),
+    clase: "molino",
+  },
+  {
+    nombre: "Chancadora Primaria",
+    marca: "FL-Smith",
+    caracteristicas: "85x118",
+    tag: "C2-CR001",
+    tamano: "23x118",
+    tonelaje: "118",
+    datos_adicionales: "datos adicionales",
+    image: require("../../assets/equipmentplant/ImageIcons/c2cr001.jpeg"),
+    // pdfManual: require("./path/to/file.pdf"),
+    // pdfPlanos: require("./path/to/file.pdf"),
+    clase: "chancadora",
+  },
+  {
+    nombre: "Molino de Bolas",
+    marca: "FL-Smith",
+    caracteristicas: "85x118",
+    tag: "C2-ML001",
+    tamano: "23x118",
+    tonelaje: "118",
+    datos_adicionales: "datos adicionales",
+    image: require("../../assets/equipmentplant/ImageIcons/c2ml001.jpeg"),
+
+    // image: require("../../assets/equipmentplant/ImageIcons/c2ml001.jpeg"),
+    // pdfManual: require("./path/to/file.pdf"),
+    // pdfPlanos: require("./path/to/file.pdf"),
+    clase: "molino",
+  },
+];
 export const equipmentList = [
   {
     nombre: "Chancadora Primaria",
@@ -21,6 +64,8 @@ export const equipmentList = [
     tonelaje: "118",
     datos_adicionales: "datos adicionales",
     image: require("../../assets/equipmentplant/ImageIcons/c2ml001.jpeg"),
+
+    // image: require("../../assets/equipmentplant/ImageIcons/c2ml001.jpeg"),
     // pdfManual: require("./path/to/file.pdf"),
     // pdfPlanos: require("./path/to/file.pdf"),
     clase: "molino",

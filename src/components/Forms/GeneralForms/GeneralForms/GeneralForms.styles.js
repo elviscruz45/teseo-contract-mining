@@ -10,4 +10,9 @@ export const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
+  subtitleForm: {
+    color: "blue",
+    fontSize: 20,
+    fontWeight: "400",
+  },
 });

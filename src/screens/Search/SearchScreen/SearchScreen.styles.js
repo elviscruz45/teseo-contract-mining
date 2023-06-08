@@ -130,6 +130,8 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 1,
     backgroundColor: "red",
+    position: "absolute", // Add position: "absolute" to position the component
+    right: 20, // Set left: 0 to align it to the left side of the screen
   },
   buttonUnfollow: {
     alignItems: "center",

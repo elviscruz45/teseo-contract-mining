@@ -23,22 +23,29 @@ import {
   limit,
   orderBy,
   getDocs,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
+  where,
 } from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
 import { screen } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
+import { db } from "../../../utils";
+import { connect } from "react-redux";
+import { EquipmentListUpper } from "../../../actions/home";
 
 const windowWidth = Dimensions.get("window").width;
-export function SearchScreen(props) {
+function SearchScreenNoRedux(props) {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
+  const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
 
-  useEffect(() => {
-    setSearchResults(equipmentList);
-  }, []);
-
+  //This is used to retrieve the equipment we are looking for
   useEffect(() => {
     const result = equipmentList.filter((item) => {
       const re = new RegExp(searchText, "ig");
@@ -53,9 +60,35 @@ export function SearchScreen(props) {
       params: { Item: item },
     });
   };
+  //this hook is used to retrieve de list of tags in Firebase EquipmentFavorities and to send to Global state EquipmentListHeader
+  useEffect(() => {
+    setSearchResults(equipmentList);
+    async function fetchData() {
+      const q = query(collection(db, "users"), where("uid", "==", props.uid));
 
-  const pressFollow = (item) => {
-    // setFollow((prev) => !prev);
+      onSnapshot(q, (querySnapshotFirebase) => {
+        querySnapshotFirebase.forEach((doc) => {
+          setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
+          props.EquipmentListUpper(doc.data().EquipmentFavorities);
+        });
+      });
+    }
+    fetchData();
+  }, []);
+
+  //Function to sent to Firebase to include/remove the equipment, depending if exist in firestoreEquipmentLiked
+  const pressFollow = async (item) => {
+    const PostRef = doc(db, "users", props.uid);
+
+    if (firestoreEquipmentLiked?.includes(item.tag)) {
+      await updateDoc(PostRef, {
+        EquipmentFavorities: arrayRemove(item.tag),
+      });
+    } else {
+      await updateDoc(PostRef, {
+        EquipmentFavorities: arrayUnion(item.tag),
+      });
+    }
   };
 
   return (
@@ -85,16 +118,19 @@ export function SearchScreen(props) {
                   <Text style={styles.info}>{item.nombre}</Text>
                   <Text style={styles.info}>{item.caracteristicas}</Text>
                 </View>
-                {false ? (
-                  <Pressable style={styles.buttonFollow} onPress={pressFollow}>
-                    <Text style={styles.textFollow}>Following</Text>
+                {firestoreEquipmentLiked?.includes(item.tag) ? (
+                  <Pressable
+                    style={styles.buttonFollow}
+                    onPress={() => pressFollow(item)}
+                  >
+                    <Text style={styles.textFollow}>Siguiendo</Text>
                   </Pressable>
                 ) : (
                   <Pressable
                     style={styles.buttonUnfollow}
-                    onPress={pressFollow}
+                    onPress={() => pressFollow(item)}
                   >
-                    <Text style={styles.textFollow}>Follow</Text>
+                    <Text style={styles.textFollow}>Seguir</Text>
                   </Pressable>
                 )}
               </View>
@@ -105,3 +141,18 @@ export function SearchScreen(props) {
     </>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    ActualPostFirebase: reducers.post.ActualPostFirebase,
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+  };
+};
+
+export const SearchScreen = connect(mapStateToProps, { EquipmentListUpper })(
+  SearchScreenNoRedux
+);
