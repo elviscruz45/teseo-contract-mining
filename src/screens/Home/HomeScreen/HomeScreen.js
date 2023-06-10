@@ -41,6 +41,7 @@ function HomeScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const [lengPosts, setlengPosts] = useState(3);
+  const [lastVisible, setLastVisible] = useState(null);
 
   const POSTS_PER_PAGE = 3; // Number of posts to retrieve per page
   // this useEffect is used to retrive all data from firebase
@@ -74,6 +75,7 @@ function HomeScreen(props) {
       });
       setIsLoading(false);
     }
+
     fetchData();
 
     return () => {
@@ -82,7 +84,7 @@ function HomeScreen(props) {
         unsubscribe();
       }
     };
-  }, [props.equipmentListHeader, lengPosts]);
+  }, [props.equipmentListHeader.toString(), lengPosts]);
 
   //This code is for retreive code each time is updated
   const loadMorePosts = async () => {

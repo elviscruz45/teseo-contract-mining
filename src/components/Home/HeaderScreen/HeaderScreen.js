@@ -12,13 +12,12 @@ import {
 } from "firebase/firestore";
 import { Image as ImageExpo } from "expo-image";
 import { equipmentList } from "../../../utils/equipmentList";
-import { equipmentEmpty } from "../../../utils/equipmentList";
 import { styles } from "./HeaderScreen.styles";
 import { connect } from "react-redux";
 import { db } from "../../../utils";
-import { screen } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { EquipmentListUpper } from "../../../actions/home";
+import { screen } from "../../../utils";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
@@ -42,7 +41,7 @@ function HeaderScreenNoRedux(props) {
     } else {
       setPostsHeader(equipmentList);
     }
-  }, [props.equipmentListHeader]);
+  }, [props.equipmentListHeader.toString()]);
 
   return (
     <View>
@@ -64,6 +63,7 @@ function HeaderScreenNoRedux(props) {
             </TouchableOpacity>
           );
         }}
+        keyExtractor={(item) => item.tag} // Provide a unique key for each item
       />
     </View>
   );

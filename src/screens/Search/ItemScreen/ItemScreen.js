@@ -145,7 +145,7 @@ function ItemScreenNotRedux(props) {
       unsubscribe = onSnapshot(q, (itemFirebase) => {
         itemFirebase.forEach((doc) => {
           setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
-          // props.EquipmentListUpper(doc.data().EquipmentFavorities);
+          props.EquipmentListUpper(doc.data().EquipmentFavorities);
         });
       });
     }
@@ -208,7 +208,7 @@ function ItemScreenNotRedux(props) {
             source={chooseImageEquipment(props.route.params.Item.tag)}
             style={styles.roundImage}
           />
-          {props.equipmentListHeader.includes(Item.tag) ? (
+          {firestoreEquipmentLiked?.includes(Item.tag) ? (
             <Pressable
               style={styles.buttonFollow}
               onPress={() => pressFollow()}

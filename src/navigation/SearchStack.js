@@ -9,6 +9,7 @@ import { ConnectedDetailScreen } from "../screens/Search/DetailScreen/DetailScre
 import { PolinesScreen } from "../screens/Search/DataScreen/DataScreen";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
 
 function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -29,6 +30,7 @@ function SearchStackBare(props) {
 
   return (
     <Stack.Navigator
+      initialRouteName={screen.search.search}
       screenOptions={{
         headerShown: true,
         headerTitle: () => (
@@ -65,9 +67,14 @@ function SearchStackBare(props) {
         component={ItemScreen}
         options={{
           title: " ",
-          // headerBackTitleVisible: true, // Show the title of the previous screen
-          // headerBackTitle: "Back", // Customize the back button title
-          // headerBackVisible: true, // Show the back button
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate(screen.search.search)}
+              style={{ marginLeft: -12 }}
+            >
+              <AntDesign name="left" size={24} color="black" />
+            </TouchableOpacity>
+          ),
         }}
       />
 

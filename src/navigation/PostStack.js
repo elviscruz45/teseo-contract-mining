@@ -13,6 +13,7 @@ import { PolinesAddInformationScreen } from "../screens/Post/PolinesAddInformati
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
 
 function PostStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -74,6 +75,14 @@ function PostStackBare(props) {
           headerShown: true,
           headerBackTitle: "Home",
           headerTintColor: "black",
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate(screen.post.post)}
+              style={{ marginLeft: -12 }}
+            >
+              <AntDesign name="left" size={24} color="black" />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
