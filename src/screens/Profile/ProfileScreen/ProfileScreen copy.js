@@ -10,15 +10,7 @@ import { ConnectedChangeDisplayNameForm } from "../../../components/Account/Chan
 import { Modal } from "../../../components/shared/Modal";
 import { getExcelGLobal } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
-import {
-  collection,
-  onSnapshot,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  limit,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
@@ -61,60 +53,57 @@ function ProfileScreen(props) {
     setStartDate(start);
     setEndDate(end);
   };
-  const quitfilter = () => {
+  const quitfilter = (start, end) => {
     setRemoveFilter((prev) => !prev);
     setStartDate(null);
-    setEndDate(null);
-    console.log("removeFilter");
+    setStartDate(null);
+    console.log(removeFilter);
   };
 
-  //This hook used to retrieve post data from Firebase and sorted by date
-
   useEffect(() => {
-    console.log("UseEffectProfileScreen");
-
-    let unsubscribe;
-    let q;
     async function fetchData() {
       if (startDate && endDate) {
-        q = query(
+        const q = query(
           collection(db, "posts"),
-          orderBy("createdAt", "desc"),
           where("emailPerfil", "==", props.email),
           where("createdAt", ">=", startDate),
           where("createdAt", "<=", endDate)
         );
-      } else {
-        q = query(
-          collection(db, "posts"),
-          orderBy("createdAt", "desc"),
-          where("emailPerfil", "==", props.email),
-          limit(10) // Add the desired limit value here
-        );
-      }
+        const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+          const lista = [];
+          querySnapshotFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
 
-      try {
-        const querySnapshot = await getDocs(q);
-        const lista = [];
-        querySnapshot.forEach((doc) => {
-          lista.push(doc.data());
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
         });
-        console.log("getDocs Item with date profile");
-
-        setPost(lista);
         setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
+      } else if (removeFilter === true || removeFilter === false) {
+        const q = query(
+          collection(db, "posts"),
+          where("emailPerfil", "==", props.email)
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+          const lista = [];
+          querySnapshotFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
+        });
         setIsLoading(false);
       }
     }
+
     fetchData();
-    return () => {
-      // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
   }, [startDate, endDate, removeFilter]);
 
   const comentPost = (item) => {

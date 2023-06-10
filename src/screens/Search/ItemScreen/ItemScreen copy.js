@@ -22,9 +22,6 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-  orderBy,
-  getDocs,
-  limit,
 } from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
@@ -40,7 +37,6 @@ import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 
 const windowWidth = Dimensions.get("window").width;
 function ItemScreenNotRedux(props) {
-  console.log("itemScreen");
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
@@ -65,7 +61,7 @@ function ItemScreenNotRedux(props) {
   const quitfilter = () => {
     setRemoveFilter((prev) => !prev);
     setStartDate(null);
-    setEndDate(null);
+    setStartDate(null);
     console.log("removeFilter");
   };
 
@@ -89,74 +85,70 @@ function ItemScreenNotRedux(props) {
 
   //This hook used to retrieve post data from Firebase and sorted by date
   useEffect(() => {
-    console.log("UseEffectitemScreen");
-
     let unsubscribe;
-    let q;
     async function fetchData() {
       if (startDate && endDate) {
-        q = query(
+        const q = query(
           collection(db, "posts"),
-          orderBy("createdAt", "desc"),
           where("equipoTag", "==", Item.tag),
           where("createdAt", ">=", startDate),
           where("createdAt", "<=", endDate)
         );
-      } else {
-        console.log("removeFilter");
-        q = query(
-          collection(db, "posts"),
-          orderBy("createdAt", "desc"),
-          where("equipoTag", "==", Item.tag),
-          limit(10) // Add the desired limit value here
-        );
-      }
-      try {
-        const querySnapshot = await getDocs(q);
-        const lista = [];
-        querySnapshot.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        console.log("getDocs Item with date");
+        unsubscribe = onSnapshot(q, (itemFirebase) => {
+          const lista = [];
+          itemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+          console.log("onSnashopt Item with date");
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
 
-        setPost(lista);
+          setPost(sortedFirestore);
+        });
         setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
+      } else if (removeFilter === true || removeFilter === false) {
+        console.log("removeFilter");
+        const q = query(
+          collection(db, "posts"),
+          where("equipoTag", "==", Item.tag)
+        );
+        const unsubscribe = onSnapshot(q, (itemFirebase) => {
+          const lista = [];
+          itemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+          console.log("onSnashopt Item without date");
+
+          const sortedFirestore = lista.sort(
+            (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+          );
+
+          setPost(sortedFirestore);
+        });
         setIsLoading(false);
       }
     }
+
     fetchData();
-    return () => {
-      // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
   }, [startDate, endDate, removeFilter]);
 
   //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
   useEffect(() => {
-    let unsubscribe;
-
     async function fetchEquipmentData() {
       const q = query(collection(db, "users"), where("uid", "==", props.uid));
 
-      unsubscribe = onSnapshot(q, (itemFirebase) => {
+      onSnapshot(q, (itemFirebase) => {
+        const lista = [];
         itemFirebase.forEach((doc) => {
-          setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
-          // props.EquipmentListUpper(doc.data().EquipmentFavorities);
+          lista.push(doc.data().EquipmentFavorities);
         });
+
+        setFirestoreEquipmentLiked(lista.flat());
+        props.EquipmentListUpper(lista.flat());
       });
     }
-    console.log("onSnashopt following Item ");
     fetchEquipmentData();
-    return () => {
-      // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
   }, []);
 
   //this function add/remove to firebase Users Collection => EquipmentFavorities
@@ -209,17 +201,11 @@ function ItemScreenNotRedux(props) {
             style={styles.roundImage}
           />
           {props.equipmentListHeader.includes(Item.tag) ? (
-            <Pressable
-              style={styles.buttonFollow}
-              onPress={() => pressFollow()}
-            >
+            <Pressable style={styles.buttonFollow} onPress={pressFollow}>
               <Text style={styles.textFollow}>Siguiendo</Text>
             </Pressable>
           ) : (
-            <Pressable
-              style={styles.buttonUnfollow}
-              onPress={() => pressFollow()}
-            >
+            <Pressable style={styles.buttonUnfollow} onPress={pressFollow}>
               <Text style={styles.textFollow}>Seguir</Text>
             </Pressable>
           )}
@@ -291,7 +277,7 @@ function ItemScreenNotRedux(props) {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
+        keyExtractor={(item) => item.idDocFirestoreDB}
       />
       <Icon
         reverse

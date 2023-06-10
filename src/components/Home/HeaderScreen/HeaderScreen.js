@@ -35,19 +35,6 @@ function HeaderScreenNoRedux(props) {
     let q = query(collection(db, "users"), where("uid", "==", props.uid));
 
     if (props.equipmentListHeader.length > 0) {
-      // onSnapshot(q, (querySnapshotFirebase) => {
-      //   const lista = [];
-      //   querySnapshotFirebase.forEach((doc) => {
-      //     lista.push(doc.data().EquipmentFavorities);
-      //   });
-      //   const flatLista = lista.flat();
-      //   const filteredList = equipmentList.filter((equipment) =>
-      //     props.equipmentListHeader?.includes(equipment.tag)
-      //   );
-      //   setPostsHeader(filteredList);
-      // });
-      //   const flatLista = lista.flat();
-
       const filteredList = equipmentList.filter((equipment) =>
         props.equipmentListHeader?.includes(equipment.tag)
       );

@@ -107,7 +107,7 @@ function InformationScreen(props) {
         await updateDoc(RefFirebase, newData);
 
         props.saveActualPostFirebase(newData);
-        navigation.navigate(screen.post.post); // this hedlps to go to the begining of the process
+        navigation.navigate(screen.post.post);
         navigation.navigate(screen.home.tab, {
           screen: screen.home.home,
         });

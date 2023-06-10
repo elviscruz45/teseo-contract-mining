@@ -63,7 +63,12 @@ function SearchStackBare(props) {
       <Stack.Screen
         name={screen.search.item}
         component={ItemScreen}
-        options={{ title: " " }}
+        options={{
+          title: " ",
+          // headerBackTitleVisible: true, // Show the title of the previous screen
+          // headerBackTitle: "Back", // Customize the back button title
+          // headerBackVisible: true, // Show the back button
+        }}
       />
 
       <Stack.Screen

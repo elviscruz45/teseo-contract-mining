@@ -33,6 +33,7 @@ import { Image as ImageExpo } from "expo-image";
 const windowWidth = Dimensions.get("window").width;
 
 function CommentScreen(props) {
+  let unsubscribe;
   const [posts2, setPosts2] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isScrolledUp, setIsScrolledUp] = useState(false);
@@ -49,13 +50,21 @@ function CommentScreen(props) {
     async function fetchData() {
       // Try to retrieve data from AsyncStorage
       const q = doc(db, "posts", Item.idDocFirestoreDB);
-      onSnapshot(q, (docSnapshot) => {
+      unsubscribe = onSnapshot(q, (docSnapshot) => {
+        console.log("onSnapshot comment");
         const data = docSnapshot.data()?.comentariosUsuarios;
         setPosts2(data);
       });
       setIsLoading(false);
     }
     fetchData();
+
+    return () => {
+      // Cleanup function to unsubscribe from the previous listener
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, [Item]);
 
   function chooseImageEquipment(tags) {

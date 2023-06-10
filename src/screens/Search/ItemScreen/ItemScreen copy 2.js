@@ -24,7 +24,6 @@ import {
   arrayRemove,
   orderBy,
   getDocs,
-  limit,
 } from "firebase/firestore";
 import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
@@ -65,7 +64,7 @@ function ItemScreenNotRedux(props) {
   const quitfilter = () => {
     setRemoveFilter((prev) => !prev);
     setStartDate(null);
-    setEndDate(null);
+    setStartDate(null);
     console.log("removeFilter");
   };
 
@@ -107,24 +106,19 @@ function ItemScreenNotRedux(props) {
         q = query(
           collection(db, "posts"),
           orderBy("createdAt", "desc"),
-          where("equipoTag", "==", Item.tag),
-          limit(10) // Add the desired limit value here
+          where("equipoTag", "==", Item.tag)
         );
       }
-      try {
-        const querySnapshot = await getDocs(q);
+      unsubscribe = onSnapshot(q, (itemFirebase) => {
         const lista = [];
-        querySnapshot.forEach((doc) => {
+        itemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("getDocs Item with date");
+        console.log("onSnashopt Item with date");
 
         setPost(lista);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-        setIsLoading(false);
-      }
+      });
+      setIsLoading(false);
     }
     fetchData();
     return () => {
@@ -145,7 +139,7 @@ function ItemScreenNotRedux(props) {
       unsubscribe = onSnapshot(q, (itemFirebase) => {
         itemFirebase.forEach((doc) => {
           setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
-          // props.EquipmentListUpper(doc.data().EquipmentFavorities);
+          props.EquipmentListUpper(doc.data().EquipmentFavorities);
         });
       });
     }
@@ -209,17 +203,11 @@ function ItemScreenNotRedux(props) {
             style={styles.roundImage}
           />
           {props.equipmentListHeader.includes(Item.tag) ? (
-            <Pressable
-              style={styles.buttonFollow}
-              onPress={() => pressFollow()}
-            >
+            <Pressable style={styles.buttonFollow} onPress={pressFollow}>
               <Text style={styles.textFollow}>Siguiendo</Text>
             </Pressable>
           ) : (
-            <Pressable
-              style={styles.buttonUnfollow}
-              onPress={() => pressFollow()}
-            >
+            <Pressable style={styles.buttonUnfollow} onPress={pressFollow}>
               <Text style={styles.textFollow}>Seguir</Text>
             </Pressable>
           )}

@@ -39,6 +39,7 @@ const windowWidth = Dimensions.get("window").width;
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastVisible, setLastVisible] = useState(null);
   const navigation = useNavigation();
   const [lengPosts, setlengPosts] = useState(3);
 
@@ -46,8 +47,6 @@ function HomeScreen(props) {
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
     console.log("useeffect");
-    let unsubscribe; // Variable to store the unsubscribe function
-
     async function fetchData() {
       let queryRef;
       if (props.equipmentListHeader.length > 0) {
@@ -64,30 +63,54 @@ function HomeScreen(props) {
           orderBy("createdAt", "desc")
         );
       }
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+      onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
         console.log("OnSnapshop");
         setPosts(lista);
+        const lastVisibleDoc = ItemFirebase.docs[ItemFirebase.docs.length - 1];
+        setLastVisible(lastVisibleDoc);
       });
       setIsLoading(false);
     }
     fetchData();
-
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
   }, [props.equipmentListHeader, lengPosts]);
 
   //This code is for retreive code each time is updated
   const loadMorePosts = async () => {
-    console.log("snapshotGETDOCS");
-    setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
+    if (lastVisible) {
+      let queryRef;
+
+      if (props.equipmentListHeader.length > 0) {
+        queryRef = query(
+          collection(db, "posts"),
+          where("equipoTag", "in", props.equipmentListHeader),
+          orderBy("createdAt", "desc"),
+          startAfter(lastVisible),
+          limit(POSTS_PER_PAGE)
+        );
+      } else {
+        queryRef = query(
+          collection(db, "posts"),
+          orderBy("createdAt", "desc"),
+          startAfter(lastVisible),
+          limit(POSTS_PER_PAGE)
+        );
+      }
+
+      const snapshot = await getDocs(queryRef);
+      const newPosts = [];
+      snapshot.forEach((doc) => {
+        newPosts.push(doc.data());
+      });
+      console.log("snapshotGETDOCS");
+      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
+      const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+      setLastVisible(lastVisibleDoc);
+    }
   };
 
   //This function retrieve the image file to render equipments from the header horizontal bar
@@ -290,7 +313,7 @@ function HomeScreen(props) {
           }}
           keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
           onEndReached={loadMorePosts}
-          onEndReachedThreshold={0.3}
+          onEndReachedThreshold={0.1}
         />
       </>
     );

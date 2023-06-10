@@ -39,56 +39,41 @@ const windowWidth = Dimensions.get("window").width;
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastVisible, setLastVisible] = useState(null);
   const navigation = useNavigation();
-  const [lengPosts, setlengPosts] = useState(3);
 
   const POSTS_PER_PAGE = 3; // Number of posts to retrieve per page
+
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
-    console.log("useeffect");
-    let unsubscribe; // Variable to store the unsubscribe function
-
     async function fetchData() {
       let queryRef;
       if (props.equipmentListHeader.length > 0) {
         queryRef = query(
           collection(db, "posts"),
           where("equipoTag", "in", props.equipmentListHeader),
-          limit(lengPosts),
+          limit(POSTS_PER_PAGE),
           orderBy("createdAt", "desc")
         );
       } else {
         queryRef = query(
           collection(db, "posts"),
-          limit(lengPosts),
+          limit(POSTS_PER_PAGE),
           orderBy("createdAt", "desc")
         );
       }
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+      onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("OnSnapshop");
+
         setPosts(lista);
       });
       setIsLoading(false);
     }
     fetchData();
-
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [props.equipmentListHeader, lengPosts]);
-
-  //This code is for retreive code each time is updated
-  const loadMorePosts = async () => {
-    console.log("snapshotGETDOCS");
-    setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
-  };
+  }, [props.equipmentListHeader]);
 
   //This function retrieve the image file to render equipments from the header horizontal bar
   const chooseImageEquipment = useCallback((tags) => {
@@ -157,7 +142,7 @@ function HomeScreen(props) {
   } else {
     return (
       <>
-        {console.log("renderHome111")}
+        {console.log("renderHome")}
         <Text></Text>
         <HeaderScreen />
         <Text></Text>
@@ -289,8 +274,6 @@ function HomeScreen(props) {
             );
           }}
           keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
-          onEndReached={loadMorePosts}
-          onEndReachedThreshold={0.3}
         />
       </>
     );

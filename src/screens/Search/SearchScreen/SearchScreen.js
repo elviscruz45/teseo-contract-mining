@@ -62,18 +62,29 @@ function SearchScreenNoRedux(props) {
   };
   //this hook is used to retrieve de list of tags in Firebase EquipmentFavorities and to send to Global state EquipmentListHeader
   useEffect(() => {
+    console.log("useeffect Search Screen");
+    let unsubscribe; // Variable to store the unsubscribe function
+
     setSearchResults(equipmentList);
     async function fetchData() {
       const q = query(collection(db, "users"), where("uid", "==", props.uid));
 
-      onSnapshot(q, (querySnapshotFirebase) => {
+      unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
         querySnapshotFirebase.forEach((doc) => {
           setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
           props.EquipmentListUpper(doc.data().EquipmentFavorities);
         });
       });
     }
+    console.log("onSnashopt following Search ");
+
     fetchData();
+    return () => {
+      // Cleanup function to unsubscribe from the previous listener
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   //Function to sent to Firebase to include/remove the equipment, depending if exist in firestoreEquipmentLiked

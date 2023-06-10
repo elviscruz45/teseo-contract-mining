@@ -20,10 +20,6 @@ import {
   arrayUnion,
   arrayRemove,
   where,
-  limit,
-  orderBy,
-  startAfter,
-  getDocs,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
@@ -37,58 +33,35 @@ import { EquipmentListUpper } from "../../../actions/home";
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  const [posts, setPosts] = useState([]);
+  const [posts2, setPosts2] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  const [lengPosts, setlengPosts] = useState(3);
 
-  const POSTS_PER_PAGE = 3; // Number of posts to retrieve per page
-  // this useEffect is used to retrive all data from firebase
   useEffect(() => {
-    console.log("useeffect");
-    let unsubscribe; // Variable to store the unsubscribe function
-
     async function fetchData() {
       let queryRef;
       if (props.equipmentListHeader.length > 0) {
         queryRef = query(
           collection(db, "posts"),
-          where("equipoTag", "in", props.equipmentListHeader),
-          limit(lengPosts),
-          orderBy("createdAt", "desc")
+          where("equipoTag", "in", props.equipmentListHeader)
         );
       } else {
-        queryRef = query(
-          collection(db, "posts"),
-          limit(lengPosts),
-          orderBy("createdAt", "desc")
-        );
+        queryRef = query(collection(db, "posts"));
       }
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+      onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("OnSnapshop");
-        setPosts(lista);
+        const sortedFirestore = lista.sort(
+          (a, b) => new Date(b.fechaPostISO) - new Date(a.fechaPostISO)
+        );
+        setPosts2(sortedFirestore);
       });
       setIsLoading(false);
     }
     fetchData();
-
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [props.equipmentListHeader, lengPosts]);
-
-  //This code is for retreive code each time is updated
-  const loadMorePosts = async () => {
-    console.log("snapshotGETDOCS");
-    setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
-  };
+  }, [props.equipmentListHeader]);
 
   //This function retrieve the image file to render equipments from the header horizontal bar
   const chooseImageEquipment = useCallback((tags) => {
@@ -157,13 +130,12 @@ function HomeScreen(props) {
   } else {
     return (
       <>
-        {console.log("renderHome111")}
         <Text></Text>
         <HeaderScreen />
         <Text></Text>
         <FlatList
-          data={posts}
-          renderItem={({ item, index }) => {
+          data={posts2}
+          renderItem={({ item }) => {
             return (
               <View
                 style={{
@@ -288,9 +260,7 @@ function HomeScreen(props) {
               </View>
             );
           }}
-          keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
-          onEndReached={loadMorePosts}
-          onEndReachedThreshold={0.3}
+          keyExtractor={(item) => item.idDocFirestoreDB} // Provide a unique key for each item
         />
       </>
     );

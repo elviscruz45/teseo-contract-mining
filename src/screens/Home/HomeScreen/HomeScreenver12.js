@@ -20,10 +20,9 @@ import {
   arrayUnion,
   arrayRemove,
   where,
-  limit,
   orderBy,
   startAfter,
-  getDocs,
+  limit,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
@@ -39,55 +38,124 @@ const windowWidth = Dimensions.get("window").width;
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastVisible, setLastVisible] = useState(null);
+
   const navigation = useNavigation();
-  const [lengPosts, setlengPosts] = useState(3);
-
   const POSTS_PER_PAGE = 3; // Number of posts to retrieve per page
-  // this useEffect is used to retrive all data from firebase
-  useEffect(() => {
-    console.log("useeffect");
-    let unsubscribe; // Variable to store the unsubscribe function
 
+  useEffect(() => {
     async function fetchData() {
       let queryRef;
+
       if (props.equipmentListHeader.length > 0) {
         queryRef = query(
           collection(db, "posts"),
           where("equipoTag", "in", props.equipmentListHeader),
-          limit(lengPosts),
-          orderBy("createdAt", "desc")
+          orderBy("createdAt", "desc"),
+          limit(POSTS_PER_PAGE)
         );
       } else {
         queryRef = query(
           collection(db, "posts"),
-          limit(lengPosts),
-          orderBy("createdAt", "desc")
+          orderBy("createdAt", "desc"),
+          limit(POSTS_PER_PAGE)
         );
       }
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
+      const unsubscribe = onSnapshot(queryRef, (snapshot) => {
+        const newPosts = [];
+        snapshot.forEach((doc) => {
+          newPosts.push(doc.data());
         });
-        console.log("OnSnapshop");
-        setPosts(lista);
+        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+        const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+        setLastVisible(lastVisibleDoc);
+        setIsLoading(false);
       });
-      setIsLoading(false);
+      return unsubscribe;
     }
     fetchData();
-
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [props.equipmentListHeader, lengPosts]);
+  }, [props.equipmentListHeader]);
 
   //This code is for retreive code each time is updated
+
   const loadMorePosts = async () => {
-    console.log("snapshotGETDOCS");
-    setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
+    if (lastVisible) {
+      let queryRef;
+
+      if (props.equipmentListHeader.length > 0) {
+        queryRef = query(
+          collection(db, "posts"),
+          where("equipoTag", "in", props.equipmentListHeader),
+          orderBy("fechaPostISO", "desc"),
+          startAfter(lastVisible),
+          limit(POSTS_PER_PAGE)
+        );
+      } else {
+        queryRef = query(
+          collection(db, "posts"),
+          orderBy("fechaPostISO", "desc"),
+          startAfter(lastVisible),
+          limit(POSTS_PER_PAGE)
+        );
+      }
+
+      const snapshot = await getDocs(queryRef);
+      const newPosts = [];
+      snapshot.forEach((doc) => {
+        newPosts.push(doc.data());
+      });
+      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+      setLastVisible(lastVisibleDoc);
+
+      // onSnapshot(queryRef, (snapshot) => {
+      //   const newPosts = [];
+      //   snapshot.forEach((doc) => {
+      //     newPosts.push(doc.data());
+      //   });
+
+      // setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+
+      // setPosts((prevPosts) => {
+      //   // Replace duplicated posts with the new ones
+      //   const updatedPosts = prevPosts.map((prevPost) => {
+      //     const newPost = newPosts.find(
+      //       (newPost) =>
+      //         newPost.idDocFirestoreDB === prevPost.idDocFirestoreDB
+      //     );
+      //     return newPost || prevPost;
+      //   });
+
+      //   return [...updatedPosts, ...newPosts];
+      // });
+
+      //   const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+      //   setLastVisible(lastVisibleDoc);
+      // });
+
+      //------------------------------------------
+
+      // const snapshot = await getDocs(queryRef);
+      // const newPosts = [];
+      // snapshot.forEach((doc) => {
+      //   newPosts.push(doc.data());
+      // });
+      // setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      // const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+      // setLastVisible(lastVisibleDoc);
+
+      //------------------------------------------
+
+      // onSnapshot(queryRef, (snapshot) => {
+      //   const newPosts = [];
+      //   snapshot.forEach((doc) => {
+      //     newPosts.push(doc.data());
+      //   });
+      //   setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      //   const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+      //   setLastVisible(lastVisibleDoc);
+      // });
+    }
   };
 
   //This function retrieve the image file to render equipments from the header horizontal bar
@@ -157,13 +225,12 @@ function HomeScreen(props) {
   } else {
     return (
       <>
-        {console.log("renderHome111")}
         <Text></Text>
         <HeaderScreen />
         <Text></Text>
         <FlatList
           data={posts}
-          renderItem={({ item, index }) => {
+          renderItem={({ item }) => {
             return (
               <View
                 style={{
@@ -288,9 +355,7 @@ function HomeScreen(props) {
               </View>
             );
           }}
-          keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
-          onEndReached={loadMorePosts}
-          onEndReachedThreshold={0.3}
+          keyExtractor={(item) => item.idDocFirestoreDB} // Provide a unique key for each item
         />
       </>
     );
