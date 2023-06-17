@@ -125,8 +125,8 @@ function ProfileScreen(props) {
   };
   return (
     <>
+      {console.log(post)}
       <Text></Text>
-
       <View>
         <ConnectedInfoUser />
         <View
@@ -155,7 +155,6 @@ function ProfileScreen(props) {
       </View>
       <Text></Text>
       <Text></Text>
-
       <Icon
         reverse
         type="material-community"
@@ -164,7 +163,9 @@ function ProfileScreen(props) {
         containerStyle={styles.btnContainer2}
         onPress={getExcelGLobal}
       />
+
       <ProfileDateScreen filterButton={filter} quitFilterButton={quitfilter} />
+
       <FlatList
         data={post}
         renderItem={({ item, index }) => {

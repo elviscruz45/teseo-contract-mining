@@ -23,7 +23,6 @@ import {
   limit,
   orderBy,
   startAfter,
-  getDocs,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
