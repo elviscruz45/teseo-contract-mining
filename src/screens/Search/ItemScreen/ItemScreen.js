@@ -26,15 +26,12 @@ import {
   getDocs,
   limit,
 } from "firebase/firestore";
-import { size, map } from "lodash";
 import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
 import { screen } from "../../../utils";
 import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
-import { getAuth, updateProfile } from "firebase/auth";
-import { v4 as uuid } from "uuid";
 import { EquipmentListUpper } from "../../../actions/home";
 import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 

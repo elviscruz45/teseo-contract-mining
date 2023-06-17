@@ -1,31 +1,35 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  onSnapshot,
-  query,
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  where,
-} from "firebase/firestore";
-import { Input, Button } from "@rneui/base";
-import { Image as ImageExpo } from "expo-image";
-import { equipmentList } from "../../../utils/equipmentList";
-import { equipmentEmpty } from "../../../utils/equipmentList";
+import { Button } from "@rneui/base";
 import { styles } from "./DateScreen.styles";
 import { connect } from "react-redux";
-import { db } from "../../../utils";
-import { screen } from "../../../utils";
-import { useNavigation } from "@react-navigation/native";
 import { EquipmentListUpper } from "../../../actions/home";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Platform } from "react-native";
 
 function DateScreenNoRedux(props) {
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
+  const [ios, setIos] = useState(false);
+  const [androidDateStart, setAndroidDateStart] = useState(false);
+  const [androidDateEnd, setAndroidDateEnd] = useState(false);
+  const [androidDate, setAndroidDate] = useState(false);
+
   const { filterButton, quitFilterButton } = props;
+
+  useEffect(() => {
+    console.log("renderedOnce");
+    if (Platform.OS === "android") {
+      setIos(false);
+      setAndroidDate(true);
+      // for iOS, add a button that closes the picker
+    } else if (Platform.OS === "ios") {
+      setIos(true);
+      setAndroidDate(false);
+      setAndroidDateStart(false);
+      setAndroidDateEnd(false);
+    }
+  }, []);
 
   const filter = () => {
     filterButton(dateStart, dateEnd);
@@ -36,15 +40,21 @@ function DateScreenNoRedux(props) {
   };
   const onChangeStart = (event, selectedDate) => {
     const currentDate = selectedDate;
+    setAndroidDateStart(false);
     setDateStart(currentDate);
   };
   const onChangeEnd = (event, selectedDate) => {
     const currentDate = selectedDate;
+    setAndroidDateEnd(false);
     setDateEnd(currentDate);
   };
 
-  const showDatepicker = () => {
-    showMode("date");
+  const showDatepickerStart = () => {
+    setAndroidDateStart(true);
+  };
+
+  const showDatepickerEnd = () => {
+    setAndroidDateEnd(true);
   };
 
   return (
@@ -53,26 +63,69 @@ function DateScreenNoRedux(props) {
         <Text></Text>
 
         <Text>Inicio:</Text>
-        <DateTimePicker
-          testID="dateTimePickerStart"
-          value={dateStart}
-          mode={"date"}
-          is24Hour={true}
-          onChange={onChangeStart}
-        />
-        <Text>Fin:</Text>
+        {androidDate && (
+          <Button
+            onPress={showDatepickerStart}
+            title={`${dateStart.toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}`}
+          />
+        )}
+        {ios && (
+          <DateTimePicker
+            testID="dateTimePickerStart"
+            value={dateStart}
+            mode={"date"}
+            is24Hour={true}
+            onChange={onChangeStart}
+          />
+        )}
+        <Text>Fin</Text>
 
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={dateEnd}
-          mode={"date"}
-          is24Hour={true}
-          onChange={onChangeEnd}
-        />
-        <Button onPress={filter} title={"Filtrar"} />
+        {androidDate && (
+          <Button
+            onPress={showDatepickerEnd}
+            title={`${dateEnd.toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}`}
+          />
+        )}
+        {androidDateStart && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={dateStart}
+            mode={"date"}
+            is24Hour={true}
+            onChange={onChangeStart}
+          />
+        )}
+        {androidDateEnd && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={dateEnd}
+            mode={"date"}
+            is24Hour={true}
+            onChange={onChangeEnd}
+          />
+        )}
+
+        {ios && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={dateEnd}
+            mode={"date"}
+            is24Hour={true}
+            onChange={onChangeEnd}
+          />
+        )}
+        <Button onPress={() => filter()} title={"Filtrar"} />
         <Text></Text>
 
-        <Button onPress={QuitFilter} title={"x"} />
+        <Button onPress={() => QuitFilter()} title={"x"} />
         <Text></Text>
 
         <Text></Text>
