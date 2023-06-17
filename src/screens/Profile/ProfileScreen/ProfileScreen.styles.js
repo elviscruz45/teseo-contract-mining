@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
   btncerrarStyles: {
@@ -45,8 +46,9 @@ export const styles = StyleSheet.create({
   },
   btnContainer2: {
     position: "absolute",
-    bottom: 10,
+    bottom: windowHeight * 0.01,
     right: 10,
+    zIndex: 9999, // Set a higher value
   },
   image2: {
     width: "15%",

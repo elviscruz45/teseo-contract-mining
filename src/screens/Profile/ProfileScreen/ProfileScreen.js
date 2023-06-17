@@ -9,6 +9,7 @@ import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
 import { getExcelGLobal } from "../../../utils/excelData";
+import { getExcelPerfil } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
   collection,
@@ -123,6 +124,7 @@ function ProfileScreen(props) {
       params: { Item: item },
     });
   };
+
   return (
     <>
       {console.log(post)}
@@ -161,7 +163,7 @@ function ProfileScreen(props) {
         name="file-excel"
         color="#8CBBF1"
         containerStyle={styles.btnContainer2}
-        onPress={getExcelGLobal}
+        onPress={() => getExcelPerfil(props.email)}
       />
 
       <ProfileDateScreen filterButton={filter} quitFilterButton={quitfilter} />
@@ -207,7 +209,6 @@ function ProfileScreen(props) {
 const mapStateToProps = (reducers) => {
   return {
     profile: reducers.profile.firebase_user_name,
-
     email: reducers.profile.email,
   };
 };

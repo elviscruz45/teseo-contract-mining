@@ -39,10 +39,10 @@ function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  const [lengPosts, setlengPosts] = useState(3);
+  const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
   const [lastVisible, setLastVisible] = useState(null);
+  const POSTS_PER_PAGE = 15; // Number of posts to retrieve per page
 
-  const POSTS_PER_PAGE = 3; // Number of posts to retrieve per page
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
     console.log("useeffect");

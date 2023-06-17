@@ -59,7 +59,7 @@ export const CircularProgress = () => {
               x={100}
               y={100}
               text={`${Math.round(newProps.percent)}%`}
-              style={{ fontSize: 45 }}
+              style={{ fontSize: 45, fontWeight: "300" }}
             />
           );
         }}
