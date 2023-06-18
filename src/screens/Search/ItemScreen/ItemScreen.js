@@ -158,17 +158,25 @@ function ItemScreenNotRedux(props) {
 
   //this function add/remove to firebase Users Collection => EquipmentFavorities
   const pressFollow = async () => {
+    console.log("1111111");
     const PostRef = doc(db, "users", props.uid);
     if (firestoreEquipmentLiked?.includes(Item.tag)) {
+      console.log("22222222222222");
+
       await updateDoc(PostRef, {
         EquipmentFavorities: arrayRemove(Item.tag),
       });
+      console.log("333333333333");
     } else {
+      console.log("4444444444444");
+
       await updateDoc(PostRef, {
         EquipmentFavorities: arrayUnion(Item.tag),
       });
+      console.log("5555555555");
     }
   };
+
   //this function goes to homeTab=>commentScreen
   const comentPost = (item) => {
     navigation.navigate(screen.home.tab, {

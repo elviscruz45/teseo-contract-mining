@@ -127,7 +127,6 @@ function ProfileScreen(props) {
 
   return (
     <>
-      {console.log(post)}
       <Text></Text>
       <View>
         <ConnectedInfoUser />
