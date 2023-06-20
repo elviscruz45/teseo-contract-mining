@@ -1,14 +1,10 @@
-import React, { useState, useContext } from "react";
-// import TabNavigator from "./TabNavigator";
-// import { app } from "../config/firebase";
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { View, Text } from "react-native";
+import React from "react";
 import { AppNavigation } from "./AppNavigation";
 import { AuthScreen } from "../screens/Auth/AuthScreen";
 import { connect } from "react-redux";
 
 function LoginNavigator(props) {
-  return <>{props.firebase_user_uid ? <AppNavigation /> : <AuthScreen />}</>;
+  return <>{props.firebase_user_uid ? <AppNavigation /> : <AuthScreen />}</>; //this screen shows a form to log in
 }
 
 const mapStateToProps = (reducers) => {

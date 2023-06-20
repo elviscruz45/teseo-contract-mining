@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
-import { getExcelGLobal } from "../../../utils/excelData";
 import { getExcelPerfil } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
@@ -27,12 +26,9 @@ import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 
 function ProfileScreen(props) {
-  const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
   const [_, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState(null);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -103,10 +99,8 @@ function ProfileScreen(props) {
         console.log("getDocs Item with date profile");
 
         setPost(lista);
-        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data: ", error);
-        setIsLoading(false);
       }
     }
     fetchData();

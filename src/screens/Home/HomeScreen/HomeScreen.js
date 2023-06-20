@@ -22,7 +22,6 @@ import {
   where,
   limit,
   orderBy,
-  startAfter,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
@@ -36,7 +35,7 @@ import { EquipmentListUpper } from "../../../actions/home";
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  const POSTS_PER_PAGE = 5; // Number of posts to retrieve per page
+  const POSTS_PER_PAGE = 10; // Number of posts to retrieve per page
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
