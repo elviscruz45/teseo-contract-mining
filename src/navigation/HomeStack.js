@@ -1,13 +1,11 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useState, useEffect } from "react";
+import { TouchableOpacity, Image } from "react-native";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { ConnectedHomeScreen } from "../screens";
 import { ConnectedCommentScreen } from "../screens";
-import { styles } from "./Navigation.styles";
 import { connect } from "react-redux";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { update_firebasePhoto } from "../actions/profile";
@@ -83,14 +81,8 @@ function HomeStack(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    firebase_user_name: reducers.profile.firebase_user_name,
+    //profile global states
     user_photo: reducers.profile.user_photo,
-    email: reducers.profile.email,
-    profile: reducers.profile.profile,
-    uid: reducers.profile.uid,
-
-    savePhotoUri: reducers.post.savePhotoUri,
-    actualEquipment: reducers.post.actualEquipment,
   };
 };
 

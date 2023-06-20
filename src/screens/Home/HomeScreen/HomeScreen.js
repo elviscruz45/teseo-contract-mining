@@ -35,13 +35,12 @@ import { EquipmentListUpper } from "../../../actions/home";
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  const POSTS_PER_PAGE = 10; // Number of posts to retrieve per page
+  const POSTS_PER_PAGE = 10; // Number of posts to retrieve per page from Firebase
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
-  const [lastVisible, setLastVisible] = useState(null);
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -85,7 +84,8 @@ function HomeScreen(props) {
     };
   }, [props.equipmentListHeader.toString(), lengPosts]);
 
-  //This code is for retreive code each time is updated
+  //This function is designed to retrieve more posts when they reach the final view, as lazy loading
+
   const loadMorePosts = async () => {
     console.log("snapshotGETDOCS");
     setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
