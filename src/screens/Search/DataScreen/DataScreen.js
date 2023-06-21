@@ -107,7 +107,7 @@ export function PolinesScreen(props) {
             ];
             const day = date.getDate();
             const month = date.getMonth();
-            const year = date.getFullYear().toString().slice(-2);
+            const year = date?.getFullYear().toString().slice(-2);
             const formattedDate = `${day}${monthNamesEs[month]}${year}`;
             return formattedDate;
           };

@@ -33,7 +33,7 @@ function HeaderScreenNoRedux(props) {
   useEffect(() => {
     let q = query(collection(db, "users"), where("uid", "==", props.uid));
 
-    if (props.equipmentListHeader.length > 0) {
+    if (props?.equipmentListHeader?.length > 0) {
       const filteredList = equipmentList.filter((equipment) =>
         props.equipmentListHeader?.includes(equipment.tag)
       );
@@ -41,7 +41,7 @@ function HeaderScreenNoRedux(props) {
     } else {
       setPostsHeader(equipmentList);
     }
-  }, [props.equipmentListHeader.toString()]);
+  }, [props?.equipmentListHeader?.toString()]);
 
   return (
     <View>

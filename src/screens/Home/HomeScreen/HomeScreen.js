@@ -82,7 +82,7 @@ function HomeScreen(props) {
         unsubscribe();
       }
     };
-  }, [props.equipmentListHeader.toString(), lengPosts]);
+  }, [props?.equipmentListHeader?.toString(), lengPosts]);
 
   //This function is designed to retrieve more posts when they reach the final view, as lazy loading
 
