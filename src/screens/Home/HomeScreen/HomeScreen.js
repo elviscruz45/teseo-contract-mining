@@ -49,7 +49,7 @@ function HomeScreen(props) {
 
     async function fetchData() {
       let queryRef;
-      if (props.equipmentListHeader.length > 0) {
+      if (props?.equipmentListHeader?.length > 0) {
         queryRef = query(
           collection(db, "posts"),
           where("equipoTag", "in", props.equipmentListHeader),
