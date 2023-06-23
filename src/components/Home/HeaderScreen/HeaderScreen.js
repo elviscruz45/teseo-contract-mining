@@ -1,15 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  onSnapshot,
-  query,
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  where,
-} from "firebase/firestore";
+import { collection, query, where } from "firebase/firestore";
 import { Image as ImageExpo } from "expo-image";
 import { equipmentList } from "../../../utils/equipmentList";
 import { styles } from "./HeaderScreen.styles";
@@ -58,6 +49,7 @@ function HeaderScreenNoRedux(props) {
                   style={styles.roundImage5}
                   cachePolicy={"memory-disk"}
                 />
+
                 <Text style={styles.Texticons}>{item.tag}</Text>
               </View>
             </TouchableOpacity>

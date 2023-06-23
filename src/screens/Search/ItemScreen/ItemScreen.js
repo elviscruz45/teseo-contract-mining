@@ -51,6 +51,7 @@ function ItemScreenNotRedux(props) {
       params: { Item },
     },
   } = props;
+  console.log("porps ITEM");
   const navigation = useNavigation();
 
   //Changing the value to activate again the filter to rende the posts
@@ -105,7 +106,7 @@ function ItemScreenNotRedux(props) {
           collection(db, "posts"),
           orderBy("createdAt", "desc"),
           where("equipoTag", "==", Item.tag),
-          limit(10) // Add the desired limit value here
+          limit(50) // Add the desired limit value here
         );
       }
       try {
@@ -130,7 +131,7 @@ function ItemScreenNotRedux(props) {
         unsubscribe();
       }
     };
-  }, [startDate, endDate, removeFilter]);
+  }, [startDate, endDate, removeFilter, Item]);
 
   //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
   useEffect(() => {

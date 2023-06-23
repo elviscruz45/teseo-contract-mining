@@ -86,7 +86,7 @@ function ProfileScreen(props) {
           collection(db, "posts"),
           orderBy("createdAt", "desc"),
           where("emailPerfil", "==", props.email),
-          limit(10) // Add the desired limit value here
+          limit(50) // Add the desired limit value here
         );
       }
 
