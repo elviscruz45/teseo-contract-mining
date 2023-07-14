@@ -30,13 +30,12 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
-import { size, map } from "lodash";
-import { equipmentList } from "../../../utils/equipmentList";
 import { screen } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 import { db } from "../../../utils";
 import { connect } from "react-redux";
 import { EquipmentListUpper } from "../../../actions/home";
+import { areaLists } from "../../../utils/areaList";
 
 const windowWidth = Dimensions.get("window").width;
 function SearchScreenNoRedux(props) {
@@ -44,45 +43,50 @@ function SearchScreenNoRedux(props) {
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
-
-  console.log("aaaaaaa");
-  //This is used to retrieve the equipment we are looking for
+  const AITServiceList = props.ActualServiceAITList;
+  //This is used to retrieve the equipment we are searching for
   useEffect(() => {
-    const result = equipmentList.filter((item) => {
-      const re = new RegExp(searchText, "ig");
-      return re.test(item.nombre) || re.test(item.tag);
-    });
+    if (searchText === "") {
+      setSearchResults(AITServiceList);
+    } else {
+      const result = AITServiceList?.filter((item) => {
+        const re = new RegExp(searchText, "ig");
+        return (
+          re.test(item.NombreServicio) ||
+          re.test(item.NumeroAIT) ||
+          re.test(item.NumeroCotizacion) ||
+          re.test(item.TipoServicio)
+        );
+      });
 
-    setSearchResults(result);
-  }, [searchText]);
+      setSearchResults(result);
+    }
+  }, [searchText, props.ActualServiceAITList]);
 
+  //this method is used to go to a screen to see the status of the item
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: item },
     });
   };
-  console.log("bbbbbbbb");
 
-  //this hook is used to retrieve de list of tags in Firebase EquipmentFavorities and to send to Global state EquipmentListHeader
+  //this hook is used to retrieve the list of tags of Firebase of Equipment I am following  to send to Global state EquipmentListHeader
   useEffect(() => {
     console.log("useeffect Search Screen");
     let unsubscribe; // Variable to store the unsubscribe function
 
-    setSearchResults(equipmentList);
+    // setSearchResults(equipmentList); this lines of code is remover because dont work
     async function fetchData() {
       const q = query(collection(db, "users"), where("uid", "==", props.uid));
 
       unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
         querySnapshotFirebase.forEach((doc) => {
-          setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
+          setFirestoreEquipmentLiked(doc.data().EquipmentFavorities); //when there is un update I update the locas useState to rerender the changes ("seguir" button)
           props.EquipmentListUpper(doc.data().EquipmentFavorities);
         });
       });
     }
-
-    console.log("onSnashopt following Search ");
-    console.log("ccccccccc");
 
     fetchData();
     return () => {
@@ -93,26 +97,18 @@ function SearchScreenNoRedux(props) {
     };
   }, []);
 
-  //Function to sent to Firebase to include/remove the equipment, depending if exist in firestoreEquipmentLiked
+  //Function to include/remove from FIrebase (users collection)the "follow" status
   const pressFollow = async (item) => {
-    console.log("1111111");
-
     const PostRef = doc(db, "users", props.uid);
 
     if (firestoreEquipmentLiked?.includes(item.tag)) {
-      console.log("22222222222222");
-
       await updateDoc(PostRef, {
         EquipmentFavorities: arrayRemove(item.tag),
       });
-      console.log("333333333333");
     } else {
-      console.log("4444444444444");
-
       await updateDoc(PostRef, {
         EquipmentFavorities: arrayUnion(item.tag),
       });
-      console.log("5555555555");
     }
   };
 
@@ -131,19 +127,48 @@ function SearchScreenNoRedux(props) {
       <FlatList
         data={searchResults}
         renderItem={({ item, index }) => {
+          //the algoritm to retrieve the image source to render the icon
+
+          const area = item.AreaServicio;
+          const indexareaList = areaLists.findIndex(
+            (item) => item.value === area
+          );
+          const imageSource = areaLists[indexareaList]?.image;
+          // the algorithm to retrieve the amount with format
+          const formattedAmount = new Intl.NumberFormat("en-US", {
+            style: "decimal",
+            useGrouping: true,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(item.Monto);
+
           return (
             <TouchableOpacity onPress={() => selectAsset(item)}>
               <View style={styles.equipments}>
                 <ImageExpo
-                  source={item.image}
+                  source={imageSource}
                   style={styles.image}
                   cachePolicy={"memory-disk"}
                 />
 
                 <View>
-                  <Text style={styles.name}>{item.tag}</Text>
-                  <Text style={styles.info}>{item.nombre}</Text>
-                  <Text style={styles.info}>{item.caracteristicas}</Text>
+                  <Text style={styles.name}>{item.NombreServicio}</Text>
+                  <Text style={styles.info}>
+                    {"AIT: "}
+                    {item.NumeroAIT}
+                  </Text>
+                  <Text style={styles.info}>
+                    {"Tipo: "}
+                    {item.TipoServicio}
+                  </Text>
+                  <Text style={styles.info}>
+                    {"Monto: "}
+                    {formattedAmount} {item.Moneda}
+                  </Text>
+                  <Text style={styles.info}>
+                    {"Fecha: "}
+                    {item.fechaPostFormato}
+                  </Text>
                 </View>
                 {firestoreEquipmentLiked?.includes(item.tag) ? (
                   <Pressable
@@ -164,7 +189,7 @@ function SearchScreenNoRedux(props) {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.tag}
+        keyExtractor={(item) => item.NumeroAIT}
       />
     </>
   );
@@ -178,6 +203,8 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
+
+    ActualServiceAITList: reducers.post.ActualServiceAITList,
   };
 };
 

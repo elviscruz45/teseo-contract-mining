@@ -30,3 +30,15 @@ export const saveActualPostFirebase = (item) => async (dispatch) => {
     alert(error.message);
   }
 };
+
+export const saveActualAITServicesFirebaseGlobalState =
+  (item) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "SAVE_ACTUALSERVICEAIT",
+        payload: item,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };

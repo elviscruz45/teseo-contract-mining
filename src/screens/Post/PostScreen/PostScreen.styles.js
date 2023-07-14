@@ -152,6 +152,11 @@ export const styles = StyleSheet.create({
     bottom: 80,
     right: 10,
   },
+  btnContainer4: {
+    position: "absolute",
+    bottom: 150,
+    right: 10,
+  },
   roundImageUpload: {
     width: 50,
     height: 50,

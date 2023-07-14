@@ -8,11 +8,14 @@ import { connect } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
+import { collection, getDocs } from "firebase/firestore";
 import { update_firebasePhoto } from "../actions/profile";
 import { update_firebaseUserName } from "../actions/profile";
 import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { update_firebaseProfile } from "../actions/profile";
+import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
+import { db } from "../utils";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
@@ -24,6 +27,17 @@ function HomeStack(props) {
     props.update_firebaseUserName(displayName);
     props.update_firebaseEmail(email);
     props.update_firebaseUid(uid);
+
+    async function fetchData() {
+      const querySnapshot = await getDocs(collection(db, "ServiciosAIT"));
+      const post_array = [];
+      querySnapshot.forEach((doc) => {
+        post_array.push(doc.data());
+      });
+
+      props.saveActualAITServicesFirebaseGlobalState(post_array);
+    }
+    fetchData();
   }, []);
 
   const home_screen = () => {
@@ -92,4 +106,5 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   update_firebaseEmail,
   update_firebaseUid,
   update_firebaseProfile,
+  saveActualAITServicesFirebaseGlobalState,
 })(HomeStack);

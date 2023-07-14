@@ -1,5 +1,18 @@
 export const equipmentList = [
   {
+    nombre: "Reuniones",
+    marca: "Reuniones",
+    caracteristicas: "85x118",
+    tag: "C2-REU",
+    tamano: "23x118",
+    tonelaje: "118",
+    datos_adicionales: "datos adicionales",
+    image: require("../../assets/equipmentplant/ImageIcons/reu.jpeg"),
+    // pdfManual: require("./path/to/file.pdf"),
+    // pdfPlanos: require("./path/to/file.pdf"),
+    clase: "chancadora",
+  },
+  {
     nombre: "Chancadora Primaria",
     marca: "FL-Smith",
     caracteristicas: "85x118",

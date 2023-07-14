@@ -11,6 +11,7 @@ const searchStack = {
   tab: "SearchTab",
   search: "Search",
   item: "Item",
+  moreDetail: "MoreDetail",
   detail: "Detail",
   polines: "Polines",
 };
@@ -22,6 +23,7 @@ const postStack = {
   form: "Form",
   polines: "Polines",
   addpolines: "AddPolines",
+  aitform: "AITform",
 };
 
 const reportStack = {

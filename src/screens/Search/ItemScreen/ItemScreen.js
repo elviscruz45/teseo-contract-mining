@@ -34,6 +34,7 @@ import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
 import { EquipmentListUpper } from "../../../actions/home";
 import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
+import { areaLists } from "../../../utils/areaList";
 
 const windowWidth = Dimensions.get("window").width;
 function ItemScreenNotRedux(props) {
@@ -44,8 +45,8 @@ function ItemScreenNotRedux(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
-  //Retrieve data Item that comes from the previous screen
 
+  //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
     route: {
       params: { Item },
@@ -53,6 +54,41 @@ function ItemScreenNotRedux(props) {
   } = props;
   console.log("porps ITEM");
   const navigation = useNavigation();
+
+  ///the algoritm to retrieve the image source to render the icon
+  const area = Item.AreaServicio;
+  const indexareaList = areaLists.findIndex((item) => item.value === area);
+  const imageSource = areaLists[indexareaList]?.image;
+  /// the algorithm to retrieve the amount with format
+  const formattedAmount = new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    useGrouping: true,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Item.Monto);
+  ///algoritm to change the format of FechaFin from ServiciosAIT firebase collection
+  const date = new Date(Item.FechaFin.seconds * 1000);
+  console.log(date);
+  const monthNames = [
+    "ene.",
+    "feb.",
+    "mar.",
+    "abr.",
+    "may.",
+    "jun.",
+    "jul.",
+    "ago.",
+    "sep.",
+    "oct.",
+    "nov.",
+    "dic.",
+  ];
+  const day = date.getDate();
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const formattedDate = `${day} ${month} ${year}`;
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
@@ -133,49 +169,36 @@ function ItemScreenNotRedux(props) {
     };
   }, [startDate, endDate, removeFilter, Item]);
 
-  //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
-  useEffect(() => {
-    let unsubscribe;
+  // //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
+  // useEffect(() => {
+  //   let unsubscribe;
 
-    async function fetchEquipmentData() {
-      const q = query(collection(db, "users"), where("uid", "==", props.uid));
+  //   async function fetchEquipmentData() {
+  //     const q = query(collection(db, "users"), where("uid", "==", props.uid));
 
-      unsubscribe = onSnapshot(q, (itemFirebase) => {
-        itemFirebase.forEach((doc) => {
-          setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
-          props.EquipmentListUpper(doc.data().EquipmentFavorities);
-        });
-      });
-    }
-    console.log("onSnashopt following Item ");
-    fetchEquipmentData();
-    return () => {
-      // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, []);
+  //     unsubscribe = onSnapshot(q, (itemFirebase) => {
+  //       itemFirebase.forEach((doc) => {
+  //         setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
+  //         props.EquipmentListUpper(doc.data().EquipmentFavorities);
+  //       });
+  //     });
+  //   }
+  //   console.log("onSnashopt following Item ");
+  //   fetchEquipmentData();
+  //   return () => {
+  //     // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
+  //     if (unsubscribe) {
+  //       unsubscribe();
+  //     }
+  //   };
+  // }, []);
 
-  //this function add/remove to firebase Users Collection => EquipmentFavorities
-  const pressFollow = async () => {
-    console.log("1111111");
-    const PostRef = doc(db, "users", props.uid);
-    if (firestoreEquipmentLiked?.includes(Item.tag)) {
-      console.log("22222222222222");
-
-      await updateDoc(PostRef, {
-        EquipmentFavorities: arrayRemove(Item.tag),
-      });
-      console.log("333333333333");
-    } else {
-      console.log("4444444444444");
-
-      await updateDoc(PostRef, {
-        EquipmentFavorities: arrayUnion(Item.tag),
-      });
-      console.log("5555555555");
-    }
+  //this function goes to another screen to get more detail about the service state
+  const Detalles = (data) => {
+    navigation.navigate(screen.home.tab, {
+      screen: screen.home.comment,
+      params: { Item: data },
+    });
   };
 
   //this function goes to homeTab=>commentScreen
@@ -210,60 +233,41 @@ function ItemScreenNotRedux(props) {
     <>
       <View style={[styles.row, styles.center]}>
         <View>
-          <Image
-            source={chooseImageEquipment(props.route.params.Item.tag)}
-            style={styles.roundImage}
-          />
-          {firestoreEquipmentLiked?.includes(Item.tag) ? (
-            <Pressable
-              style={styles.buttonFollow}
-              onPress={() => pressFollow()}
-            >
-              <Text style={styles.textFollow}>Siguiendo</Text>
-            </Pressable>
-          ) : (
-            <Pressable
-              style={styles.buttonUnfollow}
-              onPress={() => pressFollow()}
-            >
-              <Text style={styles.textFollow}>Seguir</Text>
-            </Pressable>
-          )}
+          <Image source={imageSource} style={styles.roundImage} />
+
+          <Pressable
+            style={styles.buttonUnfollow}
+            onPress={() => Detalles(Item)}
+          >
+            <Text style={styles.textFollow}>+ Detalles</Text>
+          </Pressable>
         </View>
         <View>
           <Text></Text>
-          <Text style={styles.name}>{Item.tag}</Text>
+          <Text style={styles.name}>{Item.NombreServicio}</Text>
           <Text style={styles.info}>
-            {"Nombre:  "} {Item.nombre}
+            {"AIT:  "} {Item.NumeroAIT}
           </Text>
           <Text style={styles.info}>
-            {"Marca:  "} {Item.marca}
+            {"Tipo:  "} {Item.TipoServicio}
           </Text>
           <Text style={styles.info}>
-            {"Tonelaje:  "} {Item.tonelaje}
+            {"Monto:  "} {formattedAmount} {Item.Moneda}
           </Text>
           <Text style={styles.info}>
-            {"Tamano:  "} {Item.tamano}
-          </Text>
-
-          <Text style={styles.info}>
-            {"Caracteristica:  "} {Item.caracteristicas}
+            {"Fecha Fin:  "} {formattedDate}
           </Text>
           <Text style={styles.info}>
-            {"Datos Adicionales:  "} {Item.datos_adicionales}
+            {"Ejecucion:  "} {Item.AvanceEjecucion}
+            {" %"}
+          </Text>
+          <Text style={styles.info}>
+            {"Admin:  "} {Item.AvanceAdministrativo}
+            {" %"}
           </Text>
         </View>
       </View>
 
-      <Text></Text>
-      {Item.clase == "faja" ? (
-        <Button
-          title="Estado de los Polines"
-          buttonStyle={styles.btnActualizarStyles}
-          titleStyle={styles.btnTextStyle}
-          onPress={polinesDetail}
-        />
-      ) : null}
       <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} />
 
       <FlatList

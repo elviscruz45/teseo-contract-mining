@@ -22,8 +22,6 @@ function HeaderScreenNoRedux(props) {
   };
   // // Retrieve data from equipment list to the header list and to render all the post
   useEffect(() => {
-    let q = query(collection(db, "users"), where("uid", "==", props.uid));
-
     if (props?.equipmentListHeader?.length > 0) {
       const filteredList = equipmentList.filter((equipment) =>
         props.equipmentListHeader?.includes(equipment.tag)

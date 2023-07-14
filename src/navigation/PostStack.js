@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
+import { AITScreen } from "../screens/Post/AITScreen";
 
 function PostStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -93,6 +94,17 @@ function PostStackBare(props) {
           headerTransparent: false,
           headerShown: true,
           headerBackTitle: "Home",
+          headerTintColor: "black",
+        }}
+      />
+      <Stack.Screen
+        name={screen.post.aitform}
+        component={AITScreen}
+        options={{
+          title: " ",
+          headerTransparent: false,
+          headerShown: true,
+          headerBackTitle: "Publicar",
           headerTintColor: "black",
         }}
       />
