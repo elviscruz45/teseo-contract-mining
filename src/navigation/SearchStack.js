@@ -10,6 +10,7 @@ import { PolinesScreen } from "../screens/Search/DataScreen/DataScreen";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
+import { MoreDetailScreen } from "../screens/Search/MoreDetailScreen/MoreDetailScreen";
 
 function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -77,7 +78,21 @@ function SearchStackBare(props) {
           ),
         }}
       />
-
+      <Stack.Screen
+        name={screen.search.moreDetail}
+        component={MoreDetailScreen}
+        // options={{
+        //   title: " ",
+        //   headerLeft: () => (
+        //     <TouchableOpacity
+        //       onPress={() => navigation.goBack()}
+        //       style={{ marginLeft: -12 }}
+        //     >
+        //       <AntDesign name="left" size={24} color="black" />
+        //     </TouchableOpacity>
+        //   ),
+        // }}
+      />
       <Stack.Screen
         name={screen.search.detail}
         component={ConnectedDetailScreen}

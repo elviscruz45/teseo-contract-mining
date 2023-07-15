@@ -170,6 +170,30 @@ function ItemScreenNotRedux(props) {
     };
   }, [startDate, endDate, removeFilter, Item]);
 
+  // //this hook is used to render the boton (seguir/siguiendo) and send to globalState (home=>equipmentList)
+  // useEffect(() => {
+  //   let unsubscribe;
+
+  //   async function fetchEquipmentData() {
+  //     const q = query(collection(db, "users"), where("uid", "==", props.uid));
+
+  //     unsubscribe = onSnapshot(q, (itemFirebase) => {
+  //       itemFirebase.forEach((doc) => {
+  //         setFirestoreEquipmentLiked(doc.data().EquipmentFavorities);
+  //         props.EquipmentListUpper(doc.data().EquipmentFavorities);
+  //       });
+  //     });
+  //   }
+  //   console.log("onSnashopt following Item ");
+  //   fetchEquipmentData();
+  //   return () => {
+  //     // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
+  //     if (unsubscribe) {
+  //       unsubscribe();
+  //     }
+  //   };
+  // }, []);
+
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {
     navigation.navigate(screen.search.tab, {
@@ -203,13 +227,7 @@ function ItemScreenNotRedux(props) {
     <>
       <View style={[styles.row, styles.center]}>
         <View>
-          {/* <Image source={imageSource} style={styles.roundImage} /> */}
-          <CircularProgress
-            imageSource={imageSource}
-            imageStyle={styles.roundImage}
-            avance={Item.AvanceEjecucion}
-          />
-          <Text></Text>
+          <Image source={imageSource} style={styles.roundImage} />
 
           <Pressable
             style={styles.buttonUnfollow}
