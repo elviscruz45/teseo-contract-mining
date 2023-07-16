@@ -175,9 +175,12 @@ export const styles = StyleSheet.create({
   equipments: {
     flexDirection: "row",
     margin: 10,
+    width: "100%",
+    alignItems: "center", // Align contents vertically
   },
   name: {
     fontWeight: "bold",
+    marginRight: 65,
   },
   info: {
     color: "#828282",

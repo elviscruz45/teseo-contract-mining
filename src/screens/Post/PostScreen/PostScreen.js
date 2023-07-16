@@ -196,7 +196,6 @@ function PostScreen(props) {
           </View>
         </View>
       </View>
-      <Text></Text>
       <FlatList
         data={searchResults}
         renderItem={({ item, index }) => {
@@ -221,7 +220,7 @@ function PostScreen(props) {
                     {item.TipoServicio}
                   </Text>
                   <Text style={styles.info}>
-                    {"Fecha: "}
+                    {"Fecha Inicio: "}
                     {item.fechaPostFormato}
                   </Text>
                 </View>

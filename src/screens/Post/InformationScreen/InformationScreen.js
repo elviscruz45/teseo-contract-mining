@@ -35,6 +35,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { equipmentList } from "../../../utils/equipmentList";
+import { areaLists } from "../../../utils/areaList";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
@@ -149,6 +150,11 @@ function InformationScreen(props) {
     navigation.navigate(screen.post.polines);
   };
 
+  //algorith to retrieve image source that
+  const area = props.actualEquipment?.AreaServicio;
+  const indexareaList = areaLists.findIndex((item) => item.value === area);
+  const imageSource = areaLists[indexareaList]?.image;
+
   return (
     <KeyboardAwareScrollView>
       <View style={styles.equipments}>
@@ -157,7 +163,7 @@ function InformationScreen(props) {
           rounded
           containerStyle={styles.avatar}
           icon={{ type: "material", name: "person" }}
-          source={props.actualEquipment?.image}
+          source={imageSource}
         ></Avatar>
         {props.actualEquipment.clase == "faja" && (
           <Icon
@@ -172,9 +178,9 @@ function InformationScreen(props) {
         <View>
           <Text></Text>
           <Text style={styles.name}>
-            {props.actualEquipment?.tag || "Vuelve al Inicio"}
+            {props.actualEquipment?.NombreServicio || "Titulo del Evento"}
           </Text>
-          <Text style={styles.info}>{props.actualEquipment?.nombre}</Text>
+          <Text style={styles.info}>{props.actualEquipment?.AreaServicio}</Text>
         </View>
       </View>
       <View style={styles.equipments}>
@@ -203,7 +209,7 @@ function InformationScreen(props) {
       </View>
       <GeneralForms formik={formik} />
       <Button
-        title="Agregar Dato"
+        title="Agregar Evento"
         buttonStyle={styles.addInformation}
         onPress={formik.handleSubmit}
         loading={formik.isSubmitting}

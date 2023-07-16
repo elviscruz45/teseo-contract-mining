@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { update_firebasePhoto } from "../actions/profile";
 import { update_firebaseUserName } from "../actions/profile";
 import { update_firebaseEmail } from "../actions/profile";
@@ -29,7 +29,12 @@ function HomeStack(props) {
     props.update_firebaseUid(uid);
 
     async function fetchData() {
-      const querySnapshot = await getDocs(collection(db, "ServiciosAIT"));
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, "ServiciosAIT"),
+          orderBy("LastEventPosted", "desc")
+        )
+      );
       const post_array = [];
       querySnapshot.forEach((doc) => {
         post_array.push(doc.data());

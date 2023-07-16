@@ -153,6 +153,17 @@ function HomeScreen(props) {
     [navigation]
   );
 
+  // create an algorithm to reduce the total text of the service description
+  const ShortTextComponent = (item) => {
+    const longText = item;
+    const maxLength = 20; // Maximum length of the short text
+    let shortText = longText;
+    if (longText.length > maxLength) {
+      shortText = `${longText.substring(0, maxLength)}...`;
+    }
+    return <Text style={styles.Texticons}>{shortText}</Text>;
+  };
+
   if (isLoading) {
     return <LoadingSpinner />;
   } else {
@@ -185,6 +196,7 @@ function HomeScreen(props) {
                         cachePolicy={"memory-disk"}
                       />
                       <Text>{item.equipoPostDatos?.tag}</Text>
+                      {/* {ShortTextComponent(item.NombreServicio)} */}
                     </TouchableOpacity>
 
                     <ImageExpo

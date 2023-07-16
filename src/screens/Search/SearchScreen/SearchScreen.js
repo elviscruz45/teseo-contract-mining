@@ -166,7 +166,7 @@ function SearchScreenNoRedux(props) {
                     {formattedAmount} {item.Moneda}
                   </Text>
                   <Text style={styles.info}>
-                    {"Fecha: "}
+                    {"Fecha Inicio: "}
                     {item.fechaPostFormato}
                   </Text>
                 </View>

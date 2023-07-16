@@ -80,6 +80,7 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
+    marginRight: 65,
   },
   info: {
     color: "#828282",

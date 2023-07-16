@@ -80,14 +80,11 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
-    marginLeft: windowWidth / 8,
+    textAlign: "center",
+
+    // marginLeft: windowWidth / 2,
   },
-  info: {
-    color: "#828282",
-    paddingRight: 100,
-    marginTop: 3,
-    marginLeft: windowWidth / 32,
-  },
+
   titleText: {
     fontSize: 24,
     fontFamily: "Arial",
@@ -140,10 +137,27 @@ export const styles = StyleSheet.create({
   name2: {
     fontWeight: "bold",
   },
-  info2: {
-    color: "#828282",
-    paddingRight: 100,
+  info: {
+    // color: "#828282",
+    // paddingRight: 100,
     marginTop: 3,
+    // marginLeft: windowWidth / 32,
+    fontWeight: "600",
+    marginHorizontal: windowWidth * 0.02,
+  },
+  info2: {
+    // color: "#828282",
+    // paddingRight: 10,
+    marginTop: 3,
+    fontWeight: "normal",
+    // marginHorizontal: windowWidth * 0.28,
+    marginRight: 10,
+  },
+  info3: {
+    // color: "#828282",
+    paddingLeft: 15,
+    marginTop: 3,
+    fontWeight: "normal",
   },
   row: {
     flexDirection: "row",
@@ -151,9 +165,14 @@ export const styles = StyleSheet.create({
   center: {
     alignItems: "center",
     justifyContent: "space-between",
-    margin: 0,
   },
-  roundImage: { width: 100, height: 100, borderRadius: 50, margin: 5 },
+  roundImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    // alignItems: "center",
+    marginLeft: windowWidth / 2 - 50,
+  },
 
   buttonFollow: {
     alignItems: "center",

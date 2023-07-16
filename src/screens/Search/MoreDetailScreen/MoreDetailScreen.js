@@ -23,6 +23,7 @@ import { saveActualEquipment } from "../../../actions/post";
 import { EquipmentListUpper } from "../../../actions/home";
 import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const windowWidth = Dimensions.get("window").width;
 function MoreDetailScreenNoRedux(props) {
@@ -103,6 +104,62 @@ function MoreDetailScreenNoRedux(props) {
     ((ActualDate - new Date(Item.createdAt.seconds * 1000)) * 100) /
     DaysProyectedToCompleteTask;
 
+  //Algorithm to   convert string to a list to render a list of names
+  const ContratistaList = Item.ResponsableEmpresaContratista?.split(",");
+  const UsuarioList = Item.ResponsableEmpresaUsuario?.split(",");
+
+  const ResposableList = (array) => {
+    return (
+      <View>
+        <FlatList
+          data={array}
+          renderItem={({ item }) => {
+            return (
+              <View>
+                <Text style={styles.info3}>{item}</Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item, index) => index.toString()}
+          scrollEnabled={false}
+        />
+      </View>
+    );
+  };
+  //Algorithm to render the bar status
+
+  const BarProgress = (percentage) => {
+    const TotalSizeCompleted = windowWidth - 20;
+    const percentajeNormalized = (percentage * TotalSizeCompleted) / 100;
+
+    getColor = (percentajeNormalized) => {
+      if (percentajeNormalized < (TotalSizeCompleted * 20) / 100) {
+        return "red";
+      } else if (percentajeNormalized < (TotalSizeCompleted * 40) / 100) {
+        return "magenta";
+      } else if (percentajeNormalized < (TotalSizeCompleted * 60) / 100) {
+        return "orange";
+      } else if (percentajeNormalized < (TotalSizeCompleted * 80) / 100) {
+        return "limegreen";
+      } else if (percentajeNormalized < TotalSizeCompleted) {
+        return "green";
+      } else {
+        return "blue";
+      }
+    };
+    return (
+      <View style={{ flexDirection: "row", height: 10, margin: 10 }}>
+        <View
+          style={{
+            backgroundColor: getColor(percentajeNormalized),
+            width: percentajeNormalized,
+            borderRadius: 5,
+          }}
+        />
+      </View>
+    );
+  };
+
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
     console.log("filter");
@@ -135,77 +192,96 @@ function MoreDetailScreenNoRedux(props) {
   }
 
   return (
-    <>
+    <KeyboardAwareScrollView>
       <Text></Text>
 
       <Text style={styles.name}>{Item.NombreServicio}</Text>
+      <Text></Text>
 
       <Image source={imageSource} style={styles.roundImage} />
 
-      <View style={[styles.row, styles.center]}>
-        <View>
-          <Text></Text>
-          <Text style={styles.info}>
-            {"Numero de AIT:  "} {Item.NumeroAIT}
-          </Text>
-          <Text style={styles.info}>
-            {"Numero de Cotizacion:  "} {Item.NumeroCotizacion}
-          </Text>
-          <Text style={styles.info}>
-            {"Tipo de Servicio:  "} {Item.TipoServicio}
-          </Text>
-          <Text style={styles.info}>
-            {"Area del Servicio:  "} {Item.AreaServicio}
-          </Text>
-          <Text style={styles.info}>
-            {"Nombre de la Empresa:  "} {Item.companyName}
-          </Text>
-          <Text style={styles.info}>
-            {"Creado por:  "} {Item.emailPerfil}
-          </Text>
-          <Text style={styles.info}>
-            {"Monto de Cotizacion:  "} {formattedAmount} {Item.Moneda}
-          </Text>
-          <Text style={styles.info}>
-            {"Fecha de Asignacion:  "} {formattedDateInicio}
-          </Text>
-          <Text style={styles.info}>
-            {"Fecha de Fin Propuesto:  "} {formattedDate}
-          </Text>
-          <Text style={styles.info}>
-            {"Horas Hombre Cotizadas:  "} {Item.HorasHombre}
-            {" HH"}
-          </Text>
-          <Text style={styles.info}>
-            {"Avance Ejecucion Real:  "} {Item.AvanceEjecucion}
-            {" %"}
-          </Text>
-          <Text style={styles.info}>
-            {"Avance Ejecucion Proyectado:  "} {AvanceProyected.toFixed(2)}
-            {" %"}
-          </Text>
-
-          <Text style={styles.info}>
-            {"Avance Administrativo:  "} {Item.AvanceAdministrativo}
-            {" %"}
-          </Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text style={styles.info}>
-            {"Administradores de Contratos:  "}{" "}
-            {Item.ResponsableEmpresaContratista}
-          </Text>
-          <Text style={styles.info}>
-            {"Supervisores Responsables:  "} {Item.ResponsableEmpresaUsuario}
+      <View>
+        <Text></Text>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Numero de AIT:  "}</Text>
+          <Text style={styles.info2}>{Item.NumeroAIT}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Numero de Cotizacion:  "}</Text>
+          <Text style={styles.info2}>{Item.NumeroCotizacion}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Tipo de Servicio:  "}</Text>
+          <Text style={styles.info2}>{Item.TipoServicio}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Area del Servicio:  "}</Text>
+          <Text style={styles.info2}>{Item.AreaServicio}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Nombre de la Empresa:  "}</Text>
+          <Text style={styles.info2}>{Item.companyName}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Creado por:  "}</Text>
+          <Text style={styles.info2}>{Item.emailPerfil}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Monto de Cotizacion:  "}</Text>
+          <Text style={styles.info2}>
+            {formattedAmount} {Item.Moneda}
           </Text>
         </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Fecha de Asignacion:  "}</Text>
+          <Text style={styles.info2}>{formattedDateInicio}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Fecha de Fin Propuesto:  "}</Text>
+          <Text style={styles.info2}>{formattedDate}</Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Horas Hombre Cotizadas:  "}</Text>
+          <Text style={styles.info2}>
+            {Item.HorasHombre}
+            {" HH"}
+          </Text>
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Avance Ejecucion Real:  "}</Text>
+          <Text style={styles.info2}>
+            {Item.AvanceEjecucion}
+            {" %"}
+          </Text>
+        </View>
+        {BarProgress(Item.AvanceEjecucion)}
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Avance Ejecucion Proyectado:  "}</Text>
+          <Text style={styles.info2}>
+            {AvanceProyected.toFixed(2)}
+            {" %"}
+          </Text>
+        </View>
+        {BarProgress(AvanceProyected)}
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={styles.info}>{"Avance Administrativo:  "}</Text>
+          <Text style={styles.info2}>
+            {Item.AvanceAdministrativo}
+            {" %"}
+          </Text>
+        </View>
+        {BarProgress(Item.AvanceAdministrativo)}
+
+        <Text></Text>
+
+        <Text style={styles.info}>{"Administradores de Contratos:  "}</Text>
+        {ResposableList(ContratistaList)}
+        <Text style={styles.info}>{"Supervisores Responsables:  "}</Text>
+        {ResposableList(UsuarioList)}
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 

@@ -53,7 +53,6 @@ function ItemScreenNotRedux(props) {
       params: { Item },
     },
   } = props;
-  console.log("porps ITEM");
   const navigation = useNavigation();
 
   ///the algoritm to retrieve the image source to render the icon
@@ -201,6 +200,8 @@ function ItemScreenNotRedux(props) {
 
   return (
     <>
+      <Text></Text>
+
       <View style={[styles.row, styles.center]}>
         <View>
           {/* <Image source={imageSource} style={styles.roundImage} /> */}
@@ -219,7 +220,6 @@ function ItemScreenNotRedux(props) {
           </Pressable>
         </View>
         <View>
-          <Text></Text>
           <Text style={styles.name}>{Item.NombreServicio}</Text>
           <Text style={styles.info}>
             {"AIT:  "} {Item.NumeroAIT}
@@ -235,10 +235,6 @@ function ItemScreenNotRedux(props) {
           </Text>
           <Text style={styles.info}>
             {"Ejecucion:  "} {Item.AvanceEjecucion}
-            {" %"}
-          </Text>
-          <Text style={styles.info}>
-            {"Admin:  "} {Item.AvanceAdministrativo}
             {" %"}
           </Text>
         </View>

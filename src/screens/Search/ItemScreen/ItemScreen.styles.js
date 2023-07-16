@@ -80,7 +80,10 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
-    marginLeft: windowWidth / 8,
+    // marginLeft: windowWidth / 12,
+    marginLeft: 10,
+    marginRight: 100,
+    textAlign: "center",
   },
   info: {
     color: "#828282",

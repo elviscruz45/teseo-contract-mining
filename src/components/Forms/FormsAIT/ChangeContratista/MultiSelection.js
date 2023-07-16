@@ -30,7 +30,7 @@ export const MultiSelectExample = (props) => {
         const object = doc.data();
         const objectver2 = {
           ...object,
-          value: `${object.displayNameform}(${object.email})`,
+          value: `${object.displayNameform}\n(${object.email})`,
           email: object.email,
         };
         post_array.push(objectver2);

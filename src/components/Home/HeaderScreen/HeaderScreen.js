@@ -9,10 +9,13 @@ import { db } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { EquipmentListUpper } from "../../../actions/home";
 import { screen } from "../../../utils";
+import { areaLists } from "../../../utils/areaList";
+import { CircularProgress } from "./CircularProgress";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
   const [postsHeader, setPostsHeader] = useState(equipmentList);
+  const [service, setServices] = useState();
 
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
@@ -20,40 +23,60 @@ function HeaderScreenNoRedux(props) {
       params: { Item: item },
     });
   };
-  // // Retrieve data from equipment list to the header list and to render all the post
+
+  // Retrieve of all the servicie AIT List to render the icons in this component (home screen)
+
   useEffect(() => {
-    if (props?.equipmentListHeader?.length > 0) {
-      const filteredList = equipmentList.filter((equipment) =>
-        props.equipmentListHeader?.includes(equipment.tag)
-      );
-      setPostsHeader(filteredList);
-    } else {
-      setPostsHeader(equipmentList);
+    setServices(props.ActualServiceAITList);
+  }, [props.ActualServiceAITList]);
+
+  // create an algorithm to reduce the total text of the service description
+
+  const ShortTextComponent = (item) => {
+    const longText = item;
+    const maxLength = 20; // Maximum length of the short text
+    let shortText = longText;
+    if (longText.length > maxLength) {
+      shortText = `${longText.substring(0, maxLength)}...`;
     }
-  }, [props?.equipmentListHeader?.toString()]);
+
+    return <Text style={styles.Texticons}>{shortText}</Text>;
+  };
 
   return (
     <View>
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={postsHeader}
+        data={service}
         renderItem={({ item }) => {
+          //the algoritm to retrieve the image source to render the icon
+          const area = item.AreaServicio;
+          const indexareaList = areaLists.findIndex(
+            (item) => item.value === area
+          );
+          const imageSource = areaLists[indexareaList]?.image;
           return (
             <TouchableOpacity onPress={() => selectAsset(item)}>
               <View style={styles.textImage}>
-                <ImageExpo
-                  source={item.image}
+                <CircularProgress
+                  imageSource={imageSource}
+                  imageStyle={styles.roundImage5}
+                  avance={item.AvanceEjecucion}
+                />
+                {/* <ImageExpo
+                  source={imageSource}
                   style={styles.roundImage5}
                   cachePolicy={"memory-disk"}
-                />
+                /> */}
 
-                <Text style={styles.Texticons}>{item.tag}</Text>
+                {/* <Text style={styles.Texticons}>{item.NombreServicio}</Text> */}
+                {ShortTextComponent(item.NombreServicio)}
               </View>
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.tag} // Provide a unique key for each item
+        keyExtractor={(item) => item.NumeroAIT} // Provide a unique key for each item
       />
     </View>
   );
@@ -68,6 +91,8 @@ const mapStateToProps = (reducers) => {
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
     equipmentListHeader: reducers.home.equipmentList,
+
+    ActualServiceAITList: reducers.post.ActualServiceAITList,
   };
 };
 

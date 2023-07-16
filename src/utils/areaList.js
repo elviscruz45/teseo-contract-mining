@@ -21,7 +21,7 @@ export const areaLists = [
     image: require("../../assets/equipmentplant/ImageIcons/c2cr3.jpeg"),
   },
   {
-    value: "C1-Zaranda Mineral Grueso",
+    value: "C1-Zaranda Grueso",
     tag: "C1-SC1",
     image: require("../../assets/equipmentplant/ImageIcons/c2sc001.jpeg"),
   },
@@ -90,7 +90,7 @@ export const areaLists = [
     image: require("../../assets/equipmentplant/ImageIcons/c2cr3.jpeg"),
   },
   {
-    value: "C2-Zaranda Mineral Grueso",
+    value: "C2-Zaranda Grueso",
     tag: "C2-SC1",
     image: require("../../assets/equipmentplant/ImageIcons/c2sc001.jpeg"),
   },

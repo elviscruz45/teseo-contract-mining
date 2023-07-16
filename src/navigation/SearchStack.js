@@ -70,7 +70,12 @@ function SearchStackBare(props) {
           title: " ",
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate(screen.search.search)}
+              onPress={() =>
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: screen.search.search }],
+                })
+              }
               style={{ marginLeft: -12 }}
             >
               <AntDesign name="left" size={24} color="black" />

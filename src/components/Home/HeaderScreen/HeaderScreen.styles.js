@@ -30,9 +30,19 @@ export const styles = StyleSheet.create({
     margin: 0,
   },
   roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
-  roundImage5: { width: 60, height: 60, borderRadius: 30, marginLeft: 20 },
-  textImage: { alignItems: "center" },
-  Texticons: { alignItems: "center", marginLeft: 20 },
+  roundImage5: { width: 60, height: 60 },
+  textImage: {
+    width: 100,
+    alignItems: "center",
+    marginRight: 0,
+    marginTop: 3,
+  },
+  Texticons: {
+    // alignItems: "center",
+    marginLeft: 20,
+    marginRight: 0,
+    textAlign: "center",
+  },
 
   postPhoto: {
     height: windowWidth * 0.45,
