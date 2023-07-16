@@ -6,7 +6,7 @@ import { styles } from "./ChangeDisplayAprobadores.styles";
 import { MultiSelectExample } from "./MultiSelection";
 
 export function ChangeDisplayAprobadores(props) {
-  const { onClose, formik, setAprobadores } = props;
+  const { onClose, formik, setAprobadores, etapa } = props;
   const [text, setText] = useState("");
 
   return (
@@ -18,10 +18,19 @@ export function ChangeDisplayAprobadores(props) {
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
-            setAprobadores(text.toString());
-            formik.setFieldValue("aprobacion", text.join(","));
+            if (
+              etapa === "2. Contratista-Envio Cotizacion" ||
+              etapa === "6. Contratista-Solicitud Ampliacion Servicio" ||
+              etapa === "8. Contratista-Envio EDP"
+            ) {
+              setAprobadores(text.toString());
+              formik.setFieldValue("aprobacion", text.join(","));
 
-            onClose();
+              onClose();
+            } else {
+              alert("No requiere Aprobacion");
+              onClose();
+            }
           }} // loading={formik2.isSubmitting}
         />
       </View>

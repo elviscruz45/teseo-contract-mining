@@ -49,8 +49,6 @@ function InformationScreen(props) {
     onSubmit: async (formValue) => {
       try {
         const newData = formValue;
-
-        //create the algoritm to have the date format of the post
         const date = new Date();
         const monthNames = [
           "ene.",
@@ -72,19 +70,17 @@ function InformationScreen(props) {
         const hour = date.getHours();
         const minute = date.getMinutes();
         const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
-        newData.fechaPostFormato = formattedDate;
-
-        // send profile information
         newData.emailPerfil = props.email || "Anonimo";
         newData.nombrePerfil = props.firebase_user_name || "Anonimo";
+        newData.fechaPostFormato = formattedDate;
         newData.fotoUsuarioPerfil = props.user_photo;
 
-        // upload the photo or an pickimage to firebase Storage
+        // subiendo la foto o pickimage a firebase Storage y obteniendo la url imageUrl
         const snapshot = await uploadImage(props.savePhotoUri);
         const imagePath = snapshot.metadata.fullPath;
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
-        //upload pdf file to firebase Storage
+        //subir pdf a firebase Storage y obteniendo la url imageUrl
 
         if (formValue.pdfFile) {
           const snapshotPDF = await uploadPdf(formValue.pdfFile);
@@ -97,22 +93,20 @@ function InformationScreen(props) {
         //preparando datos para subir a  firestore Database
         newData.pdfPrincipal = imageUrlPDF || "";
         newData.fotoPrincipal = imageUrl;
+        newData.equipoPostDatos = props.actualEquipment;
+        newData.equipoTag = props.actualEquipment.tag;
+        newData.equipoNombre = props.actualEquipment.nombre;
+        newData.claseEquipo = props.actualEquipment.clase;
+        newData.fechaPostISO = new Date().toISOString();
         newData.createdAt = new Date();
         newData.likes = [];
         newData.comentariosUsuarios = [];
 
-        // newData.equipoPostDatos = props.actualEquipment;
-        // newData.equipoTag = props.actualEquipment.tag;
-        // newData.equipoNombre = props.actualEquipment.nombre;
-        // newData.claseEquipo = props.actualEquipment.clase;
-
-        //Uploading data to Firebase and adding the ID firestore
-        const docRef = await addDoc(collection(db, "events"), newData);
+        const docRef = await addDoc(collection(db, "posts"), newData);
         newData.idDocFirestoreDB = docRef.id;
-        const RefFirebase = doc(db, "events", newData.idDocFirestoreDB);
+        const RefFirebase = doc(db, "posts", newData.idDocFirestoreDB);
         await updateDoc(RefFirebase, newData);
 
-        //once all data is uploaded to firebase , go to homescreen
         props.saveActualPostFirebase(newData);
         navigation.navigate(screen.post.post); // this hedlps to go to the begining of the process
         navigation.navigate(screen.home.tab, {
@@ -152,6 +146,10 @@ function InformationScreen(props) {
     return uploadBytes(storageRef, blob);
   };
 
+  const goToPolines = () => {
+    navigation.navigate(screen.post.polines);
+  };
+
   //algorith to retrieve image source that
   const area = props.actualEquipment?.AreaServicio;
   const indexareaList = areaLists.findIndex((item) => item.value === area);
@@ -167,7 +165,16 @@ function InformationScreen(props) {
           icon={{ type: "material", name: "person" }}
           source={imageSource}
         ></Avatar>
-
+        {props.actualEquipment.clase == "faja" && (
+          <Icon
+            reverse
+            type="material-community"
+            name="plus"
+            color="#8CBBF1"
+            containerStyle={styles.btnContainer2}
+            onPress={goToPolines}
+          />
+        )}
         <View>
           <Text></Text>
           <Text style={styles.name}>

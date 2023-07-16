@@ -59,6 +59,8 @@ export function GeneralForms(props) {
           onClose={onCloseOpenModal}
           formik={formik}
           setEtapa={setEtapa}
+          setAprobadores={setAprobadores}
+          etapa={etapa}
         />
       );
     }
@@ -77,6 +79,7 @@ export function GeneralForms(props) {
           onClose={onCloseOpenModal}
           formik={formik}
           setAprobadores={setAprobadores}
+          etapa={etapa}
         />
       );
     }
@@ -127,7 +130,7 @@ export function GeneralForms(props) {
           }}
         />
         <Input
-          value={`${avance}${" %"}`}
+          value={avance ? `${avance} %` : null}
           placeholder="Avance del ejecucion"
           editable={false}
           errorMessage={formik.errors.porcentajeAvance}

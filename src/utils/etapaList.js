@@ -15,7 +15,7 @@ export const etapaLists = [
     value: "5. Contratista-Avance Ejecucion",
   },
   {
-    value: "6. Contratista-Ampliacion Servicio",
+    value: "6. Contratista-Solicitud Ampliacion Servicio",
   },
   {
     value: "7. Usuario-Aprobacion Ampliacion",

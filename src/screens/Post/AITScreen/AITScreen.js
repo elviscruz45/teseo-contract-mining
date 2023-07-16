@@ -101,7 +101,7 @@ function AITNoReduxScreen(props) {
         newData.HHModificado = 0;
         newData.MontoModificado = 0;
 
-        //Uploading data to Firebase
+        //Uploading data to Firebase and adding the ID firestore
         const docRef = await addDoc(collection(db, "ServiciosAIT"), newData);
         newData.idServiciosAIT = docRef.id;
         const RefFirebase = doc(db, "ServiciosAIT", newData.idServiciosAIT);
