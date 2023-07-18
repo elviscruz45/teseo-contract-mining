@@ -89,6 +89,27 @@ function ItemScreenNotRedux(props) {
   const minute = date.getMinutes();
   const formattedDate = `${day} ${month} ${year}`;
 
+  ///algoritm to change the format of FechaInicio from ServiciosAIT firebase collection
+  const dateInicio = new Date(Item.createdAt.seconds * 1000);
+  const monthNamesInicio = [
+    "ene.",
+    "feb.",
+    "mar.",
+    "abr.",
+    "may.",
+    "jun.",
+    "jul.",
+    "ago.",
+    "sep.",
+    "oct.",
+    "nov.",
+    "dic.",
+  ];
+  const dayInicio = dateInicio.getDate();
+  const monthInicio = monthNamesInicio[dateInicio.getMonth()];
+  const yearInicio = dateInicio.getFullYear();
+  const formattedDateInicio = `${dayInicio} ${monthInicio} ${yearInicio}`;
+
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
     console.log("filter");
@@ -205,33 +226,26 @@ function ItemScreenNotRedux(props) {
 
       <View style={[styles.row, styles.center]}>
         <View>
-          {/* <Image source={imageSource} style={styles.roundImage} /> */}
+          <Text></Text>
           <CircularProgress
             imageSource={imageSource}
             imageStyle={styles.roundImage}
             avance={Item.AvanceEjecucion}
           />
-          <TouchableOpacity
-            style={styles.btnContainer2}
-            onPress={() => Detalles(Item)}
-          >
-            <Image
-              source={require("../../../../assets/more_information.png")}
-              style={styles.roundImageUpload}
-            />
-          </TouchableOpacity>
+
           <Text></Text>
         </View>
         <View>
+          {console.log(Item)}
           <Text style={styles.name}>{Item.NombreServicio}</Text>
           <Text style={styles.info}>
-            {"AIT:  "} {Item.NumeroAIT}
+            {"Numero Serv:  "} {Item.NumeroAIT}
           </Text>
           <Text style={styles.info}>
             {"Tipo:  "} {Item.TipoServicio}
           </Text>
           <Text style={styles.info}>
-            {"Monto:  "} {formattedAmount} {Item.Moneda}
+            {"Fecha Inicio:  "} {formattedDateInicio}
           </Text>
           <Text style={styles.info}>
             {"Fecha Fin:  "} {formattedDate}
@@ -244,7 +258,6 @@ function ItemScreenNotRedux(props) {
       </View>
       <Text></Text>
 
-      <Text></Text>
       <View
         style={{
           flexDirection: "row",
@@ -256,14 +269,15 @@ function ItemScreenNotRedux(props) {
         }}
       >
         <TouchableOpacity
-          style={styles.btnContainer3}
-          onPress={() => getExcelEquipo(Item.tag)}
+          style={styles.btnContainer4}
+          onPress={() => Detalles(Item)}
         >
           <Image
-            source={require("../../../../assets/excel2.png")}
+            source={require("../../../../assets/more_information.png")}
             style={styles.roundImageUpload}
           />
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.btnContainer4}
           onPress={() => goToPublicar()}
@@ -273,7 +287,18 @@ function ItemScreenNotRedux(props) {
             style={styles.roundImageUpload}
           />
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btnContainer4}
+          onPress={() => getExcelEquipo(Item.tag)}
+        >
+          <Image
+            source={require("../../../../assets/excel2.png")}
+            style={styles.roundImageUpload}
+          />
+        </TouchableOpacity>
       </View>
+      <Text></Text>
+
       <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} />
 
       <FlatList

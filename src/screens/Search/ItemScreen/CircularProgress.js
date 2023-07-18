@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory-native";
 import Svg from "react-native-svg";
-import { View, Image } from "react-native";
-
+import { View, Image, Text } from "react-native";
 export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
   const [percent, setPercent] = useState(25);
   // const [data, setData] = useState([
@@ -17,17 +16,17 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
   return (
     <>
       <Svg
-        style={{ position: "absolute", top: -60, left: -50, zIndex: 100 }}
-        width="200%"
-        height="200%"
+        style={{ position: "absolute", top: -45, left: -50, zIndex: 100 }}
+        width="500%"
+        height="500%"
       >
         <VictoryPie
           standalone={false}
           // animate={{ duration: 1000 }}
-          width={200}
-          height={200}
+          width={220}
+          height={220}
           data={data}
-          innerRadius={45}
+          innerRadius={55}
           // cornerRadius={80}
           labels={() => null}
           style={{
@@ -56,8 +55,8 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
         style={{
           marginLeft: 10,
           // ...imageStyle,
-          width: 80,
-          height: 80,
+          width: 100,
+          height: 100,
           // position: "absolute",
           borderRadius: 80,
           // left: 65, // Set the position along the x-axis (left)

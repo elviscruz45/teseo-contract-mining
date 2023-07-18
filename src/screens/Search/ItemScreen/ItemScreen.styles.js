@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     // position: "absolute",
     // bottom: 10,
     // right: 10,
-    size: 12,
+    // size: 82,
     alignContent: "space-between",
   },
   btnEditDelete: {
@@ -81,8 +81,8 @@ export const styles = StyleSheet.create({
   name: {
     fontWeight: "bold",
     // marginLeft: windowWidth / 12,
-    marginLeft: 10,
-    marginRight: 100,
+    // marginLeft: 10,
+    marginRight: 120,
     textAlign: "center",
   },
   btnContainer2: {
@@ -108,6 +108,7 @@ export const styles = StyleSheet.create({
     // right: 10,
     // paddingHorizontal: 90,
     // marginLeft: windowWidth / 2,
+    paddingHorizontal: 45,
   },
   roundImageUpload: {
     width: 50,
@@ -181,9 +182,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
   center: {
-    alignItems: "center",
+    marginLeft: 50,
     justifyContent: "space-between",
-    margin: 0,
   },
   roundImage: { width: 100, height: 100, borderRadius: 50, margin: 5 },
 
