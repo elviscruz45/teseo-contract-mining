@@ -3,6 +3,7 @@ import {
   View,
   Text,
   FlatList,
+  Dimensions,
   TouchableOpacity,
   Image,
   Pressable,
@@ -37,6 +38,7 @@ import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+const windowWidth = Dimensions.get("window").width;
 function ItemScreenNotRedux(props) {
   console.log("itemScreen");
   const [post, setPost] = useState(null);
@@ -211,15 +213,6 @@ function ItemScreenNotRedux(props) {
             imageStyle={styles.roundImage}
             avance={Item.AvanceEjecucion}
           />
-          <TouchableOpacity
-            style={styles.btnContainer2}
-            onPress={() => Detalles(Item)}
-          >
-            <Image
-              source={require("../../../../assets/more_information.png")}
-              style={styles.roundImageUpload}
-            />
-          </TouchableOpacity>
           <Text></Text>
         </View>
         <View>
@@ -243,37 +236,39 @@ function ItemScreenNotRedux(props) {
         </View>
       </View>
       <Text></Text>
-
+      {props.firebase_user_name && (
+        <View>
+          <TouchableOpacity
+            style={styles.btnContainer2}
+            onPress={() => Detalles(Item)}
+          >
+            <Image
+              source={require("../../../../assets/more_information.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer3}
+            onPress={() => getExcelEquipo(Item.tag)}
+          >
+            <Image
+              source={require("../../../../assets/AddAIT.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => goToPublicar()}
+          >
+            <Image
+              source={require("../../../../assets/TakePhoto2.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <Text></Text>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: "white",
-          justifyContent: "space-between",
 
-          // paddingHorizontal: 150,
-        }}
-      >
-        <TouchableOpacity
-          style={styles.btnContainer3}
-          onPress={() => getExcelEquipo(Item.tag)}
-        >
-          <Image
-            source={require("../../../../assets/excel2.png")}
-            style={styles.roundImageUpload}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btnContainer4}
-          onPress={() => goToPublicar()}
-        >
-          <Image
-            source={require("../../../../assets/TakePhoto2.png")}
-            style={styles.roundImageUpload}
-          />
-        </TouchableOpacity>
-      </View>
       <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} />
 
       <FlatList

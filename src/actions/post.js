@@ -9,10 +9,10 @@ export const savePhotoUri = (uri) => async (dispatch) => {
   }
 };
 
-export const saveActualEquipment = (item) => async (dispatch) => {
+export const saveActualServiceAIT = (item) => async (dispatch) => {
   try {
     dispatch({
-      type: "SAVE_ACTUALEQUIPMENT",
+      type: "SAVE_ACTUALSERVICEAIT",
       payload: item,
     });
   } catch (error) {
@@ -35,7 +35,7 @@ export const saveActualAITServicesFirebaseGlobalState =
   (item) => async (dispatch) => {
     try {
       dispatch({
-        type: "SAVE_ACTUALSERVICEAIT",
+        type: "SAVE_ACTUALSERVICEAITLIST",
         payload: item,
       });
     } catch (error) {

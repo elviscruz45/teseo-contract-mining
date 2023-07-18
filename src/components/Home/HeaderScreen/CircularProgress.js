@@ -17,7 +17,7 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
   return (
     <>
       <Svg
-        style={{ position: "absolute", top: -50, left: -35, zIndex: 100 }}
+        style={{ position: "absolute", top: -50, left: -30, zIndex: 100 }}
         width="200%"
         height="200%"
       >
@@ -54,7 +54,7 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
       <Image
         source={imageSource}
         style={{
-          marginLeft: 10,
+          marginLeft: 20,
           // ...imageStyle,
           width: 80,
           height: 80,

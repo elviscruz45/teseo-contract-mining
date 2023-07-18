@@ -143,24 +143,28 @@ export const styles = StyleSheet.create({
     right: width * 0.2,
   },
   btnContainer2: {
-    position: "absolute",
-    bottom: 10,
-    right: 10,
+    // position: "absolute",
+    // bottom: 10,
+    // right: 10,
+    // marginHorizontal: 100,
+    paddingHorizontal: 60,
   },
   btnContainer3: {
-    position: "absolute",
-    bottom: 80,
-    right: 10,
+    // position: "absolute",
+    // bottom: 80,
+    // right: 10,
+    // paddingHorizontal: 0,
   },
   btnContainer4: {
-    position: "absolute",
-    bottom: 150,
-    right: 10,
+    // position: "absolute",
+    // bottom: 150,
+    // right: 10,
+    paddingHorizontal: 60,
   },
   roundImageUpload: {
     width: 50,
     height: 50,
-    borderRadius: 50, // half of width and height
+    // borderRadius: 50, // half of width and height
   },
   image: {
     width: "15%",
@@ -174,9 +178,20 @@ export const styles = StyleSheet.create({
   },
   equipments: {
     flexDirection: "row",
-    margin: 10,
+    // margin: 10,
+    padding: 10,
     width: "100%",
     alignItems: "center", // Align contents vertically
+    backgroundColor: "white", // Add backgroundColor here
+  },
+  equipments2: {
+    flexDirection: "row",
+    // margin: 10,
+    padding: 10,
+    paddingHorizontal: 30,
+    width: "100%",
+    alignItems: "center", // Align contents vertically
+    backgroundColor: "white", // Add backgroundColor here
   },
   name: {
     fontWeight: "bold",

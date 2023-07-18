@@ -9,7 +9,6 @@ import {
   TextInput,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./CommentScreen.styles";
@@ -29,6 +28,7 @@ import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/Loadin
 import { screen } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -118,25 +118,70 @@ function CommentScreen(props) {
   } else {
     return (
       <>
-        <ImageExpo
-          source={{ uri: Item.fotoPrincipal }}
-          style={styles.postPhoto}
-          cachePolicy={"memory-disk"}
-        />
+        <KeyboardAwareScrollView
+          style={{ backgroundColor: "white" }} // Add backgroundColor here
+        >
+          <ImageExpo
+            source={{ uri: Item.fotoPrincipal }}
+            style={styles.postPhoto}
+            cachePolicy={"memory-disk"}
+          />
+          <Text></Text>
 
-        <View style={[styles.row, styles.center]}>
-          <Text style={{ margin: 5, color: "#5B5B5B" }}>
-            {"Fecha:  "}
-            {Item.fechaPostFormato}
-          </Text>
-          {Item.pdfPrincipal && (
-            <TouchableOpacity onPress={() => UploadFile(Item.pdfPrincipal)}>
-              <Icon type="material-community" name="paperclip" />
-              <Text>Archivo Adjunto</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+          <View style={[styles.row, styles.center]}>
+            <Text style={{ margin: 5, color: "#5B5B5B" }}>
+              {"Fecha:  "}
+              {Item.fechaPostFormato}
+            </Text>
+            {Item.pdfPrincipal && (
+              <TouchableOpacity onPress={() => UploadFile(Item.pdfPrincipal)}>
+                <Icon type="material-community" name="paperclip" />
+                <Text>Archivo Adjunto</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <Text></Text>
+          <Text></Text>
 
+          <FlatList
+            data={posts2}
+            scrollEnabled={false}
+            renderItem={({ item, index }) => {
+              const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: false,
+              };
+
+              return (
+                <View>
+                  <View style={[styles.row, styles.center]}>
+                    <View style={[styles.row, styles.center]}>
+                      <ImageExpo
+                        source={{
+                          uri: item?.commenterPhoto,
+                        }}
+                        style={styles.roundImage}
+                        cachePolicy={"memory-disk"}
+                      />
+                      <Text style={styles.center2}>{item.commenterName}</Text>
+                    </View>
+
+                    <Text style={styles.center2}>
+                      {new Date(item.date).toLocaleString(undefined, options)}
+                    </Text>
+                  </View>
+                  <View style={styles.center3}>
+                    <Text style={styles.center4}>{item.comment}</Text>
+                  </View>
+                </View>
+              );
+            }}
+          />
+        </KeyboardAwareScrollView>
         <View style={styles.commentContainer}>
           <ImageExpo
             source={{ uri: props.user_photo }}
@@ -157,44 +202,6 @@ function CommentScreen(props) {
             <Feather name="send" size={16} color="white" />
           </TouchableOpacity>
         </View>
-
-        <FlatList
-          data={posts2}
-          renderItem={({ item, index }) => {
-            const options = {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: false,
-            };
-
-            return (
-              <View>
-                <View style={[styles.row, styles.center]}>
-                  <View style={[styles.row, styles.center]}>
-                    <ImageExpo
-                      source={{
-                        uri: item?.commenterPhoto,
-                      }}
-                      style={styles.roundImage}
-                      cachePolicy={"memory-disk"}
-                    />
-                    <Text style={styles.center2}>{item.commenterName}</Text>
-                  </View>
-
-                  <Text style={styles.center2}>
-                    {new Date(item.date).toLocaleString(undefined, options)}
-                  </Text>
-                </View>
-                <View style={styles.center3}>
-                  <Text style={styles.center4}>{item.comment}</Text>
-                </View>
-              </View>
-            );
-          }}
-        />
       </>
     );
   }

@@ -35,12 +35,13 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
-import { TitleForms } from "../../../components/Forms/GeneralForms/TitleForms/TitleForms";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
+  console.log("oaaaa", props.actualServiceAIT);
+
   // retrieving data from formik forms ,data from ./InfomartionScreen.data.js
   const formik = useFormik({
     initialValues: initialValues(),
@@ -160,9 +161,7 @@ function InformationScreen(props) {
   const imageSource = areaLists[indexareaList]?.image;
 
   return (
-    <KeyboardAwareScrollView
-      style={{ backgroundColor: "white" }} // Add backgroundColor here
-    >
+    <KeyboardAwareScrollView>
       <View style={styles.equipments}>
         <Avatar
           size="large"
@@ -183,9 +182,30 @@ function InformationScreen(props) {
           </Text>
         </View>
       </View>
-
-      <TitleForms formik={formik} />
-
+      <View style={styles.equipments}>
+        <Image
+          source={{
+            uri: props.savePhotoUri,
+          }}
+          style={styles.postPhoto}
+        />
+        <View>
+          <Input
+            placeholder="Titulo del Evento"
+            onChangeText={(text) => {
+              formik.setFieldValue("titulo", text);
+            }}
+          />
+          <Input
+            placeholder="Comentarios"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChangeText={(text) => {
+              formik.setFieldValue("comentarios", text);
+            }} // errorMessage={formik.errors.observacion}
+          />
+        </View>
+      </View>
       <GeneralForms formik={formik} />
       <Button
         title="Agregar Evento"

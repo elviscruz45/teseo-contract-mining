@@ -4,12 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { styles } from "./Navigation.styles";
 import { ConnectedPostScreen } from "../screens";
-import { getAuth, updateProfile } from "firebase/auth";
 import { ConnectedCameraScreen } from "../screens";
 import { ConnectedInformationScreen } from "../screens";
-// import { PolinesScreen } from "../screens";
-import { ConnectedPolinesScreen } from "../screens";
-import { PolinesAddInformationScreen } from "../screens/Post/PolinesAddInformationScreen";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
@@ -105,28 +101,6 @@ function PostStackBare(props) {
           headerTransparent: false,
           headerShown: true,
           headerBackTitle: "Publicar",
-          headerTintColor: "black",
-        }}
-      />
-      <Stack.Screen
-        name={screen.post.polines}
-        component={ConnectedPolinesScreen}
-        options={{
-          title: " ",
-          headerTransparent: false,
-          headerShown: true,
-          headerBackTitle: "Home",
-          headerTintColor: "black",
-        }}
-      />
-      <Stack.Screen
-        name={screen.post.addpolines}
-        component={PolinesAddInformationScreen}
-        options={{
-          title: " ",
-          headerTransparent: false,
-          headerShown: true,
-          headerBackTitle: "Home",
           headerTintColor: "black",
         }}
       />

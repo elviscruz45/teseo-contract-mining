@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
   Texticons: { alignItems: "center", marginLeft: 20 },
 
   postPhoto: {
-    height: windowWidth * 0.6,
+    height: windowWidth * 1,
     width: windowWidth * 1,
     marginTop: 0,
   },
@@ -111,6 +111,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     // paddingHorizontal: 5,
     marginRight: 5,
+    // backgroundColor: "white",
     // borderTopWidth: 1,
     // borderTopColor: "lightgray",
   },

@@ -24,6 +24,7 @@ import { Image as ImageExpo } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
   const [_, setReload] = useState(false);
@@ -120,7 +121,9 @@ function ProfileScreen(props) {
   };
 
   return (
-    <>
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "white" }} // Add backgroundColor here
+    >
       <Text></Text>
       <View>
         <ConnectedInfoUser />
@@ -163,6 +166,7 @@ function ProfileScreen(props) {
 
       <FlatList
         data={post}
+        scrollEnabled={false}
         renderItem={({ item, index }) => {
           return (
             <TouchableOpacity onPress={() => comentPost(item)}>
@@ -195,7 +199,7 @@ function ProfileScreen(props) {
         }}
         keyExtractor={(item) => item.idDocFirestoreDB}
       />
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 

@@ -44,8 +44,13 @@ function HeaderScreenNoRedux(props) {
   };
 
   return (
-    <View>
+    <>
       <FlatList
+        style={{
+          backgroundColor: "white",
+          paddingTop: 10,
+          paddingVertical: 10,
+        }} // Add backgroundColor here
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={service}
@@ -64,6 +69,7 @@ function HeaderScreenNoRedux(props) {
                   imageStyle={styles.roundImage5}
                   avance={item.AvanceEjecucion}
                 />
+
                 {/* <ImageExpo
                   source={imageSource}
                   style={styles.roundImage5}
@@ -78,7 +84,7 @@ function HeaderScreenNoRedux(props) {
         }}
         keyExtractor={(item) => item.NumeroAIT} // Provide a unique key for each item
       />
-    </View>
+    </>
   );
 }
 
@@ -93,6 +99,7 @@ const mapStateToProps = (reducers) => {
     equipmentListHeader: reducers.home.equipmentList,
 
     ActualServiceAITList: reducers.post.ActualServiceAITList,
+    actualServiceAIT: reducers.post.actualServiceAIT,
   };
 };
 

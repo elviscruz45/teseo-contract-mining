@@ -144,6 +144,14 @@ export function AITForms(props) {
           errorMessage={formik.errors.NombreServicio}
         />
         <Input
+          placeholder="Numero Servicio"
+          onChangeText={(text) => {
+            formik.setFieldValue("NumeroAIT", text);
+            setAit(text);
+          }}
+          errorMessage={formik.errors.NumeroAIT}
+        />
+        {/* <Input
           value={numeroAIT}
           placeholder="Numero AIT"
           editable={false}
@@ -154,7 +162,7 @@ export function AITForms(props) {
             // color: getColorIconMap(formik),
             onPress: () => selectComponent("NumeroAIT"),
           }}
-        />
+        /> */}
         <Text style={styles.subtitleForm}>Detalles del Servicio:</Text>
 
         <Input

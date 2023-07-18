@@ -11,7 +11,7 @@ import {
 import { Icon, Avatar, SearchBar } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { saveActualEquipment } from "../../../actions/post";
+import { saveActualServiceAIT } from "../../../actions/post";
 import { styles } from "./PostScreen.styles";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
@@ -33,6 +33,8 @@ import {
 } from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 function PostScreen(props) {
   const POSTS_PER_PAGE = 20; // Number of posts to retrieve per page from Firebase
 
@@ -78,7 +80,7 @@ function PostScreen(props) {
     };
   }, []);
 
-  //This is used to retrieve the equipment we are looking for
+  //This is used to retrieve the servicies AIT we are looking for
 
   useEffect(() => {
     if (searchText === "") {
@@ -137,7 +139,7 @@ function PostScreen(props) {
     const imageSource = areaLists[indexareaList]?.image;
     setAIT(AIT);
     setEquipment(imageSource);
-    props.saveActualEquipment(AIT);
+    props.saveActualServiceAIT(AIT);
   };
 
   //This function is designed to retrieve more Services AIT when they reach the final view, as lazy loading
@@ -148,13 +150,13 @@ function PostScreen(props) {
   };
 
   return (
-    <>
+    <KeyboardAwareScrollView>
       <SearchBar
         placeholder="Buscar AIT o nombre del servicio"
         value={searchText}
         onChangeText={(text) => setSearchText(text)}
       />
-      <View style={styles.equipments}>
+      <View style={styles.equipments2}>
         <View>
           <Avatar
             size="large"
@@ -196,8 +198,49 @@ function PostScreen(props) {
           </View>
         </View>
       </View>
+      {props.firebase_user_name && (
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "white",
+            justifyContent: "space-between",
+
+            // paddingHorizontal: 150,
+          }}
+        >
+          <TouchableOpacity
+            style={styles.btnContainer2}
+            onPress={() => pickImage()}
+          >
+            <Image
+              source={require("../../../../assets/AddImage.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer3}
+            onPress={() => camera()}
+          >
+            <Image
+              source={require("../../../../assets/TakePhoto2.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => addAIT()}
+          >
+            <Image
+              source={require("../../../../assets/newService7.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <FlatList
         data={searchResults}
+        scrollEnabled={false}
         renderItem={({ item, index }) => {
           const area = item.AreaServicio;
           const indexareaList = areaLists.findIndex(
@@ -206,7 +249,10 @@ function PostScreen(props) {
           const imageSource = areaLists[indexareaList]?.image;
 
           return (
-            <TouchableOpacity onPress={() => selectAsset(item)}>
+            <TouchableOpacity
+              onPress={() => selectAsset(item)}
+              style={{ backgroundColor: "white" }} // Add backgroundColor here
+            >
               <View style={styles.equipments}>
                 <Image source={imageSource} style={styles.image} />
                 <View>
@@ -232,38 +278,7 @@ function PostScreen(props) {
         // onEndReached={() => loadMorePosts()}
         // onEndReachedThreshold={0.1}
       />
-      {props.firebase_user_name && (
-        <>
-          <TouchableOpacity
-            style={styles.btnContainer4}
-            onPress={() => addAIT()}
-          >
-            <Image
-              source={require("../../../../assets/AddAIT.png")}
-              style={styles.roundImageUpload}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnContainer3}
-            onPress={() => pickImage()}
-          >
-            <Image
-              source={require("../../../../assets/AddImage.png")}
-              style={styles.roundImageUpload}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnContainer2}
-            onPress={() => camera()}
-          >
-            <Image
-              source={require("../../../../assets/TakePhoto2.png")}
-              style={styles.roundImageUpload}
-            />
-          </TouchableOpacity>
-        </>
-      )}
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -276,7 +291,7 @@ const mapStateToProps = (reducers) => {
     uid: reducers.profile.uid,
 
     savePhotoUri: reducers.post.savePhotoUri,
-    actualEquipment: reducers.post.actualEquipment,
+    actualServiceAIT: reducers.post.actualServiceAIT,
     equipmentListHeader: reducers.home.equipmentList,
 
     ActualServiceAITList: reducers.post.ActualServiceAITList,
@@ -284,7 +299,7 @@ const mapStateToProps = (reducers) => {
 };
 
 export const ConnectedPostScreen = connect(mapStateToProps, {
-  saveActualEquipment,
+  saveActualServiceAIT,
   savePhotoUri,
   saveActualAITServicesFirebaseGlobalState,
 })(PostScreen);

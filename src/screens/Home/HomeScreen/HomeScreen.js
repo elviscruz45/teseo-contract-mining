@@ -31,6 +31,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { HeaderScreen } from "../../../components/Home";
 import { EquipmentListUpper } from "../../../actions/home";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -168,13 +169,13 @@ function HomeScreen(props) {
     return <LoadingSpinner />;
   } else {
     return (
-      <>
+      <KeyboardAwareScrollView>
         {console.log("renderHome111")}
-        <Text></Text>
         <HeaderScreen />
-        <Text></Text>
         <FlatList
           data={posts}
+          style={{ backgroundColor: "white" }} // Add backgroundColor here
+          scrollEnabled={false}
           renderItem={({ item, index }) => {
             return (
               <View
@@ -305,7 +306,7 @@ function HomeScreen(props) {
           onEndReached={() => loadMorePosts()}
           onEndReachedThreshold={0.1}
         />
-      </>
+      </KeyboardAwareScrollView>
     );
   }
 }

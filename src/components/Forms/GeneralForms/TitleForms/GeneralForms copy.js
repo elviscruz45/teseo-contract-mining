@@ -3,27 +3,29 @@ import React, { useState } from "react";
 import { styles } from "./GeneralForms.styles";
 import { Input } from "@rneui/themed";
 import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
+import { ChangeDisplayComponent } from "../../ChangeComponent/ChangeDisplayComponent";
+import { ChangeDisplayEquipo } from "../../ChangeEquipo/ChangeDisplayEquipo";
+import { ChangeDisplayRecursos } from "../../ChangeRecursos/ChangeDisplayRecursos";
+import { ChangeDisplaySupervisor } from "../../ChangeSupervisor/ChangeDisplaySupervisor";
+import { ChangeDisplayEtapa } from "../../ChangeEtapa/ChangeDisplayEtapa";
+import { ChangeDisplayTipo } from "../../ChangeTipo/ChangeDisplayTipo";
 import { Modal } from "../../../shared/Modal/Modal";
-import { ChangeDisplayEtapa } from "../../FormsGeneral/ChangeEtapa/ChangeDisplayEtapa";
-import { ChangeDisplayAvance } from "../../FormsGeneral/ChangeAvance/ChangeDisplayAvance";
-import { ChangeDisplayAprobadores } from "../../FormsGeneral/ChangeAprobadores/ChangeDisplayAprobadores";
-import { ChangeDisplayMonto } from "../../FormsGeneral/ChangeNumeroMonto/ChangeDisplayMonto";
-import { ChangeDisplayFechaFin } from "../../FormsGeneral/ChangeFechaFin/ChangeDisplayFechaFin";
-import { ChangeDisplayHH } from "../../FormsGeneral/ChangeNumeroHH/ChangeDisplayHH";
+import { SelectExample } from "../../../shared/Selection";
+import { MultiSelectExample } from "../../../shared/MultiSelection";
 
 export function GeneralForms(props) {
   const { formik } = props;
   const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
-  const [aprobadores, setAprobadores] = useState(null);
+  const [nombreComponente, setNombreComponente] = useState(null);
+  const [supervisor, setSupervisor] = useState(null);
+  const [equipoTrabajo, setEquipoTrabajo] = useState(null);
+  const [recursos, setRecursos] = useState(null);
   const [etapa, setEtapa] = useState(null);
-  const [avance, setAvance] = useState(null);
+  const [tipo, setTipo] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [fechafin, setFechafin] = useState(null);
-  const [monto, setMonto] = useState(null);
-  const [horashombre, setHorashombre] = useState(null);
 
-  //algorith to pick a pdf File to attach to the event
   const pickDocument = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -49,54 +51,51 @@ export function GeneralForms(props) {
           onClose={onCloseOpenModal}
           formik={formik}
           setEtapa={setEtapa}
-          setAprobadores={setAprobadores}
-          etapa={etapa}
         />
       );
     }
-    if (key === "porcentajeAvance") {
+    if (key === "tipo") {
       setRenderComponent(
-        <ChangeDisplayAvance
+        <ChangeDisplayTipo
           onClose={onCloseOpenModal}
           formik={formik}
-          setAvance={setAvance}
+          setTipo={setTipo}
         />
       );
     }
-    if (key === "aprobacion") {
+    if (key === "nombreComponente") {
       setRenderComponent(
-        <ChangeDisplayAprobadores
+        <ChangeDisplayComponent
           onClose={onCloseOpenModal}
           formik={formik}
-          setAprobadores={setAprobadores}
-          etapa={etapa}
+          setNombreComponente={setNombreComponente}
         />
       );
     }
-    if (key === "MontoModificado") {
+    if (key === "supervisor") {
       setRenderComponent(
-        <ChangeDisplayMonto
+        <ChangeDisplaySupervisor
           onClose={onCloseOpenModal}
           formik={formik}
-          setMonto={setMonto}
+          setSupervisor={setSupervisor}
         />
       );
     }
-    if (key === "NuevaFechaEstimada") {
+    if (key === "equipoTrabajo") {
       setRenderComponent(
-        <ChangeDisplayFechaFin
+        <ChangeDisplayEquipo
           onClose={onCloseOpenModal}
           formik={formik}
-          setFechafin={setFechafin}
+          setEquipoTrabajo={setEquipoTrabajo}
         />
       );
     }
-    if (key === "HHModificado") {
+    if (key === "recursos") {
       setRenderComponent(
-        <ChangeDisplayHH
+        <ChangeDisplayRecursos
           onClose={onCloseOpenModal}
           formik={formik}
-          setHorashombre={setHorashombre}
+          setRecursos={setRecursos}
         />
       );
     }
@@ -106,13 +105,15 @@ export function GeneralForms(props) {
   return (
     <View>
       <View style={styles.content}>
-        <Text style={styles.subtitleForm}>Avance del Servicio:</Text>
+        <Text style={styles.subtitleForm}>Detalles del Evento:</Text>
 
         <Input
           value={etapa}
           placeholder="Etapa del Evento"
           editable={false}
-          errorMessage={formik.errors.etapa}
+          onChangeText={(text) => {
+            formik.setFieldValue("etapa", text);
+          }}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -120,81 +121,91 @@ export function GeneralForms(props) {
           }}
         />
         <Input
-          value={avance ? `${avance} %` : null}
-          placeholder="Avance del ejecucion"
+          value={tipo}
+          placeholder="Descripcion del Evento"
           editable={false}
-          errorMessage={formik.errors.porcentajeAvance}
+          onChangeText={(text) => {
+            formik.setFieldValue("tipo", text);
+          }}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("porcentajeAvance"),
+            onPress: () => selectComponent("tipo"),
           }}
         />
         <Input
-          value={aprobadores}
-          placeholder="Aprobador"
+          value={nombreComponente}
+          placeholder="Nombre del Componente"
           editable={false}
-          multiline={true}
-          errorMessage={formik.errors.aprobacion}
+          onChangeText={(text) => {
+            formik.setFieldValue("nombreComponente", text);
+          }}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("aprobacion"),
+            onPress: () => selectComponent("nombreComponente"),
           }}
         />
+        <Text style={styles.subtitleForm}>Equipo y Recursos de trabajo:</Text>
+
+        <Input
+          value={supervisor}
+          placeholder="Supervisor"
+          editable={false}
+          onChangeText={(text) => {
+            formik.setFieldValue("supervisor", text);
+          }}
+          rightIcon={{
+            type: "material-community",
+            name: "arrow-right-circle-outline",
+            onPress: () => selectComponent("supervisor"),
+          }}
+        />
+        <Input
+          value={equipoTrabajo}
+          placeholder="Equipo de Trabajo"
+          multiline={true}
+          editable={false}
+          onChangeText={(text) => {
+            formik.setFieldValue("equipoTrabajo", text);
+          }}
+          rightIcon={{
+            type: "material-community",
+            name: "arrow-right-circle-outline",
+            onPress: () => selectComponent("equipoTrabajo"),
+          }}
+        />
+        <Input
+          value={recursos}
+          placeholder="Recursos Usados"
+          editable={false}
+          multiline={true}
+          // editable={false}
+          onChangeText={(text) => {
+            formik.setFieldValue("recursos", text);
+          }}
+          rightIcon={{
+            type: "material-community",
+            name: "arrow-right-circle-outline",
+            onPress: () => selectComponent("recursos"),
+          }}
+        />
+        <Text style={styles.content}>Archivos:</Text>
+
         <Input
           value={pickedDocument}
           placeholder="Adjuntar PDF"
           multiline={true}
           editable={false}
+          onChangeText={(text) => {
+            formik.setFieldValue("pdfFile", text);
+          }}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
             onPress: () => pickDocument(),
           }}
         />
-        <Text style={styles.subtitleForm}>Modificaciones (*):</Text>
-
-        <Input
-          value={monto}
-          placeholder="No hay modificacion de Monto Cotizado"
-          multiline={true}
-          editable={false}
-          // errorMessage={formik.errors.MontoModificado}
-          rightIcon={{
-            type: "material-community",
-            name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("MontoModificado"),
-          }}
-        />
-        <Input
-          value={fechafin}
-          placeholder="No hay modificacion de Fecha Fin"
-          editable={false}
-          // errorMessage={formik.errors.NuevaFechaEstimada}
-          multiline={true}
-          // editable={false}
-
-          rightIcon={{
-            type: "material-community",
-            name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("NuevaFechaEstimada"),
-          }}
-        />
-
-        <Input
-          value={horashombre}
-          placeholder="No hay modificacion de Horas Hombres"
-          editable={false}
-          // errorMessage={formik.errors.HHModificado}
-          multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("HHModificado"),
-          }}
-        />
-        <Text style={styles.subtitleForm}>* No modificar sin aprobacion</Text>
       </View>
 
       <Modal show={showModal} close={onCloseOpenModal}>

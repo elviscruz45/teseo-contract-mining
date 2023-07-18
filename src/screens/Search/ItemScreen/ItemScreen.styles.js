@@ -85,6 +85,35 @@ export const styles = StyleSheet.create({
     marginRight: 100,
     textAlign: "center",
   },
+  btnContainer2: {
+    // position: "absolute",
+    // bottom: 10,
+    // right: 10,
+    // marginHorizontal: 100,
+    // paddingHorizontal: 60,
+  },
+  btnContainer3: {
+    // position: "absolute",
+    // bottom: 10,
+    // right: 100,
+    // marginHorizontal: 100,
+    // marginHorizontal: 100,
+    // margin: 100,
+    // paddingHorizontal: 90,
+    // marginLeft: windowWidth / 2,
+  },
+  btnContainer4: {
+    // position: "absolute",
+    // bottom: 80,
+    // right: 10,
+    // paddingHorizontal: 90,
+    // marginLeft: windowWidth / 2,
+  },
+  roundImageUpload: {
+    width: 50,
+    height: 50,
+    // borderRadius: 50, // half of width and height
+  },
   info: {
     color: "#828282",
     paddingRight: 100,

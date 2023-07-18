@@ -121,7 +121,9 @@ function AITNoReduxScreen(props) {
   });
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "white" }} // Add backgroundColor here
+    >
       <View style={styles.sectionForms}>
         <Avatar
           size="large"

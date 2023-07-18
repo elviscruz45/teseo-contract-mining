@@ -8,13 +8,11 @@ export const CircularProgress = () => {
   );
 
   const getColor = (percentage) => {
-    if (percentage < 20) {
-      return "red";
-    } else if (percentage < 40) {
-      return "magenta";
-    } else if (percentage < 60) {
+    if (percentage < 25) {
+      return "yellow";
+    } else if (percentage < 50) {
       return "orange";
-    } else if (percentage < 80) {
+    } else if (percentage < 75) {
       return "limegreen";
     } else if (percentage < 100) {
       return "green";

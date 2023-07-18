@@ -36,6 +36,7 @@ import { db } from "../../../utils";
 import { connect } from "react-redux";
 import { EquipmentListUpper } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const windowWidth = Dimensions.get("window").width;
 function SearchScreenNoRedux(props) {
@@ -113,7 +114,7 @@ function SearchScreenNoRedux(props) {
   };
 
   return (
-    <>
+    <KeyboardAwareScrollView>
       {console.log("priemra parte")}
       <SearchBar
         placeholder="Buscar Equipo"
@@ -126,6 +127,7 @@ function SearchScreenNoRedux(props) {
 
       <FlatList
         data={searchResults}
+        scrollEnabled={false}
         renderItem={({ item, index }) => {
           //the algoritm to retrieve the image source to render the icon
 
@@ -143,7 +145,10 @@ function SearchScreenNoRedux(props) {
           }).format(item.Monto);
 
           return (
-            <TouchableOpacity onPress={() => selectAsset(item)}>
+            <TouchableOpacity
+              onPress={() => selectAsset(item)}
+              style={{ backgroundColor: "white" }} // Add backgroundColor here
+            >
               <View style={styles.equipments}>
                 <ImageExpo
                   source={imageSource}
@@ -191,7 +196,7 @@ function SearchScreenNoRedux(props) {
         }}
         keyExtractor={(item) => item.NumeroAIT}
       />
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 
