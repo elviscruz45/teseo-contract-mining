@@ -32,6 +32,7 @@ export function GeneralForms(props) {
       });
       if (result.type === "success") {
         setPickedDocument(result.uri);
+        formik.setFieldValue("pdfFile", result.uri);
       } else {
         setPickedDocument(null);
       }
@@ -150,7 +151,9 @@ export function GeneralForms(props) {
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
-            onPress: () => pickDocument(),
+            onPress: () => {
+              pickDocument();
+            },
           }}
         />
         <Text style={styles.subtitleForm}>Modificaciones (*):</Text>

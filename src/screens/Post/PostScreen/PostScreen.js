@@ -289,11 +289,10 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
+    equipmentListHeader: reducers.home.equipmentList,
 
     savePhotoUri: reducers.post.savePhotoUri,
     actualServiceAIT: reducers.post.actualServiceAIT,
-    equipmentListHeader: reducers.home.equipmentList,
-
     ActualServiceAITList: reducers.post.ActualServiceAITList,
   };
 };

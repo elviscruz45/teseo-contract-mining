@@ -95,7 +95,7 @@ function InformationScreen(props) {
         }
         console.log("pdf2", newData.pdfFile);
 
-        newData.pdfPrincipal = imageUrlPDF || "oaa";
+        newData.pdfPrincipal = imageUrlPDF || "";
 
         //preparing data to upload to  firestore Database
         newData.fotoPrincipal = imageUrl;

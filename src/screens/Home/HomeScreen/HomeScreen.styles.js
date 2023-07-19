@@ -29,7 +29,14 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     margin: 0,
   },
-  roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
+  roundImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 0.5,
+    margin: 5,
+    borderColor: "black",
+  },
   roundImage5: { width: 60, height: 60, borderRadius: 30, marginLeft: 20 },
   textImage: { alignItems: "center" },
   Texticons: { alignItems: "center", marginLeft: 20 },
@@ -77,9 +84,8 @@ export const styles = StyleSheet.create({
   textAreaTitleplus: {
     width: windowWidth * 0.6,
     marginLeft: 10,
-    fontWeight: "bold",
     color: "black",
-    fontWeight: "400",
+    fontWeight: "600",
   },
   avatar: {
     marginRight: 20,

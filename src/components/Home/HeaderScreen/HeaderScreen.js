@@ -14,8 +14,6 @@ import { CircularProgress } from "./CircularProgress";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
-  const [postsHeader, setPostsHeader] = useState(equipmentList);
-  const [service, setServices] = useState();
 
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
@@ -23,12 +21,6 @@ function HeaderScreenNoRedux(props) {
       params: { Item: item },
     });
   };
-
-  // Retrieve of all the servicie AIT List to render the icons in this component (home screen)
-
-  useEffect(() => {
-    setServices(props.ActualServiceAITList);
-  }, [props.ActualServiceAITList]);
 
   // create an algorithm to reduce the total text of the service description
 
@@ -53,7 +45,7 @@ function HeaderScreenNoRedux(props) {
         }} // Add backgroundColor here
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={service}
+        data={props.ActualServiceAITList}
         renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AreaServicio;
@@ -69,14 +61,6 @@ function HeaderScreenNoRedux(props) {
                   imageStyle={styles.roundImage5}
                   avance={item.AvanceEjecucion}
                 />
-
-                {/* <ImageExpo
-                  source={imageSource}
-                  style={styles.roundImage5}
-                  cachePolicy={"memory-disk"}
-                /> */}
-
-                {/* <Text style={styles.Texticons}>{item.NombreServicio}</Text> */}
                 {ShortTextComponent(item.NombreServicio)}
               </View>
             </TouchableOpacity>
@@ -99,7 +83,6 @@ const mapStateToProps = (reducers) => {
     equipmentListHeader: reducers.home.equipmentList,
 
     ActualServiceAITList: reducers.post.ActualServiceAITList,
-    actualServiceAIT: reducers.post.actualServiceAIT,
   };
 };
 

@@ -4,15 +4,11 @@ import Svg from "react-native-svg";
 import { View, Image } from "react-native";
 
 export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
-  const [percent, setPercent] = useState(25);
-  // const [data, setData] = useState([
-  //   { x: 1, y: percent },
-  //   { x: 2, y: 100 - percent },
-  // ]);
-  const [data, setData] = useState([
+  console.log("avaceee", parseInt(avance));
+  const data = [
     { x: 1, y: parseInt(avance) },
     { x: 2, y: 100 - parseInt(avance) },
-  ]);
+  ];
 
   return (
     <>
@@ -55,13 +51,9 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
         source={imageSource}
         style={{
           marginLeft: 20,
-          // ...imageStyle,
           width: 80,
           height: 80,
-          // position: "absolute",
           borderRadius: 80,
-          // left: 65, // Set the position along the x-axis (left)
-          // top: 65, // Set the position along the y-axis (top)
         }}
       />
     </>

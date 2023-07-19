@@ -212,18 +212,10 @@ function HomeScreen(props) {
                 </View>
               </View>
               <View style={[styles.row, styles.center]}>
-                <Text style={{ margin: 5, color: "#5B5B5B" }}>
+                <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
                   {"Fecha:  "}
                   {item.fechaPostFormato}
                 </Text>
-                {item.pdfPrincipal && (
-                  <TouchableOpacity
-                    onPress={() => uploadFile(item.pdfPrincipal)}
-                  >
-                    <Icon type="material-community" name="paperclip" />
-                    <Text>Archivo Adjunto</Text>
-                  </TouchableOpacity>
-                )}
               </View>
               <View style={styles.equipments}>
                 <TouchableOpacity onPress={() => commentPost(item)}>
@@ -235,27 +227,29 @@ function HomeScreen(props) {
                 </TouchableOpacity>
 
                 <View>
-                  <Text style={styles.textAreaTitle}>{item.titulo}</Text>
+                  <Text style={styles.textAreaTitle}>
+                    {"Evento: "}
+                    {item.titulo}
+                  </Text>
                   <Text style={styles.textAreaComment}>{item.comentarios}</Text>
-                  <Text style={styles.textAreaTitleplus}>
-                    Datos Adicionales:{" "}
+                  <Text style={styles.textAreaTitleplus}>Estado General</Text>
+                  <Text style={styles.textAreaCommentplus}>
+                    {"Progreso: "}
+                    {item.porcentajeAvance}
+                    {"%"}
                   </Text>
                   <Text style={styles.textAreaCommentplus}>
-                    {"Etapa del evento:"}
-                    {item.etapa}
-                  </Text>
-                  <Text style={styles.textAreaCommentplus}>
-                    {"Componente:"}
+                    {"Estado:"}
                     {item.nombreComponente}
                   </Text>
                   <Text style={styles.textAreaCommentplus}>
-                    {"Datos Clave:"}
-                    {item.tipo}
+                    {"Codigo Servicio:"}
+                    {item.AITNumero}
                   </Text>
 
                   <Text style={styles.textAreaCommentplus}>
-                    {"Recursos:"}
-                    {item.recursos}
+                    {"Etapa: "}
+                    {item.etapa}
                   </Text>
                 </View>
               </View>
@@ -264,7 +258,7 @@ function HomeScreen(props) {
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    marginRight: windowWidth * 0.35,
+                    marginRight: windowWidth * 0.1,
                   }}
                 >
                   <TouchableOpacity
@@ -283,7 +277,13 @@ function HomeScreen(props) {
                     <Text> {item.likes.length} Revisado</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginRight: windowWidth * 0.1,
+                  }}
+                >
                   <TouchableOpacity
                     onPress={() => commentPost(item)}
                     style={{ flexDirection: "row", alignItems: "center" }}
@@ -296,6 +296,15 @@ function HomeScreen(props) {
                     <Text> {item.comentariosUsuarios.length} Comentarios</Text>
                   </TouchableOpacity>
                 </View>
+                {item.pdfPrincipal && (
+                  <TouchableOpacity
+                    onPress={() => uploadFile(item.pdfPrincipal)}
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                  >
+                    <Icon type="material-community" name="paperclip" />
+                    <Text>Pdf File</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           );

@@ -125,7 +125,7 @@ function ItemScreenNotRedux(props) {
 
   //Using navigation.navigate I send it to another screen (post)
   const goToPublicar = () => {
-    props.saveActualServiceAIT(Item);
+    navigation.goBack();
 
     navigation.navigate(screen.post.tab, {
       screen: screen.post.camera,
