@@ -36,6 +36,7 @@ import {
 } from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
 import { TitleForms } from "../../../components/Forms/GeneralForms/TitleForms/TitleForms";
+import { resetPostPerPageHome } from "../../../actions/home";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
@@ -85,26 +86,49 @@ function InformationScreen(props) {
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
         //upload pdf file to firebase Storage
-
-        if (formValue.pdfFile) {
-          const snapshotPDF = await uploadPdf(formValue.pdfFile);
+        let imageUrlPDF;
+        if (newData.pdfFile) {
+          console.log("pdf", newData.pdfFile);
+          const snapshotPDF = await uploadPdf(newData.pdfFile);
           const imagePathPDF = snapshotPDF.metadata.fullPath;
-          var imageUrlPDF = await getDownloadURL(
-            ref(getStorage(), imagePathPDF)
-          );
+          imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
         }
+        console.log("pdf2", newData.pdfFile);
 
-        //preparando datos para subir a  firestore Database
-        newData.pdfPrincipal = imageUrlPDF || "";
+        newData.pdfPrincipal = imageUrlPDF || "oaa";
+
+        //preparing data to upload to  firestore Database
         newData.fotoPrincipal = imageUrl;
         newData.createdAt = new Date();
         newData.likes = [];
         newData.comentariosUsuarios = [];
 
-        // newData.equipoPostDatos = props.actualEquipment;
-        // newData.equipoTag = props.actualEquipment.tag;
-        // newData.equipoNombre = props.actualEquipment.nombre;
-        // newData.claseEquipo = props.actualEquipment.clase;
+        //data of the service AIT information
+        newData.AITidServicios = props.actualServiceAIT.idServiciosAIT;
+        newData.AITNombreServicio = props.actualServiceAIT.NombreServicio;
+        newData.AITAreaServicio = props.actualServiceAIT.AreaServicio;
+
+        // //aditional data of the service AIT information
+        newData.AITAvanceEjecucion = props.actualServiceAIT.AvanceEjecucion;
+        newData.AITHHModificado = props.actualServiceAIT.FechaFin;
+        newData.AITHorasHombre = props.actualServiceAIT.HorasHombre;
+        newData.AITLastEventPosted = props.actualServiceAIT.LastEventPosted;
+        newData.AITMonto = props.actualServiceAIT.Monto;
+        newData.AITMoneda = props.actualServiceAIT.Moneda;
+        newData.AITMontoModificado = props.actualServiceAIT.MontoModificado;
+        newData.AITNuevaFechaEstimada =
+          props.actualServiceAIT.NuevaFechaEstimada;
+        newData.AITNumero = props.actualServiceAIT.NumeroAIT;
+        newData.AITNumeroCotizacion = props.actualServiceAIT.NumeroCotizacion;
+        newData.AITResponsableEmpresaContratista =
+          props.actualServiceAIT.ResponsableEmpresaContratista;
+        newData.AITTipoServicio = props.actualServiceAIT.TipoServicio;
+        newData.AITcompanyName = props.actualServiceAIT.companyName;
+        newData.AITcreatedAt = props.actualServiceAIT.createdAt;
+        newData.AITemailPerfil = props.actualServiceAIT.emailPerfil;
+        newData.AITfechaPostFormato = props.actualServiceAIT.fechaPostFormato;
+        newData.AITfechaPostISO = props.actualServiceAIT.fechaPostISO;
+        newData.AITnombrePerfil = props.actualServiceAIT.nombrePerfil;
 
         //Uploading data to Firebase and adding the ID firestore
         const docRef = await addDoc(collection(db, "events"), newData);
@@ -112,8 +136,32 @@ function InformationScreen(props) {
         const RefFirebase = doc(db, "events", newData.idDocFirestoreDB);
         await updateDoc(RefFirebase, newData);
 
+        //////updating data to ServiciosAIT collection to modify its state
+
+        ///Modifying the LasEventPostd field,AvanceEjecucion
+        const RefFirebaseLasEventPostd = doc(
+          db,
+          "ServiciosAIT",
+          props.actualServiceAIT.idServiciosAIT
+        );
+        const updateDataLasEventPost = {
+          LastEventPosted: newData.createdAt,
+          AvanceEjecucion: newData.porcentajeAvance,
+          AvanceAdministrativoTexto: newData.etapa,
+          aprobacion: arrayUnion(newData.aprobacion),
+          pdfFile: arrayUnion(newData.pdfFile),
+          MontoModificado: newData.MontoModificado,
+          NuevaFechaEstimada: newData.NuevaFechaEstimada,
+          HHModificado: newData.HHModificado,
+        }; // Specify the field name and its updated value
+
+        await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
+
         //Updating global State redux
         props.saveActualPostFirebase(newData);
+
+        //reset pagination in HomeScreen to 15 to firebase
+        props.resetPostPerPageHome(5);
         //once all data is uploaded to firebase , go to homescreen
 
         navigation.navigate(screen.post.post); // this hedlps to go to the begining of the process
@@ -134,8 +182,8 @@ function InformationScreen(props) {
     const response = await fetch(uri);
     const blob = await response.blob();
     const fileSize = blob.size;
-    if (fileSize > 5 * 1024 * 1024) {
-      throw new Error("File size exceeds 5MB");
+    if (fileSize > 25 * 1024 * 1024) {
+      throw new Error("File size exceeds 25MB");
     }
     const storage = getStorage();
     const storageRef = ref(storage, `pdfPost/${uuid}`);
@@ -150,7 +198,7 @@ function InformationScreen(props) {
     const blob = await response.blob();
 
     const storage = getStorage();
-    const storageRef = ref(storage, `mainImagePost/${uuid}`);
+    const storageRef = ref(storage, `mainImageEvents/${uuid}`);
     return uploadBytes(storageRef, blob);
   };
 
@@ -215,4 +263,5 @@ const mapStateToProps = (reducers) => {
 
 export const ConnectedInformationScreen = connect(mapStateToProps, {
   saveActualPostFirebase,
+  resetPostPerPageHome,
 })(InformationScreen);

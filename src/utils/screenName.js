@@ -12,6 +12,7 @@ const searchStack = {
   search: "Search",
   item: "Item",
   moreDetail: "MoreDetail",
+  pdf: "Pdf",
   detail: "Detail",
   polines: "Polines",
 };

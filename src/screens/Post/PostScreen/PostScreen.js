@@ -57,7 +57,7 @@ function PostScreen(props) {
       queryRef = query(
         collection(db, "ServiciosAIT"),
         limit(lengPosts),
-        orderBy("createdAt", "desc")
+        orderBy("LastEventPosted", "desc")
       );
 
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {

@@ -39,15 +39,15 @@ import { resetPostPerPageHome } from "../../../actions/home";
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  // const POSTS_PER_PAGE = 5; // Number of posts to retrieve per page from Firebase
+  const POSTS_PER_PAGE = 5; // Number of posts to retrieve per page from Firebase
   console.log("holaaaa", props.postPerPage);
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  // const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
+  const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
 
-  // console.log("renderHomerScreen", lengPosts);
+  console.log("renderHomerScreen", lengPosts);
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -58,7 +58,7 @@ function HomeScreen(props) {
       let queryRef = query(
         collection(db, "events"),
         // where("equipoTag", "in", props.equipmentListHeader),
-        limit(props.postPerPage),
+        limit(lengPosts),
         orderBy("createdAt", "desc")
       );
 
@@ -81,15 +81,15 @@ function HomeScreen(props) {
         unsubscribe();
       }
     };
-  }, [props.postPerPage]);
+  }, [lengPosts]);
 
   //This function is designed to retrieve more posts when they reach the final view, as lazy loading
 
   const loadMorePosts = async () => {
     console.log("snapshotGETDOCS");
-    // setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
+    setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
     props.resetPostPerPageHome(props.postPerPage);
-    // console.log(props.postPerPage);
+    console.log(props.postPerPage);
   };
 
   //This function retrieve the image file to render equipments from the header horizontal bar
@@ -156,7 +156,7 @@ function HomeScreen(props) {
 
   // create an algorithm to reduce the total text of the service description
   const ShortTextComponent = (item) => {
-    const longText = item || "";
+    const longText = item;
     const maxLength = 25; // Maximum length of the short text
     let shortText = longText;
     if (longText.length > maxLength) {
@@ -175,7 +175,7 @@ function HomeScreen(props) {
         ListHeaderComponent={<HeaderScreen />}
         renderItem={({ item, index }) => {
           //the algoritm to retrieve the image source to render the icon
-          const area = item.AITAreaServicio;
+          const area = item.AreaServicio;
           const indexareaList = areaLists.findIndex(
             (item) => item.value === area
           );
@@ -200,7 +200,7 @@ function HomeScreen(props) {
                       cachePolicy={"memory-disk"}
                     />
                     {/* <Text>{item.equipoPostDatos?.tag}</Text> */}
-                    {ShortTextComponent(item.AITNombreServicio)}
+                    {ShortTextComponent(item.NombreServicio)}
                   </TouchableOpacity>
 
                   <ImageExpo

@@ -3,14 +3,15 @@ import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory-native";
 import Svg from "react-native-svg";
 import { View, Image, Text } from "react-native";
 export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
+  console.log("typeof", typeof avance);
   const [percent, setPercent] = useState(25);
   // const [data, setData] = useState([
   //   { x: 1, y: percent },
   //   { x: 2, y: 100 - percent },
   // ]);
   const [data, setData] = useState([
-    { x: 1, y: avance },
-    { x: 2, y: 100 - avance },
+    { x: 1, y: parseInt(avance) },
+    { x: 2, y: 100 - parseInt(avance) },
   ]);
 
   return (

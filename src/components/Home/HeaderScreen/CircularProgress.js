@@ -10,8 +10,8 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
   //   { x: 2, y: 100 - percent },
   // ]);
   const [data, setData] = useState([
-    { x: 1, y: avance },
-    { x: 2, y: 100 - avance },
+    { x: 1, y: parseInt(avance) },
+    { x: 2, y: 100 - parseInt(avance) },
   ]);
 
   return (

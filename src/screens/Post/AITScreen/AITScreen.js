@@ -97,6 +97,8 @@ function AITNoReduxScreen(props) {
         //Progress of Service
         newData.AvanceEjecucion = 5;
         newData.AvanceAdministrativo = 0;
+        newData.AvanceEjecucionTexto = "";
+        newData.AvanceAdministrativoTexto = "";
         //Monto and HH updated in the proccess of the service
         newData.HHModificado = 0;
         newData.MontoModificado = 0;

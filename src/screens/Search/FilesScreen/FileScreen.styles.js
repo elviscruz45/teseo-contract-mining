@@ -74,19 +74,17 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: windowWidth,
-    height: 280,
+    // height: 280,
     // marginRight: 15,
     // marginTop: 0,
   },
   name: {
     fontWeight: "bold",
-    marginRight: 90,
+    textAlign: "center",
+
+    // marginLeft: windowWidth / 2,
   },
-  info: {
-    color: "#828282",
-    paddingRight: 100,
-    marginTop: 3,
-  },
+
   titleText: {
     fontSize: 24,
     fontFamily: "Arial",
@@ -113,38 +111,86 @@ export const styles = StyleSheet.create({
     flex: 1, // Use flex: 1 to make the container fill the entire screen
   },
   image: {
+    width: "45%",
+    height: "45%",
+
+    marginLeft: windowWidth / 4,
+
+    // height: 55,
+  },
+  item: {
+    // flexDirection: "row",
+    margin: 10,
+  },
+  image2: {
     width: "15%",
     height: 55,
     borderRadius: 10,
+    marginBottom: 15,
+
+    marginEnd: 3,
   },
-  equipments: {
+  equipments2: {
     flexDirection: "row",
-    margin: 10,
-    width: "100%",
-    alignItems: "center", // Align contents vertically
+    marginHorizontal: 5,
   },
+  name2: {
+    fontWeight: "bold",
+  },
+  info: {
+    // color: "#828282",
+    // paddingRight: 100,
+    marginTop: 3,
+    // marginLeft: windowWidth / 32,
+    fontWeight: "600",
+    marginHorizontal: windowWidth * 0.02,
+  },
+  info2: {
+    // color: "#828282",
+    // paddingRight: 10,
+    marginTop: 3,
+    fontWeight: "normal",
+    // marginHorizontal: windowWidth * 0.28,
+    marginRight: 10,
+  },
+  info3: {
+    // color: "#828282",
+    paddingLeft: 15,
+    marginTop: 3,
+    fontWeight: "normal",
+  },
+  row: {
+    flexDirection: "row",
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  roundImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    // alignItems: "center",
+    marginLeft: windowWidth / 2 - 50,
+  },
+
   buttonFollow: {
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 6,
     paddingHorizontal: 10,
-    borderRadius: 4,
+    borderRadius: 20,
     elevation: 1,
     backgroundColor: "red",
-    position: "absolute", // Add position: "absolute" to position the component
-    right: 20, // Set left: 0 to align it to the left side of the screen
   },
   buttonUnfollow: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 5,
-    paddingHorizontal: 5,
-    borderRadius: 4,
-    // elevation: 1,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    elevation: 1,
     backgroundColor: "black",
-    marginLeft: 20,
-    position: "absolute", // Add position: "absolute" to position the component
-    right: 20, // Set left: 0 to align it to the left side of the screen
   },
   textFollow: {
     fontSize: 16,
@@ -152,5 +198,33 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+  },
+  btnActualizarStyles: {
+    // marginTop: 30,
+    // paddingVertical: 10,
+    borderRadius: 0,
+    backgroundColor: "#8CBBF1",
+    borderTopWidth: 1,
+    borderTopColor: "#e3e3e3",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e3e3e3",
+  },
+  btnTextStyle: {
+    color: "#ffff",
+    fontWeight: "bold",
+  },
+  btnContainer2: {
+    position: "absolute",
+    bottom: windowHeight * 0.1,
+    right: 10,
+  },
+  btnContainer3: {
+    position: "absolute",
+    bottom: windowHeight * 0.01,
+    right: 10,
+  },
+  attachedElement: {
+    position: "absolute", // Add position: "absolute" to position the component
+    right: 20, //
   },
 });

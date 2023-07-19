@@ -11,13 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
 function CameraScreen(props) {
-  // const formik = useFormik({
-  //   initialValues: initialValues(),
-  //   validationSchema: validationSchema(),
-  //   validateOnChange: false,
-  //   onSubmit: async (formValue) => {
-  //   },
-  // });
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const cameraRef = useRef(null);
@@ -48,13 +41,10 @@ function CameraScreen(props) {
       const resizedPhoto = await ImageManipulator.manipulateAsync(
         data.uri,
         [{ resize: { width: 800 } }],
-        { compress: 0.1, format: "jpeg", base64: true }
+        { compress: 0.2, format: "jpeg", base64: true }
       );
       props.savePhotoUri(resizedPhoto.uri);
       navigation.navigate(screen.post.form);
-
-      // props.savePhotoUri(resizedPhoto.uri);
-      // props.navigation.navigate("Post_Camera");
     }
   }
 

@@ -93,6 +93,7 @@ export const styles = StyleSheet.create({
     color: "#828282",
     paddingRight: 100,
     marginTop: 3,
+    textAlign: "center",
   },
   content: {
     marginHorizontal: 10,

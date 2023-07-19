@@ -129,7 +129,14 @@ function ItemScreenNotRedux(props) {
 
     navigation.navigate(screen.post.tab, {
       screen: screen.post.camera,
-      // params: { Item: Item },
+    });
+  };
+
+  //Using navigation.navigate I send it to another screen (post)
+  const goToPdf = (item) => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.pdf,
+      params: { Item: item },
     });
   };
 
@@ -278,6 +285,15 @@ function ItemScreenNotRedux(props) {
           />
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.btnContainer4}
+          onPress={() => goToPdf(Item)}
+        >
+          <Image
+            source={require("../../../../assets/pdf4.png")}
+            style={styles.roundImageUpload}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnContainer4}
           onPress={() => goToPublicar()}

@@ -15,7 +15,6 @@ import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { update_firebaseProfile } from "../actions/profile";
 import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
-import { saveTotalEventServiceAITList } from "../actions/home";
 import { db } from "../utils";
 
 function HomeStack(props) {
@@ -23,14 +22,12 @@ function HomeStack(props) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    //this retrieve data from authentication Firebase and send it to the global redux state
     const { uid, photoURL, displayName, email } = getAuth().currentUser;
     props.update_firebasePhoto(photoURL);
     props.update_firebaseUserName(displayName);
     props.update_firebaseEmail(email);
     props.update_firebaseUid(uid);
 
-    //this retrieve data from ServiciosAIT collections from Firestore and sed it ot the global redux state
     async function fetchDataServicesList() {
       const querySnapshot = await getDocs(
         query(
@@ -105,7 +102,6 @@ const mapStateToProps = (reducers) => {
   return {
     //profile global states
     user_photo: reducers.profile.user_photo,
-    totalServiceAITLIST: reducers.home.totalServiceAITLIST,
   };
 };
 
@@ -116,5 +112,4 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   update_firebaseUid,
   update_firebaseProfile,
   saveActualAITServicesFirebaseGlobalState,
-  saveTotalEventServiceAITList,
 })(HomeStack);

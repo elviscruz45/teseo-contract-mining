@@ -11,6 +11,7 @@ import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
 import { MoreDetailScreen } from "../screens/Search/MoreDetailScreen/MoreDetailScreen";
+import { FileScreen } from "../screens/Search/FilesScreen/FileScreen";
 
 function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -99,13 +100,8 @@ function SearchStackBare(props) {
         // }}
       />
       <Stack.Screen
-        name={screen.search.detail}
-        component={ConnectedDetailScreen}
-        options={{ title: " " }}
-      />
-      <Stack.Screen
-        name={screen.search.polines}
-        component={PolinesScreen}
+        name={screen.search.pdf}
+        component={FileScreen}
         options={{ title: " " }}
       />
     </Stack.Navigator>

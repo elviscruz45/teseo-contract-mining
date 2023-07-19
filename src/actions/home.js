@@ -41,3 +41,25 @@ export const EquipmentListUpper = (list) => async (dispatch) => {
     alert(error.message);
   }
 };
+export const saveTotalEventServiceAITList = (item) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SAVE_TOTALEVENTSERVICEAITLIST",
+      payload: item,
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+export const resetPostPerPageHome = (item) => async (dispatch) => {
+  const itemNew = item + 10;
+  try {
+    dispatch({
+      type: "RESET_POSTPERPAGEHOME",
+      payload: itemNew,
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};

@@ -175,7 +175,7 @@ function SearchScreenNoRedux(props) {
                     {item.fechaPostFormato}
                   </Text>
                 </View>
-                {firestoreEquipmentLiked?.includes(item.tag) ? (
+                {/* {firestoreEquipmentLiked?.includes(item.tag) ? (
                   <Pressable
                     style={styles.buttonFollow}
                     onPress={() => pressFollow(item)}
@@ -189,7 +189,7 @@ function SearchScreenNoRedux(props) {
                   >
                     <Text style={styles.textFollow}>Seguir</Text>
                   </Pressable>
-                )}
+                )} */}
               </View>
             </TouchableOpacity>
           );

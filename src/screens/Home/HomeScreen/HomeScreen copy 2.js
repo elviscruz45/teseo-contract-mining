@@ -23,7 +23,6 @@ import {
   where,
   limit,
   orderBy,
-  startAfter,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
@@ -34,20 +33,19 @@ import { Image as ImageExpo } from "expo-image";
 import { HeaderScreen } from "../../../components/Home";
 import { EquipmentListUpper } from "../../../actions/home";
 import { saveTotalEventServiceAITList } from "../../../actions/home";
-import { areaLists } from "../../../utils/areaList";
-import { resetPostPerPageHome } from "../../../actions/home";
+
 const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
-  // const POSTS_PER_PAGE = 5; // Number of posts to retrieve per page from Firebase
-  console.log("holaaaa", props.postPerPage);
+  const POSTS_PER_PAGE = 5; // Number of posts to retrieve per page from Firebase
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  // const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
+  const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
+  const [lastVisiblePost, setLastVisiblePost] = useState(null); // Add state variable for tracking the last visible post
 
-  // console.log("renderHomerScreen", lengPosts);
+  console.log("renderHomerScreen", lengPosts);
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -56,9 +54,9 @@ function HomeScreen(props) {
 
     async function fetchData() {
       let queryRef = query(
-        collection(db, "events"),
+        collection(db, "posts"),
         // where("equipoTag", "in", props.equipmentListHeader),
-        limit(props.postPerPage),
+        limit(lengPosts),
         orderBy("createdAt", "desc")
       );
 
@@ -67,10 +65,9 @@ function HomeScreen(props) {
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
-
         console.log("OnSnapshop");
-
         setPosts(lista);
+        setlengPosts(5);
       });
       setIsLoading(false);
     }
@@ -81,15 +78,28 @@ function HomeScreen(props) {
         unsubscribe();
       }
     };
-  }, [props.postPerPage]);
-
+  }, []);
+  //this useEffect is goin to be used to retreive more data
+  useEffect(() => {
+    // if (lengPosts > 5) {
+    //   async function fetchDataServicesList() {
+    //     const querySnapshot = await getDocs(
+    //       query(collection(db, "posts"), orderBy("createdAt", "desc"))
+    //     );
+    //     const post_array = [];
+    //     querySnapshot.forEach((doc) => {
+    //       post_array.push(doc.data());
+    //     });
+    //     setPosts(post_array);
+    //   }
+    //   fetchDataServicesList();
+    // }
+  }, [lengPosts]);
   //This function is designed to retrieve more posts when they reach the final view, as lazy loading
 
   const loadMorePosts = async () => {
     console.log("snapshotGETDOCS");
-    // setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
-    props.resetPostPerPageHome(props.postPerPage);
-    // console.log(props.postPerPage);
+    setlengPosts((prevPosts) => prevPosts + POSTS_PER_PAGE);
   };
 
   //This function retrieve the image file to render equipments from the header horizontal bar
@@ -128,7 +138,7 @@ function HomeScreen(props) {
   //---activate like/unlike Post using useCallback--------
   const likePost = useCallback(
     async (item) => {
-      const postRef = doc(db, "events", item.idDocFirestoreDB);
+      const postRef = doc(db, "posts", item.idDocFirestoreDB);
 
       if (item.likes.includes(props.email)) {
         await updateDoc(postRef, {
@@ -156,13 +166,13 @@ function HomeScreen(props) {
 
   // create an algorithm to reduce the total text of the service description
   const ShortTextComponent = (item) => {
-    const longText = item || "";
-    const maxLength = 25; // Maximum length of the short text
+    const longText = item;
+    const maxLength = 20; // Maximum length of the short text
     let shortText = longText;
     if (longText.length > maxLength) {
       shortText = `${longText.substring(0, maxLength)}...`;
     }
-    return <Text>{shortText}</Text>;
+    return <Text style={styles.Texticons}>{shortText}</Text>;
   };
 
   if (isLoading) {
@@ -174,12 +184,6 @@ function HomeScreen(props) {
         style={{ backgroundColor: "white" }} // Add backgroundColor here
         ListHeaderComponent={<HeaderScreen />}
         renderItem={({ item, index }) => {
-          //the algoritm to retrieve the image source to render the icon
-          const area = item.AITAreaServicio;
-          const indexareaList = areaLists.findIndex(
-            (item) => item.value === area
-          );
-          const imageSource = areaLists[indexareaList]?.image;
           return (
             <View
               style={{
@@ -195,12 +199,12 @@ function HomeScreen(props) {
                     style={[styles.row, styles.center]}
                   >
                     <ImageExpo
-                      source={imageSource}
+                      source={chooseImageEquipment(item.equipoPostDatos?.tag)}
                       style={styles.roundImage}
                       cachePolicy={"memory-disk"}
                     />
-                    {/* <Text>{item.equipoPostDatos?.tag}</Text> */}
-                    {ShortTextComponent(item.AITNombreServicio)}
+                    <Text>{item.equipoPostDatos?.tag}</Text>
+                    {/* {ShortTextComponent(item.NombreServicio)} */}
                   </TouchableOpacity>
 
                   <ImageExpo
@@ -318,7 +322,6 @@ const mapStateToProps = (reducers) => {
     uid: reducers.profile.uid,
     equipmentListHeader: reducers.home.equipmentList,
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
-    postPerPage: reducers.home.postPerPage,
   };
 };
 
@@ -326,5 +329,4 @@ export const ConnectedHomeScreen = connect(mapStateToProps, {
   saveActualPostFirebase,
   EquipmentListUpper,
   saveTotalEventServiceAITList,
-  resetPostPerPageHome,
 })(HomeScreen);

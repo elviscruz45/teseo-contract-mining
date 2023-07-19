@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
     // right: 10,
     // paddingHorizontal: 90,
     // marginLeft: windowWidth / 2,
-    paddingHorizontal: 45,
+    paddingHorizontal: 20,
   },
   roundImageUpload: {
     width: 50,
