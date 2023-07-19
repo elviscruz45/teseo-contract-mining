@@ -157,18 +157,18 @@ function ItemScreenNotRedux(props) {
     async function fetchData() {
       if (startDate && endDate) {
         q = query(
-          collection(db, "posts"),
+          collection(db, "events"),
           orderBy("createdAt", "desc"),
-          where("equipoTag", "==", Item.tag),
+          where("AITNombreServicio", "==", Item.NombreServicio),
           where("createdAt", ">=", startDate),
           where("createdAt", "<=", endDate)
         );
       } else {
         console.log("removeFilter");
         q = query(
-          collection(db, "posts"),
+          collection(db, "events"),
           orderBy("createdAt", "desc"),
-          where("equipoTag", "==", Item.tag),
+          where("AITNombreServicio", "==", Item.NombreServicio),
           limit(50) // Add the desired limit value here
         );
       }
@@ -194,7 +194,7 @@ function ItemScreenNotRedux(props) {
         unsubscribe();
       }
     };
-  }, [startDate, endDate, removeFilter, Item]);
+  }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {
@@ -243,7 +243,6 @@ function ItemScreenNotRedux(props) {
           <Text></Text>
         </View>
         <View>
-          {console.log(Item)}
           <Text style={styles.name}>{Item.NombreServicio}</Text>
           <Text style={styles.info}>
             {"Numero Serv:  "} {Item.NumeroAIT}
@@ -305,7 +304,10 @@ function ItemScreenNotRedux(props) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnContainer4}
-          onPress={() => getExcelEquipo(Item.tag)}
+          onPress={
+            () => alert("Pendiente todavia")
+            // getExcelEquipo(Item.tag)
+          }
         >
           <Image
             source={require("../../../../assets/excel2.png")}
@@ -332,18 +334,21 @@ function ItemScreenNotRedux(props) {
                     cachePolicy={"memory-disk"}
                   />
                   <View>
-                    <Text style={styles.name2}>{item.titulo}</Text>
+                    <Text style={styles.name2}>
+                      {"Evento: "}
+                      {item.titulo}
+                    </Text>
                     <Text style={styles.info2}>{item.comentarios}</Text>
                     <Text style={styles.info2}>{item.fechaPostFormato}</Text>
                   </View>
-                  {item.pdfPrincipal && (
+                  {/* {item.pdfPrincipal && (
                     <TouchableOpacity
                       onPress={() => UploadFile(item.pdfPrincipal)}
                       style={styles.attachedElement}
                     >
                       <Icon type="material-community" name="paperclip" />
                     </TouchableOpacity>
-                  )}
+                  )} */}
                 </View>
               </View>
             </TouchableOpacity>
@@ -363,6 +368,8 @@ const mapStateToProps = (reducers) => {
     actualEquipment: reducers.post.actualEquipment,
     uid: reducers.profile.uid,
     equipmentListHeader: reducers.home.equipmentList,
+    ActualServiceAITList: reducers.post.ActualServiceAITList,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

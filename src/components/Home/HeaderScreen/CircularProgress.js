@@ -4,7 +4,6 @@ import Svg from "react-native-svg";
 import { View, Image } from "react-native";
 
 export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
-  console.log("avaceee", parseInt(avance));
   const data = [
     { x: 1, y: parseInt(avance) },
     { x: 2, y: 100 - parseInt(avance) },

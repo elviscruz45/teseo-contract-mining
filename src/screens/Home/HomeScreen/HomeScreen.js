@@ -71,6 +71,7 @@ function HomeScreen(props) {
         console.log("OnSnapshop");
 
         setPosts(lista);
+        props.saveTotalEventServiceAITList(lista);
       });
       setIsLoading(false);
     }
@@ -102,6 +103,7 @@ function HomeScreen(props) {
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
+    console.log("pdfHomescreen", uri);
     try {
       const supported = await Linking.canOpenURL(uri);
       if (supported) {
@@ -191,7 +193,7 @@ function HomeScreen(props) {
               <View style={[styles.row, styles.center]}>
                 <View style={[styles.row, styles.center]}>
                   <TouchableOpacity
-                    onPress={() => selectAsset(item.equipoPostDatos)}
+                    // onPress={() => selectAsset(item.equipoPostDatos)}
                     style={[styles.row, styles.center]}
                   >
                     <ImageExpo

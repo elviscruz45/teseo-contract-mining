@@ -76,7 +76,7 @@ function ProfileScreen(props) {
     async function fetchData() {
       if (startDate && endDate) {
         q = query(
-          collection(db, "posts"),
+          collection(db, "events"),
           orderBy("createdAt", "desc"),
           where("emailPerfil", "==", props.email),
           where("createdAt", ">=", startDate),
@@ -84,7 +84,7 @@ function ProfileScreen(props) {
         );
       } else {
         q = query(
-          collection(db, "posts"),
+          collection(db, "events"),
           orderBy("createdAt", "desc"),
           where("emailPerfil", "==", props.email),
           limit(50) // Add the desired limit value here
@@ -111,7 +111,7 @@ function ProfileScreen(props) {
         unsubscribe();
       }
     };
-  }, [startDate, endDate, removeFilter]);
+  }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
 
   const comentPost = (item) => {
     navigation.navigate(screen.home.tab, {
@@ -178,20 +178,22 @@ function ProfileScreen(props) {
                     cachePolicy={"memory-disk"}
                   />
                   <View>
+                    <Text style={styles.name2}>{item.AITNombreServicio}</Text>
                     <Text style={styles.name2}>
-                      {item.equipoTag} {item.titulo}
+                      {"Evento: "}
+                      {item.titulo}
                     </Text>
                     <Text style={styles.info2}>{item.comentarios}</Text>
                     <Text style={styles.info2}>{item.fechaPostFormato}</Text>
                   </View>
-                  {item.pdfPrincipal && (
+                  {/* {item.pdfPrincipal && (
                     <TouchableOpacity
                       onPress={() => UploadFile(item.pdfPrincipal)}
                       style={styles.attachedElement}
                     >
                       <Icon type="material-community" name="paperclip" />
                     </TouchableOpacity>
-                  )}
+                  )} */}
                 </View>
               </View>
             </TouchableOpacity>
@@ -207,6 +209,7 @@ const mapStateToProps = (reducers) => {
   return {
     profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

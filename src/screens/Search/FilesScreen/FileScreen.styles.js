@@ -151,7 +151,9 @@ export const styles = StyleSheet.create({
     marginTop: 3,
     fontWeight: "normal",
     // marginHorizontal: windowWidth * 0.28,
-    marginRight: 10,
+    // marginRight: 40,
+    margin: 10,
+    paddingRight: 60,
   },
   info3: {
     // color: "#828282",

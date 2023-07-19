@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import {
   View,
   Text,
@@ -31,12 +31,53 @@ export function FileScreen(props) {
       params: { Item },
     },
   } = props;
+
+  const uploadFile = useCallback(async (uri) => {
+    console.log("pdfFILESCREEN", uri);
+
+    try {
+      const supported = await Linking.canOpenURL(uri);
+      if (supported) {
+        await Linking.openURL(uri);
+      } else {
+        alert("Unable to open PDF document");
+      }
+    } catch (error) {
+      alert("Error opening PDF document", error);
+    }
+  }, []);
+
   return (
     <KeyboardAwareScrollView>
       <Text></Text>
 
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
+
+      <FlatList
+        data={Item.pdfFile}
+        scrollEnabled={false}
+        renderItem={({ item, index }) => {
+          return (
+            <TouchableOpacity onPress={() => uploadFile(item)}>
+              <View />
+              <View>
+                <View style={styles.equipments2}>
+                  <ImageExpo
+                    source={require("../../../../assets/pdf4.png")}
+                    style={styles.image2}
+                    cachePolicy={"memory-disk"}
+                  />
+                  <View>
+                    <Text style={styles.info2}>{item}</Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={(item) => item} // Provide a unique key for each item
+      />
     </KeyboardAwareScrollView>
   );
 }

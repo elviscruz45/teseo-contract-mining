@@ -81,7 +81,6 @@ const mapStateToProps = (reducers) => {
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
     equipmentListHeader: reducers.home.equipmentList,
-
     ActualServiceAITList: reducers.post.ActualServiceAITList,
   };
 };

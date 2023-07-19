@@ -86,16 +86,20 @@ function InformationScreen(props) {
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
         //upload pdf file to firebase Storage
+        const fileName = newData.pdfFile.name; // Get the original file name
+        console.log("nombre del archivo pdf", fileName);
         let imageUrlPDF;
         if (newData.pdfFile) {
           console.log("pdf", newData.pdfFile);
           const snapshotPDF = await uploadPdf(newData.pdfFile);
           const imagePathPDF = snapshotPDF.metadata.fullPath;
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
+          newData.pdfPrincipal = imageUrlPDF;
+        } else {
+          newData.pdfPrincipal = "";
         }
-        console.log("pdf2", newData.pdfFile);
 
-        newData.pdfPrincipal = imageUrlPDF || "";
+        // newData.pdfPrincipal = imageUrlPDF || "";
 
         //preparing data to upload to  firestore Database
         newData.fotoPrincipal = imageUrl;
@@ -149,7 +153,7 @@ function InformationScreen(props) {
           AvanceEjecucion: newData.porcentajeAvance,
           AvanceAdministrativoTexto: newData.etapa,
           aprobacion: arrayUnion(newData.aprobacion),
-          pdfFile: arrayUnion(newData.pdfFile),
+          pdfFile: arrayUnion(imageUrlPDF),
           MontoModificado: newData.MontoModificado,
           NuevaFechaEstimada: newData.NuevaFechaEstimada,
           HHModificado: newData.HHModificado,

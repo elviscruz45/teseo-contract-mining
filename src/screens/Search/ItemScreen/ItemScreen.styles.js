@@ -159,8 +159,8 @@ export const styles = StyleSheet.create({
     margin: 10,
   },
   image2: {
-    width: "15%",
-    height: 55,
+    width: 80,
+    height: 80,
     borderRadius: 10,
     marginBottom: 15,
 

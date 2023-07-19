@@ -167,8 +167,8 @@ export const styles = StyleSheet.create({
     // borderRadius: 50, // half of width and height
   },
   image: {
-    width: "15%",
-    height: 55,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   avatar: {
