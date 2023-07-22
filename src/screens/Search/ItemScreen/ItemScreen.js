@@ -36,6 +36,7 @@ import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Example } from "../../../components/Search/TimeLine/TimeLine";
 
 function ItemScreenNotRedux(props) {
   console.log("itemScreen");
@@ -318,6 +319,8 @@ function ItemScreenNotRedux(props) {
       <Text></Text>
 
       <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} />
+
+      <Example />
 
       <FlatList
         data={post}

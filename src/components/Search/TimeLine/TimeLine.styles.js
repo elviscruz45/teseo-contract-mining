@@ -20,42 +20,14 @@ export const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
-  center: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginRight: 5,
-  },
-  row2: {
-    flexDirection: "row",
-  },
-  center2: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginRight: 5,
-    marginTop: 5,
-    fontWeight: "200",
-  },
-  row3: {
-    flexDirection: "row",
-  },
-  center3: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginRight: 5,
-    marginLeft: 50,
-    marginTop: 0,
-  },
-  center4: {
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: -25,
-
-    marginRight: 5,
-    fontWeight: "300",
-  },
   rowlikes: {
     flexDirection: "row",
     margin: 10,
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 0,
   },
   roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
   roundImage5: { width: 60, height: 60, borderRadius: 30, marginLeft: 20 },
@@ -63,9 +35,10 @@ export const styles = StyleSheet.create({
   Texticons: { alignItems: "center", marginLeft: 20 },
 
   postPhoto: {
-    height: windowWidth * 1,
-    width: windowWidth * 1,
+    height: windowWidth * 0.45,
+    width: windowWidth * 0.35,
     marginTop: 0,
+    borderRadius: 15,
   },
   container2: {
     flex: 1,
@@ -106,28 +79,8 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#DB4545",
   },
-  commentContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    // paddingHorizontal: 5,
-    marginRight: 5,
-    // backgroundColor: "white",
-    // borderTopWidth: 1,
-    // borderTopColor: "lightgray",
-    marginBottom: 0,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    backgroundColor: "white",
-    marginRight: 10,
-  },
-  sendButton: {
-    backgroundColor: "#8CBBF1",
-    borderRadius: 20,
-    padding: 10,
-    zIndex: 1000,
+  avatar: {
+    marginRight: 20,
+    backgroundColor: "green",
   },
 });

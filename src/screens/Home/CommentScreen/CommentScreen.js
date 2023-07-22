@@ -7,6 +7,7 @@ import {
   Dimensions,
   Linking,
   TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
@@ -33,10 +34,10 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const windowWidth = Dimensions.get("window").width;
 
 function CommentScreen(props) {
+  console.log("comeent");
   let unsubscribe;
-  const [posts2, setPosts2] = useState([]);
+  const [postsComments, setPostsComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isScrolledUp, setIsScrolledUp] = useState(false);
   const [comment, setComment] = useState("");
 
   const navigation = useNavigation();
@@ -49,11 +50,11 @@ function CommentScreen(props) {
   useEffect(() => {
     async function fetchData() {
       // Try to retrieve data from AsyncStorage
-      const q = doc(db, "posts", Item.idDocFirestoreDB);
+      const q = doc(db, "events", Item.idDocFirestoreDB);
       unsubscribe = onSnapshot(q, (docSnapshot) => {
         console.log("onSnapshot comment");
         const data = docSnapshot.data()?.comentariosUsuarios;
-        setPosts2(data);
+        setPostsComments(data);
       });
       setIsLoading(false);
     }
@@ -65,15 +66,7 @@ function CommentScreen(props) {
         unsubscribe();
       }
     };
-  }, [Item]);
-
-  function chooseImageEquipment(tags) {
-    const result = equipmentList.find((item) => {
-      return item.tag == tags;
-    });
-
-    return result.image;
-  }
+  }, []);
 
   async function UploadFile(uri) {
     Linking.canOpenURL(uri)
@@ -98,7 +91,7 @@ function CommentScreen(props) {
       return; // Do not proceed further
     }
 
-    const PostRef = doc(db, "posts", Item.idDocFirestoreDB);
+    const PostRef = doc(db, "events", Item.idDocFirestoreDB);
     const commentObj = {
       comment: comment,
       commenterEmail: props.email,
@@ -113,75 +106,54 @@ function CommentScreen(props) {
     setComment("");
   };
 
+  // AITNombreServicio
+
   if (isLoading) {
     return <LoadingSpinner />;
   } else {
     return (
-      <>
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: "white" }} // Add backgroundColor here
+      <KeyboardAwareScrollView
+        style={{ backgroundColor: "white" }} // Add backgroundColor here
+        // contentContainerStyle={{ flexGrow: 1 }} // Allow the content to grow inside the ScrollView
+        // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
+      >
+        <ImageExpo
+          source={{ uri: Item.fotoPrincipal }}
+          style={styles.postPhoto}
+          cachePolicy={"memory-disk"}
+        />
+        <Text></Text>
+        <Text
+          style={{
+            marginLeft: 5,
+            marginTop: -5,
+            color: "black",
+            fontWeight: "500",
+            alignSelf: "center",
+          }}
         >
-          <ImageExpo
-            source={{ uri: Item.fotoPrincipal }}
-            style={styles.postPhoto}
-            cachePolicy={"memory-disk"}
-          />
-          <Text></Text>
+          {Item.AITNombreServicio}
+        </Text>
 
-          <View style={[styles.row, styles.center]}>
-            <Text style={{ margin: 5, color: "#5B5B5B" }}>
-              {"Fecha:  "}
-              {Item.fechaPostFormato}
-            </Text>
-            {Item.pdfPrincipal && (
-              <TouchableOpacity onPress={() => UploadFile(Item.pdfPrincipal)}>
-                <Icon type="material-community" name="paperclip" />
-                <Text>Archivo Adjunto</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <Text></Text>
-          <Text></Text>
-
-          <FlatList
-            data={posts2}
-            scrollEnabled={false}
-            renderItem={({ item, index }) => {
-              const options = {
-                year: "numeric",
-                month: "numeric",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                hour12: false,
-              };
-
-              return (
-                <View>
-                  <View style={[styles.row, styles.center]}>
-                    <View style={[styles.row, styles.center]}>
-                      <ImageExpo
-                        source={{
-                          uri: item?.commenterPhoto,
-                        }}
-                        style={styles.roundImage}
-                        cachePolicy={"memory-disk"}
-                      />
-                      <Text style={styles.center2}>{item.commenterName}</Text>
-                    </View>
-
-                    <Text style={styles.center2}>
-                      {new Date(item.date).toLocaleString(undefined, options)}
-                    </Text>
-                  </View>
-                  <View style={styles.center3}>
-                    <Text style={styles.center4}>{item.comment}</Text>
-                  </View>
-                </View>
-              );
-            }}
-          />
-        </KeyboardAwareScrollView>
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ margin: 5, color: "#5B5B5B" }}>
+            {"Fecha:  "}
+            {Item.fechaPostFormato}
+          </Text>
+          {Item.pdfPrincipal && (
+            <TouchableOpacity
+              onPress={() => uploadFile(Item.pdfPrincipal)}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginRight: 10,
+              }}
+            >
+              <Icon type="material-community" name="paperclip" />
+              <Text>Pdf</Text>
+            </TouchableOpacity>
+          )}
+        </View>
         <View style={styles.commentContainer}>
           <ImageExpo
             source={{ uri: props.user_photo }}
@@ -193,7 +165,7 @@ function CommentScreen(props) {
             placeholder="Ingresa tu comentario"
             value={comment}
             onChangeText={handleCommentChange}
-            onSubmitEditing={() => handleSendComment(comment)}
+            // onSubmitEditing={() => handleSendComment(comment)}
           />
           <TouchableOpacity
             onPress={() => handleSendComment(comment)}
@@ -202,7 +174,45 @@ function CommentScreen(props) {
             <Feather name="send" size={16} color="white" />
           </TouchableOpacity>
         </View>
-      </>
+        <FlatList
+          data={postsComments}
+          scrollEnabled={false}
+          renderItem={({ item, index }) => {
+            const options = {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: false,
+            };
+
+            return (
+              <View>
+                <View style={[styles.row, styles.center]}>
+                  <View style={[styles.row, styles.center]}>
+                    <ImageExpo
+                      source={{
+                        uri: item?.commenterPhoto,
+                      }}
+                      style={styles.roundImage}
+                      cachePolicy={"memory-disk"}
+                    />
+                    <Text style={styles.center2}>{item.commenterName}</Text>
+                  </View>
+
+                  <Text style={styles.center2}>
+                    {new Date(item.date).toLocaleString(undefined, options)}
+                  </Text>
+                </View>
+                <View style={styles.center3}>
+                  <Text style={styles.center4}>{item.comment}</Text>
+                </View>
+              </View>
+            );
+          }}
+        />
+      </KeyboardAwareScrollView>
     );
   }
 }
