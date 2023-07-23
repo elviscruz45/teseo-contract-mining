@@ -122,6 +122,7 @@ function CommentScreen(props) {
           style={styles.postPhoto}
           cachePolicy={"memory-disk"}
         />
+
         <Text></Text>
         <Text
           style={{
@@ -134,6 +135,7 @@ function CommentScreen(props) {
         >
           {Item.AITNombreServicio}
         </Text>
+        <Text style={{ margin: 5 }}>{Item.comentarios}</Text>
 
         <View style={[styles.row, styles.center]}>
           <Text style={{ margin: 5, color: "#5B5B5B" }}>

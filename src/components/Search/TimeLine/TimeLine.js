@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import Timeline from "react-native-timeline-flatlist";
 
-export const Example = () => {
+export const ServicesListHistorial = (props) => {
   const [selected, setSelected] = useState(null);
+  const { datas, comentPost } = props;
 
   const data = [
     {
-      time: "27 Ago",
+      time: "27 sAgo",
       title: "Archery Training",
       description:
         "The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ",
@@ -50,17 +51,14 @@ export const Example = () => {
     },
   ];
 
+  useEffect(() => {
+    if (selected !== null) {
+      comentPost(selected);
+    }
+  }, [selected]);
+
   const onEventPress = (data) => {
     setSelected(data);
-  };
-
-  const renderSelected = () => {
-    if (selected)
-      return (
-        <Text style={{ marginTop: 10 }}>
-          Selected event: {selected.title} at {selected.time}
-        </Text>
-      );
   };
 
   const renderDetail = (rowData, sectionID, rowID) => {
@@ -68,10 +66,23 @@ export const Example = () => {
     let desc = null;
     if (rowData.description && rowData.imageUrl)
       desc = (
-        <View style={styles.descriptionContainer}>
-          <Image source={{ uri: rowData.imageUrl }} style={styles.image} />
-          <Text style={[styles.textDescription]}>{rowData.description}</Text>
-        </View>
+        <>
+          <View style={styles.descriptionContainer}>
+            <Image
+              source={{ uri: rowData.imageUrl }}
+              style={styles.image}
+              defaultSource={rowData.icon} // Fallback image
+            />
+            <View>
+              <Text style={[styles.textDescription]}>
+                {rowData.description}
+              </Text>
+              <Text style={[styles.textDescription]}>
+                {rowData.nombrePerfil}
+              </Text>
+            </View>
+          </View>
+        </>
       );
 
     return (
@@ -84,14 +95,14 @@ export const Example = () => {
 
   return (
     <View style={styles.container}>
-      {renderSelected()}
       <Timeline
+        // scrollEnabled={false}
         style={styles.list}
-        data={data}
+        data={datas}
         circleSize={20}
         circleColor="rgba(0,0,0,0)"
         lineColor="rgb(45,156,219)"
-        timeContainerStyle={{ minWidth: 52, marginTop: -5 }}
+        timeContainerStyle={{ minWidth: 52, marginTop: -5, marginRight: 0 }}
         timeStyle={{
           textAlign: "center",
           backgroundColor: "#ff9797",

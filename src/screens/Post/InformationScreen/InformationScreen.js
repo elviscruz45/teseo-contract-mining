@@ -148,6 +148,9 @@ function InformationScreen(props) {
           "ServiciosAIT",
           props.actualServiceAIT.idServiciosAIT
         );
+        console.log(
+          "hola como estas que tal te va, ahi es de dia o es de noche"
+        );
         const updateDataLasEventPost = {
           LastEventPosted: newData.createdAt,
           AvanceEjecucion: newData.porcentajeAvance,
@@ -158,9 +161,17 @@ function InformationScreen(props) {
           NuevaFechaEstimada: newData.NuevaFechaEstimada,
           HHModificado: newData.HHModificado,
         }; // Specify the field name and its updated value
+        console.log(
+          "2222222hola como estas que tal te va, ahi es de dia o es de noche"
+        );
+        console.log("tipo", typeof newData?.aprobacion);
+        console.log(newData?.aprobacion);
 
+        console.log(imageUrlPDF);
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
-
+        console.log(
+          "33333333hola como estas que tal te va, ahi es de dia o es de noche"
+        );
         //Updating global State redux
         props.saveActualPostFirebase(newData);
 

@@ -177,17 +177,7 @@ function ItemScreenNotRedux(props) {
         const querySnapshot = await getDocs(q);
         const lista = [];
         querySnapshot.forEach((doc) => {
-          const dataschema = {
-            ...doc.data(),
-            time: "27 Ago",
-            title: doc.data().titulo,
-            description: doc.data().comentarios,
-            lineColor: "skyblue",
-            icon: require("../../../../assets/empresa.png"),
-            imageUrl: doc.data().fotoUsuarioPerfil,
-          };
-          // lista.push(doc.data());
-          lista.push(dataschema);
+          lista.push(doc.data());
         });
         console.log("getDocs Item with date");
 
@@ -333,7 +323,45 @@ function ItemScreenNotRedux(props) {
           filterButton={filter}
           quitFilterButton={() => quitfilter()}
         />
-        <ServicesListHistorial datas={post} comentPost={comentPost} />
+        <ServicesListHistorial data={post} />
+
+        <FlatList
+          data={post}
+          scrollEnabled={false}
+          renderItem={({ item, index }) => {
+            return (
+              <TouchableOpacity onPress={() => comentPost(item)}>
+                <View />
+                <View>
+                  <View style={styles.equipments2}>
+                    <ImageExpo
+                      source={{ uri: item.fotoPrincipal }}
+                      style={styles.image2}
+                      cachePolicy={"memory-disk"}
+                    />
+                    <View>
+                      <Text style={styles.name2}>
+                        {"Evento: "}
+                        {item.titulo}
+                      </Text>
+                      <Text style={styles.info2}>{item.comentarios}</Text>
+                      <Text style={styles.info2}>{item.fechaPostFormato}</Text>
+                    </View>
+                    {/* {item.pdfPrincipal && (
+                    <TouchableOpacity
+                      onPress={() => UploadFile(item.pdfPrincipal)}
+                      style={styles.attachedElement}
+                    >
+                      <Icon type="material-community" name="paperclip" />
+                    </TouchableOpacity>
+                  )} */}
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
+        />
       </ScrollView>
       {/* <Example /> */}
     </>

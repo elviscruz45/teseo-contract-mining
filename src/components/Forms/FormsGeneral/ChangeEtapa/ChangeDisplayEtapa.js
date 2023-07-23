@@ -19,13 +19,11 @@ export function ChangeDisplayEtapa(props) {
           onPress={() => {
             setEtapa(text.toString());
             formik.setFieldValue("etapa", text.toString());
-            if (etapa !== "2. Contratista-Envio Cotizacion") {
+            if (etapa !== "Contratista-Envio Cotizacion") {
               setAprobadores(null);
-            } else if (
-              etapa !== "6. Contratista-Solicitud Ampliacion Servicio"
-            ) {
+            } else if (etapa !== "Contratista-Solicitud Ampliacion Servicio") {
               setAprobadores(null);
-            } else if (etapa !== "8. Contratista-Envio EDP") {
+            } else if (etapa !== "Contratista-Envio EDP") {
               setAprobadores(null);
             }
             onClose();

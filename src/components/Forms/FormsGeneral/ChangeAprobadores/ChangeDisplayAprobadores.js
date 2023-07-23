@@ -19,9 +19,9 @@ export function ChangeDisplayAprobadores(props) {
           buttonStyle={styles.btn}
           onPress={() => {
             if (
-              etapa === "2. Contratista-Envio Cotizacion" ||
-              etapa === "6. Contratista-Solicitud Ampliacion Servicio" ||
-              etapa === "8. Contratista-Envio EDP"
+              etapa === "Contratista-Envio Cotizacion" ||
+              etapa === "Contratista-Solicitud Ampliacion Servicio" ||
+              etapa === "Contratista-Envio EDP"
             ) {
               setAprobadores(text.toString());
               formik.setFieldValue("aprobacion", text.join(","));
