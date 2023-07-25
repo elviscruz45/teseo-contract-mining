@@ -30,11 +30,11 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
               fill: ({ datum }) => {
                 const color =
                   datum.y < 20
-                    ? "red"
+                    ? "limegreen"
                     : datum.y < 40
-                    ? "magenta"
+                    ? "limegreen"
                     : datum.y < 60
-                    ? "orange"
+                    ? "limegreen"
                     : datum.y < 80
                     ? "limegreen"
                     : datum.y < 100

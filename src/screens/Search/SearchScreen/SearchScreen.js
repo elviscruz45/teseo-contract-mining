@@ -23,7 +23,6 @@ function SearchScreenNoRedux(props) {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
-  const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
   //This is used to retrieve the equipment we are searching for
   useEffect(() => {
     const AITServiceList = props.ActualServiceAITList;

@@ -40,7 +40,6 @@ const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
   // const POSTS_PER_PAGE = 5; // Number of posts to retrieve per page from Firebase
-  console.log("holaaaa", props.postPerPage);
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,13 +67,14 @@ function HomeScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("OnSnapshop");
+        console.log("OnSnapshopHome");
 
         setPosts(lista);
         props.saveTotalEventServiceAITList(lista);
       });
       setIsLoading(false);
     }
+
     fetchData();
     return () => {
       // Cleanup function to unsubscribe from the previous listener
