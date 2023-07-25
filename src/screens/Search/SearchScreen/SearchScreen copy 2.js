@@ -53,6 +53,21 @@ function SearchScreenNoRedux(props) {
     });
   };
 
+  //Function to include/remove from FIrebase (users collection)the "follow" status
+  const pressFollow = async (item) => {
+    const PostRef = doc(db, "users", props.uid);
+
+    if (firestoreEquipmentLiked?.includes(item.tag)) {
+      await updateDoc(PostRef, {
+        EquipmentFavorities: arrayRemove(item.tag),
+      });
+    } else {
+      await updateDoc(PostRef, {
+        EquipmentFavorities: arrayUnion(item.tag),
+      });
+    }
+  };
+
   return (
     <KeyboardAwareScrollView>
       {console.log("priemra parte")}

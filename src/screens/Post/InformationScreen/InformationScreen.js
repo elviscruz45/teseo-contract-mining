@@ -1,14 +1,6 @@
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Aler,
-  ImageBackground,
-  Image,
-} from "react-native";
-import { Icon, Avatar, Input, Button } from "@rneui/themed";
-import React, { useState, useEffect, useContext } from "react";
+import { View, Text } from "react-native";
+import { Avatar, Button } from "@rneui/themed";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { styles } from "./InformationScreen.styles";
 import { GeneralForms } from "../../../components/Forms/GeneralForms/GeneralForms/GeneralForms";
@@ -18,21 +10,15 @@ import { screen } from "../../../utils";
 import { initialValues, validationSchema } from "./InformationScreen.data";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { useFormik } from "formik";
-import { getAuth, updateProfile } from "firebase/auth";
 import { db } from "../../../utils";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import {
   collection,
   doc,
-  getDocs,
   addDoc,
   updateDoc,
-  serverTimestamp,
   arrayUnion,
-  arrayRemove,
-  setDoc,
-  deleteDoc,
 } from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
 import { TitleForms } from "../../../components/Forms/GeneralForms/TitleForms/TitleForms";
@@ -85,21 +71,15 @@ function InformationScreen(props) {
         const imagePath = snapshot.metadata.fullPath;
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
-        //upload pdf file to firebase Storage
-        const fileName = newData.pdfFile.name; // Get the original file name
-        console.log("nombre del archivo pdf", fileName);
         let imageUrlPDF;
         if (newData.pdfFile) {
           console.log("pdf", newData.pdfFile);
           const snapshotPDF = await uploadPdf(newData.pdfFile);
           const imagePathPDF = snapshotPDF.metadata.fullPath;
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
-          newData.pdfPrincipal = imageUrlPDF;
-        } else {
-          newData.pdfPrincipal = "";
         }
 
-        // newData.pdfPrincipal = imageUrlPDF || "";
+        newData.pdfPrincipal = imageUrlPDF || "";
 
         //preparing data to upload to  firestore Database
         newData.fotoPrincipal = imageUrl;
@@ -140,38 +120,34 @@ function InformationScreen(props) {
         const RefFirebase = doc(db, "events", newData.idDocFirestoreDB);
         await updateDoc(RefFirebase, newData);
 
-        //////updating data to ServiciosAIT collection to modify its state
+        /////////updating data to ServiciosAIT collection to modify its state
 
-        ///Modifying the LasEventPostd field,AvanceEjecucion
+        //////////Modifying the LasEventPostd field,AvanceEjecucion
         const RefFirebaseLasEventPostd = doc(
           db,
           "ServiciosAIT",
           props.actualServiceAIT.idServiciosAIT
         );
-        console.log(
-          "hola como estas que tal te va, ahi es de dia o es de noche"
-        );
+
         const updateDataLasEventPost = {
           LastEventPosted: newData.createdAt,
           AvanceEjecucion: newData.porcentajeAvance,
           AvanceAdministrativoTexto: newData.etapa,
-          aprobacion: arrayUnion(newData.aprobacion),
-          pdfFile: arrayUnion(imageUrlPDF),
           MontoModificado: newData.MontoModificado,
           NuevaFechaEstimada: newData.NuevaFechaEstimada,
           HHModificado: newData.HHModificado,
         }; // Specify the field name and its updated value
-        console.log(
-          "2222222hola como estas que tal te va, ahi es de dia o es de noche"
-        );
-        console.log("tipo", typeof newData?.aprobacion);
-        console.log(newData?.aprobacion);
 
-        console.log(imageUrlPDF);
+        if (newData?.aprobacion !== undefined) {
+          updateDataLasEventPost.aprobacion = arrayUnion(newData.aprobacion);
+        }
+
+        if (imageUrlPDF !== undefined) {
+          updateDataLasEventPost.pdfFile = arrayUnion(imageUrlPDF);
+        }
+
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
-        console.log(
-          "33333333hola como estas que tal te va, ahi es de dia o es de noche"
-        );
+
         //Updating global State redux
         props.saveActualPostFirebase(newData);
 

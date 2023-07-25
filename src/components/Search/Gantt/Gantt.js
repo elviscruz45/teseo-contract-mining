@@ -5,30 +5,45 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { Image as ImageExpo } from "expo-image";
 import { styles } from "./Gantt.styles";
 
 export const GanttHistorial = (props) => {
-  const [selected, setSelected] = useState(null);
   const { datas, comentPost } = props;
-
-  // const onEventPress = (data) => {
-  //   setSelected(data);
-  //   console.log(data);
-  //   comentPost(data)
-  // };
 
   return (
     <View style={styles.container}>
       <FlatList
         scrollEnabled={false}
-        // style={[styles.listview, props.listViewStyle]}
         contentContainerStyle={props.listViewContainerStyle}
         data={datas}
-        // extraData={data}
         renderItem={({ item, index }) => {
+          const timestampData = item.createdAt;
+          const timestampInMilliseconds =
+            timestampData.seconds * 1000 + timestampData.nanoseconds / 1000000;
+          const date = new Date(timestampInMilliseconds); // Function to get the abbreviated month name
+          function getAbbreviatedMonthName(monthNumber) {
+            const months = [
+              "Ene",
+              "Feb",
+              "Mar",
+              "Abr",
+              "May",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Set",
+              "Oct",
+              "Nov",
+              "Dic",
+            ];
+            return months[monthNumber];
+          }
+          // Create the formatted string "dd MMM" (e.g., "28 Ago")
+          const day = date.getDate();
+          const month = getAbbreviatedMonthName(date.getMonth());
+          const formattedDate = `${day} ${month}`;
           return (
             <>
               <Text></Text>
@@ -41,7 +56,7 @@ export const GanttHistorial = (props) => {
                       style={[styles.time, styles.timeStyle]}
                       allowFontScaling={true}
                     >
-                      {item.time}
+                      {formattedDate}
                     </Text>
                   </View>
                 </View>
@@ -54,7 +69,7 @@ export const GanttHistorial = (props) => {
                 />
               </View>
               <View style={styles.details}>
-                <TouchableOpacity onPress={() => console.log("hola")}>
+                <TouchableOpacity onPress={() => comentPost(item)}>
                   <Text style={styles.titledetails}> {item.title}</Text>
                   <View style={styles.row}>
                     <ImageExpo
@@ -85,8 +100,7 @@ export const GanttHistorial = (props) => {
             </>
           );
         }}
-        // keyExtractor={(item, index) => index + ""}
-        {...props.options}
+        keyExtractor={(item) => item.createdAt}
       />
     </View>
   );

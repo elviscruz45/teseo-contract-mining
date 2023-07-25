@@ -55,6 +55,7 @@ function ChangeDisplayNameForm(props) {
       <KeyboardAwareScrollView>
         <Input
           placeholder="Nombre y apellidos"
+          multiline={true}
           rightIcon={{
             type: "material-community",
             name: "account-circle-outline",
@@ -65,6 +66,7 @@ function ChangeDisplayNameForm(props) {
         />
         <Input
           placeholder="Escribe tu cargo"
+          multiline={true}
           rightIcon={{
             type: "material-community",
             name: "account-circle-outline",

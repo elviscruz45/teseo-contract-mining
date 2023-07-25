@@ -166,6 +166,7 @@ function CommentScreen(props) {
             {Item.etapa}
           </Text>
         </View>
+        <Text></Text>
 
         <View style={[styles.row, styles.center]}>
           <Text style={{ margin: 5, color: "#5B5B5B" }}>

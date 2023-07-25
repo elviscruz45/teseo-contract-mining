@@ -25,7 +25,7 @@ export function ChangeDisplayAprobadores(props) {
             ) {
               setAprobadores(text.toString());
               formik.setFieldValue("aprobacion", text.join(","));
-
+              console.log(text.join(","));
               onClose();
             } else {
               alert("No requiere Aprobacion");

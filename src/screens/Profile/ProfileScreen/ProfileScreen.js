@@ -121,87 +121,87 @@ function ProfileScreen(props) {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={{ backgroundColor: "white" }} // Add backgroundColor here
-    >
-      <Text></Text>
-      <View>
-        <ConnectedInfoUser />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            title="Editar"
-            buttonStyle={styles.btnActualizarStyles}
-            titleStyle={styles.btnTextStyle}
-            onPress={update_Data}
-          />
+    <>
+      <KeyboardAwareScrollView
+        style={{ backgroundColor: "white" }} // Add backgroundColor here
+      >
+        <Text></Text>
+        <View>
+          <ConnectedInfoUser />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              title="Editar"
+              buttonStyle={styles.btnActualizarStyles}
+              titleStyle={styles.btnTextStyle}
+              onPress={update_Data}
+            />
 
-          <Button
-            title="Cerrar "
-            buttonStyle={styles.btncerrarStyles}
-            titleStyle={styles.btnTextStyle}
-            onPress={logout}
-          />
+            <Button
+              title="Cerrar "
+              buttonStyle={styles.btncerrarStyles}
+              titleStyle={styles.btnTextStyle}
+              onPress={logout}
+            />
+          </View>
+          {/* <Modal show={showModal} close={onCloseOpenModal}>
+            {renderComponent}
+          </Modal> */}
         </View>
-        <Modal show={showModal} close={onCloseOpenModal}>
-          {renderComponent}
-        </Modal>
-      </View>
-      <Text></Text>
-      <Text></Text>
-      <Icon
-        reverse
-        type="material-community"
-        name="file-excel"
-        color="#8CBBF1"
-        containerStyle={styles.btnContainer2}
-        onPress={() => getExcelPerfil(props.email)}
-      />
+        <Text></Text>
+        <Text></Text>
+        <Icon
+          reverse
+          type="material-community"
+          name="file-excel"
+          color="#8CBBF1"
+          containerStyle={styles.btnContainer2}
+          onPress={() => getExcelPerfil(props.email)}
+        />
 
-      <ProfileDateScreen filterButton={filter} quitFilterButton={quitfilter} />
+        <ProfileDateScreen
+          filterButton={filter}
+          quitFilterButton={quitfilter}
+        />
 
-      <FlatList
-        data={post}
-        scrollEnabled={false}
-        renderItem={({ item, index }) => {
-          return (
-            <TouchableOpacity onPress={() => comentPost(item)}>
-              <View>
-                <View style={styles.equipments2}>
-                  <ImageExpo
-                    source={{ uri: item.fotoPrincipal }}
-                    style={styles.image2}
-                    cachePolicy={"memory-disk"}
-                  />
-                  <View>
-                    <Text style={styles.name2}>{item.AITNombreServicio}</Text>
-                    <Text style={styles.name2}>
-                      {"Evento: "}
-                      {item.titulo}
-                    </Text>
-                    <Text style={styles.info2}>{item.comentarios}</Text>
-                    <Text style={styles.info2}>{item.fechaPostFormato}</Text>
+        <FlatList
+          data={post}
+          scrollEnabled={false}
+          renderItem={({ item, index }) => {
+            return (
+              <TouchableOpacity onPress={() => comentPost(item)}>
+                <View>
+                  <View style={styles.equipments2}>
+                    <ImageExpo
+                      source={{ uri: item.fotoPrincipal }}
+                      style={styles.image2}
+                      cachePolicy={"memory-disk"}
+                    />
+                    <View>
+                      <Text style={styles.name2}>{item.AITNombreServicio}</Text>
+                      <Text style={styles.name2}>
+                        {"Evento: "}
+                        {item.titulo}
+                      </Text>
+                      <Text style={styles.info2}>{item.comentarios}</Text>
+                      <Text style={styles.info2}>{item.fechaPostFormato}</Text>
+                    </View>
                   </View>
-                  {/* {item.pdfPrincipal && (
-                    <TouchableOpacity
-                      onPress={() => UploadFile(item.pdfPrincipal)}
-                      style={styles.attachedElement}
-                    >
-                      <Icon type="material-community" name="paperclip" />
-                    </TouchableOpacity>
-                  )} */}
                 </View>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item) => item.idDocFirestoreDB}
-      />
-    </KeyboardAwareScrollView>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item.idDocFirestoreDB}
+        />
+      </KeyboardAwareScrollView>
+      <Modal show={showModal} close={onCloseOpenModal}>
+        {renderComponent}
+      </Modal>
+    </>
   );
 }
 

@@ -1,6 +1,13 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { collection, query, where } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  limit,
+  getDocs,
+} from "firebase/firestore";
 import { Image as ImageExpo } from "expo-image";
 import { equipmentList } from "../../../utils/equipmentList";
 import { styles } from "./HeaderScreen.styles";
@@ -14,6 +21,26 @@ import { CircularProgress } from "./CircularProgress";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      q = query(
+        collection(db, "ServiciosAIT"),
+        orderBy("LastEventPosted", "desc"),
+        limit(50) // Add the desired limit value here
+      );
+      const querySnapshot = await getDocs(q);
+      const lista = [];
+      querySnapshot.forEach((doc) => {
+        lista.push(doc.data());
+      });
+      console.log("getDocs Item with date");
+
+      setData(lista);
+    }
+    fetchData();
+  }, [props.totalEventServiceAITLIST, props.ActualPostFirebase]);
 
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
@@ -45,7 +72,7 @@ function HeaderScreenNoRedux(props) {
         }} // Add backgroundColor here
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={props.ActualServiceAITList}
+        data={data}
         renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AreaServicio;
@@ -82,6 +109,7 @@ const mapStateToProps = (reducers) => {
     uid: reducers.profile.uid,
     equipmentListHeader: reducers.home.equipmentList,
     ActualServiceAITList: reducers.post.ActualServiceAITList,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 
