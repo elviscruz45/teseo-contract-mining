@@ -2,26 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   Image,
-  Pressable,
   Linking,
   ScrollView,
 } from "react-native";
-import { Image as ImageExpo } from "expo-image";
 import { styles } from "./ItemScreen.styles";
-import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import {
   collection,
-  onSnapshot,
   query,
   where,
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
   orderBy,
   getDocs,
   limit,
@@ -36,7 +27,7 @@ import { EquipmentListUpper } from "../../../actions/home";
 import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
-import { ServicesListHistorial } from "../../../components/Search/TimeLine/TimeLine";
+import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";
 
 function ItemScreenNotRedux(props) {
   console.log("itemScreen");
@@ -333,9 +324,8 @@ function ItemScreenNotRedux(props) {
           filterButton={filter}
           quitFilterButton={() => quitfilter()}
         />
-        <ServicesListHistorial datas={post} comentPost={comentPost} />
+        <GanttHistorial datas={post} comentPost={comentPost} />
       </ScrollView>
-      {/* <Example /> */}
     </>
   );
 }

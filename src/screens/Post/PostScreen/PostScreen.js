@@ -36,7 +36,7 @@ import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function PostScreen(props) {
-  const POSTS_PER_PAGE = 20; // Number of posts to retrieve per page from Firebase
+  const SERVICES_PER_PAGE = 50; // Number of posts to retrieve per page from Firebase
 
   const emptyimage = require("../../../../assets/splash.png");
   const [photos, setPhotos] = useState([]);
@@ -44,7 +44,7 @@ function PostScreen(props) {
   const [equipment, setEquipment] = useState(null);
   const [AIT, setAIT] = useState(null);
   const [searchText, setSearchText] = useState("");
-  const [lengPosts, setlengPosts] = useState(POSTS_PER_PAGE);
+  const [lengPosts, setlengPosts] = useState(SERVICES_PER_PAGE);
   const [posts, setPosts] = useState([]);
   const [searchResults, setSearchResults] = useState(null);
 
@@ -53,6 +53,7 @@ function PostScreen(props) {
     console.log("useeffectAIT");
     let unsubscribe; // Variable to store the unsubscribe function
 
+    //Order by LastEventPosted to send it a global state
     async function fetchData() {
       queryRef = query(
         collection(db, "ServiciosAIT"),
@@ -65,9 +66,17 @@ function PostScreen(props) {
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("OnSnapshopPublicar Service AIT");
-        setPosts(lista);
         props.saveActualAITServicesFirebaseGlobalState(lista); // to global state
+
+        //then order by Created At to render in  screen PostScreen
+
+        const newOrderList = lista.sort((a, b) => {
+          return b.createdAt - a.createdAt;
+        });
+        console.log("OnSnapshopPublicar Service AIT");
+        // console.log(lista);
+
+        setPosts(newOrderList);
       });
       // setIsLoading(false);
     }
@@ -258,7 +267,7 @@ function PostScreen(props) {
                 <View>
                   <Text style={styles.name}>{item.NombreServicio}</Text>
                   <Text style={styles.info}>
-                    {"AIT: "}
+                    {"Codigo Servicio: "}
                     {item.NumeroAIT}
                   </Text>
                   <Text style={styles.info}>

@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
   },
   textAreaComment: {
     width: windowWidth * 0.6,
-    height: windowWidth * 0.2,
+    // height: windowWidth * 0.3,
     // padding: 0,
     marginLeft: 10,
   },

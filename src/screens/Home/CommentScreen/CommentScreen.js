@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Text,
   View,
@@ -20,8 +20,11 @@ import {
   query,
   doc,
   updateDoc,
+  orderBy,
   arrayUnion,
   arrayRemove,
+  getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
@@ -34,11 +37,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const windowWidth = Dimensions.get("window").width;
 
 function CommentScreen(props) {
-  console.log("comeent");
   let unsubscribe;
   const [postsComments, setPostsComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [comment, setComment] = useState("");
+
+  console.log("CommentScreen");
 
   const navigation = useNavigation();
   const {
@@ -48,37 +52,37 @@ function CommentScreen(props) {
   } = props;
 
   useEffect(() => {
-    async function fetchData() {
-      // Try to retrieve data from AsyncStorage
-      const q = doc(db, "events", Item.idDocFirestoreDB);
-      unsubscribe = onSnapshot(q, (docSnapshot) => {
-        console.log("onSnapshot comment");
-        const data = docSnapshot.data()?.comentariosUsuarios;
-        setPostsComments(data);
+    // // //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
+    async function fetchDataEventServicesCommentsList() {
+      const docRef = doc(db, "events", Item.idDocFirestoreDB);
+      const docSnapshot = await getDoc(docRef);
+      const post_array = docSnapshot.data().comentariosUsuarios;
+
+      post_array.sort((a, b) => {
+        return b.date - a.date;
       });
-      setIsLoading(false);
+
+      setPostsComments(post_array);
     }
-    fetchData();
+    fetchDataEventServicesCommentsList();
 
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
+    setIsLoading(false);
+  }, [props.totalEventServiceAITLIST]);
+
+  //---This is used to get the attached file in the post that contain an attached file---
+  const uploadFile = useCallback(async (uri) => {
+    console.log("pdfHomescreen", uri);
+    try {
+      const supported = await Linking.canOpenURL(uri);
+      if (supported) {
+        await Linking.openURL(uri);
+      } else {
+        alert("Unable to open PDF document");
       }
-    };
+    } catch (error) {
+      alert("Error opening PDF document", error);
+    }
   }, []);
-
-  async function UploadFile(uri) {
-    Linking.canOpenURL(uri)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(uri);
-        } else {
-          alert("Unable to open PDF document");
-        }
-      })
-      .catch((error) => alert("Error opening PDF document", error));
-  }
 
   const handleCommentChange = (text) => {
     setComment(text);
@@ -129,13 +133,39 @@ function CommentScreen(props) {
             marginLeft: 5,
             marginTop: -5,
             color: "black",
-            fontWeight: "500",
+            fontWeight: "700",
             alignSelf: "center",
           }}
         >
           {Item.AITNombreServicio}
         </Text>
-        <Text style={{ margin: 5 }}>{Item.comentarios}</Text>
+        <Text></Text>
+
+        <View>
+          <Text style={styles.textAreaTitle}>{Item.titulo}</Text>
+          <Text style={styles.textAreaComment}>{Item.comentarios}</Text>
+          <Text></Text>
+
+          <Text style={styles.textAreaTitleplus}>Estado General : </Text>
+          <Text style={styles.textAreaCommentplus}>
+            {"Progreso: "}
+            {Item.porcentajeAvance}
+            {"%"}
+          </Text>
+          <Text style={styles.textAreaCommentplus}>
+            {"Estado:"}
+            {Item.nombreComponente}
+          </Text>
+          <Text style={styles.textAreaCommentplus}>
+            {"Codigo Servicio:"}
+            {Item.AITNumero}
+          </Text>
+
+          <Text style={styles.textAreaCommentplus}>
+            {"Etapa: "}
+            {Item.etapa}
+          </Text>
+        </View>
 
         <View style={[styles.row, styles.center]}>
           <Text style={{ margin: 5, color: "#5B5B5B" }}>
@@ -227,6 +257,7 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

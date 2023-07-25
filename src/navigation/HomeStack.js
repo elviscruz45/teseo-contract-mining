@@ -30,7 +30,7 @@ function HomeStack(props) {
     props.update_firebaseEmail(email);
     props.update_firebaseUid(uid);
 
-    //this retrieve data from ServiciosAIT collections from Firestore and sed it ot the global redux state
+    //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
     async function fetchDataServicesList() {
       const querySnapshot = await getDocs(
         query(

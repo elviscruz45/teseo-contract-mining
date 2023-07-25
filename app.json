@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "teseo-app",
-    "slug": "teseo-app",
+    "name": "teseo-contract-mining-app",
+    "slug": "teseo-contract-mining-app",
     "description": "high perfomance for your industry",
     "version": "1.0.0",
     "orientation": "portrait",

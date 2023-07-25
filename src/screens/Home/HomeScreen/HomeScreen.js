@@ -185,9 +185,9 @@ function HomeScreen(props) {
           return (
             <View
               style={{
-                margin: 2,
+                // margin: 2,
                 borderBottomWidth: 5,
-                borderBottomColor: "white",
+                borderBottomColor: "#f0f8ff",
               }}
             >
               <View style={[styles.row, styles.center]}>
@@ -230,11 +230,11 @@ function HomeScreen(props) {
 
                 <View>
                   <Text style={styles.textAreaTitle}>
-                    {"Evento: "}
+                    {/* {"Evento: "} */}
                     {item.titulo}
                   </Text>
                   <Text style={styles.textAreaComment}>{item.comentarios}</Text>
-                  <Text style={styles.textAreaTitleplus}>Estado General</Text>
+                  {/* <Text style={styles.textAreaTitleplus}>Estado General</Text>
                   <Text style={styles.textAreaCommentplus}>
                     {"Progreso: "}
                     {item.porcentajeAvance}
@@ -252,7 +252,7 @@ function HomeScreen(props) {
                   <Text style={styles.textAreaCommentplus}>
                     {"Etapa: "}
                     {item.etapa}
-                  </Text>
+                  </Text> */}
                 </View>
               </View>
               <View style={styles.rowlikes}>

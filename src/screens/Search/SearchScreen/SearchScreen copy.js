@@ -2,14 +2,34 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
+  ImageBackground,
+  ScrollView,
   FlatList,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
   TouchableOpacity,
+  Image,
+  Pressable,
 } from "react-native";
 import { styles } from "./SearchScreen.styles";
 import { SearchBar, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+  collection,
+  query,
+  startAt,
+  endAt,
+  limit,
+  orderBy,
+  getDocs,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
 import { screen } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 import { db } from "../../../utils";
@@ -52,6 +72,32 @@ function SearchScreenNoRedux(props) {
       params: { Item: item },
     });
   };
+
+  //this hook is used to retrieve the list of tags of Firebase of Equipment I am following  to send to Global state EquipmentListHeader
+  useEffect(() => {
+    console.log("useeffect Search Screen");
+    let unsubscribe; // Variable to store the unsubscribe function
+
+    // setSearchResults(equipmentList); this lines of code is remover because dont work
+    async function fetchData() {
+      const q = query(collection(db, "users"), where("uid", "==", props.uid));
+
+      unsubscribe = onSnapshot(q, (querySnapshotFirebase) => {
+        querySnapshotFirebase.forEach((doc) => {
+          setFirestoreEquipmentLiked(doc.data().EquipmentFavorities); //when there is un update I update the locas useState to rerender the changes ("seguir" button)
+          props.EquipmentListUpper(doc.data().EquipmentFavorities);
+        });
+      });
+    }
+
+    fetchData();
+    return () => {
+      // Cleanup function to unsubscribe from the previous listener
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   //Function to include/remove from FIrebase (users collection)the "follow" status
   const pressFollow = async (item) => {
@@ -114,19 +160,37 @@ function SearchScreenNoRedux(props) {
                 <View>
                   <Text style={styles.name}>{item.NombreServicio}</Text>
                   <Text style={styles.info}>
-                    {"Codigo Servicio: "}
+                    {"AIT: "}
                     {item.NumeroAIT}
                   </Text>
                   <Text style={styles.info}>
                     {"Tipo: "}
                     {item.TipoServicio}
                   </Text>
-
+                  <Text style={styles.info}>
+                    {"Monto: "}
+                    {formattedAmount} {item.Moneda}
+                  </Text>
                   <Text style={styles.info}>
                     {"Fecha Inicio: "}
                     {item.fechaPostFormato}
                   </Text>
                 </View>
+                {/* {firestoreEquipmentLiked?.includes(item.tag) ? (
+                  <Pressable
+                    style={styles.buttonFollow}
+                    onPress={() => pressFollow(item)}
+                  >
+                    <Text style={styles.textFollow}>Siguiendo</Text>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={styles.buttonUnfollow}
+                    onPress={() => pressFollow(item)}
+                  >
+                    <Text style={styles.textFollow}>Seguir</Text>
+                  </Pressable>
+                )} */}
               </View>
             </TouchableOpacity>
           );
