@@ -65,9 +65,8 @@ function PostScreen(props) {
         props.saveActualAITServicesFirebaseGlobalState(lista); // to global state
         console.log("4.OnSnapshop_POST_Publicar Service AIT");
 
-        //then order by Created At to render in  screen PostScreen
-
-        const newOrderList = lista.sort((a, b) => {
+        //then creaste a new list to order by Created At to render in  screen PostScreen
+        const newOrderList = [...lista].sort((a, b) => {
           return b.createdAt - a.createdAt;
         });
         // console.log(lista);

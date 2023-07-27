@@ -12,7 +12,14 @@ export function home(state = INITIAL_STATE, action) {
     case "EQUIPMENTLISTUPPER":
       return { ...state, equipmentList: action.payload };
     case "SAVE_TOTALEVENTSERVICEAITLIST":
-      return { ...state, totalEventServiceAITLIST: action.payload };
+      // return { ...state, totalEventServiceAITLIST: action.payload };
+      return {
+        ...state,
+        totalEventServiceAITLIST: [
+          ...state.totalEventServiceAITLIST,
+          ...action.payload,
+        ],
+      };
     case "RESET_POSTPERPAGEHOME":
       return { ...state, postPerPage: action.payload };
     default:

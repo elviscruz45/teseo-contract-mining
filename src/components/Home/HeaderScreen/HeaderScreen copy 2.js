@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   collection,
   query,
-  onSnapshot,
   where,
   orderBy,
   limit,
@@ -24,63 +23,33 @@ function HeaderScreenNoRedux(props) {
   const [data, setData] = useState();
   console.log("2RenderHeaderScreenNoRedux");
 
-  useEffect(() => {
-    let unsubscribe;
-
-    async function fetchData() {
-      let queryRef = query(
-        collection(db, "ServiciosAIT"),
-        orderBy("LastEventPosted", "desc")
-      );
-
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+  useEffect(
+    () => {
+      // console.log("props.totalEventServiceAITLIST");
+      async function fetchData() {
+        q = query(
+          collection(db, "ServiciosAIT"),
+          orderBy("LastEventPosted", "desc")
+          // limit(50) // Add the desired limit value here
+        );
+        const querySnapshot = await getDocs(q);
         const lista = [];
-        ItemFirebase.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
           lista.push(doc.data());
         });
-
-        console.log("2.OnsnapshotHeaderScreenNoRedux");
+        console.log("2OnsnapshotHeaderScreenNoRedux");
 
         setData(lista);
-      });
-    }
-
-    fetchData();
-
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
       }
-    };
-  }, []);
-
-  //     // console.log("props.totalEventServiceAITLIST");
-  //     async function fetchData() {
-  //       q = query(
-  //         collection(db, "ServiciosAIT"),
-  //         orderBy("LastEventPosted", "desc")
-
-  //         // limit(50) // Add the desired limit value here
-  //       );
-  //       const querySnapshot = await getDocs(q);
-  //       const lista = [];
-  //       querySnapshot.forEach((doc) => {
-  //         lista.push(doc.data());
-  //       });
-  //       console.log("2OnsnapshotHeaderScreenNoRedux");
-
-  //       setData(lista);
-  //     }
-  //     fetchData();
-  //   },
-  //   [
-  //     // props.totalEventServiceAITLIST,
-  //     // props.ActualServiceAITList,
-  //     // props.ActualPostFirebase,
-  //   ]
-  // );
-  // // }, [props.totalEventServiceAITLIST]);
+      fetchData();
+    },
+    [
+      // props.totalEventServiceAITLIST,
+      // props.ActualServiceAITList,
+      // props.ActualPostFirebase,
+    ]
+  );
+  // }, [props.totalEventServiceAITLIST]);
 
   // props.totalEventServiceAITLIST
   const selectAsset = (item) => {

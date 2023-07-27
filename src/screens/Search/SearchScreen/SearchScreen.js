@@ -23,10 +23,13 @@ function SearchScreenNoRedux(props) {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
+
+  let AITServiceList = props.ActualServiceAITList;
+
   //This is used to retrieve the equipment we are searching for
   useEffect(() => {
-    const AITServiceList = props.ActualServiceAITList;
-
+    AITServiceList = props.ActualServiceAITList;
+    console.log("SearchScreenUseEffect");
     if (searchText === "") {
       setSearchResults(AITServiceList);
     } else {
