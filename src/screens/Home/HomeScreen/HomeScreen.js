@@ -64,7 +64,7 @@ function HomeScreen(props) {
         console.log("1OnSnapshopHomeHomeScreen");
 
         setPosts(lista);
-        // props.saveTotalEventServiceAITList(lista);
+        props.saveTotalEventServiceAITList(lista);
       });
       setIsLoading(false);
     }
