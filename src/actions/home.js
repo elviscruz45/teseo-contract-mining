@@ -53,11 +53,11 @@ export const saveTotalEventServiceAITList = (item) => async (dispatch) => {
 };
 
 export const resetPostPerPageHome = (item) => async (dispatch) => {
-  const itemNew = item + 10;
+  const newItem = item + 5;
   try {
     dispatch({
       type: "RESET_POSTPERPAGEHOME",
-      payload: itemNew,
+      payload: newItem,
     });
   } catch (error) {
     alert(error.message);

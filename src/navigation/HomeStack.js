@@ -14,8 +14,8 @@ import { update_firebaseUserName } from "../actions/profile";
 import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { update_firebaseProfile } from "../actions/profile";
-import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
-import { saveTotalEventServiceAITList } from "../actions/home";
+// import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
+// import { saveTotalEventServiceAITList } from "../actions/home";
 import { db } from "../utils";
 
 function HomeStack(props) {
@@ -30,22 +30,22 @@ function HomeStack(props) {
     props.update_firebaseEmail(email);
     props.update_firebaseUid(uid);
 
-    //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
-    async function fetchDataServicesList() {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, "ServiciosAIT"),
-          orderBy("LastEventPosted", "desc")
-        )
-      );
-      const post_array = [];
-      querySnapshot.forEach((doc) => {
-        post_array.push(doc.data());
-      });
+    // //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
+    // async function fetchDataServicesList() {
+    //   const querySnapshot = await getDocs(
+    //     query(
+    //       collection(db, "ServiciosAIT"),
+    //       orderBy("LastEventPosted", "desc")
+    //     )
+    //   );
+    //   const post_array = [];
+    //   querySnapshot.forEach((doc) => {
+    //     post_array.push(doc.data());
+    //   });
 
-      props.saveActualAITServicesFirebaseGlobalState(post_array);
-    }
-    fetchDataServicesList();
+    //   props.saveActualAITServicesFirebaseGlobalState(post_array);
+    // }
+    // fetchDataServicesList();
   }, []);
 
   const home_screen = () => {
@@ -115,6 +115,6 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   update_firebaseEmail,
   update_firebaseUid,
   update_firebaseProfile,
-  saveActualAITServicesFirebaseGlobalState,
-  saveTotalEventServiceAITList,
+  // saveActualAITServicesFirebaseGlobalState,
+  // saveTotalEventServiceAITList,
 })(HomeStack);

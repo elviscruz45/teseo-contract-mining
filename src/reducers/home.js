@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   home: "elvis",
   equipmentList: [],
   totalEventServiceAITLIST: [],
-  postPerPage: 5,
+  postPerPage: 10,
 };
 
 export function home(state = INITIAL_STATE, action) {

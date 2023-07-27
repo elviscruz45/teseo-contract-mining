@@ -23,6 +23,11 @@ import {
   collection,
   onSnapshot,
   query,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  where,
   limit,
   orderBy,
 } from "firebase/firestore";
@@ -31,7 +36,6 @@ import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function PostScreen(props) {
-  console.log("4PostScreen");
   const SERVICES_PER_PAGE = 50; // Number of posts to retrieve per page from Firebase
 
   const emptyimage = require("../../../../assets/splash.png");
@@ -46,7 +50,7 @@ function PostScreen(props) {
 
   //retrieving serviceAIT list data from firebase
   useEffect(() => {
-    console.log("4useeffectAIT");
+    console.log("useeffectAIT");
     let unsubscribe; // Variable to store the unsubscribe function
 
     //Order by LastEventPosted to send it a global state

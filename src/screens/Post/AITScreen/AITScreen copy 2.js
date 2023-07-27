@@ -1,16 +1,39 @@
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Aler,
+  ImageBackground,
+  Image,
+} from "react-native";
 import { Icon, Avatar, Input, Button } from "@rneui/themed";
 import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import { styles } from "./AITScreen.styles";
+import { GeneralForms } from "../../../components/Forms/GeneralForms/GeneralForms/GeneralForms";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { initialValues, validationSchema } from "./AITScreen.data";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { useFormik } from "formik";
+import { getAuth, updateProfile } from "firebase/auth";
 import { db } from "../../../utils";
-import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { AITForms } from "../../../components/Forms/GeneralForms/AITForms/AITForms";
 import { areaLists } from "../../../utils/areaList";
 

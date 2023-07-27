@@ -12,37 +12,35 @@ import { styles } from "./HeaderScreen.styles";
 import { connect } from "react-redux";
 import { db } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
-// import { EquipmentListUpper } from "../../../actions/home";
+import { EquipmentListUpper } from "../../../actions/home";
 import { screen } from "../../../utils";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
-import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
   const [data, setData] = useState();
-  console.log("2RenderHeaderScreenNoRedux");
+  console.log("RenderHeaderScreenNoRedux");
 
   useEffect(() => {
     // console.log("props.totalEventServiceAITLIST");
     async function fetchData() {
       q = query(
         collection(db, "ServiciosAIT"),
-        orderBy("LastEventPosted", "desc")
-        // limit(50) // Add the desired limit value here
+        orderBy("LastEventPosted", "desc"),
+        limit(50) // Add the desired limit value here
       );
       const querySnapshot = await getDocs(q);
       const lista = [];
       querySnapshot.forEach((doc) => {
         lista.push(doc.data());
       });
-      console.log("2OnsnapshotHeaderScreenNoRedux");
+      console.log("querySnapshot HeaderScreenNoRedux");
 
       setData(lista);
     }
     fetchData();
-  }, [props.totalEventServiceAITLIST, props.ActualServiceAITList]);
-  // }, [props.totalEventServiceAITLIST]);
+  }, [props.totalEventServiceAITLIST]);
 
   // props.totalEventServiceAITLIST
   const selectAsset = (item) => {
@@ -104,19 +102,18 @@ function HeaderScreenNoRedux(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    // ActualPostFirebase: reducers.post.ActualPostFirebase,
-    // firebase_user_name: reducers.profile.firebase_user_name,
-    // user_photo: reducers.profile.user_photo,
-    // email: reducers.profile.email,
-    // profile: reducers.profile.profile,
-    // uid: reducers.profile.uid,
-    // equipmentListHeader: reducers.home.equipmentList,
+    ActualPostFirebase: reducers.post.ActualPostFirebase,
+    firebase_user_name: reducers.profile.firebase_user_name,
+    user_photo: reducers.profile.user_photo,
+    email: reducers.profile.email,
+    profile: reducers.profile.profile,
+    uid: reducers.profile.uid,
+    equipmentListHeader: reducers.home.equipmentList,
     ActualServiceAITList: reducers.post.ActualServiceAITList,
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 
-export const HeaderScreen = connect(mapStateToProps, {
-  // EquipmentListUpper,
-  saveActualAITServicesFirebaseGlobalState,
-})(HeaderScreenNoRedux);
+export const HeaderScreen = connect(mapStateToProps, { EquipmentListUpper })(
+  HeaderScreenNoRedux
+);

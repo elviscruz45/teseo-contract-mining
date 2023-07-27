@@ -21,7 +21,6 @@ import { MontoServiceList } from "../RecursosScreen/MontoServiceList";
 import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
 
 export const ReportScreen = () => {
-  console.log("5ReportScreen");
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);

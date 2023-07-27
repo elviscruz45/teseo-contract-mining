@@ -32,7 +32,6 @@ import { screen } from "../../../utils";
 import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualServiceAIT } from "../../../actions/post";
-import { EquipmentListUpper } from "../../../actions/home";
 import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
@@ -179,7 +178,7 @@ function ItemScreenNotRedux(props) {
         querySnapshot.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("getDocs Item with date");
+        console.log("querySnapshotItemScreenNotRedux getDocs Item with date");
 
         setPost(lista);
         setIsLoading(false);
@@ -383,5 +382,4 @@ const mapStateToProps = (reducers) => {
 
 export const ItemScreen = connect(mapStateToProps, {
   saveActualServiceAIT,
-  EquipmentListUpper,
 })(ItemScreenNotRedux);
