@@ -7,27 +7,18 @@ import { screen } from "../../../utils";
 export const InactiveServiceList = (props) => {
   const { data } = props;
   const navigation = useNavigation();
-  // const tableData = [
-  //   {
-  //     id: 1,
-  //     name: "Itemdf dfsf",
-  //     price: "$10.99",
-  //   },
-  //   { id: 2, name: "Item 2", price: "$24.99" },
-  //   { id: 3, name: "Item 3", price: "$7.49" },
-  //   // Add more items as needed
-  // ];
 
   const newTableData = [];
   if (data) {
     for (let i = 0; i < data.length; i++) {
       if (
-        data[i].AvanceAdministrativoTexto === "Standy by" ||
+        data[i].AvanceAdministrativoTexto === "Stand by" ||
         data[i].AvanceAdministrativoTexto === "Cancelacion"
       ) {
         newTableData.push({
           id: data[i].NumeroAIT,
           name: data[i].NombreServicio,
+          estado: data[i].AvanceAdministrativoTexto,
         });
       }
     }
@@ -38,7 +29,6 @@ export const InactiveServiceList = (props) => {
     const result = data?.filter((dataItem) => {
       return dataItem.NumeroAIT === item;
     });
-    console.log(result[0]);
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
@@ -55,6 +45,7 @@ export const InactiveServiceList = (props) => {
           <DataTable.Title style={styles.multiLineColumn}>
             Nombre
           </DataTable.Title>
+          <DataTable.Title style={styles.shortColumn1}>Estado</DataTable.Title>
         </DataTable.Header>
 
         {newTableData.length === 0 ? (
@@ -71,6 +62,9 @@ export const InactiveServiceList = (props) => {
               >
                 {item.name}
               </Text>
+              <DataTable.Cell style={styles.shortColumn1}>
+                {item.estado}
+              </DataTable.Cell>
             </DataTable.Row>
           ))
         )}

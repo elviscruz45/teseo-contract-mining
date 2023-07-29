@@ -17,6 +17,7 @@ import { screen } from "../../../utils";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
+import { updateAITServicesDATA } from "../../../actions/home";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
@@ -39,7 +40,9 @@ function HeaderScreenNoRedux(props) {
         });
 
         console.log("2.OnsnapshotHeaderScreenNoRedux");
+
         setData(lista);
+        props.updateAITServicesDATA(lista);
       });
     }
 
@@ -128,4 +131,5 @@ const mapStateToProps = (reducers) => {
 export const HeaderScreen = connect(mapStateToProps, {
   // EquipmentListUpper,
   saveActualAITServicesFirebaseGlobalState,
+  updateAITServicesDATA,
 })(HeaderScreenNoRedux);

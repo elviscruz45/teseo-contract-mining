@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   equipmentList: [],
   totalEventServiceAITLIST: [],
   postPerPage: 10,
+  servicesData: null,
 };
 
 export function home(state = INITIAL_STATE, action) {
@@ -22,6 +23,9 @@ export function home(state = INITIAL_STATE, action) {
       };
     case "RESET_POSTPERPAGEHOME":
       return { ...state, postPerPage: action.payload };
+
+    case "UPDATE_AITSERVICESDATA":
+      return { ...state, servicesData: action.payload };
     default:
       return state;
   }

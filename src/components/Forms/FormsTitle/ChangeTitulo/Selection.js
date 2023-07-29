@@ -28,7 +28,6 @@ const SelectExampleBare = (props) => {
   }
 
   function saveProperty(itemValue) {
-    console.log(itemValue);
     setText(itemValue);
   }
 

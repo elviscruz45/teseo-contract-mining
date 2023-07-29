@@ -1,48 +1,92 @@
 import React from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
 import { DataTable } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
 
-const tableData = [
-  {
-    id: 1,
-    name: "Itemdf dfsf",
-    price: "$10.99",
-  },
-  { id: 2, name: "Item 2", price: "$24.99" },
-  { id: 3, name: "Item 3", price: "$7.49" },
-  // Add more items as needed
-];
+export const MontoEDPList = (props) => {
+  const { data } = props;
+  const navigation = useNavigation();
+  const newTableData = [];
 
-export const MontoEDPList = () => {
+  if (data) {
+    for (let i = 0; i < data.length; i++) {
+      if (
+        data[i].AvanceAdministrativoTexto !== "Stand by" &&
+        data[i].AvanceAdministrativoTexto !== "Cancelacion"
+      ) {
+        newTableData.push({
+          id: data[i].NumeroAIT,
+          name: data[i].NombreServicio,
+          price:
+            data[i].Moneda === "Dolares"
+              ? data[i].Monto * 3.5
+              : data[i].Moneda === "Euros"
+              ? data[i].Monto * 4
+              : data[i].Monto,
+          moneda: data[i].Moneda,
+          etapa:
+            data[i]["AvanceAdministrativoTexto"] === "Contratista-Fin servicio"
+              ? "EDPPagados"
+              : data[i]["AvanceAdministrativoTexto"] === "Contratista-Envio EDP"
+              ? "EDPNoPagados"
+              : data[i]["AvanceAdministrativoTexto"] ===
+                  "Contratista-Avance Ejecucion" &&
+                data[i]["AvanceEjecucion"] === "100"
+              ? "Compl"
+              : "NoCompl",
+        });
+      }
+    }
+  }
+
+  console.log(newTableData);
+  newTableData.sort((a, b) => a.etapa.localeCompare(b.etapa));
+
+  // props.totalEventServiceAITLIST
+  const goToInformation = (item) => {
+    const result = data?.filter((dataItem) => {
+      return dataItem.NumeroAIT === item;
+    });
+    console.log(result[0]);
+
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.item,
+      params: { Item: result[0] },
+    });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <DataTable>
         {/* Table header */}
         <DataTable.Header>
-          <DataTable.Title style={styles.shortColumn1}>ID</DataTable.Title>
           <DataTable.Title style={styles.multiLineColumn}>
             Nombre
           </DataTable.Title>
-          <DataTable.Title style={styles.shortColumn2}>Avance</DataTable.Title>
-          <DataTable.Title style={styles.column4}>Fecha Fin</DataTable.Title>
+          <DataTable.Title style={styles.shortColumn2}>Etapa</DataTable.Title>
+          <DataTable.Title style={styles.column4}>Valor</DataTable.Title>
         </DataTable.Header>
 
         {/* Table data */}
-        {tableData.map((item) => (
+        {newTableData.map((item) => (
           <DataTable.Row key={item.id}>
-            <DataTable.Cell style={styles.shortColumn1}>
-              {item.id}
-            </DataTable.Cell>
-            <DataTable.Cell
+            <Text
               style={styles.multiLineColumn}
-              // numberOfLines={2}
+              onPress={() => goToInformation(item.id)}
             >
               {item.name}
-            </DataTable.Cell>
+            </Text>
             <DataTable.Cell style={styles.shortColumn2}>
-              {item.price}
+              {item.etapa}
             </DataTable.Cell>
-            <DataTable.Cell style={styles.column}>{item.price}</DataTable.Cell>
+            <DataTable.Cell style={styles.column}>
+              {" "}
+              {"S/ "}
+              {parseFloat(item.price).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+              })}
+            </DataTable.Cell>
           </DataTable.Row>
         ))}
       </DataTable>

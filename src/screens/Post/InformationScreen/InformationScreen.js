@@ -152,7 +152,7 @@ function InformationScreen(props) {
         props.saveActualPostFirebase(newData);
 
         // //reset pagination in HomeScreen to 15 to firebase
-        props.resetPostPerPageHome(5);
+        // props.resetPostPerPageHome(5);
         // //once all data is uploaded to firebase , go to homescreen
 
         navigation.navigate(screen.post.post); // this hedlps to go to the begining of the process

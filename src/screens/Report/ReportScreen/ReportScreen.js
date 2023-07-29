@@ -12,6 +12,7 @@ import { InactiveServiceList } from "../RecursosScreen/InactiveServiceList";
 import { MontoEDPList } from "../RecursosScreen/MontoEDPList";
 import { MontoServiceList } from "../RecursosScreen/MontoServiceList";
 import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
+import { BarInactiveServices } from "../RecursosScreen/BarInactiveServices";
 
 const ReportScreenNoRedux = (props) => {
   console.log("5ReportScreen");
@@ -30,8 +31,8 @@ const ReportScreenNoRedux = (props) => {
 
   useEffect(() => {
     console.log("5.USEEFFECTReportScreen");
-    setData(props.ActualServiceAITList);
-  }, [props.ActualServiceAITList]);
+    setData(props.servicesData);
+  }, [props.servicesData]);
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
@@ -82,6 +83,7 @@ const ReportScreenNoRedux = (props) => {
           />
         </TouchableOpacity>
       </View>
+
       <PieChart data={data} />
       {serviciosActivos && <ServiceList data={data} />}
       <Text></Text>
@@ -105,15 +107,17 @@ const ReportScreenNoRedux = (props) => {
           />
         </TouchableOpacity>
       </View>
+      <Text></Text>
+
       <Text style={styles.iconMinMax}>
-        <RecursosProgress
-          cantidad={1}
-          titulo={"Stan By"}
+        <BarInactiveServices
+          data={data}
+          titulo={"Stand by"}
           unidad={"servicios"}
         />
-        <RecursosProgress
-          cantidad={1}
-          titulo={"Cancelados"}
+        <BarInactiveServices
+          data={data}
+          titulo={"Cancelacion"}
           unidad={"servicios"}
         />
       </Text>
@@ -177,6 +181,7 @@ const mapStateToProps = (reducers) => {
     ActualServiceAITList: reducers.post.ActualServiceAITList,
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
     ActualPostFirebase: reducers.post.ActualPostFirebase,
+    servicesData: reducers.home.servicesData,
   };
 };
 

@@ -24,7 +24,14 @@ export const BarChartMontoServicios = (props) => {
 
   let sumByTipoServicio;
   if (data) {
-    sumByTipoServicio = {};
+    sumByTipoServicio = {
+      Reparacion: 1,
+      Fabricacion: 1,
+      Ingenieria: 1,
+      Instalacion: 1,
+      IngenieriayFabricacion: 1,
+    };
+
     const totalEntries = data?.length;
     for (let i = 0; i < totalEntries; i++) {
       const tipoServicio = data[i].TipoServicio;
@@ -36,18 +43,12 @@ export const BarChartMontoServicios = (props) => {
           sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 4;
         }
 
-        sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto);
-      } else {
-        if (data[i]["Moneda"] === "Dolares") {
-          sumByTipoServicio[tipoServicio] = parseInt(data[i].Monto) * 3.5;
+        if (data[i]["Moneda"] === "Soles") {
+          sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto);
         }
-        if (data[i]["Moneda"] === "Euros") {
-          sumByTipoServicio[tipoServicio] = parseInt(data[i].Monto) * 4;
-        }
-        sumByTipoServicio[tipoServicio] = parseInt(data[i].Monto);
       }
     }
-    console.log(sumByTipoServicio);
+
     datas = [
       {
         label: "Rep",

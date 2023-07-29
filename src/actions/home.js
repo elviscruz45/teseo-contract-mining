@@ -63,3 +63,14 @@ export const resetPostPerPageHome = (item) => async (dispatch) => {
     alert(error.message);
   }
 };
+
+export const updateAITServicesDATA = (item) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "UPDATE_AITSERVICESDATA",
+      payload: item,
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};

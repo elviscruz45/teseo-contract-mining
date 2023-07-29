@@ -4,21 +4,9 @@ import { DataTable } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
-const tableData = [
-  {
-    id: 1,
-    name: "Itemdf dfsf",
-    price: "$10.99",
-  },
-  { id: 2, name: "Item 2", price: "$24.99" },
-  { id: 3, name: "Item 3", price: "$7.49" },
-  // Add more items as needed
-];
-
 export const MontoServiceList = (props) => {
   const { data } = props;
   const navigation = useNavigation();
-
   const newTableData = [];
 
   if (data) {
@@ -30,7 +18,12 @@ export const MontoServiceList = (props) => {
         newTableData.push({
           id: data[i].NumeroAIT,
           name: data[i].NombreServicio,
-          price: data[i].Monto,
+          price:
+            data[i].Moneda === "Dolares"
+              ? data[i].Monto * 3.5
+              : data[i].Moneda === "Euros"
+              ? data[i].Monto * 4
+              : data[i].Monto,
           moneda: data[i].Moneda,
         });
       }
@@ -76,11 +69,7 @@ export const MontoServiceList = (props) => {
               {item.name}
             </Text>
             <DataTable.Cell style={styles.shortColumn2}>
-              {item.moneda === "Euros"
-                ? "EUR "
-                : item.moneda === "Dolares"
-                ? "$ "
-                : "S/ "}
+              {"S/ "}
 
               {parseFloat(item.price).toLocaleString(undefined, {
                 minimumFractionDigits: 2,

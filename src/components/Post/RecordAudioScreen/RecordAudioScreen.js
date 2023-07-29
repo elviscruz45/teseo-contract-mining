@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { EquipmentListUpper } from "../../../actions/home";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Platform } from "react-native";
-import { Audio } from 'expo-av';
+import { Audio } from "expo-av";
 
 function RecordAudioNoRedux(props) {
   const [dateStart, setDateStart] = useState(new Date());
@@ -19,7 +19,6 @@ function RecordAudioNoRedux(props) {
   const { filterButton, quitFilterButton } = props;
 
   useEffect(() => {
-    console.log("renderedOnce");
     if (Platform.OS === "android") {
       setIos(false);
       setAndroidDate(true);

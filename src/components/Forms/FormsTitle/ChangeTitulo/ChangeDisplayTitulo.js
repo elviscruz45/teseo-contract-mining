@@ -7,7 +7,6 @@ import { SelectExample } from "./Selection";
 export function ChangeDisplayTitulo(props) {
   const { onClose, formik, setTitulo } = props;
   const [text, setText] = useState("");
-  console.log("chau");
 
   return (
     <View>

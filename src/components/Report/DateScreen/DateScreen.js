@@ -18,7 +18,6 @@ function DateScreenNoRedux(props) {
   const { filterButton, quitFilterButton } = props;
 
   useEffect(() => {
-    console.log("renderedOnce");
     if (Platform.OS === "android") {
       setIos(false);
       setAndroidDate(true);

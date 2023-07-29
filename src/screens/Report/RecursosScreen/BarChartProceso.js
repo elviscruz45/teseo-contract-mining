@@ -13,6 +13,7 @@ import { tipoServicioList } from "../../../utils/tipoServicioList";
 
 export const BarChartProceso = (props) => {
   const { data } = props;
+
   let datas = [
     { label: "EDP Pagados", value: 100, unidad: "Soles" },
     { label: "EDP Pendiente", value: 100, unidad: "Soles" },
@@ -20,100 +21,98 @@ export const BarChartProceso = (props) => {
     { label: "Serv Compl2", value: 100, unidad: "Soles" },
     // Add more data points as needed
   ];
-
   let sumByEtapa;
   if (data) {
-    sumByEtapa = {};
+    sumByEtapa = {
+      NoCompl: 0,
+      EDPNoPagados: 0,
+      Compl: 0,
+      EDPPagados: 0,
+    };
+
     console.log(data?.length);
     const totalEntries = data?.length;
-  for (let i = 0; i < totalEntries; i++) {
-      console.log((data[0])}
-      // if (data[i]["AvanceAdministrativoTexto"] === "Contratista-Fin servicio") {
-      //   if (data[i]["Moneda"] === "Dolares") {
-      //     sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 3.5;
-      //   }
-      //   if (data[i]["Moneda"] === "Euros") {
-      //     sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 4;
-      //   }
-      //   sumByEtapa["EDPPagados"] += parseInt(data[i].Monto);
-      // } else if (data[i]["AvanceEjecucion"] === "100") {
-      //   if (data[i]["Moneda"] === "Dolares") {
-      //     sumByEtapa["Compl"] += parseInt(data[i].Monto) * 3.5;
-      //   }
-      //   if (data[i]["Moneda"] === "Euros") {
-      //     sumByEtapa["Compl"] += parseInt(data[i].Monto) * 4;
-      //   }
-      //   sumByEtapa["Compl"] += parseInt(data[i].Monto);
-      // } else if (
-      //   data[i]["AvanceAdministrativoTexto"] === "Contratista-Envio EDP"
-      // ) {
-      //   if (data[i]["Moneda"] === "Dolares") {
-      //     sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto) * 3.5;
-      //   }
-      //   if (data[i]["Moneda"] === "Euros") {
-      //     sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto) * 4;
-      //   }
-      //   sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto);
-      // } else if (
-      //   data[i]["AvanceAdministrativoTexto"] !== "Stand by" &&
-      //   data[i]["AvanceAdministrativoTexto"] !== "Cancelacion"
-      // ) {
+    for (let i = 0; i < totalEntries; i++) {
+      console.log(data[i]["AvanceAdministrativoTexto"]);
 
-      //   if (data[i]["Moneda"] === "Dolares") {
-      //     sumByEtapa["NoCompl"] = parseInt(data[i].Monto) * 3.5;
-      //   }
-      //   if (data[i]["Moneda"] === "Euros") {
-      //     sumByEtapa["NoCompl"] = parseInt(data[i].Monto) * 4;
-      //   }
-      //   sumByEtapa["NoCompl"] = parseInt(data[i].Monto);
-      // }
-    // }
-    // datas = [
-    //   {
-    //     label: "EDP Pagados",
-    //     value: 23,
-    //     unidad: "Soles",
-    //   },
-    //   {
-    //     label: "EDP Pendiente",
-    //     value: 33,
-    //     unidad: "Soles",
-    //   },
-    //   {
-    //     label: "Compl",
-    //     value: 22,
-    //     unidad: "Soles",
-    //   },
-    //   {
-    //     label: "No Compl",
-    //     value: 11,
-    //     unidad: "Soles",
-    //   },
-    // ];
-    // datas = [
-    //   {
-    //     label: "No Compl",
-    //     value: sumByEtapa["NoCompl"] ?? 0,
-    //     unidad: "Soles",
-    //   },
-    //   {
-    //     label: "Compl",
-    //     value: sumByEtapa["Compl"] ?? 0,
-    //     unidad: "Soles",
-    //   },
-    //   {
-    //     label: "EDP Pendiente",
-    //     value: sumByEtapa["EDPNoPagados"] ?? 0,
-    //     unidad: "Soles",
-    //   },
-    //   {
-    //     label: "EDP Pagados",
-    //     value: sumByEtapa["EDPPagados"] ?? 0,
-    //     unidad: "Soles",
-    //   },
-  //   // ];
-  // }
-  console.log(sumByEtapa);
+      if (data[i].AvanceAdministrativoTexto === "Contratista-Fin servicio") {
+        if (data[i].Moneda === "Dolares") {
+          sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 3.5;
+        }
+        if (data[i].Moneda === "Euros") {
+          sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 4;
+        }
+        if (data[i].Moneda === "Soles") {
+          sumByEtapa["EDPPagados"] += parseInt(data[i].Monto);
+        }
+      } else if (
+        data[i]["AvanceAdministrativoTexto"] === "Contratista-Envio EDP"
+      ) {
+        if (data[i]["Moneda"] === "Dolares") {
+          sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto) * 3.5;
+        }
+        if (data[i]["Moneda"] === "Euros") {
+          sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto) * 4;
+        }
+        if (data[i]["Moneda"] === "Soles") {
+          sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto);
+        }
+      } else if (
+        data[i]["AvanceAdministrativoTexto"] ===
+          "Contratista-Avance Ejecucion" &&
+        data[i]["AvanceEjecucion"] === "100"
+      ) {
+        if (data[i]["Moneda"] === "Dolares") {
+          sumByEtapa["Compl"] += parseInt(data[i].Monto) * 3.5;
+        }
+        if (data[i]["Moneda"] === "Euros") {
+          sumByEtapa["Compl"] += parseInt(data[i].Monto) * 4;
+        }
+        if (data[i]["Moneda"] === "Soles") {
+          sumByEtapa["Compl"] += parseInt(data[i].Monto);
+        }
+      } else if (
+        data[i]["AvanceAdministrativoTexto"] !== "Stand by" &&
+        data[i]["AvanceAdministrativoTexto"] !== "Cancelacion"
+      ) {
+        console.log("---a------", data[i]["Monto"]);
+
+        if (data[i]["Moneda"] === "Dolares") {
+          sumByEtapa["NoCompl"] += parseInt(data[i].Monto) * 3.5;
+        }
+        if (data[i]["Moneda"] === "Euros") {
+          sumByEtapa["NoCompl"] += parseInt(data[i].Monto) * 4;
+        }
+        if (data[i]["Moneda"] === "Soles") {
+          sumByEtapa["NoCompl"] += parseInt(data[i].Monto);
+        }
+      }
+    }
+
+    datas = [
+      {
+        label: "EDP Pagados",
+        value: sumByEtapa["EDPPagados"],
+        unidad: "Soles",
+      },
+      {
+        label: "EDP Pendiente",
+        value: sumByEtapa["EDPNoPagados"],
+        unidad: "Soles",
+      },
+      {
+        label: "Compl",
+        value: sumByEtapa["Compl"],
+        unidad: "Soles",
+      },
+      {
+        label: "No Compl",
+        value: sumByEtapa["NoCompl"],
+        unidad: "Soles",
+      },
+    ];
+    console.log(datas);
+  }
   return (
     <View style={styles.container}>
       <View style={styles.chartContainer}>

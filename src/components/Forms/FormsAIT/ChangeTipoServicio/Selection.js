@@ -9,7 +9,6 @@ export const SelectExample = (props) => {
   const { formik, setText } = props;
 
   function saveProperty(itemValue) {
-    console.log(itemValue);
     setText(itemValue);
   }
 

@@ -6,7 +6,6 @@ import { styles } from "./ChangeDisplayNumeroAIT.styles";
 export function ChangeDisplaynumeroAIT(props) {
   const { onClose, setnumeroAIT, formik, setAit } = props;
   const [text, setText] = useState("");
-  console.log("ChangeDisplaysetnumeroAIT");
 
   return (
     <View>
