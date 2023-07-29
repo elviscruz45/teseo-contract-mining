@@ -7,34 +7,18 @@ import {
   Dimensions,
   Linking,
   TextInput,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./CommentScreen.styles";
-import { equipmentList } from "../../../utils/equipmentList";
-import {
-  collection,
-  onSnapshot,
-  query,
-  doc,
-  updateDoc,
-  orderBy,
-  arrayUnion,
-  arrayRemove,
-  getDocs,
-  getDoc,
-} from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/LoadingSpinner";
-import { screen } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-const windowWidth = Dimensions.get("window").width;
 
 function CommentScreen(props) {
   let unsubscribe;

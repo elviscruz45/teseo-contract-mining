@@ -1,13 +1,4 @@
-import {
-  View,
-  Text,
-  Modal,
-  SafeAreaView,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { Icon, Avatar, SearchBar } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";

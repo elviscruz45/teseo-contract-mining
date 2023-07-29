@@ -1,13 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
-  Linking,
-  ScrollView,
-} from "react-native";
+import { Text, View, FlatList, TouchableOpacity, Linking } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
@@ -24,17 +16,14 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../../utils";
-// import { saveActualPostFirebase } from "../../../actions/post";
 import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/LoadingSpinner";
 import { screen } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { HeaderScreen } from "../../../components/Home";
-// import { EquipmentListUpper } from "../../../actions/home";
 import { saveTotalEventServiceAITList } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
 import { resetPostPerPageHome } from "../../../actions/home";
-const windowWidth = Dimensions.get("window").width;
 
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
@@ -232,13 +221,7 @@ function HomeScreen(props) {
                 </View>
               </View>
               <View style={styles.rowlikes}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginRight: windowWidth * 0.1,
-                  }}
-                >
+                <View style={styles.likeComment}>
                   <TouchableOpacity
                     onPress={() => likePost(item)}
                     style={{ flexDirection: "row", alignItems: "center" }}
@@ -255,13 +238,7 @@ function HomeScreen(props) {
                     <Text> {item.likes.length} Revisado</Text>
                   </TouchableOpacity>
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginRight: windowWidth * 0.1,
-                  }}
-                >
+                <View style={styles.likeComment}>
                   <TouchableOpacity
                     onPress={() => commentPost(item)}
                     style={{ flexDirection: "row", alignItems: "center" }}
@@ -298,21 +275,13 @@ function HomeScreen(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    // ActualPostFirebase: reducers.post.ActualPostFirebase,
-    // firebase_user_name: reducers.profile.firebase_user_name,
-    // user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
-    // profile: reducers.profile.profile,
-    // uid: reducers.profile.uid,
-    // equipmentListHeader: reducers.home.equipmentList,
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
     postPerPage: reducers.home.postPerPage,
   };
 };
 
 export const ConnectedHomeScreen = connect(mapStateToProps, {
-  // saveActualPostFirebase,
-  // EquipmentListUpper,
   saveTotalEventServiceAITList,
   resetPostPerPageHome,
 })(HomeScreen);

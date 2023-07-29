@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-
+import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 import { styles } from "./ReportScreen.styles";
 import { RecursosProgress } from "../RecursosScreen/RecursosProgress";
 import { PieChart } from "../RecursosScreen/PieStatus";
@@ -20,8 +13,11 @@ import { MontoEDPList } from "../RecursosScreen/MontoEDPList";
 import { MontoServiceList } from "../RecursosScreen/MontoServiceList";
 import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
 
-export const ReportScreen = () => {
+const ReportScreenNoRedux = (props) => {
   console.log("5ReportScreen");
+  //real time updates
+  const [data, setData] = useState();
+  //states of filters
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
@@ -31,6 +27,11 @@ export const ReportScreen = () => {
   const [serviciosInactivos, setServiciosInactivos] = useState(false);
   const [montoServicios, setMontoServicios] = useState(false);
   const [montoEDP, setMontoEDP] = useState(false);
+
+  useEffect(() => {
+    console.log("5.USEEFFECTReportScreen");
+    setData(props.ActualServiceAITList);
+  }, [props.ActualServiceAITList]);
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
@@ -81,8 +82,8 @@ export const ReportScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <PieChart />
-      {serviciosActivos && <ServiceList />}
+      <PieChart data={data} />
+      {serviciosActivos && <ServiceList data={data} />}
       <Text></Text>
       <Text></Text>
       <View style={styles.container22}>
@@ -106,17 +107,17 @@ export const ReportScreen = () => {
       </View>
       <Text style={styles.iconMinMax}>
         <RecursosProgress
-          cantidad={5}
+          cantidad={1}
           titulo={"Stan By"}
           unidad={"servicios"}
         />
         <RecursosProgress
-          cantidad={10}
+          cantidad={1}
           titulo={"Cancelados"}
           unidad={"servicios"}
         />
       </Text>
-      {serviciosInactivos && <InactiveServiceList />}
+      {serviciosInactivos && <InactiveServiceList data={data} />}
       <Text></Text>
       <Text></Text>
       <View style={styles.container22}>
@@ -137,8 +138,8 @@ export const ReportScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <BarChartMontoServicios />
-      {montoServicios && <MontoServiceList />}
+      <BarChartMontoServicios data={data} />
+      {montoServicios && <MontoServiceList data={data} />}
       <Text></Text>
       <View style={styles.container22}>
         <Text style={styles.titleText}>Monto Estado de Pago</Text>
@@ -159,8 +160,27 @@ export const ReportScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <BarChartProceso />
-      {montoEDP && <MontoEDPList />}
+      <BarChartProceso data={data} />
+      {montoEDP && <MontoEDPList data={data} />}
     </ScrollView>
   );
 };
+
+const mapStateToProps = (reducers) => {
+  return {
+    // firebase_user_name: reducers.profile.firebase_user_name,
+    // user_photo: reducers.profile.user_photo,
+    // email: reducers.profile.email,
+    // profile: reducers.profile.profile,
+    // uid: reducers.profile.uid,
+    // equipmentListHeader: reducers.home.equipmentList,
+    ActualServiceAITList: reducers.post.ActualServiceAITList,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
+    ActualPostFirebase: reducers.post.ActualPostFirebase,
+  };
+};
+
+export const ReportScreen = connect(mapStateToProps, {
+  // EquipmentListUpper,
+  // saveActualAITServicesFirebaseGlobalState,
+})(ReportScreenNoRedux);

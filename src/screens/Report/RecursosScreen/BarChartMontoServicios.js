@@ -7,36 +7,110 @@ import {
   VictoryTooltip,
   VictoryContainer,
   VictoryAxis,
+  VictoryLabel,
 } from "victory-native";
 import { tipoServicioList } from "../../../utils/tipoServicioList";
 
-const data = [
-  { label: tipoServicioList[0].value, value: 10000, unidad: "Dolares" },
-  { label: tipoServicioList[1].value, value: 5034, unidad: "Dolares" },
-  { label: tipoServicioList[2].value, value: 1253, unidad: "Dolares" },
-  { label: tipoServicioList[3].value, value: 12345, unidad: "Dolares" },
+export const BarChartMontoServicios = (props) => {
+  const { data } = props;
 
-  // Add more data points as needed
-];
+  let datas = [
+    { label: tipoServicioList[0].value, value: 0, unidad: "Soles" },
+    { label: tipoServicioList[1].value, value: 0, unidad: "Soles" },
+    { label: tipoServicioList[2].value, value: 0, unidad: "Soles" },
+    { label: tipoServicioList[3].value, value: 0, unidad: "Soles" },
+    { label: tipoServicioList[3].value, value: 0, unidad: "Soles" },
+  ];
 
-export const BarChartMontoServicios = () => {
+  let sumByTipoServicio;
+  if (data) {
+    sumByTipoServicio = {};
+    const totalEntries = data?.length;
+    for (let i = 0; i < totalEntries; i++) {
+      const tipoServicio = data[i].TipoServicio;
+      if (sumByTipoServicio[tipoServicio]) {
+        if (data[i]["Moneda"] === "Dolares") {
+          sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 3.5;
+        }
+        if (data[i]["Moneda"] === "Euros") {
+          sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 4;
+        }
+
+        sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto);
+      } else {
+        if (data[i]["Moneda"] === "Dolares") {
+          sumByTipoServicio[tipoServicio] = parseInt(data[i].Monto) * 3.5;
+        }
+        if (data[i]["Moneda"] === "Euros") {
+          sumByTipoServicio[tipoServicio] = parseInt(data[i].Monto) * 4;
+        }
+        sumByTipoServicio[tipoServicio] = parseInt(data[i].Monto);
+      }
+    }
+    console.log(sumByTipoServicio);
+    datas = [
+      {
+        label: "Rep",
+        value: sumByTipoServicio["Reparacion"] ?? 0,
+        unidad: "Soles",
+      },
+      {
+        label: "Fab",
+        value: sumByTipoServicio["Fabricacion"] ?? 0,
+        unidad: "Soles",
+      },
+      {
+        label: "Ing",
+        value: sumByTipoServicio["Ingenieria"] ?? 0,
+        unidad: "Soles",
+      },
+      {
+        label: "Inst",
+        value: sumByTipoServicio["Instalacion"] ?? 0,
+        unidad: "Soles",
+      },
+      {
+        label: "IngFab",
+        value: sumByTipoServicio["IngenieriayFabricacion"] ?? 0,
+        unidad: "Soles",
+      },
+    ];
+  }
+
   return (
     <View style={styles.container}>
       <VictoryChart
         theme={VictoryTheme.material}
-        domainPadding={{ x: 25 }} // Adjust the padding between the bars and the edges of the chart
+        domainPadding={{ x: 35 }} // Adjust the padding between the bars and the edges of the chart
         containerComponent={<VictoryContainer />} // Use VictoryContainer for tooltips
       >
-        {/* Hide both X-axis and Y-axis */}
-        {/* <VictoryAxis
+        <VictoryAxis
+          dependentAxis // Horizontal chart requires a dependent axis for Y-axis
           style={{
             axis: { stroke: "blue" },
             tickLabels: { fill: "black" },
-            grid: { stroke: "transparent" },
+            margin: 30,
+            tickLabels: { fontSize: 15, padding: -375 },
+
+            // grid: { stroke: "transparent" },
           }}
-        /> */}
+        />
+        <VictoryAxis // X-axis configuration for the full label visibility
+          style={{
+            axis: { stroke: "blue" },
+            tickLabels: { fill: "black" },
+          }}
+          tickLabelComponent={
+            <VictoryLabel // Use VictoryLabel as the custom tick label component
+              angle={0} // Rotate the label by 45 degrees to fit more text
+              textAnchor="end" // Anchor the label at the start position
+              verticalAnchor="end" // Vertically center the label
+            />
+          }
+        />
+
         <VictoryBar
-          data={data}
+          data={datas}
           x="label"
           y="value"
           style={{
@@ -45,6 +119,7 @@ export const BarChartMontoServicios = () => {
               stroke: "green",
               strokeWidth: 1,
               borderRadius: 5,
+              marginLeft: 10,
             },
           }}
           barWidth={20} // Adjust this value to control the bar width
@@ -68,6 +143,7 @@ export const BarChartMontoServicios = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginLeft: -50,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",

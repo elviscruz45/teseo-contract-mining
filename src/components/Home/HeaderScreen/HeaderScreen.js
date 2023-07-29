@@ -13,7 +13,6 @@ import { styles } from "./HeaderScreen.styles";
 import { connect } from "react-redux";
 import { db } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
-// import { EquipmentListUpper } from "../../../actions/home";
 import { screen } from "../../../utils";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
@@ -40,7 +39,6 @@ function HeaderScreenNoRedux(props) {
         });
 
         console.log("2.OnsnapshotHeaderScreenNoRedux");
-
         setData(lista);
       });
     }
@@ -54,33 +52,6 @@ function HeaderScreenNoRedux(props) {
       }
     };
   }, []);
-
-  //     // console.log("props.totalEventServiceAITLIST");
-  //     async function fetchData() {
-  //       q = query(
-  //         collection(db, "ServiciosAIT"),
-  //         orderBy("LastEventPosted", "desc")
-
-  //         // limit(50) // Add the desired limit value here
-  //       );
-  //       const querySnapshot = await getDocs(q);
-  //       const lista = [];
-  //       querySnapshot.forEach((doc) => {
-  //         lista.push(doc.data());
-  //       });
-  //       console.log("2OnsnapshotHeaderScreenNoRedux");
-
-  //       setData(lista);
-  //     }
-  //     fetchData();
-  //   },
-  //   [
-  //     // props.totalEventServiceAITLIST,
-  //     // props.ActualServiceAITList,
-  //     // props.ActualPostFirebase,
-  //   ]
-  // );
-  // // }, [props.totalEventServiceAITLIST]);
 
   // props.totalEventServiceAITLIST
   const selectAsset = (item) => {

@@ -3,13 +3,42 @@ import { View, TouchableOpacity } from "react-native";
 import { VictoryPie, VictoryLabel } from "victory-native";
 import Svg from "react-native-svg";
 
-export const PieChart = () => {
-  const datas = [
-    { x: "Rep", y: 40 },
-    { x: "Fab", y: 20 },
-    { x: "Ing", y: 35 },
-    { x: "Inst", y: 15 },
+export const PieChart = (props) => {
+  const { data } = props;
+  console.log("10.PieChart");
+
+  let datas = [
+    { x: "Rep", y: 10 },
+    { x: "Fab", y: 10 },
+    { x: "Ing", y: 10 },
+    { x: "Maq", y: 10 },
+    { x: "IngFab", y: 10 },
   ];
+
+  // Function to calculate the sum and quantity of different kinds of "TipoServicio"
+
+  let sumByTipoServicio;
+  if (data) {
+    sumByTipoServicio = {};
+    const totalEntries = data?.length;
+
+    for (let i = 0; i < totalEntries; i++) {
+      const tipoServicio = data[i].TipoServicio;
+      if (sumByTipoServicio[tipoServicio]) {
+        sumByTipoServicio[tipoServicio]++;
+      } else {
+        sumByTipoServicio[tipoServicio] = 1;
+      }
+    }
+    datas = [
+      { x: "Rep", y: sumByTipoServicio["Reparacion"] ?? 0 },
+      { x: "Fab", y: sumByTipoServicio["Fabricacion"] ?? 0 },
+      { x: "Ing", y: sumByTipoServicio["Ingenieria"] ?? 0 },
+      { x: "Maq", y: sumByTipoServicio["Maquinado"] ?? 0 },
+      { x: "IngFab", y: sumByTipoServicio["IngFab"] ?? 0 },
+    ];
+  }
+
   const [selectedSlice, setSelectedSlice] = useState(null); // Initialize with no slice selected
   console.log(selectedSlice);
 
@@ -49,7 +78,7 @@ export const PieChart = () => {
             data={datas}
             innerRadius={60}
             labelRadius={80}
-            colorScale={["tomato", "orange", "gold", "cyan"]}
+            colorScale={["limegreen", "orange", "gold", "cyan", "skyblue"]}
             // colorScale={colorScale}
             events={[
               {
@@ -73,9 +102,7 @@ export const PieChart = () => {
               verticalAnchor="middle"
               x={175}
               y={175}
-              text={`${selectedSlice.x}\n${Math.round(
-                (selectedSlice.y / total) * 100
-              )}`}
+              text={`${selectedSlice.x}\n${selectedSlice.y}`}
               style={{ fontSize: 30 }}
             />
           ) : (

@@ -30,7 +30,7 @@ import { CircularProgress } from "./CircularProgress";
 import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";
 
 function ItemScreenNotRedux(props) {
-  console.log("itemScreen");
+  console.log("22.itemScreen");
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
@@ -58,7 +58,7 @@ function ItemScreenNotRedux(props) {
     maximumFractionDigits: 2,
   }).format(Item.Monto);
   ///algoritm to change the format of FechaFin from ServiciosAIT firebase collection
-  const date = new Date(Item.FechaFin.seconds * 1000);
+  const date = new Date(Item?.FechaFin?.seconds * 1000);
   console.log(date);
   const monthNames = [
     "ene.",
@@ -82,7 +82,7 @@ function ItemScreenNotRedux(props) {
   const formattedDate = `${day} ${month} ${year}`;
 
   ///algoritm to change the format of FechaInicio from ServiciosAIT firebase collection
-  const dateInicio = new Date(Item.createdAt.seconds * 1000);
+  const dateInicio = new Date(Item?.createdAt?.seconds * 1000);
   const monthNamesInicio = [
     "ene.",
     "feb.",
@@ -196,7 +196,7 @@ function ItemScreenNotRedux(props) {
         unsubscribe();
       }
     };
-  }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
+  }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST, Item]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {

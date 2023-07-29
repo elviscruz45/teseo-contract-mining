@@ -11,16 +11,109 @@ import {
 } from "victory-native";
 import { tipoServicioList } from "../../../utils/tipoServicioList";
 
-const data = [
-  { label: "EDP Pagados", value: 8224, unidad: "$" },
-  { label: "EDP Pendiente", value: 2623, unidad: "$" },
+export const BarChartProceso = (props) => {
+  const { data } = props;
+  let datas = [
+    { label: "EDP Pagados", value: 100, unidad: "Soles" },
+    { label: "EDP Pendiente", value: 100, unidad: "Soles" },
+    { label: "Serv Compl", value: 100, unidad: "Soles" },
+    { label: "Serv Compl2", value: 100, unidad: "Soles" },
+    // Add more data points as needed
+  ];
 
-  { label: "Serv Compl", value: 1200, unidad: "$" },
+  let sumByEtapa;
+  if (data) {
+    sumByEtapa = {};
+    console.log(data?.length);
+    const totalEntries = data?.length;
+  for (let i = 0; i < totalEntries; i++) {
+      console.log((data[0])}
+      // if (data[i]["AvanceAdministrativoTexto"] === "Contratista-Fin servicio") {
+      //   if (data[i]["Moneda"] === "Dolares") {
+      //     sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 3.5;
+      //   }
+      //   if (data[i]["Moneda"] === "Euros") {
+      //     sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 4;
+      //   }
+      //   sumByEtapa["EDPPagados"] += parseInt(data[i].Monto);
+      // } else if (data[i]["AvanceEjecucion"] === "100") {
+      //   if (data[i]["Moneda"] === "Dolares") {
+      //     sumByEtapa["Compl"] += parseInt(data[i].Monto) * 3.5;
+      //   }
+      //   if (data[i]["Moneda"] === "Euros") {
+      //     sumByEtapa["Compl"] += parseInt(data[i].Monto) * 4;
+      //   }
+      //   sumByEtapa["Compl"] += parseInt(data[i].Monto);
+      // } else if (
+      //   data[i]["AvanceAdministrativoTexto"] === "Contratista-Envio EDP"
+      // ) {
+      //   if (data[i]["Moneda"] === "Dolares") {
+      //     sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto) * 3.5;
+      //   }
+      //   if (data[i]["Moneda"] === "Euros") {
+      //     sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto) * 4;
+      //   }
+      //   sumByEtapa["EDPNoPagados"] += parseInt(data[i].Monto);
+      // } else if (
+      //   data[i]["AvanceAdministrativoTexto"] !== "Stand by" &&
+      //   data[i]["AvanceAdministrativoTexto"] !== "Cancelacion"
+      // ) {
 
-  // Add more data points as needed
-];
-
-export const BarChartProceso = () => {
+      //   if (data[i]["Moneda"] === "Dolares") {
+      //     sumByEtapa["NoCompl"] = parseInt(data[i].Monto) * 3.5;
+      //   }
+      //   if (data[i]["Moneda"] === "Euros") {
+      //     sumByEtapa["NoCompl"] = parseInt(data[i].Monto) * 4;
+      //   }
+      //   sumByEtapa["NoCompl"] = parseInt(data[i].Monto);
+      // }
+    // }
+    // datas = [
+    //   {
+    //     label: "EDP Pagados",
+    //     value: 23,
+    //     unidad: "Soles",
+    //   },
+    //   {
+    //     label: "EDP Pendiente",
+    //     value: 33,
+    //     unidad: "Soles",
+    //   },
+    //   {
+    //     label: "Compl",
+    //     value: 22,
+    //     unidad: "Soles",
+    //   },
+    //   {
+    //     label: "No Compl",
+    //     value: 11,
+    //     unidad: "Soles",
+    //   },
+    // ];
+    // datas = [
+    //   {
+    //     label: "No Compl",
+    //     value: sumByEtapa["NoCompl"] ?? 0,
+    //     unidad: "Soles",
+    //   },
+    //   {
+    //     label: "Compl",
+    //     value: sumByEtapa["Compl"] ?? 0,
+    //     unidad: "Soles",
+    //   },
+    //   {
+    //     label: "EDP Pendiente",
+    //     value: sumByEtapa["EDPNoPagados"] ?? 0,
+    //     unidad: "Soles",
+    //   },
+    //   {
+    //     label: "EDP Pagados",
+    //     value: sumByEtapa["EDPPagados"] ?? 0,
+    //     unidad: "Soles",
+    //   },
+  //   // ];
+  // }
+  console.log(sumByEtapa);
   return (
     <View style={styles.container}>
       <View style={styles.chartContainer}>
@@ -54,7 +147,7 @@ export const BarChartProceso = () => {
             }
           />
           <VictoryBar
-            data={data}
+            data={datas}
             x="label"
             y="value"
             style={{

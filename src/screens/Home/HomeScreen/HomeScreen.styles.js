@@ -64,15 +64,10 @@ export const styles = StyleSheet.create({
   },
   textAreaComment: {
     width: windowWidth * 0.6,
-    // height: windowWidth * 0.3,
-    // padding: 0,
     marginLeft: 10,
   },
   textAreaCommentplus: {
     width: windowWidth * 0.6,
-    // height: windowWidth * 0.3,
-    // padding: 0,
-    // color: "#DB4545",
     marginLeft: 10,
     fontWeight: "300",
   },
@@ -90,5 +85,10 @@ export const styles = StyleSheet.create({
   avatar: {
     marginRight: 20,
     backgroundColor: "green",
+  },
+  likeComment: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: windowWidth * 0.1,
   },
 });
