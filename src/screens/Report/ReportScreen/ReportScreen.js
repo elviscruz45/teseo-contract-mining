@@ -13,6 +13,7 @@ import { MontoEDPList } from "../RecursosScreen/MontoEDPList";
 import { MontoServiceList } from "../RecursosScreen/MontoServiceList";
 import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
 import { BarInactiveServices } from "../RecursosScreen/BarInactiveServices";
+import { MontoComprometido } from "../RecursosScreen/MontoComprometido";
 
 const ReportScreenNoRedux = (props) => {
   console.log("5ReportScreen");
@@ -28,6 +29,7 @@ const ReportScreenNoRedux = (props) => {
   const [serviciosInactivos, setServiciosInactivos] = useState(false);
   const [montoServicios, setMontoServicios] = useState(false);
   const [montoEDP, setMontoEDP] = useState(false);
+  const [comprometido, setComprometido] = useState(false);
 
   useEffect(() => {
     console.log("5.USEEFFECTReportScreen");
@@ -60,6 +62,7 @@ const ReportScreenNoRedux = (props) => {
         />
       </TouchableOpacity>
       <Text style={styles.company}>PRODISE</Text>
+
       <Text></Text>
       <RecursosHumanos />
       <Text></Text>
@@ -166,6 +169,26 @@ const ReportScreenNoRedux = (props) => {
       </View>
       <BarChartProceso data={data} />
       {montoEDP && <MontoEDPList data={data} />}
+
+      <Text></Text>
+      <View style={styles.container22}>
+        <Text style={styles.titleText}>Montos Comprometidos</Text>
+      </View>
+      <Text></Text>
+
+      <MontoComprometido data={data} />
+      <TouchableOpacity
+        // style={styles.btnContainer4}
+        onPress={
+          () => alert("Pendiente todavia")
+          // getExcelEquipo(Item.tag)
+        }
+      >
+        <Image
+          source={require("../../../../assets/excel2.png")}
+          style={styles.roundImageUpload}
+        />
+      </TouchableOpacity>
     </ScrollView>
   );
 };

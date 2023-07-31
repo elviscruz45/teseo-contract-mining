@@ -21,7 +21,8 @@ export function ChangeDisplayAprobadores(props) {
             if (
               etapa === "Contratista-Envio Cotizacion" ||
               etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-              etapa === "Contratista-Envio EDP"
+              etapa === "Contratista-Envio EDP" ||
+              etapa === "Contratista-Solicitud Aprobacion Doc"
             ) {
               setAprobadores(text.toString());
               formik.setFieldValue("aprobacion", text.join(","));

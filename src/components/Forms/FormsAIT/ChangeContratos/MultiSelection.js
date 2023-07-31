@@ -21,6 +21,8 @@ export const MultiSelectExample = (props) => {
   const [list, setList] = useState([]);
   const { formik, setText } = props;
 
+  console.log("holaaa MultiSelectExample");
+
   useEffect(() => {
     async function fetchData() {
       const querySnapshot = await getDocs(collection(db, "users"));
@@ -28,12 +30,14 @@ export const MultiSelectExample = (props) => {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         const object = doc.data();
-        const objectver2 = {
-          ...object,
-          value: `${object.displayNameform}\n(${object.email})`,
-          email: object.email,
-        };
-        post_array.push(objectver2);
+        if (object.email.includes("@fmi")) {
+          const objectver2 = {
+            ...object,
+            value: `${object.displayNameform}\n(${object.email})`,
+            email: object.email,
+          };
+          post_array.push(objectver2);
+        }
       });
 
       setList(post_array);

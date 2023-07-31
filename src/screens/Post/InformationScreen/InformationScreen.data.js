@@ -8,7 +8,7 @@ export function initialValues() {
     aprobacion: "",
     pdfFile: "",
     MontoModificado: "",
-    NuevaFechaEstimada: "",
+    NuevaFechaEstimada: new Date(),
     HHModificado: "",
   };
 }
@@ -18,7 +18,7 @@ export function validationSchema() {
     titulo: Yup.string().required("Campo obligatorio"),
     comentarios: Yup.string().required("Campo obligatorio"),
     etapa: Yup.string().required("Campo obligatorio"),
-    porcentajeAvance: Yup.string().required("Campo obligatorio"),
+    // porcentajeAvance: Yup.string().required("Campo obligatorio"),
     // aprobacion: Yup.string().required("Campo obligatorio"),
     // pdfFile: Yup.string().required("Campo obligatorio"),
     // MontoModificado: Yup.string().required("Campo obligatorio"),

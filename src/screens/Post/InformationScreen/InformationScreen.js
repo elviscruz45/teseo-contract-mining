@@ -71,12 +71,34 @@ function InformationScreen(props) {
         const imagePath = snapshot.metadata.fullPath;
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
+        //managin the file updated to ask for aprovals
         let imageUrlPDF;
         if (newData.pdfFile) {
           console.log("pdf", newData.pdfFile);
           const snapshotPDF = await uploadPdf(newData.pdfFile);
           const imagePathPDF = snapshotPDF.metadata.fullPath;
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
+
+          if (newData.aprobacion) {
+            //Uploading docs to a new collection called "aprovals" to manage doc aprovals
+            const regex = /\((.*?)\)/g;
+            const matches = newData.aprobacion.match(regex);
+
+            const docData = {
+              IdAITService: props.actualServiceAIT.idServiciosAIT,
+              fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
+              pdfFile: imageUrlPDF,
+              ApprovalRequestedBy: "",
+              ApprovalRequestSentTo: matches,
+              ApprovalPerformed: [],
+              date: new Date(),
+            };
+            const docRef = await addDoc(collection(db, "approvals"), docData);
+            docData.idApproval = docRef.id;
+            const RefFirebase = doc(db, "approvals", docData.idApproval);
+            await updateDoc(RefFirebase, docData);
+            console.log("docData", docData);
+          }
         }
 
         newData.pdfPrincipal = imageUrlPDF || "";

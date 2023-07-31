@@ -75,8 +75,6 @@ export const BarChartProceso = (props) => {
         data[i]["AvanceAdministrativoTexto"] !== "Stand by" &&
         data[i]["AvanceAdministrativoTexto"] !== "Cancelacion"
       ) {
-        console.log("---a------", data[i]["Monto"]);
-
         if (data[i]["Moneda"] === "Dolares") {
           sumByEtapa["NoCompl"] += parseInt(data[i].Monto) * 3.5;
         }

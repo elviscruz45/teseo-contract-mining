@@ -13,7 +13,8 @@ export const ServiceList = (props) => {
     for (let i = 0; i < data.length; i++) {
       if (
         data[i].AvanceAdministrativoTexto !== "Standy by" &&
-        data[i].AvanceAdministrativoTexto !== "Cancelacion"
+        data[i].AvanceAdministrativoTexto !== "Cancelacion" &&
+        data[i].AvanceAdministrativoTexto !== "Contratista-Fin servicio"
       ) {
         newTableData.push({
           id: data[i].NumeroAIT,

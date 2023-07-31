@@ -16,4 +16,19 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     marginLeft: 9,
   },
+  iconMinMax: {
+    paddingHorizontal: 15,
+    fontWeight: "600",
+    alignSelf: "flex-end",
+    flexDirection: "row",
+    zIndex: 100,
+  },
+  roundImageUploadmas: {
+    width: 30,
+    height: 30,
+    margin: 5,
+  },
+  attachedFile: {
+    marginLeft: 10,
+  },
 });

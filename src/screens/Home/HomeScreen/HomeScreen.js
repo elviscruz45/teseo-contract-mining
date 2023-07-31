@@ -30,7 +30,10 @@ function HomeScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   console.log("1HomeScreen");
+
   console.log(props.postPerPage);
+
+  // props.resetPostPerPageHome(5); // PROVING RERENDERING-------------
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {

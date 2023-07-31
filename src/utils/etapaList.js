@@ -12,6 +12,12 @@ export const etapaLists = [
     value: "Contratista-Inicio Servicio",
   },
   {
+    value: "Contratista-Solicitud Aprobacion Doc",
+  },
+  {
+    value: "Usuario-Aprobacion Doc",
+  },
+  {
     value: "Contratista-Avance Ejecucion",
   },
   {
@@ -26,9 +32,9 @@ export const etapaLists = [
   {
     value: "Usuario-Aprobacion EDP",
   },
-  {
-    value: "Contratista-Registro de Pago",
-  },
+  // {
+  //   value: "Contratista-Registro de Pago",
+  // },
   {
     value: "Contratista-Fin servicio",
   },

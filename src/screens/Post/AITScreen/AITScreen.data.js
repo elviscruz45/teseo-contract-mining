@@ -12,6 +12,7 @@ export function initialValues() {
     Moneda: "",
     Monto: "",
     HorasHombre: "",
+    pdfFile: [],
   };
 }
 

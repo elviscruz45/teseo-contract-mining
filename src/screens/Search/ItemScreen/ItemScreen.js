@@ -132,14 +132,6 @@ function ItemScreenNotRedux(props) {
     });
   };
 
-  //This function is used to retrive the image file to the icon
-  function chooseImageEquipment(tags) {
-    const result = equipmentList.find((item) => {
-      return item.tag == tags;
-    });
-    return result.image;
-  }
-
   //This hook used to retrieve post data from Firebase and sorted by date
   useEffect(() => {
     console.log("UseEffectitemScreen");
@@ -213,19 +205,6 @@ function ItemScreenNotRedux(props) {
       params: { Item: item },
     });
   };
-
-  //This is used to get the attached file in the post that contain an attached file
-  async function UploadFile(uri) {
-    Linking.canOpenURL(uri)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(uri);
-        } else {
-          alert("Unable to open PDF document");
-        }
-      })
-      .catch((error) => alert("Error opening PDF document", error));
-  }
 
   return (
     <>
@@ -313,7 +292,7 @@ function ItemScreenNotRedux(props) {
             }
           >
             <Image
-              source={require("../../../../assets/excel2.png")}
+              source={require("../../../../assets/approved.png")}
               style={styles.roundImageUpload}
             />
           </TouchableOpacity>
