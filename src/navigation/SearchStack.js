@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
 import { MoreDetailScreen } from "../screens/Search/MoreDetailScreen/MoreDetailScreen";
 import { FileScreen } from "../screens/Search/FilesScreen/FileScreen";
+import { DocstoApproveScreen } from "../screens/Search/DocstoApproveScreen/DocstoApproveScreen";
 
 function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -102,6 +103,12 @@ function SearchStackBare(props) {
       <Stack.Screen
         name={screen.search.pdf}
         component={FileScreen}
+        options={{ title: " " }}
+      />
+
+      <Stack.Screen
+        name={screen.search.approve}
+        component={DocstoApproveScreen}
         options={{ title: " " }}
       />
     </Stack.Navigator>

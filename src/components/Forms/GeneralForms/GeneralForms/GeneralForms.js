@@ -17,7 +17,7 @@ import { ChangeDisplayAprobadores } from "../../FormsGeneral/ChangeAprobadores/C
 import { ChangeDisplayMonto } from "../../FormsGeneral/ChangeNumeroMonto/ChangeDisplayMonto";
 import { ChangeDisplayFechaFin } from "../../FormsGeneral/ChangeFechaFin/ChangeDisplayFechaFin";
 import { ChangeDisplayHH } from "../../FormsGeneral/ChangeNumeroHH/ChangeDisplayHH";
-
+import { ChangeDisplayFileTipo } from "../../FormsGeneral/ChangeFIleTipo/ChangeDisplayFileTipo";
 export function GeneralForms(props) {
   const { formik } = props;
   const [pickedDocument, setPickedDocument] = useState(null);
@@ -30,6 +30,7 @@ export function GeneralForms(props) {
   const [monto, setMonto] = useState(null);
   const [horashombre, setHorashombre] = useState(null);
   const [aditional, setAditional] = useState(false);
+  const [tipoFile, setTipoFile] = useState(null);
 
   //configuring the name of the pdf file to make it readable
   let shortNameFile = "";
@@ -48,6 +49,7 @@ export function GeneralForms(props) {
       if (result.type === "success") {
         setPickedDocument(result.uri);
         formik.setFieldValue("pdfFile", result.uri);
+        formik.setFieldValue("FilenameTitle", shortNameFile);
       } else {
         setPickedDocument(null);
       }
@@ -67,6 +69,15 @@ export function GeneralForms(props) {
           setEtapa={setEtapa}
           setAprobadores={setAprobadores}
           etapa={etapa}
+        />
+      );
+    }
+    if (key === "tipoFile") {
+      setRenderComponent(
+        <ChangeDisplayFileTipo
+          onClose={onCloseOpenModal}
+          formik={formik}
+          setTipoFile={setTipoFile}
         />
       );
     }
@@ -179,6 +190,20 @@ export function GeneralForms(props) {
             },
           }}
         />
+
+        {shortNameFile && (
+          <Input
+            value={tipoFile}
+            placeholder="Tipo de Archivo Adjunto"
+            multiline={true}
+            editable={false}
+            rightIcon={{
+              type: "material-community",
+              name: "arrow-right-circle-outline",
+              onPress: () => selectComponent("tipoFile"),
+            }}
+          />
+        )}
 
         <View style={styles.iconMinMax}>
           <TouchableOpacity onPress={() => setAditional(true)}>

@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Linking, FlatList, Text } from "react-native";
 import { Button, Icon } from "@rneui/themed";
 import { getAuth, signOut } from "firebase/auth";
 import { ConnectedInfoUser } from "../../../components/Account";
-import { styles } from "./ProfileScreen.styles";
+import { styles } from "./ApprovalScreen.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
@@ -24,7 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 
-function ProfileScreen(props) {
+function ApprovalScreen(props) {
   const [_, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -149,14 +149,6 @@ function ProfileScreen(props) {
       </View>
       <Text></Text>
       <Text></Text>
-      <Icon
-        reverse
-        type="material-community"
-        name="file-excel"
-        color="#8CBBF1"
-        containerStyle={styles.btnContainer2}
-        onPress={() => getExcelPerfil(props.email)}
-      />
 
       <ProfileDateScreen filterButton={filter} quitFilterButton={quitfilter} />
 
@@ -179,20 +171,12 @@ function ProfileScreen(props) {
                     <Text style={styles.info2}>{item.comentarios}</Text>
                     <Text style={styles.info2}>{item.fechaPostFormato}</Text>
                   </View>
-                  {item.pdfPrincipal && (
-                    <TouchableOpacity
-                      onPress={() => UploadFile(item.pdfPrincipal)}
-                      style={styles.attachedElement}
-                    >
-                      <Icon type="material-community" name="paperclip" />
-                    </TouchableOpacity>
-                  )}
                 </View>
               </View>
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.idDocFirestoreDB}
+        keyExtractor={(item) => item.fotoPrincipal}
       />
     </>
   );

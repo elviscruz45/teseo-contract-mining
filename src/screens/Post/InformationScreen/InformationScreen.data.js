@@ -7,9 +7,11 @@ export function initialValues() {
     porcentajeAvance: "",
     aprobacion: "",
     pdfFile: "",
+    FilenameTitle: "",
     MontoModificado: "",
     NuevaFechaEstimada: new Date(),
     HHModificado: "",
+    tipoFile: "",
   };
 }
 

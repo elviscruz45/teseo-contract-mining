@@ -7,6 +7,7 @@ import { screen } from "../utils";
 import { styles } from "./Navigation.styles";
 // import { ConnectedPostScreen } from "../screens";
 import { ConnectedProfileScreen } from "../screens";
+import { ApprovalScreen } from "../screens/Profile/ApprovalScreen/ApprovalScreen";
 
 export function ProfileStack() {
   const Stack = createNativeStackNavigator();
@@ -37,12 +38,13 @@ export function ProfileStack() {
         component={ConnectedProfileScreen}
         options={{ title: " " }}
       />
-      {/* <Stack.Screen
-        name={screen.homestack.data}
-        component={DataScreen}
-        options={{ title: "Conveyor Belt" }}
-      />
+
       <Stack.Screen
+        name={screen.profile.approvals}
+        component={ApprovalScreen}
+        options={{ title: "Aprobaciones Pendientes" }}
+      />
+      {/* <Stack.Screen
         name={screen.homestack.graphic}
         component={GraphicScreen}
         options={{ title: "Conveyor Belt" }}

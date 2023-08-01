@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Linking, FlatList, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Linking,
+  FlatList,
+  Text,
+  Image,
+} from "react-native";
 import { Button, Icon } from "@rneui/themed";
 import { getAuth, signOut } from "firebase/auth";
 import { ConnectedInfoUser } from "../../../components/Account";
@@ -25,6 +32,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { ApprovalScreen } from "../ApprovalScreen/ApprovalScreen";
 
 function ProfileScreen(props) {
   const [_, setReload] = useState(false);
@@ -120,11 +128,27 @@ function ProfileScreen(props) {
     });
   };
 
+  const goToApprovalScreen = () => {
+    navigation.navigate(screen.profile.tab, {
+      screen: screen.profile.approvals,
+      // params: { Item: item },
+    });
+  };
+
   return (
     <>
       <KeyboardAwareScrollView
         style={{ backgroundColor: "white" }} // Add backgroundColor here
       >
+        <TouchableOpacity
+          style={styles.btnContainer4}
+          onPress={() => goToApprovalScreen()}
+        >
+          <Image
+            source={require("../../../../assets/bell1.png")}
+            style={styles.roundImageUpload}
+          />
+        </TouchableOpacity>
         <Text></Text>
         <View>
           <ConnectedInfoUser />
@@ -148,20 +172,9 @@ function ProfileScreen(props) {
               onPress={logout}
             />
           </View>
-          {/* <Modal show={showModal} close={onCloseOpenModal}>
-            {renderComponent}
-          </Modal> */}
         </View>
         <Text></Text>
         <Text></Text>
-        <Icon
-          reverse
-          type="material-community"
-          name="file-excel"
-          color="#8CBBF1"
-          containerStyle={styles.btnContainer2}
-          onPress={() => getExcelPerfil(props.email)}
-        />
 
         <ProfileDateScreen
           filterButton={filter}
@@ -173,7 +186,7 @@ function ProfileScreen(props) {
           scrollEnabled={false}
           renderItem={({ item, index }) => {
             return (
-              <TouchableOpacity onPress={() => comentPost(item)}>
+              <TouchableOpacity onPress={() => comentPost(item.IdAITService)}>
                 <View>
                   <View style={styles.equipments2}>
                     <ImageExpo
@@ -195,7 +208,7 @@ function ProfileScreen(props) {
               </TouchableOpacity>
             );
           }}
-          keyExtractor={(item) => item.idDocFirestoreDB}
+          keyExtractor={(item) => item.fotoPrincipal}
         />
       </KeyboardAwareScrollView>
       <Modal show={showModal} close={onCloseOpenModal}>

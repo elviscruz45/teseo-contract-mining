@@ -206,6 +206,13 @@ function ItemScreenNotRedux(props) {
     });
   };
 
+  //this function goes to homeTab=>commentScreen
+  const goToDocsToApprove = () => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.approve,
+      params: { Item: Item },
+    });
+  };
   return (
     <>
       <ScrollView
@@ -286,10 +293,7 @@ function ItemScreenNotRedux(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnContainer4}
-            onPress={
-              () => alert("Pendiente todavia")
-              // getExcelEquipo(Item.tag)
-            }
+            onPress={() => goToDocsToApprove()}
           >
             <Image
               source={require("../../../../assets/approved.png")}

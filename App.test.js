@@ -26,3 +26,44 @@ describe("App", () => {
     expect(connectedLoginNavigator).toBeDefined();
   });
 });
+
+[
+  {
+    ApprovalPerformed: [],
+    ApprovalRequestSentTo: ["alonso@fmi.com"],
+    ApprovalRequestedBy: "alonso@fmi.com",
+    IdAITService: "P7z1KOSlWLyjQWdRrTMu",
+    date: [Object],
+    idApproval: "wXhzfTashAgZoMf1KrWU",
+    solicitud: "Contratista-Envio EDP",
+  },
+  {
+    ApprovalPerformed: [],
+    ApprovalRequestSentTo: [
+      "generic@gmail.com",
+      "elviscruz45@gmail.com",
+      "alonso@fmi.com",
+    ],
+    ApprovalRequestedBy: "alonso@fmi.com",
+    IdAITService: "P7z1KOSlWLyjQWdRrTMu",
+    date: [Object],
+    idApproval: "fp7pJbHnawTxsQuMHeol",
+    solicitud: "Contratista-Envio EDP",
+  },
+  {
+    ApprovalPerformed: [],
+    ApprovalRequestSentTo: [
+      "alonso@fmi.com",
+      "daniel@gmail.com",
+      "elviscruz45@gmail.com",
+    ],
+    ApprovalRequestedBy: "",
+    IdAITService: "r4tnI2GJj7TMeq5TyR0X",
+    date: [Object],
+    fileName: "20498681388-09-EG07-2400_AAQ_OTP_161.pdf",
+    idApproval: "4uSjn3NJOG7O2KWlSNKc",
+    pdfFile:
+      "https://firebasestorage.googleapis.com/v0/b/teseo-app-81d77.appspot.com/o/pdfPost%2F51487892-356d-4731-89ba-34c037dcee5e?alt=media&token=12f1d871-0006-4576-b459-1b252ca62536",
+    solicitud: "Usuario-Aprobacion Doc",
+  },
+];

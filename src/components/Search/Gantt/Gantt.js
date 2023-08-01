@@ -71,6 +71,7 @@ export const GanttHistorial = (props) => {
               <View style={styles.details}>
                 <TouchableOpacity onPress={() => comentPost(item)}>
                   <Text style={styles.titledetails}> {item.title}</Text>
+
                   <View style={styles.row}>
                     <ImageExpo
                       source={{ uri: item.imageUrl }}
@@ -85,6 +86,11 @@ export const GanttHistorial = (props) => {
                     <Text style={styles.textdetail}> {item.description}</Text>
                   </View>
                   <Text></Text>
+                  <View style={styles.rowavanceNombre}>
+                    <Text style={styles.avanceNombre}> Etapa: </Text>
+
+                    <Text style={styles.detail}> {item.etapa}</Text>
+                  </View>
                   <View style={styles.rowavanceNombre}>
                     <Text style={styles.avanceNombre}> Avance Ejecucion: </Text>
 

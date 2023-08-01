@@ -15,6 +15,7 @@ const searchStack = {
   pdf: "Pdf",
   detail: "Detail",
   polines: "Polines",
+  approve: "Approve",
 };
 
 const postStack = {
@@ -36,6 +37,7 @@ const reportStack = {
 
 const profileStack = {
   tab: "ProfileTab",
+  approvals: "Approvals",
   account: "Account",
   login: "Login",
   register: "Register",

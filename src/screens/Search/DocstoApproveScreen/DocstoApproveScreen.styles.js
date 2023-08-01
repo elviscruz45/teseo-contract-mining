@@ -18,21 +18,28 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
-  roundImageUpload: {
-    width: 50,
-    height: 50,
-    // borderRadius: 50, // half of width and height
+  row: {
+    flexDirection: "row",
   },
-  btnContainer4: {
-    zIndex: 100,
-    // width: 1,
-    // height: 1,
-    position: "absolute",
-    marginTop: 10,
-    // right: 10,
-    // paddingHorizontal: 90,
-    marginLeft: windowWidth - 100,
-    paddingHorizontal: 20,
+  center: {
+    alignItems: "center",
+    // justifyContent: "space-between",
+  },
+  info: {
+    // color: "#828282",
+    // paddingRight: 100,
+    marginTop: 3,
+    // marginLeft: windowWidth / 32,
+    fontWeight: "600",
+    marginHorizontal: windowWidth * 0.02,
+  },
+  info2: {
+    // color: "#828282",
+    // paddingRight: 10,
+    marginTop: 3,
+    fontWeight: "normal",
+    // marginHorizontal: windowWidth * 0.28,
+    marginRight: 10,
   },
   btnActualizarStyles: {
     // marginTop: 30,
@@ -67,15 +74,14 @@ export const styles = StyleSheet.create({
     zIndex: 9999, // Set a higher value
   },
   image2: {
-    width: 80,
-    height: 80,
+    width: "15%",
+    height: 55,
     borderRadius: 10,
     marginBottom: 15,
   },
   equipments2: {
     flexDirection: "row",
     marginHorizontal: 5,
-    marginVertical: 5,
   },
   name2: {
     fontWeight: "bold",

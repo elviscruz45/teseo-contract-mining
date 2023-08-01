@@ -30,11 +30,8 @@ export const BarChartProceso = (props) => {
       EDPPagados: 0,
     };
 
-    console.log(data?.length);
     const totalEntries = data?.length;
     for (let i = 0; i < totalEntries; i++) {
-      console.log(data[i]["AvanceAdministrativoTexto"]);
-
       if (data[i].AvanceAdministrativoTexto === "Contratista-Fin servicio") {
         if (data[i].Moneda === "Dolares") {
           sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 3.5;

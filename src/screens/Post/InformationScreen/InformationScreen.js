@@ -49,7 +49,7 @@ function InformationScreen(props) {
           "jul.",
           "ago.",
           "sep.",
-          "oct.",
+          // "oct.",
           "nov.",
           "dic.",
         ];
@@ -71,7 +71,7 @@ function InformationScreen(props) {
         const imagePath = snapshot.metadata.fullPath;
         const imageUrl = await getDownloadURL(ref(getStorage(), imagePath));
 
-        //managin the file updated to ask for aprovals
+        //manage the file updated to ask for aprovals
         let imageUrlPDF;
         if (newData.pdfFile) {
           console.log("pdf", newData.pdfFile);
@@ -81,15 +81,22 @@ function InformationScreen(props) {
 
           if (newData.aprobacion) {
             //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
-            if (newData.etapa === "Contratista-Solicitud Aprobacion Doc") {
+            if (
+              newData.etapa === "Contratista-Solicitud Aprobacion Doc" ||
+              newData.etapa === "Contratista-Envio Cotizacion" ||
+              newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
+              newData.etapa === "Contratista-Envio EDP"
+            ) {
               const regex = /(?<=\()[^)]*(?=\))/g;
               const matches = newData.aprobacion.match(regex);
 
               const docData = {
                 solicitud: newData.etapa,
+                NombreServicio: props.actualServiceAIT.NombreServicio,
                 IdAITService: props.actualServiceAIT.idServiciosAIT,
                 fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
                 pdfFile: imageUrlPDF,
+                tipoFile: newData.tipoFile,
                 ApprovalRequestedBy: props.email,
                 ApprovalRequestSentTo: matches,
                 ApprovalPerformed: [],
@@ -101,43 +108,77 @@ function InformationScreen(props) {
               await updateDoc(RefFirebase, docData);
               console.log("docDataApproval", docData);
             }
-            //--------Uploading request to a new collection called "aprovals" to manage aprovals
-            //Uploading docs to a new collection called "aprovals" to manage doc aprovals
-
-            if (
-              newData.etapa === "Contratista-Envio Cotizacion" ||
-              newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-              newData.etapa === "Contratista-Envio EDP"
-            ) {
-              const regex = /(?<=\()[^)]*(?=\))/g;
-              const matches = newData.aprobacion.match(regex);
-
-              const docData = {
-                solicitud: newData.etapa,
-                IdAITService: props.actualServiceAIT.idServiciosAIT,
-                fileName:
-                  newData?.pdfFile?.replace(/%20/g, "_").split("/").pop() ?? "",
-                pdfFile: imageUrlPDF ?? "",
-                ApprovalRequestedBy: props.email,
-                ApprovalRequestSentTo: matches,
-                ApprovalPerformed: [],
-                date: new Date(),
-              };
-              const docRef = await addDoc(collection(db, "approvals"), docData);
-              docData.idApproval = docRef.id;
-              const RefFirebase = doc(db, "approvals", docData.idApproval);
-              await updateDoc(RefFirebase, docData);
-              console.log("Approvalsss", docData);
-            }
           }
         }
         newData.pdfPrincipal = imageUrlPDF || "";
+
+        //--------Uploading request to a new collection called "aprovals" to manage aprovals
+
+        if (
+          newData.etapa === "Contratista-Envio Cotizacion" ||
+          newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
+          newData.etapa === "Contratista-Envio EDP"
+        ) {
+          const regex = /(?<=\()[^)]*(?=\))/g;
+          const matches = newData.aprobacion.match(regex);
+
+          const docData = {
+            solicitud: newData.etapa,
+            NombreServicio: props.actualServiceAIT.NombreServicio,
+            IdAITService: props.actualServiceAIT.idServiciosAIT,
+            fileName:
+              newData?.pdfFile?.replace(/%20/g, "_").split("/").pop() ?? "",
+            pdfFile: imageUrlPDF ?? "",
+            tipoFile: newData.tipoFile ?? "",
+            ApprovalRequestedBy: props.email,
+            ApprovalRequestSentTo: matches,
+            ApprovalPerformed: [],
+            date: new Date(),
+          };
+          const docRef = await addDoc(collection(db, "approvals"), docData);
+          docData.idApproval = docRef.id;
+          const RefFirebase = doc(db, "approvals", docData.idApproval);
+          await updateDoc(RefFirebase, docData);
+          console.log("Approvalsss", docData);
+        }
 
         //preparing data to upload to  firestore Database
         newData.fotoPrincipal = imageUrl;
         newData.createdAt = new Date();
         newData.likes = [];
         newData.comentariosUsuarios = [];
+
+        //-------- a default newData porcentajeAvance-------
+        if (
+          newData.etapa === "Usuario-Envio Solicitud Servicio" ||
+          newData.etapa === "Contratista-Envio Cotizacion" ||
+          newData.etapa === "Usuario-Aprobacion Cotizacion" ||
+          newData.etapa === "Contratista-Inicio Servicio" ||
+          newData.etapa === "Stand by" ||
+          newData.etapa === "Cancelacion"
+        ) {
+          newData.porcentajeAvance = "0";
+        }
+
+        if (
+          newData.etapa === "Contratista-Solicitud Aprobacion Doc" ||
+          newData.etapa === "Usuario-Aprobacion Doc" ||
+          newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
+          newData.etapa === "Usuario-Aprobacion Ampliacion"
+        ) {
+          newData.porcentajeAvance = "50";
+        }
+
+        if (
+          newData.etapa === "Contratista-Envio EDP" ||
+          newData.etapa === "Usuario-Aprobacion EDP" ||
+          newData.etapa === "Contratista-Fin servicio"
+        ) {
+          newData.porcentajeAvance = "100";
+        }
+        console.log("----------porcentaje de avance---------");
+        console.log(newData.porcentajeAvance);
+        console.log(newData);
 
         //data of the service AIT information
         newData.AITidServicios = props.actualServiceAIT.idServiciosAIT;
