@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   btnRegister: {
-    color: "#8CBBF1",
+    color: "#2A3B76",
     fontWeight: "bold",
   },
   container: {
