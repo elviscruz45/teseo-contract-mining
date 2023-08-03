@@ -1,5 +1,5 @@
 import { TouchableOpacity, Image } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
 import { ConnectedHomeScreen } from "../screens";
@@ -8,19 +8,20 @@ import { connect } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
 import { update_firebasePhoto } from "../actions/profile";
 import { update_firebaseUserName } from "../actions/profile";
 import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { update_firebaseProfile } from "../actions/profile";
 import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
-// import { saveTotalEventServiceAITList } from "../actions/home";
+import { update_approvalList } from "../actions/home";
 import { db } from "../utils";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
+  const [email, setEmail] = useState();
 
   useEffect(() => {
     //this retrieve data from authentication Firebase and send it to the global redux state
@@ -31,7 +32,7 @@ function HomeStack(props) {
     props.update_firebaseUid(uid);
 
     //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
-    async function fetchDataServicesList() {
+    async function fetchList() {
       const querySnapshot = await getDocs(
         query(
           collection(db, "ServiciosAIT"),
@@ -44,9 +45,33 @@ function HomeStack(props) {
       });
 
       props.saveActualAITServicesFirebaseGlobalState(post_array);
+      setEmail(email);
     }
-    fetchDataServicesList();
+    fetchList();
   }, []);
+
+  useEffect(() => {
+    //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
+
+    if (email) {
+      async function fetchDataApprovalList() {
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, "approvals"),
+            where("ApprovalRequestSentTo", "array-contains", email),
+            orderBy("date", "desc")
+          )
+        );
+        const post_array = [];
+        querySnapshot.forEach((doc) => {
+          post_array.push(doc.data());
+        });
+        props.update_approvalList(post_array);
+      }
+
+      fetchDataApprovalList();
+    }
+  }, [props.ActualPostFirebase, props.approvalList, email]);
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {
@@ -66,8 +91,8 @@ function HomeStack(props) {
         headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
-              source={require("../../assets/logoTeseo1.png")}
-              style={{ width: 90, height: 18 }}
+              source={require("../../assets/teseoLong.png")}
+              style={{ width: 130, height: 25 }}
             />
           </TouchableOpacity>
         ),
@@ -104,8 +129,12 @@ function HomeStack(props) {
 const mapStateToProps = (reducers) => {
   return {
     //profile global states
+    email: reducers.profile.email,
+
     user_photo: reducers.profile.user_photo,
     totalServiceAITLIST: reducers.home.totalServiceAITLIST,
+    ActualPostFirebase: reducers.post.ActualPostFirebase,
+    approvalList: reducers.home.approvalList,
   };
 };
 
@@ -116,5 +145,6 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   update_firebaseUid,
   update_firebaseProfile,
   saveActualAITServicesFirebaseGlobalState,
+  update_approvalList,
   // saveTotalEventServiceAITList,
 })(HomeStack);

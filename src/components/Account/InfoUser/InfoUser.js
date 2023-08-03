@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import { Avatar, Text, Icon } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -70,7 +70,6 @@ function InfoUser(props) {
       >
         <Avatar.Accessory size={24} onPress={changeAvatar} />
       </Avatar>
-
       <View>
         {props.profile?.displayNameform && (
           <Text style={styles.displayName}>
@@ -82,6 +81,14 @@ function InfoUser(props) {
         {props.profile?.cargo && <Text>{props.profile.cargo}</Text>}
         {props.profile?.descripcion && <Text>{props.profile.descripcion}</Text>}
       </View>
+
+      <Image
+        source={require("../../../../assets/bell1.png")}
+        style={styles.roundImageUpload}
+      />
+      {props?.approvalList && (
+        <Text style={styles.bellNomber}>{props?.bellQuantity}</Text>
+      )}
     </View>
   );
 }
@@ -93,6 +100,7 @@ const mapStateToProps = (reducers) => {
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
     uid: reducers.profile.uid,
+    approvalList: reducers.home.approvalList,
 
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,

@@ -39,8 +39,8 @@ function SearchStackBare(props) {
         headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
-              source={require("../../assets/logoTeseo1.png")}
-              style={{ width: 90, height: 18 }}
+              source={require("../../assets/teseoLong.png")}
+              style={{ width: 130, height: 25 }}
             />
           </TouchableOpacity>
         ),

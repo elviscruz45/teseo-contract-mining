@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   roundImageUpload: {
     width: 50,
     height: 50,
+    zIndex: 122,
     // borderRadius: 50, // half of width and height
   },
   btnContainer4: {
@@ -88,5 +89,20 @@ export const styles = StyleSheet.create({
   attachedElement: {
     position: "absolute", // Add position: "absolute" to position the component
     right: 20, //
+  },
+  bellNomber: {
+    backgroundColor: "white",
+
+    fontSize: 15,
+    marginLeft: 382,
+    marginTop: 10,
+
+    borderRadius: 11,
+    position: "absolute",
+    zIndex: 22220,
+    padding: 0,
+    paddingHorizontal: 5,
+    borderWidth: 2,
+    borderColor: "red",
   },
 });

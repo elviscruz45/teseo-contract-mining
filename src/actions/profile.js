@@ -32,3 +32,10 @@ export const update_firebaseUid = (firebase_uid) => (dispatch) => {
     payload: firebase_uid,
   });
 };
+
+export const update_approvalQuantity = (firebase_uid) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_APPROVALQUANTITY",
+    payload: firebase_uid,
+  });
+};

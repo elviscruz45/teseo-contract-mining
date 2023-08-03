@@ -46,7 +46,6 @@ function ProfileScreen(props) {
 
   const onReload = () => setReload((prevState) => !prevState);
 
-  console.log(post);
   const logout = async () => {
     const auth = getAuth();
     await signOut(auth);
@@ -145,15 +144,10 @@ function ProfileScreen(props) {
         <TouchableOpacity
           style={styles.btnContainer4}
           onPress={() => goToApprovalScreen()}
-        >
-          <Image
-            source={require("../../../../assets/bell1.png")}
-            style={styles.roundImageUpload}
-          />
-        </TouchableOpacity>
+        ></TouchableOpacity>
         <Text></Text>
         <View>
-          <ConnectedInfoUser />
+          <ConnectedInfoUser bellQuantity={props?.approvalList?.length} />
           <View
             style={{
               flexDirection: "row",
@@ -224,6 +218,9 @@ const mapStateToProps = (reducers) => {
   return {
     profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
+    approvalQuantity: reducers.profile.approvalQuantity,
+    approvalList: reducers.home.approvalList,
+
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };

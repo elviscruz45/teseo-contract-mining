@@ -5,10 +5,10 @@
     "description": "high perfomance for your industry",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appTeseoLogol.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/teseoLong.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

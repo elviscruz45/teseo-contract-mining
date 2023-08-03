@@ -29,4 +29,26 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 17,
   },
+  roundImageUpload: {
+    width: 50,
+    height: 50,
+    zIndex: 122,
+    // borderRadius: 50, // half of width and height
+  },
+  bellNomber: {
+    // backgroundColor: "white",
+
+    fontSize: 15,
+    margin: -20,
+    // marginLeft: 500,
+    marginTop: -45,
+
+    borderRadius: 11,
+    // position: "absolute",
+    // zIndex: 1000,
+    // padding: 0,
+    paddingHorizontal: 5,
+    borderWidth: 2,
+    borderColor: "red",
+  },
 });

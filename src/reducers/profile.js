@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   user_photo: null,
   email: null,
   uid: null,
+  approvalQuantity: 0,
 };
 
 export function profile(state = INITIAL_STATE, action) {
@@ -19,7 +20,16 @@ export function profile(state = INITIAL_STATE, action) {
     case "UPDATE_FIREBASEID":
       return { ...state, uid: action.payload };
 
+    case "UPDATE_APPROVALQUANTITY":
+      return { ...state, approvalQuantity: action.payload };
+
     default:
       return state;
   }
 }
+
+// export const update_approvalQuantity = (firebase_uid) => (dispatch) => {
+//   dispatch({
+//     type: "UPDATE_APPROVALQUANTITY",
+//     payload: firebase_uid,
+//   })}

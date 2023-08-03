@@ -18,7 +18,7 @@ export function AuthScreen(props) {
     <KeyboardAwareScrollView>
       <View style={styles.image}>
         <ImageExpo
-          source={require("../../../assets/logoteseoficial.png")}
+          source={require("../../../assets/appTeseoLogol.png")}
           style={{ width: 60, height: 70 }}
           cachePolicy={"memory-disk"}
         />
@@ -26,8 +26,8 @@ export function AuthScreen(props) {
         <Text></Text>
 
         <ImageExpo
-          source={require("../../../assets/LogoNameTeseo.png")}
-          style={{ width: 152, height: 37 }}
+          source={require("../../../assets/TeseoLetra.png")}
+          style={{ width: 188, height: 37 }}
           cachePolicy={"memory-disk"}
         />
       </View>

@@ -51,10 +51,10 @@ export const styles = StyleSheet.create({
     zIndex: 9999, // Set a higher value
   },
   image2: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginTop: 3,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginTop: 0,
     marginHorizontal: 10,
   },
   equipments2: {

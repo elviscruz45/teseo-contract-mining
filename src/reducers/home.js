@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   totalEventServiceAITLIST: [],
   postPerPage: 10,
   servicesData: null,
+  approvalList: null,
 };
 
 export function home(state = INITIAL_STATE, action) {
@@ -23,6 +24,9 @@ export function home(state = INITIAL_STATE, action) {
       };
     case "RESET_POSTPERPAGEHOME":
       return { ...state, postPerPage: action.payload };
+
+    case "UPDATE_APPROVALLIST":
+      return { ...state, approvalList: action.payload };
 
     case "UPDATE_AITSERVICESDATA":
       return { ...state, servicesData: action.payload };

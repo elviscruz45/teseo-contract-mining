@@ -1,6 +1,6 @@
-export const saveApprovalList = (approval) => (dispatch) => {
+export const saveApprovalListnew = (approval) => (dispatch) => {
   dispatch({
-    type: "SAVE_APPROVALLIST",
+    type: "SAVE_APPROVALLISTNEW",
     payload: approval,
   });
 };

@@ -26,10 +26,11 @@ import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { areaLists } from "../../../utils/areaList";
+import { update_approvalQuantity } from "../../../actions/profile";
 
 function ApprovalScreenBare(props) {
   const navigation = useNavigation();
-  const [approval, setApproval] = useState();
+  // const [approval, setApproval] = useState();
 
   //create the algoritm to have the date format of the post
 
@@ -60,24 +61,25 @@ function ApprovalScreenBare(props) {
     return formattedDate;
   };
 
-  useEffect(() => {
-    //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
-    async function fetchDataServicesList() {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, "approvals"),
-          where("ApprovalRequestSentTo", "array-contains", props.email),
-          orderBy("date", "desc")
-        )
-      );
-      const post_array = [];
-      querySnapshot.forEach((doc) => {
-        post_array.push(doc.data());
-      });
-      setApproval(post_array);
-    }
-    fetchDataServicesList();
-  }, [props.ActualPostFirebase, props.approvalList]);
+  // useEffect(() => {
+  //   //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
+  //   async function fetchDataServicesList() {
+  //     const querySnapshot = await getDocs(
+  //       query(
+  //         collection(db, "approvals"),
+  //         where("ApprovalRequestSentTo", "array-contains", props.email),
+  //         orderBy("date", "desc")
+  //       )
+  //     );
+  //     const post_array = [];
+  //     querySnapshot.forEach((doc) => {
+  //       post_array.push(doc.data());
+  //     });
+  //     setApproval(post_array);
+  //     props.update_approvalQuantity(post_array.length);
+  //   }
+  //   fetchDataServicesList();
+  // }, [props.ActualPostFirebase, props.approvalList]);
 
   goToApprove = async (item) => {
     // retrieve the actual service to use the data to go to approve what is required
@@ -88,8 +90,6 @@ function ApprovalScreenBare(props) {
     serviceQuery.forEach((doc) => {
       post_array.push(doc.data());
     });
-
-    console.log(post_array[0]);
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
@@ -104,7 +104,7 @@ function ApprovalScreenBare(props) {
       {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}
 
       <FlatList
-        data={approval}
+        data={props.approvalList}
         scrollEnabled={false}
         renderItem={({ item, index }) => {
           //the algoritm to retrieve the image source to render the icon
@@ -154,8 +154,9 @@ const mapStateToProps = (reducers) => {
   return {
     profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
+
     ActualPostFirebase: reducers.post.ActualPostFirebase,
-    approvalList: reducers.search.approvalList,
+    approvalList: reducers.home.approvalList,
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
@@ -163,4 +164,5 @@ const mapStateToProps = (reducers) => {
 export const ApprovalScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
   update_firebaseProfile,
+  update_approvalQuantity,
 })(ApprovalScreenBare);

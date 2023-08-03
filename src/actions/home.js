@@ -74,3 +74,10 @@ export const updateAITServicesDATA = (item) => async (dispatch) => {
     alert(error.message);
   }
 };
+
+export const update_approvalList = (firebase_uid) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_APPROVALLIST",
+    payload: firebase_uid,
+  });
+};
