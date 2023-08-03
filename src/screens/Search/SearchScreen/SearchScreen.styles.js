@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
-    marginRight: 90,
+    marginRight: 100,
   },
   info: {
     color: "#828282",
@@ -113,9 +113,9 @@ export const styles = StyleSheet.create({
     flex: 1, // Use flex: 1 to make the container fill the entire screen
   },
   image: {
-    width: "15%",
-    height: 55,
-    borderRadius: 10,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
   },
   equipments: {
     flexDirection: "row",

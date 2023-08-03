@@ -169,7 +169,7 @@ export const styles = StyleSheet.create({
   image: {
     width: 80,
     height: 80,
-    borderRadius: 10,
+    borderRadius: 40,
   },
   avatar: {
     marginRight: 20,
