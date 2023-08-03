@@ -20,17 +20,20 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    marginRight: 110,
   },
   center: {
-    alignItems: "center",
+    // alignItems: "center",
     // justifyContent: "space-between",
   },
   info: {
     // color: "#828282",
     // paddingRight: 100,
+    // alignItems: "flex-start",
     marginTop: 3,
     // marginLeft: windowWidth / 32,
     fontWeight: "600",
+    // textAlignVertical: "top",
     marginHorizontal: windowWidth * 0.02,
   },
   info2: {
@@ -39,7 +42,8 @@ export const styles = StyleSheet.create({
     marginTop: 3,
     fontWeight: "normal",
     // marginHorizontal: windowWidth * 0.28,
-    marginRight: 10,
+    // marginRight: 10,
+    // margin: 20,
   },
   btnActualizarStyles: {
     // marginTop: 30,
@@ -74,10 +78,29 @@ export const styles = StyleSheet.create({
     zIndex: 9999, // Set a higher value
   },
   image2: {
-    width: "15%",
+    width: "13.5%",
     height: 55,
     borderRadius: 10,
-    marginBottom: 15,
+  },
+  image3: {
+    width: "100%",
+    height: 55,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  image4: {
+    width: 25,
+    alignSelf: "center",
+    height: 25,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  image5: {
+    width: 25,
+    alignSelf: "center",
+    height: 25,
+    borderRadius: 10,
+    marginTop: 10,
   },
   equipments2: {
     flexDirection: "row",
@@ -88,11 +111,16 @@ export const styles = StyleSheet.create({
   },
   info2: {
     color: "#828282",
+    // width:10,
     paddingRight: 100,
+
     marginTop: 3,
   },
   attachedElement: {
     position: "absolute", // Add position: "absolute" to position the component
     right: 20, //
+  },
+  article: {
+    margin: 10,
   },
 });

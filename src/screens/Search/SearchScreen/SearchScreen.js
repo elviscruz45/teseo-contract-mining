@@ -92,11 +92,19 @@ function SearchScreenNoRedux(props) {
               style={{ backgroundColor: "white" }} // Add backgroundColor here
             >
               <View style={styles.equipments}>
-                <ImageExpo
-                  source={imageSource}
-                  style={styles.image}
-                  cachePolicy={"memory-disk"}
-                />
+                {item.photoServiceURL ? (
+                  <ImageExpo
+                    source={{ uri: item.photoServiceURL }}
+                    style={styles.image}
+                    cachePolicy={"memory-disk"}
+                  />
+                ) : (
+                  <ImageExpo
+                    source={imageSource}
+                    style={styles.image}
+                    cachePolicy={"memory-disk"}
+                  />
+                )}
 
                 <View>
                   <Text style={styles.name}>{item.NombreServicio}</Text>

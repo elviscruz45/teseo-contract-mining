@@ -64,6 +64,8 @@ function AITNoReduxScreen(props) {
         newData.LastEventPosted = new Date();
         newData.NuevaFechaEstimada = new Date();
 
+        //Photo of the service
+        newData.photoServiceURL = "";
         //Data about information profile and company
         newData.emailPerfil = props.email || "Anonimo";
         newData.nombrePerfil = props.firebase_user_name || "Anonimo";

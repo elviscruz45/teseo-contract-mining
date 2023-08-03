@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Linking, FlatList, Text } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  View,
+  TouchableOpacity,
+  Linking,
+  FlatList,
+  Text,
+  Alert,
+} from "react-native";
 import { Button, Icon } from "@rneui/themed";
 import { getAuth, signOut } from "firebase/auth";
 import { ConnectedInfoUser } from "../../../components/Account";
@@ -18,17 +25,22 @@ import {
   onSnapshot,
   docs,
   getDocs,
+  arrayUnion,
+  arrayRemove,
+  updateDoc,
   limit,
+  doc,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { saveApprovalList } from "../../../actions/search";
 
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
-  console.log(approval);
+
   //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
     route: {
@@ -81,6 +93,7 @@ function DocstoApproveScreenBare(props) {
         });
         console.log("55.OnSnapshopDocsApprovalScreen");
         setApproval(lista);
+        props.saveApprovalList(lista);
       });
     }
 
@@ -93,67 +106,151 @@ function DocstoApproveScreenBare(props) {
     };
   }, []);
 
+  const docAprovals = async (emailUser, approvalPerformed, idApproval) => {
+    const PostRef = doc(db, "approvals", idApproval);
+
+    Alert.alert(
+      "Aprobacion",
+      "Estas Seguro de Aprobar esta Solicitud?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Aprobar",
+          onPress: async () => {
+            if (approvalPerformed?.includes(emailUser)) {
+              await updateDoc(PostRef, {
+                ApprovalPerformed: arrayRemove(emailUser),
+              });
+            } else {
+              await updateDoc(PostRef, {
+                ApprovalPerformed: arrayUnion(emailUser),
+              });
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  //---This is used to get the attached file in the post that contain an attached file---
+  const uploadFile = useCallback(async (uri) => {
+    // console.log("pdfHomescreen", uri);
+    try {
+      const supported = await Linking.canOpenURL(uri);
+      if (supported) {
+        await Linking.openURL(uri);
+      } else {
+        alert("Este archivo no tiene Documento adjunto");
+      }
+    } catch (error) {
+      alert("No Hay Documento Adjunto", error);
+    }
+  }, []);
+
   return (
     <KeyboardAwareScrollView>
       <Text></Text>
-
-      {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}
 
       <FlatList
         data={approval}
         scrollEnabled={false}
         renderItem={({ item, index }) => {
+          const approvalRequestedLength = item.ApprovalRequestSentTo.length;
+          const approvalPerformedLength = item.ApprovalPerformed.length;
+          const approvalRequested = item.ApprovalRequestSentTo;
+          const approvalPerformed = item.ApprovalPerformed;
+          const emailUser = props.email;
+          const isIncluded = approvalPerformed.includes(emailUser);
+          const idApproval = item.idApproval;
+
           return (
-            <TouchableOpacity onPress={() => goToApprove(item.IdAITService)}>
-              <View />
+            <View>
               <View>
                 <View style={styles.equipments2}>
-                  <ImageExpo
-                    source={require("../../../../assets/pdf4.png")}
-                    style={styles.image2}
-                    cachePolicy={"memory-disk"}
-                  />
+                  <View style={styles.image2}>
+                    <TouchableOpacity onPress={() => uploadFile(item.pdfFile)}>
+                      <ImageExpo
+                        source={
+                          item.pdfFile
+                            ? require("../../../../assets/docIcon.png")
+                            : require("../../../../assets/mailIcon.png")
+                        }
+                        style={styles.image3}
+                        cachePolicy={"memory-disk"}
+                      />
+                    </TouchableOpacity>
 
-                  <View>
+                    <ImageExpo
+                      source={
+                        approvalRequestedLength === approvalPerformedLength
+                          ? require("../../../../assets/approvalGreen.png")
+                          : approvalPerformedLength > 0
+                          ? require("../../../../assets/approvalYellow.png")
+                          : require("../../../../assets/approvalRed.png")
+                      }
+                      style={styles.image4}
+                      cachePolicy={"memory-disk"}
+                    />
+                    <TouchableOpacity
+                      onPress={() =>
+                        docAprovals(emailUser, approvalPerformed, idApproval)
+                      }
+                    >
+                      {!isIncluded && (
+                        <ImageExpo
+                          source={require("../../../../assets/sello.png")}
+                          style={styles.image5}
+                          cachePolicy={"memory-disk"}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.article}>
                     <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Solicitud:  "}</Text>
+                      <Text style={styles.info}>{"Solicitud:"}</Text>
                       <Text style={styles.info2}>{item.solicitud}</Text>
                     </View>
 
                     <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Nombre Archivo:  "}</Text>
+                      <Text style={styles.info}>{"Archivo:  "}</Text>
                       <Text style={styles.info2}>{item.fileName}</Text>
                     </View>
 
                     <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Autor:  "}</Text>
+                      <Text style={styles.info}>{"Autor:      "}</Text>
                       <Text style={styles.info2}>
                         {item.ApprovalRequestedBy}
                       </Text>
                     </View>
 
                     <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Fecha:  "}</Text>
+                      <Text style={styles.info}>{"Fecha:     "}</Text>
                       <Text style={styles.info2}>{formatDate(item.date)}</Text>
                     </View>
 
                     <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Aprobadores:  "}</Text>
+                      <Text style={styles.info}>{"Req:         "}</Text>
                       <Text style={styles.info2}>
-                        {item.ApprovalRequestSentTo.join(",")}
+                        {item.ApprovalRequestSentTo.join(", ")}
                       </Text>
                     </View>
 
                     <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Aprobaciones:  "}</Text>
-                      <Text style={styles.info2}>{item.ApprovalPerformed}</Text>
+                      <Text style={styles.info}>{"Aprob:     "}</Text>
+                      <Text style={styles.info2}>
+                        {item.ApprovalPerformed.join(", ")}
+                      </Text>
                     </View>
 
                     <Text></Text>
                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
+            </View>
           );
         }}
         keyExtractor={(item) => item.date} // Provide a unique key for each item
@@ -173,4 +270,5 @@ const mapStateToProps = (reducers) => {
 export const DocstoApproveScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
   update_firebaseProfile,
+  saveApprovalList,
 })(DocstoApproveScreenBare);

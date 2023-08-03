@@ -19,6 +19,7 @@ function InfoUser(props) {
   const [avatar, setAvatar] = useState(props.user_photo);
 
   const user = getAuth().currentUser;
+
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

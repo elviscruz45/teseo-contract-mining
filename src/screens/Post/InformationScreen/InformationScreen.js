@@ -49,7 +49,7 @@ function InformationScreen(props) {
           "jul.",
           "ago.",
           "sep.",
-          // "oct.",
+          "oct.",
           "nov.",
           "dic.",
         ];
@@ -101,6 +101,8 @@ function InformationScreen(props) {
                 ApprovalRequestSentTo: matches,
                 ApprovalPerformed: [],
                 date: new Date(),
+                AreaServicio: props.actualServiceAIT.AreaServicio,
+                photoServiceURL: props.actualServiceAIT.photoServiceURL,
               };
               const docRef = await addDoc(collection(db, "approvals"), docData);
               docData.idApproval = docRef.id;
@@ -134,6 +136,8 @@ function InformationScreen(props) {
             ApprovalRequestSentTo: matches,
             ApprovalPerformed: [],
             date: new Date(),
+            AreaServicio: props.actualServiceAIT.AreaServicio,
+            photoServiceURL: props.actualServiceAIT.photoServiceURL,
           };
           const docRef = await addDoc(collection(db, "approvals"), docData);
           docData.idApproval = docRef.id;
@@ -184,6 +188,7 @@ function InformationScreen(props) {
         newData.AITidServicios = props.actualServiceAIT.idServiciosAIT;
         newData.AITNombreServicio = props.actualServiceAIT.NombreServicio;
         newData.AITAreaServicio = props.actualServiceAIT.AreaServicio;
+        newData.AITphotoServiceURL = props.actualServiceAIT.photoServiceURL;
 
         // //aditional data of the service AIT information
         newData.AITAvanceEjecucion = props.actualServiceAIT.AvanceEjecucion;

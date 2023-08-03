@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory-native";
 import Svg from "react-native-svg";
-import { View, Image } from "react-native";
+import { View } from "react-native";
+import { Image as ImageExpo } from "expo-image";
 
-export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
+export const CircularProgress = ({
+  imageSource,
+  imageStyle,
+  avance,
+  image,
+}) => {
   const data = [
     { x: 1, y: parseInt(avance) },
     { x: 2, y: 100 - parseInt(avance) },
@@ -46,15 +52,27 @@ export const CircularProgress = ({ imageSource, imageStyle, avance }) => {
           }}
         />
       </Svg>
-      <Image
-        source={imageSource}
-        style={{
-          marginLeft: 20,
-          width: 80,
-          height: 80,
-          borderRadius: 80,
-        }}
-      />
+      {image ? (
+        <ImageExpo
+          source={{ uri: image }}
+          style={{
+            marginLeft: 20,
+            width: 80,
+            height: 80,
+            borderRadius: 80,
+          }}
+        />
+      ) : (
+        <ImageExpo
+          source={imageSource}
+          style={{
+            marginLeft: 20,
+            width: 80,
+            height: 80,
+            borderRadius: 80,
+          }}
+        />
+      )}
     </>
   );
 };

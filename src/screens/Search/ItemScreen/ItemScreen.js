@@ -227,6 +227,8 @@ function ItemScreenNotRedux(props) {
               imageSource={imageSource}
               imageStyle={styles.roundImage}
               avance={Item.AvanceEjecucion}
+              id={Item.idServiciosAIT}
+              image={Item.photoServiceURL}
             />
 
             <Text></Text>

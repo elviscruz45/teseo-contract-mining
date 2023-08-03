@@ -242,7 +242,15 @@ function PostScreen(props) {
               style={{ backgroundColor: "white" }} // Add backgroundColor here
             >
               <View style={styles.equipments}>
-                <Image source={imageSource} style={styles.image} />
+                {item.photoServiceURL ? (
+                  <Image
+                    source={{ uri: item.photoServiceURL }}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Image source={imageSource} style={styles.image} />
+                )}
+
                 <View>
                   <Text style={styles.name}>{item.NombreServicio}</Text>
                   <Text style={styles.info}>

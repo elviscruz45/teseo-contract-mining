@@ -3,7 +3,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Aler,
+  Alert,
   ImageBackground,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";

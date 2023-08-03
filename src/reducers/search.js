@@ -1,9 +1,11 @@
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  approvalList: null,
+};
 
 export function search(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case "SOMETHING":
-      return { ...state };
+    case "SAVE_APPROVALLIST":
+      return { ...state, approvalList: action.payload };
     default:
       return state;
   }

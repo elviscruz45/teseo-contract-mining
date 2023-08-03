@@ -105,6 +105,7 @@ function HomeScreen(props) {
   //----this goes to another screen using the params given in this screen, useCallBack---
   const selectAsset = useCallback(
     (item) => {
+      console.log(item);
       navigation.navigate(screen.search.tab, {
         screen: screen.search.item,
         params: { Item: item },
@@ -183,11 +184,20 @@ function HomeScreen(props) {
                     // onPress={() => selectAsset(item.equipoPostDatos)}
                     style={[styles.row, styles.center]}
                   >
-                    <ImageExpo
-                      source={imageSource}
-                      style={styles.roundImage}
-                      cachePolicy={"memory-disk"}
-                    />
+                    {item.AITphotoServiceURL ? (
+                      <ImageExpo
+                        source={{ uri: item.AITphotoServiceURL }}
+                        style={styles.roundImage}
+                        cachePolicy={"memory-disk"}
+                      />
+                    ) : (
+                      <ImageExpo
+                        source={imageSource}
+                        style={styles.roundImage}
+                        cachePolicy={"memory-disk"}
+                      />
+                    )}
+
                     {/* <Text>{item.equipoPostDatos?.tag}</Text> */}
                     {ShortTextComponent(item.AITNombreServicio)}
                   </TouchableOpacity>

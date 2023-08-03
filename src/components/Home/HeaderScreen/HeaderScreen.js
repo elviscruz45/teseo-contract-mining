@@ -102,6 +102,7 @@ function HeaderScreenNoRedux(props) {
                   imageSource={imageSource}
                   imageStyle={styles.roundImage5}
                   avance={item.AvanceEjecucion}
+                  image={item.photoServiceURL}
                 />
                 {ShortTextComponent(item.NombreServicio)}
               </View>

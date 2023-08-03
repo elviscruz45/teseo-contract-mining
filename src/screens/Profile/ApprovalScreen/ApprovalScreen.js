@@ -25,6 +25,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { areaLists } from "../../../utils/areaList";
 
 function ApprovalScreenBare(props) {
   const navigation = useNavigation();
@@ -76,7 +77,7 @@ function ApprovalScreenBare(props) {
       setApproval(post_array);
     }
     fetchDataServicesList();
-  }, [props.ActualPostFirebase]);
+  }, [props.ActualPostFirebase, props.approvalList]);
 
   goToApprove = async (item) => {
     // retrieve the actual service to use the data to go to approve what is required
@@ -106,16 +107,30 @@ function ApprovalScreenBare(props) {
         data={approval}
         scrollEnabled={false}
         renderItem={({ item, index }) => {
+          //the algoritm to retrieve the image source to render the icon
+          const area = item.AreaServicio;
+          const indexareaList = areaLists.findIndex(
+            (item) => item.value === area
+          );
+          const imageSource = areaLists[indexareaList]?.image;
           return (
             <TouchableOpacity onPress={() => goToApprove(item.IdAITService)}>
               <View />
               <View>
                 <View style={styles.equipments2}>
-                  <ImageExpo
-                    source={require("../../../../assets/bell1.png")}
-                    style={styles.image2}
-                    cachePolicy={"memory-disk"}
-                  />
+                  {item.photoServiceURL ? (
+                    <ImageExpo
+                      source={{ uri: item.photoServiceURL }}
+                      style={styles.image2}
+                      cachePolicy={"memory-disk"}
+                    />
+                  ) : (
+                    <ImageExpo
+                      source={imageSource}
+                      style={styles.image2}
+                      cachePolicy={"memory-disk"}
+                    />
+                  )}
 
                   <View>
                     <Text style={styles.info2}>{item.NombreServicio}</Text>
@@ -140,6 +155,8 @@ const mapStateToProps = (reducers) => {
     profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
     ActualPostFirebase: reducers.post.ActualPostFirebase,
+    approvalList: reducers.search.approvalList,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

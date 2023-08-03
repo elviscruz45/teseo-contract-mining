@@ -46,6 +46,7 @@ function ProfileScreen(props) {
 
   const onReload = () => setReload((prevState) => !prevState);
 
+  console.log(post);
   const logout = async () => {
     const auth = getAuth();
     await signOut(auth);
@@ -122,6 +123,7 @@ function ProfileScreen(props) {
   }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
 
   const comentPost = (item) => {
+    console.log("item", item);
     navigation.navigate(screen.home.tab, {
       screen: screen.home.comment,
       params: { Item: item },
@@ -186,7 +188,7 @@ function ProfileScreen(props) {
           scrollEnabled={false}
           renderItem={({ item, index }) => {
             return (
-              <TouchableOpacity onPress={() => comentPost(item.IdAITService)}>
+              <TouchableOpacity onPress={() => comentPost(item)}>
                 <View>
                   <View style={styles.equipments2}>
                     <ImageExpo

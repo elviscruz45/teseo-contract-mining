@@ -51,14 +51,16 @@ export const styles = StyleSheet.create({
     zIndex: 9999, // Set a higher value
   },
   image2: {
-    width: "15%",
-    height: 55,
-    borderRadius: 10,
-    marginBottom: 15,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginTop: 3,
+    marginHorizontal: 10,
   },
   equipments2: {
     flexDirection: "row",
     marginHorizontal: 5,
+    marginTop: 10,
   },
   name2: {
     fontWeight: "bold",

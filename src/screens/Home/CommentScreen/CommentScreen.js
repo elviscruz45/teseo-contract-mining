@@ -106,7 +106,7 @@ function CommentScreen(props) {
         // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
       >
         <ImageExpo
-          source={{ uri: Item.fotoPrincipal }}
+          source={{ uri: Item?.fotoPrincipal }}
           style={styles.postPhoto}
           cachePolicy={"memory-disk"}
         />
@@ -121,33 +121,31 @@ function CommentScreen(props) {
             alignSelf: "center",
           }}
         >
-          {Item.AITNombreServicio}
+          {Item?.AITNombreServicio}
         </Text>
         <Text></Text>
 
         <View>
-          <Text style={styles.textAreaTitle}>{Item.titulo}</Text>
-          <Text style={styles.textAreaComment}>{Item.comentarios}</Text>
+          <Text style={styles.textAreaTitle}>{Item?.titulo}</Text>
+          <Text style={styles.textAreaComment}>{Item?.comentarios}</Text>
           <Text></Text>
 
           <Text style={styles.textAreaTitleplus}>Estado General : </Text>
           <Text style={styles.textAreaCommentplus}>
             {"Progreso: "}
-            {Item.porcentajeAvance}
+
+            {Item?.porcentajeAvance}
             {"%"}
           </Text>
-          <Text style={styles.textAreaCommentplus}>
-            {"Estado:"}
-            {Item.nombreComponente}
-          </Text>
+
           <Text style={styles.textAreaCommentplus}>
             {"Codigo Servicio:"}
-            {Item.AITNumero}
+            {Item?.AITNumero}
           </Text>
 
           <Text style={styles.textAreaCommentplus}>
             {"Etapa: "}
-            {Item.etapa}
+            {Item?.etapa}
           </Text>
         </View>
         <Text></Text>
@@ -155,9 +153,9 @@ function CommentScreen(props) {
         <View style={[styles.row, styles.center]}>
           <Text style={{ margin: 5, color: "#5B5B5B" }}>
             {"Fecha:  "}
-            {Item.fechaPostFormato}
+            {Item?.fechaPostFormato}
           </Text>
-          {Item.pdfPrincipal && (
+          {Item?.pdfPrincipal && (
             <TouchableOpacity
               onPress={() => uploadFile(Item.pdfPrincipal)}
               style={{
