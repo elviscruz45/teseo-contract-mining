@@ -12,13 +12,18 @@ import { update_firebasePhoto } from "../../../actions/profile";
 import { update_firebaseEmail } from "../../../actions/profile";
 import { update_firebaseProfile } from "../../../actions/profile";
 import { update_firebaseUid } from "../../../actions/profile";
-
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
+import { ChangeManPower } from "../../Profile/ManPowerForm/ChangeManPower";
 function InfoUser(props) {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
-  const [avatar, setAvatar] = useState(props.user_photo);
+  const [showModal, setShowModal] = useState(false);
+  const [renderComponent, setRenderComponent] = useState(null);
 
+  const [avatar, setAvatar] = useState(props.user_photo);
   const user = getAuth().currentUser;
+  const navigation = useNavigation();
 
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -59,37 +64,74 @@ function InfoUser(props) {
     setLoading(false);
   };
 
+  const goToApprovalScreen = () => {
+    navigation.navigate(screen.profile.tab, {
+      screen: screen.profile.approvals,
+    });
+  };
+
+  const updateManpower = () => {
+    setRenderComponent(<ChangeManPower onClose={onCloseOpenModal} />);
+    setShowModal(true);
+  };
+  const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
+
   return (
-    <View style={styles.content}>
-      <Avatar
-        size="large"
-        rounded
-        containerStyle={styles.avatar}
-        icon={{ type: "material", name: "person" }}
-        source={{ uri: avatar }}
-      >
-        <Avatar.Accessory size={24} onPress={changeAvatar} />
-      </Avatar>
-      <View>
-        {props.profile?.displayNameform && (
-          <Text style={styles.displayName}>
-            {props.profile.displayNameform}
-          </Text>
+    <>
+      <View style={styles.content}>
+        <Avatar
+          size="large"
+          rounded
+          containerStyle={styles.avatar}
+          icon={{ type: "material", name: "person" }}
+          source={{ uri: avatar }}
+        >
+          <Avatar.Accessory size={24} onPress={changeAvatar} />
+        </Avatar>
+        <View>
+          {props.profile?.displayNameform && (
+            <Text style={styles.displayName}>
+              {props.profile.displayNameform}
+            </Text>
+          )}
+
+          <Text>{props.email}</Text>
+          {props.profile?.cargo && <Text>{props.profile.cargo}</Text>}
+          {props.profile?.descripcion && (
+            <Text>{props.profile.descripcion}</Text>
+          )}
+        </View>
+        <Text> </Text>
+        <Text> </Text>
+        <Text> </Text>
+        <TouchableOpacity
+          style={styles.btnContainer4}
+          onPress={() => updateManpower()}
+        >
+          <Image
+            source={require("../../../../assets/manpower2.png")}
+            style={styles.roundImageUpload2}
+          />
+        </TouchableOpacity>
+        <Text> </Text>
+        <TouchableOpacity
+          style={styles.btnContainer4}
+          onPress={() => goToApprovalScreen()}
+        >
+          <Image
+            source={require("../../../../assets/bell1.png")}
+            style={styles.roundImageUpload}
+          />
+        </TouchableOpacity>
+
+        {props?.approvalList && (
+          <Text style={styles.bellNomber}>{props?.bellQuantity}</Text>
         )}
-
-        <Text>{props.email}</Text>
-        {props.profile?.cargo && <Text>{props.profile.cargo}</Text>}
-        {props.profile?.descripcion && <Text>{props.profile.descripcion}</Text>}
       </View>
-
-      <Image
-        source={require("../../../../assets/bell1.png")}
-        style={styles.roundImageUpload}
-      />
-      {props?.approvalList && (
-        <Text style={styles.bellNomber}>{props?.bellQuantity}</Text>
-      )}
-    </View>
+      <Modal show={showModal} close={onCloseOpenModal}>
+        {renderComponent}
+      </Modal>
+    </>
   );
 }
 

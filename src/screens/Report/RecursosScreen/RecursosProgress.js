@@ -4,27 +4,25 @@ import { View, Text } from "react-native";
 
 export const RecursosProgress = (props) => {
   const data = 70;
-  const { cantidad, titulo, unidad } = props;
+  const { cantidad, titulo, unidad, porcentaje } = props;
   // Example: 20% progress
   console.log(data);
 
-  const getColor = (percentage) => {
-    if (percentage < 25) {
-      return "red";
-    } else if (percentage < 50) {
-      return "orange";
-    } else if (percentage < 75) {
-      return "limegreen";
-    } else if (percentage < 100) {
+  const getColor = (porcentaje) => {
+    if (porcentaje < 25) {
       return "green";
+    } else if (porcentaje < 50) {
+      return "limegreen";
+    } else if (porcentaje < 75) {
+      return "orange";
+    } else if (porcentaje < 100) {
+      return "red";
     } else {
-      return "blue";
+      return "red";
     }
   };
 
-  const percentage = cantidad;
-
-  const barWidth = `${cantidad}%`; // Calculate the width as a percentage string
+  const barWidth = `${porcentaje}%`; // Calculate the width as a percentage string
 
   return (
     <View
@@ -52,7 +50,7 @@ export const RecursosProgress = (props) => {
 
       <View
         style={{
-          backgroundColor: getColor(percentage),
+          backgroundColor: getColor(porcentaje),
           width: barWidth,
           height: 10,
           borderRadius: 5,

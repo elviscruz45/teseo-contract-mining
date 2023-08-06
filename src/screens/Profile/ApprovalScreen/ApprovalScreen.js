@@ -98,7 +98,9 @@ function ApprovalScreenBare(props) {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "white" }} // Add backgroundColor here
+    >
       <Text></Text>
 
       {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}

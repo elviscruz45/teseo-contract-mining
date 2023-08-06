@@ -14,6 +14,7 @@ import { MontoServiceList } from "../RecursosScreen/MontoServiceList";
 import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
 import { BarInactiveServices } from "../RecursosScreen/BarInactiveServices";
 import { MontoComprometido } from "../RecursosScreen/MontoComprometido";
+import { getExcelReportData } from "../../../utils/excelData";
 
 const ReportScreenNoRedux = (props) => {
   console.log("5ReportScreen");
@@ -180,8 +181,8 @@ const ReportScreenNoRedux = (props) => {
       <TouchableOpacity
         // style={styles.btnContainer4}
         onPress={
-          () => alert("Pendiente todavia")
-          // getExcelEquipo(Item.tag)
+          () => getExcelReportData()
+          // alert("Pendiente todavia")
         }
       >
         <Image

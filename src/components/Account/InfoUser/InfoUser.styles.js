@@ -35,6 +35,12 @@ export const styles = StyleSheet.create({
     zIndex: 122,
     // borderRadius: 50, // half of width and height
   },
+  roundImageUpload2: {
+    width: 30,
+    height: 30,
+    zIndex: 122,
+    // borderRadius: 50, // half of width and height
+  },
   bellNomber: {
     // backgroundColor: "white",
 

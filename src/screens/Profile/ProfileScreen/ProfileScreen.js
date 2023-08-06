@@ -95,7 +95,7 @@ function ProfileScreen(props) {
           collection(db, "events"),
           orderBy("createdAt", "desc"),
           where("emailPerfil", "==", props.email),
-          limit(50) // Add the desired limit value here
+          limit(20) // Add the desired limit value here
         );
       }
 
@@ -129,22 +129,11 @@ function ProfileScreen(props) {
     });
   };
 
-  const goToApprovalScreen = () => {
-    navigation.navigate(screen.profile.tab, {
-      screen: screen.profile.approvals,
-      // params: { Item: item },
-    });
-  };
-
   return (
     <>
       <KeyboardAwareScrollView
         style={{ backgroundColor: "white" }} // Add backgroundColor here
       >
-        <TouchableOpacity
-          style={styles.btnContainer4}
-          onPress={() => goToApprovalScreen()}
-        ></TouchableOpacity>
         <Text></Text>
         <View>
           <ConnectedInfoUser bellQuantity={props?.approvalList?.length} />
