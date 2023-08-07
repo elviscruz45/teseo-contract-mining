@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 
 export const RecursosProgress = (props) => {
   const data = 70;
-  const { cantidad, titulo, unidad, porcentaje } = props;
+  const { cantidad, titulo, unidad, porcentaje, total } = props;
   // Example: 20% progress
   console.log(data);
 
@@ -22,42 +22,44 @@ export const RecursosProgress = (props) => {
     }
   };
 
-  const barWidth = `${porcentaje}%`; // Calculate the width as a percentage string
+  const barWidth = `${porcentaje * 100}%`; // Calculate the width as a percentage string
 
   return (
-    <View
-      style={{
-        // flexDirection: "row",
-        // alignItems: "center", // Align items vertically at the center
-
-        // height: 30,
-        // marginRight: 90,
-        paddingHorizontal: 15,
-      }}
-    >
-      <View
-      // style={{
-      //   flexDirection: "row",
-      //   height: 30,
-      //   marginRight: 90,
-      //   paddingHorizontal: 10,
-      // }}
+    <>
+      <Text
+        style={{
+          marginLeft: 15,
+          borderRadius: 5,
+          fontWeight: "700",
+        }}
       >
-        <Text>
-          {titulo}: {cantidad} {unidad}
-        </Text>
-      </View>
-
+        Area: {titulo}
+      </Text>
       <View
         style={{
-          backgroundColor: getColor(porcentaje),
-          width: barWidth,
-          height: 10,
-          borderRadius: 5,
-          // alignSelf: "flex-start", // Align the progress bar to the left
+          paddingHorizontal: 15,
         }}
-      />
-      <Text></Text>
-    </View>
+      >
+        <View>
+          <Text>
+            Disponible: {cantidad} {unidad}
+          </Text>
+          <Text>
+            Total: {total} {unidad}
+          </Text>
+        </View>
+
+        <View
+          style={{
+            backgroundColor: getColor(porcentaje * 100),
+            width: barWidth,
+            height: 10,
+            borderRadius: 5,
+            // alignSelf: "flex-start", // Align the progress bar to the left
+          }}
+        />
+        <Text></Text>
+      </View>
+    </>
   );
 };

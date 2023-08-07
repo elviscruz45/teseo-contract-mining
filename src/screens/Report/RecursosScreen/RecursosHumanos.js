@@ -17,7 +17,7 @@ import { db } from "../../../utils";
 export const RecursosHumanos = (props) => {
   const [manpower, setManpower] = useState([]);
   const [company, setCompany] = useState("prodise");
-
+  console.log(manpower);
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
     // console.log("useeffectHomeScreen");
@@ -51,6 +51,7 @@ export const RecursosHumanos = (props) => {
       }
     };
   }, []);
+  console.log("hoaa", manpower?.Reparacion / manpower?.TotalReparacion);
 
   return (
     <>
@@ -70,25 +71,29 @@ export const RecursosHumanos = (props) => {
 
       <RecursosProgress
         cantidad={manpower?.Reparacion}
+        total={manpower?.TotalReparacion}
         porcentaje={manpower?.Reparacion / manpower?.TotalReparacion}
         titulo={"Reparacion"}
         unidad={"tecnicos"}
       />
       <RecursosProgress
-        cantidad={manpower?.Reparacion}
-        porcentaje={manpower?.Reparacion / manpower?.TotalReparacion}
+        cantidad={manpower?.Fabricacion}
+        total={manpower?.TotalFabricacion}
+        porcentaje={manpower?.Fabricacion / manpower?.TotalFabricacion}
         titulo={"Fabricacion"}
         unidad={"tecnicos"}
       />
       <RecursosProgress
-        cantidad={manpower?.Reparacion}
-        porcentaje={manpower?.Reparacion / manpower?.TotalReparacion}
+        cantidad={manpower?.Ingenieria}
+        total={manpower?.TotalIngenieria}
+        porcentaje={manpower?.Ingenieria / manpower?.TotalIngenieria}
         titulo={"Ingenieria"}
         unidad={"tecnicos"}
       />
       <RecursosProgress
-        cantidad={manpower?.Reparacion}
-        porcentaje={manpower?.Reparacion / manpower?.TotalReparacion}
+        cantidad={manpower?.Instalacion}
+        total={manpower?.TotalInstalacion}
+        porcentaje={manpower?.Instalacion / manpower?.TotalInstalacion}
         titulo={"Instalacion"}
         unidad={"tecnicos"}
       />
@@ -100,7 +105,7 @@ export const RecursosHumanos = (props) => {
           fontSize: 12,
         }}
       >
-        Ultima Actualizacion: 21 Octubre 2023 {manpower?.formattedDate}
+        Ultima Actualizacion: {manpower?.fechaPostFormato}
       </Text>
     </>
   );

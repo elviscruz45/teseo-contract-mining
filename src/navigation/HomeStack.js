@@ -17,6 +17,7 @@ import { update_firebaseProfile } from "../actions/profile";
 import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
 import { update_approvalList } from "../actions/home";
 import { db } from "../utils";
+import { resetPostPerPageHome } from "../actions/home";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
@@ -43,11 +44,13 @@ function HomeStack(props) {
       querySnapshot.forEach((doc) => {
         post_array.push(doc.data());
       });
-      console.log("100.homestack02");
+      console.log("100.homestack01");
 
       props.saveActualAITServicesFirebaseGlobalState(post_array);
+      props.resetPostPerPageHome(5);
       setEmail(email);
     }
+
     fetchList();
   }, []);
 
@@ -68,7 +71,7 @@ function HomeStack(props) {
         querySnapshot.forEach((doc) => {
           post_array.push(doc.data());
         });
-        console.log("100.homestack01");
+        console.log("100.homestack02");
         props.update_approvalList(post_array);
       }
 
@@ -151,5 +154,6 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   update_firebaseProfile,
   saveActualAITServicesFirebaseGlobalState,
   update_approvalList,
+  resetPostPerPageHome,
   // saveTotalEventServiceAITList,
 })(HomeStack);

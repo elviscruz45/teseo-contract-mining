@@ -30,7 +30,6 @@ function HomeScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   console.log("1HomeScreen");
-
   console.log(props.postPerPage);
 
   // props.resetPostPerPageHome(5); // PROVING RERENDERING-------------
@@ -65,6 +64,7 @@ function HomeScreen(props) {
 
     return () => {
       // Cleanup function to unsubscribe from the previous listener
+
       if (unsubscribe) {
         unsubscribe();
       }

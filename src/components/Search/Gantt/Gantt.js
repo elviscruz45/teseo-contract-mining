@@ -11,7 +11,6 @@ import { styles } from "./Gantt.styles";
 
 export const GanttHistorial = (props) => {
   const { datas, comentPost } = props;
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -44,6 +43,13 @@ export const GanttHistorial = (props) => {
           const day = date.getDate();
           const month = getAbbreviatedMonthName(date.getMonth());
           const formattedDate = `${day} ${month}`;
+
+          //get the company name from the userEmail
+          const regex = /@([a-z]+)\.com/i;
+          const matches = item.emailPerfil.match(regex);
+          console.log(item.emailPerfil);
+          console.log(matches[1]);
+
           return (
             <>
               <Text></Text>
@@ -62,11 +68,19 @@ export const GanttHistorial = (props) => {
                 </View>
               </View>
               <View style={[styles.circle]}>
-                <ImageExpo
-                  source={item.icon}
-                  style={{ width: 20, height: 20 }}
-                  cachePolicy={"memory-disk"}
-                />
+                {matches[1] === "fmi" ? (
+                  <ImageExpo
+                    source={require("../../../../assets/smcv2.jpeg")}
+                    style={{ width: 20, height: 20 }}
+                    cachePolicy={"memory-disk"}
+                  />
+                ) : (
+                  <ImageExpo
+                    source={item.icon}
+                    style={{ width: 20, height: 20 }}
+                    cachePolicy={"memory-disk"}
+                  />
+                )}
               </View>
               <View style={styles.details}>
                 <TouchableOpacity onPress={() => comentPost(item)}>

@@ -179,49 +179,42 @@ export const getExcelPerfil = async (emailProfile) => {
 export const getExcelReportData = async () => {
   const querySnapshot = await getDocs(collection(db, "ServiciosAIT"));
   const post_array = [];
+
   querySnapshot.forEach((doc) => {
     const table = {
       //Datos principales del servicio
-      Equipo_Tag: doc.data().NombreServicio,
-      Equipo_Nombre: doc.data().NumeroAIT,
-      Titulo_Trabajo: doc.data().TipoServicio,
-      Equipo_Trabajo: doc.data().companyName,
-      Equipo_Trabajo: doc.data().photoServiceURL,
-      Nombre_Perfil: doc.data().fechaPostFormato,
-      Nombre_Perfil: doc.data().LastEventPosted,
-      Descripcion_Trabajo: doc.data().NumeroCotizacion,
-      Nombre_Componente: doc.data().FechaFin,
-
+      NumeroServicio: doc.data().NumeroAIT,
+      NombreServicio: doc.data().NombreServicio,
+      TipoServicio: doc.data().TipoServicio,
+      companyName: doc.data().companyName,
+      fechaPostFormato: doc.data().fechaPostFormato,
+      // LastEventPosted: doc.data().LastEventPosted,
+      NumeroCotizacion: doc.data().NumeroCotizacion,
+      // FechaFin: doc.data().FechaFin,
       //Usuario
-      Nombre_Perfil: doc.data().emailPerfil,
-      Email_Perfil: doc.data().nombrePerfil,
-      //Responsables ,interacciones
-      Etapa_Evento: doc.data().ResponsableEmpresaUsuario.join(" "),
-      Fecha_Formato: doc.data().ResponsableEmpresaContratista.join(" "),
-      ClaseEquipo: doc.data().AreaServicio,
-
+      emailPerfil: doc.data().emailPerfil,
+      nombreAutor: doc.data().nombrePerfil,
+      // Responsables ,interacciones
+      ResponsableEmpresaUsuario: doc.data().ResponsableEmpresaUsuario,
+      ResponsableEmpresaContratista: doc.data().ResponsableEmpresaContratista,
+      AreaServicio: doc.data().AreaServicio,
       //Monto y HH
-      Fecha_ISO: doc.data().HorasHombre,
-      Comentarios: doc.data().Moneda,
-      Recursos_Trabajo: doc.data().Monto,
-
+      HorasHombre: doc.data().HorasHombre,
+      Moneda: doc.data().Moneda,
+      Monto: doc.data().Monto,
       //Fechas
-      Email_Perfil: doc.data().fechaPostISO,
-      Equipo_Trabajo: doc.data().createdAt,
-
+      fechaPostISO: doc.data().fechaPostISO,
+      // createdAt: doc.data().createdAt,
       //Avances
-
-      Nombre_Perfil: doc.data().AvanceEjecucion,
-      Email_Perfil: doc.data().AvanceAdministrativo,
-      Equipo_Trabajo: doc.data().AvanceEjecucionTexto,
-      Nombre_Perfil: doc.data().AvanceAdministrativoTexto,
-
+      AvanceEjecucion: doc.data().AvanceEjecucion,
+      AvanceAdministrativo: doc.data().AvanceAdministrativo,
+      AvanceEjecucionTexto: doc.data().AvanceEjecucionTexto,
+      AvanceAdministrativoTexto: doc.data().AvanceAdministrativoTexto,
       //Modificaciones
-      Email_Perfil: doc.data().NuevaFechaEstimada,
-      Email_Perfil: doc.data().HHModificado,
-      Equipo_Trabajo: doc.data().MontoModificado,
+      // NuevaFechaEstimada: doc.data().NuevaFechaEstimada,
+      HHModificado: doc.data().HHModificado,
+      MontoModificado: doc.data().MontoModificado,
     };
-
     post_array.push(table);
   });
 

@@ -261,8 +261,6 @@ function ItemScreenNotRedux(props) {
             alignItems: "center",
             backgroundColor: "white",
             justifyContent: "space-between",
-
-            // paddingHorizontal: 150,
           }}
         >
           <TouchableOpacity
@@ -304,11 +302,13 @@ function ItemScreenNotRedux(props) {
           </TouchableOpacity>
         </View>
         <Text></Text>
+        <Text></Text>
+        <Text></Text>
 
-        <DateScreen
+        {/* <DateScreen
           filterButton={filter}
           quitFilterButton={() => quitfilter()}
-        />
+        /> */}
         <GanttHistorial datas={post} comentPost={comentPost} />
       </ScrollView>
     </>
