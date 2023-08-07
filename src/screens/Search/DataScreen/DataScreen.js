@@ -54,6 +54,7 @@ export function PolinesScreen(props) {
         const sortedFirestore = lista.sort(
           (a, b) => new Date(b.createdData) - new Date(a.createdData)
         );
+        console.log("910.DataScreen");
 
         setPost(sortedFirestore);
       });

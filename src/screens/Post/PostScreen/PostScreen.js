@@ -37,7 +37,6 @@ function PostScreen(props) {
 
   //retrieving serviceAIT list data from firebase
   useEffect(() => {
-    console.log("4useeffectAIT");
     let unsubscribe; // Variable to store the unsubscribe function
 
     //Order by LastEventPosted to send it a global state

@@ -10,6 +10,7 @@ import {
   arrayUnion,
   arrayRemove,
   limit,
+  where,
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../../utils";

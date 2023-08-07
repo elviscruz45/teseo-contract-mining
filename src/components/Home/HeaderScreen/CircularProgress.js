@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory-native";
 import Svg from "react-native-svg";
 import { View } from "react-native";

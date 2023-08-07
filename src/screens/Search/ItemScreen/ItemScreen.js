@@ -172,7 +172,7 @@ function ItemScreenNotRedux(props) {
           // lista.push(doc.data());
           lista.push(dataschema);
         });
-        console.log("getDocs Item with date");
+        console.log("120.getDocsItemSCREEN Item with date");
 
         setPost(lista);
         setIsLoading(false);

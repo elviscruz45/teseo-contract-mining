@@ -43,6 +43,7 @@ function HomeStack(props) {
       querySnapshot.forEach((doc) => {
         post_array.push(doc.data());
       });
+      console.log("100.homestack02");
 
       props.saveActualAITServicesFirebaseGlobalState(post_array);
       setEmail(email);
@@ -62,16 +63,20 @@ function HomeStack(props) {
             orderBy("date", "desc")
           )
         );
+
         const post_array = [];
         querySnapshot.forEach((doc) => {
           post_array.push(doc.data());
         });
+        console.log("100.homestack01");
         props.update_approvalList(post_array);
       }
 
       fetchDataApprovalList();
     }
-  }, [props.ActualPostFirebase, props.approvalList, email]);
+  }, [email]);
+
+  // [props.ActualPostFirebase, props.approvalList, email]);
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {

@@ -61,26 +61,6 @@ function ApprovalScreenBare(props) {
     return formattedDate;
   };
 
-  // useEffect(() => {
-  //   //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
-  //   async function fetchDataServicesList() {
-  //     const querySnapshot = await getDocs(
-  //       query(
-  //         collection(db, "approvals"),
-  //         where("ApprovalRequestSentTo", "array-contains", props.email),
-  //         orderBy("date", "desc")
-  //       )
-  //     );
-  //     const post_array = [];
-  //     querySnapshot.forEach((doc) => {
-  //       post_array.push(doc.data());
-  //     });
-  //     setApproval(post_array);
-  //     props.update_approvalQuantity(post_array.length);
-  //   }
-  //   fetchDataServicesList();
-  // }, [props.ActualPostFirebase, props.approvalList]);
-
   goToApprove = async (item) => {
     // retrieve the actual service to use the data to go to approve what is required
     const serviceQuery = await getDocs(

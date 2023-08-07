@@ -1,5 +1,5 @@
 import { SelectList } from "react-native-dropdown-select-list";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { etapaLists } from "../../../../utils/etapaList";
 
 export const SelectExample = (props) => {

@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { Icon, Avatar, Input, Button } from "@rneui/themed";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
 import { styles } from "./AITScreen.styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";

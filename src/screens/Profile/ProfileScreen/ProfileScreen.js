@@ -95,7 +95,7 @@ function ProfileScreen(props) {
           collection(db, "events"),
           orderBy("createdAt", "desc"),
           where("emailPerfil", "==", props.email),
-          limit(20) // Add the desired limit value here
+          limit(10) // Add the desired limit value here
         );
       }
 
@@ -105,7 +105,8 @@ function ProfileScreen(props) {
         querySnapshot.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("getDocs Item with date profile");
+        // console.log("1.---GetDocsProfileScreen Item with date profile");
+        console.log("1.---longitudListaProfileScreen", lista.length);
 
         setPost(lista);
       } catch (error) {

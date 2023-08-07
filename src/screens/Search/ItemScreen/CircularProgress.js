@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory-native";
 import { Avatar, Icon } from "@rneui/themed";
 import Svg from "react-native-svg";

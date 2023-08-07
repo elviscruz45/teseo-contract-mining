@@ -36,7 +36,7 @@ import { Image as ImageExpo } from "expo-image";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { saveApprovalList } from "../../../actions/search";
+import { update_approvalList } from "../../../actions/home";
 
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
@@ -93,7 +93,8 @@ function DocstoApproveScreenBare(props) {
         });
         console.log("55.OnSnapshopDocsApprovalScreen");
         setApproval(lista);
-        props.saveApprovalList(lista);
+        // props.saveApprovalList(lista);
+        props.update_approvalList(lista);
       });
     }
 
@@ -270,5 +271,5 @@ const mapStateToProps = (reducers) => {
 export const DocstoApproveScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
   update_firebaseProfile,
-  saveApprovalList,
+  update_approvalList,
 })(DocstoApproveScreenBare);

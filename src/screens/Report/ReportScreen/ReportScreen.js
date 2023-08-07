@@ -33,7 +33,7 @@ const ReportScreenNoRedux = (props) => {
   const [comprometido, setComprometido] = useState(false);
 
   useEffect(() => {
-    console.log("5.USEEFFECTReportScreen");
+    console.log("15.USEEFFECTReportScreen");
     setData(props.servicesData);
   }, [props.servicesData]);
 
