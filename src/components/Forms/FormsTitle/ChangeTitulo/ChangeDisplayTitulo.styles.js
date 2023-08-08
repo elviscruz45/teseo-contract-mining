@@ -7,9 +7,10 @@ export const styles = StyleSheet.create({
   },
   btnContainer: {
     width: "95%",
+    // height: "10%",
     marginTop: 10,
   },
   btn: {
-    backgroundColor: "#FA4A0C",
+    backgroundColor: "#2A3B76",
   },
 });

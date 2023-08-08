@@ -37,7 +37,7 @@ import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { update_approvalList } from "../../../actions/home";
-
+import { saveApprovalListnew } from "../../../actions/search";
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
 
@@ -91,10 +91,8 @@ function DocstoApproveScreenBare(props) {
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
-        console.log("55.OnSnapshopDocsApprovalScreen");
+        console.log("55111.OnSnapshopDocsApprovalScreen");
         setApproval(lista);
-        // props.saveApprovalList(lista);
-        props.update_approvalList(lista);
       });
     }
 
@@ -130,6 +128,7 @@ function DocstoApproveScreenBare(props) {
                 ApprovalPerformed: arrayUnion(emailUser),
               });
             }
+            //aquie es
           },
         },
       ],
@@ -213,6 +212,12 @@ function DocstoApproveScreenBare(props) {
                   <View style={styles.article}>
                     <View style={[styles.row, styles.center]}>
                       <Text style={styles.info}>{"Solicitud:"}</Text>
+                      <Text style={styles.info2}>
+                        {item.solicitudComentario}
+                      </Text>
+                    </View>
+                    <View style={[styles.row, styles.center]}>
+                      <Text style={styles.info}>{"Tipo:        "}</Text>
                       <Text style={styles.info2}>{item.solicitud}</Text>
                     </View>
 
@@ -272,4 +277,5 @@ export const DocstoApproveScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
   update_firebaseProfile,
   update_approvalList,
+  saveApprovalListnew,
 })(DocstoApproveScreenBare);

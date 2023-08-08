@@ -10,6 +10,6 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   btn: {
-    backgroundColor: "#FA4A0C",
+    backgroundColor: "#2A3B76",
   },
 });

@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   timeContainerStyle: { minWidth: 52, marginTop: -5, marginRight: 0 },
   timeStyle: {
     textAlign: "right",
-    backgroundColor: "#ff9797",
+    backgroundColor: "#2A3B76",
     color: "white",
     padding: 5,
     borderRadius: 13,
@@ -128,7 +128,7 @@ export const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: "#aaa",
+    // backgroundColor: "red",
     marginTop: 10,
     marginBottom: 10,
   },

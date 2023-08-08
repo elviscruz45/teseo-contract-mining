@@ -89,9 +89,10 @@ function InformationScreen(props) {
             ) {
               const regex = /(?<=\()[^)]*(?=\))/g;
               const matches = newData.aprobacion.match(regex);
-
               const docData = {
                 solicitud: newData.etapa,
+                solicitudComentario: newData.comentarios,
+                etapa: newData.etapa,
                 NombreServicio: props.actualServiceAIT.NombreServicio,
                 IdAITService: props.actualServiceAIT.idServiciosAIT,
                 fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
@@ -126,6 +127,8 @@ function InformationScreen(props) {
 
           const docData = {
             solicitud: newData.etapa,
+            solicitudComentario: newData.comentarios,
+            etapa: newData.etapa,
             NombreServicio: props.actualServiceAIT.NombreServicio,
             IdAITService: props.actualServiceAIT.idServiciosAIT,
             fileName:

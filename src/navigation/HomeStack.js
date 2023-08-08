@@ -18,6 +18,7 @@ import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
 import { update_approvalList } from "../actions/home";
 import { db } from "../utils";
 import { resetPostPerPageHome } from "../actions/home";
+import { saveApprovalListnew } from "../actions/search";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
@@ -71,15 +72,17 @@ function HomeStack(props) {
         querySnapshot.forEach((doc) => {
           post_array.push(doc.data());
         });
+        const filteredArray = post_array.filter(
+          (element) => !element.ApprovalPerformed?.includes(email)
+        );
+
         console.log("100.homestack02");
-        props.update_approvalList(post_array);
+        props.saveApprovalListnew(filteredArray);
       }
 
       fetchDataApprovalList();
     }
   }, [email]);
-
-  // [props.ActualPostFirebase, props.approvalList, email]);
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {
@@ -155,5 +158,6 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   saveActualAITServicesFirebaseGlobalState,
   update_approvalList,
   resetPostPerPageHome,
+  saveApprovalListnew,
   // saveTotalEventServiceAITList,
 })(HomeStack);

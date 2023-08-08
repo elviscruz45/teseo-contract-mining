@@ -152,8 +152,8 @@ function ItemScreenNotRedux(props) {
         q = query(
           collection(db, "events"),
           orderBy("createdAt", "desc"),
-          where("AITNombreServicio", "==", Item.NombreServicio),
-          limit(50) // Add the desired limit value here
+          where("AITNombreServicio", "==", Item.NombreServicio)
+          // limit(50) // Add the desired limit value here
         );
       }
       try {
@@ -303,12 +303,18 @@ function ItemScreenNotRedux(props) {
         </View>
         <Text></Text>
         <Text></Text>
-        <Text></Text>
 
-        {/* <DateScreen
-          filterButton={filter}
-          quitFilterButton={() => quitfilter()}
-        /> */}
+        <Text
+          style={{
+            marginLeft: 15,
+            borderRadius: 5,
+            fontWeight: "700",
+            alignSelf: "center",
+          }}
+        >
+          Historial de Eventos
+        </Text>
+
         <GanttHistorial datas={post} comentPost={comentPost} />
       </ScrollView>
     </>

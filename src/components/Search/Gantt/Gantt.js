@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Image as ImageExpo } from "expo-image";
 import { styles } from "./Gantt.styles";
+import { Icon } from "@rneui/themed";
 
 export const GanttHistorial = (props) => {
   const { datas, comentPost } = props;
@@ -47,8 +48,6 @@ export const GanttHistorial = (props) => {
           //get the company name from the userEmail
           const regex = /@([a-z]+)\.com/i;
           const matches = item.emailPerfil.match(regex);
-          console.log(item.emailPerfil);
-          console.log(matches[1]);
 
           return (
             <>
@@ -112,9 +111,13 @@ export const GanttHistorial = (props) => {
                   </View>
                   <View style={styles.rowavanceNombre}>
                     <Text style={styles.avanceNombre}> Autor: </Text>
-
                     <Text style={styles.detail}> {item.nombrePerfil}</Text>
                   </View>
+                  {item?.pdfFile && (
+                    <View style={styles.rowavanceNombre}>
+                      <Icon type="material-community" name="paperclip" />
+                    </View>
+                  )}
                 </TouchableOpacity>
               </View>
             </>

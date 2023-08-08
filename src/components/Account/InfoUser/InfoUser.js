@@ -124,8 +124,10 @@ function InfoUser(props) {
           />
         </TouchableOpacity>
 
-        {props?.approvalList && (
-          <Text style={styles.bellNomber}>{props?.bellQuantity}</Text>
+        {props?.approvalListNew && (
+          <Text style={styles.bellNomber}>
+            {props?.approvalListNew?.length}
+          </Text>
         )}
       </View>
       <Modal show={showModal} close={onCloseOpenModal}>
@@ -146,6 +148,7 @@ const mapStateToProps = (reducers) => {
 
     savePhotoUri: reducers.post.savePhotoUri,
     actualEquipment: reducers.post.actualEquipment,
+    approvalListNew: reducers.search.approvalListNew,
   };
 };
 

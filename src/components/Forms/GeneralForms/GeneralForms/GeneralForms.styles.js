@@ -11,9 +11,9 @@ export const styles = StyleSheet.create({
     margin: 0,
   },
   subtitleForm: {
-    color: "blue",
+    color: "#2A3B76",
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "700",
     marginLeft: 9,
   },
   iconMinMax: {

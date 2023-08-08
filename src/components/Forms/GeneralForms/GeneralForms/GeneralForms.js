@@ -223,7 +223,7 @@ export function GeneralForms(props) {
 
         {aditional && (
           <>
-            <Text style={styles.subtitleForm}>Modificaciones (*):</Text>
+            <Text style={styles.subtitleForm}>Modificaciones (*)</Text>
 
             <Input
               value={monto}

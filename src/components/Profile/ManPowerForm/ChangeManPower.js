@@ -62,7 +62,7 @@ function ChangeManPowerBare(props) {
         const docRef = doc(collection(db, "manpower"), newData.uid);
         await setDoc(docRef, newData);
         onClose();
-        alert("Se ha subido correctamente");
+        alert("La disponibilidad de trabajadores se ha subido correctamente");
       } catch (error) {
         Toast.show({
           type: "error",
@@ -77,100 +77,60 @@ function ChangeManPowerBare(props) {
     <>
       <KeyboardAwareScrollView>
         <Input
-          placeholder="Total Tecnicos de Reparacion"
+          placeholder="Total Reparacion"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("TotalReparacion", text)}
           // errorMessage={formik.errors.displayNameform}
         />
         <Input
-          placeholder="Tecnicos de Reparacion"
+          placeholder="Disponible Reparacion"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("Reparacion", text)}
           // errorMessage={formik.errors.cargo}
         />
         <Input
-          placeholder="Total Tecnicos de Fabricacion"
+          placeholder="Total Fabricacion"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) =>
             formik.setFieldValue("TotalFabricacion", text)
           }
           // errorMessage={formik.errors.displayNameform}
         />
         <Input
-          placeholder="Tecnicos de Fabricacion"
+          placeholder="Disponible Fabricacion"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("Fabricacion", text)}
           // errorMessage={formik.errors.cargo}
         />
         <Input
-          placeholder="Total Tecnicos de Ingenieria"
+          placeholder="Total Ingenieria"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("TotalIngenieria", text)}
           // errorMessage={formik.errors.displayNameform}
         />
         <Input
-          placeholder="Tecnicos de Ingenieria"
+          placeholder="Disponible Ingenieria"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("Ingenieria", text)}
           // errorMessage={formik.errors.cargo}
         />
         <Input
-          placeholder="Total Tecnicos de Maquinado"
+          placeholder="Total Maquinado"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("TotalMaquinado", text)}
           // errorMessage={formik.errors.displayNameform}
         />
         <Input
-          placeholder="Tecnicos de Maquinado"
+          placeholder="Disponible Maquinado"
           keyboardType="numeric"
           multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
           onChangeText={(text) => formik.setFieldValue("Maquinado", text)}
           // errorMessage={formik.errors.cargo}
         />

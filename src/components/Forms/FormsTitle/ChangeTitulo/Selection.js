@@ -36,7 +36,7 @@ const SelectExampleBare = (props) => {
       setSelected={(val) => setSelected(val)}
       data={serviceType}
       save="value"
-      maxHeight={300}
+      maxHeight={150}
       onSelect={() => saveProperty(selected)}
     />
   );

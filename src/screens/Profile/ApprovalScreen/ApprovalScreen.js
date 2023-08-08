@@ -15,6 +15,7 @@ import {
   query,
   where,
   orderBy,
+  onSnapshot,
   docs,
   getDocs,
   limit,
@@ -27,13 +28,47 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { areaLists } from "../../../utils/areaList";
 import { update_approvalQuantity } from "../../../actions/profile";
+import { saveApprovalListnew } from "../../../actions/search";
 
 function ApprovalScreenBare(props) {
   const navigation = useNavigation();
-  // const [approval, setApproval] = useState();
+  const [approvalList, setApprovalList] = useState();
+
+  useEffect(() => {
+    let unsubscribe;
+    async function fetchData() {
+      let queryRef = query(
+        collection(db, "approvals"),
+        orderBy("date", "desc"),
+        where("ApprovalRequestSentTo", "array-contains", props.email)
+      );
+
+      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+        const lista = [];
+        ItemFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
+        console.log("800.OnSnapshopApprovalLISTPROFILEScreen");
+
+        const filteredArray = lista.filter(
+          (element) => !element.ApprovalPerformed?.includes(props.email)
+        );
+
+        setApprovalList(filteredArray);
+        props.saveApprovalListnew(filteredArray);
+      });
+    }
+
+    fetchData();
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   //create the algoritm to have the date format of the post
-
   const formatDate = (dateInput) => {
     const { seconds, nanoseconds } = dateInput;
     const milliseconds = seconds * 1000 + nanoseconds / 1000000;
@@ -77,6 +112,8 @@ function ApprovalScreenBare(props) {
     });
   };
 
+  // <ConnectedInfoUser bellQuantity={props?.approvalList?.length} />
+
   return (
     <KeyboardAwareScrollView
       style={{ backgroundColor: "white" }} // Add backgroundColor here
@@ -86,7 +123,7 @@ function ApprovalScreenBare(props) {
       {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}
 
       <FlatList
-        data={props.approvalList}
+        data={approvalList}
         scrollEnabled={false}
         renderItem={({ item, index }) => {
           //the algoritm to retrieve the image source to render the icon
@@ -147,4 +184,5 @@ export const ApprovalScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
   update_firebaseProfile,
   update_approvalQuantity,
+  saveApprovalListnew,
 })(ApprovalScreenBare);

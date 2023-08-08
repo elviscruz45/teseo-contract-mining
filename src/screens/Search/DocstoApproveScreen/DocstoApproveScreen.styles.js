@@ -96,9 +96,10 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   image5: {
-    width: 25,
+    width: 40,
+    height: 40,
     alignSelf: "center",
-    height: 25,
+
     borderRadius: 10,
     marginTop: 10,
   },

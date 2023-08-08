@@ -42,6 +42,8 @@ function ProfileScreen(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
+  const [quantityBell, setQuantityBell] = useState(0);
+
   const navigation = useNavigation();
 
   const onReload = () => setReload((prevState) => !prevState);
@@ -137,7 +139,8 @@ function ProfileScreen(props) {
       >
         <Text></Text>
         <View>
-          <ConnectedInfoUser bellQuantity={props?.approvalList?.length} />
+          {/* <ConnectedInfoUser bellQuantity={props?.approvalList?.length} /> */}
+          <ConnectedInfoUser />
           <View
             style={{
               flexDirection: "row",
@@ -180,7 +183,7 @@ function ProfileScreen(props) {
                       style={styles.image2}
                       cachePolicy={"memory-disk"}
                     />
-                    <View>
+                    <View style={{ marginLeft: 5 }}>
                       <Text style={styles.name2}>{item.AITNombreServicio}</Text>
                       <Text style={styles.name2}>
                         {"Evento: "}

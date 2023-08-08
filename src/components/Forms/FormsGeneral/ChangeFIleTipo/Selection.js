@@ -16,8 +16,9 @@ export const SelectExample = (props) => {
       setSelected={(val) => setSelected(val)}
       data={TipoFileLists}
       save="value"
-      maxHeight={200}
+      maxHeight={150}
       onSelect={() => saveProperty(selected)}
+      search={"false"}
     />
   );
 };

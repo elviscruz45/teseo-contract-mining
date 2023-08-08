@@ -17,7 +17,7 @@ export const SelectExample = (props) => {
       setSelected={(val) => setSelected(val)}
       data={monedaList}
       save="value"
-      maxHeight={200}
+      maxHeight={140}
       onSelect={() => saveProperty(selected)}
     />
   );

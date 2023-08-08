@@ -19,6 +19,13 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    // alignSelf: "flex-end",
+    // backgroundColor: "red",
+  },
+  row5: {
+    flexDirection: "row",
+    alignSelf: "flex-end",
+    // backgroundColor: "red",
   },
   center: {
     // alignItems: "center",
@@ -107,6 +114,8 @@ export const styles = StyleSheet.create({
     // color: "#DB4545",
   },
   commentContainer: {
+    // backgroundColor: "red",
+    zIndex: 100,
     flexDirection: "row",
     alignItems: "center",
     // paddingHorizontal: 5,
@@ -115,8 +124,11 @@ export const styles = StyleSheet.create({
     // borderTopWidth: 1,
     // borderTopColor: "lightgray",
     marginBottom: 0,
-    borderBottomWidth: 5,
-    borderBottomColor: "#f0f8ff",
+    // borderBottomWidth: 5,
+    // borderBottomColor: "#f0f8ff",
+    borderColor: "#f0f8ff",
+    // borderTopColor: "red",
+    borderWidth: 10,
   },
   input: {
     flex: 1,

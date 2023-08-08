@@ -151,7 +151,7 @@ function HomeScreen(props) {
     if (longText.length > maxLength) {
       shortText = `${longText.substring(0, maxLength)}...`;
     }
-    return <Text>{shortText}</Text>;
+    return <Text selectable={true}>{shortText}</Text>;
   };
 
   if (isLoading) {
@@ -183,6 +183,7 @@ function HomeScreen(props) {
                   <TouchableOpacity
                     // onPress={() => selectAsset(item.equipoPostDatos)}
                     style={[styles.row, styles.center]}
+                    activeOpacity={1}
                   >
                     {item.AITphotoServiceURL ? (
                       <ImageExpo

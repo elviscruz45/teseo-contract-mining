@@ -128,7 +128,10 @@ function CommentScreen(props) {
 
         <View>
           <Text style={styles.textAreaTitle}>{Item?.titulo}</Text>
-          <Text style={styles.textAreaComment}>{Item?.comentarios}</Text>
+          <Text></Text>
+          <Text style={styles.textAreaComment} selectable={true}>
+            {Item?.comentarios}
+          </Text>
           <Text></Text>
 
           <Text style={styles.textAreaTitleplus}>Estado General : </Text>
@@ -139,7 +142,7 @@ function CommentScreen(props) {
             {"%"}
           </Text>
 
-          <Text style={styles.textAreaCommentplus}>
+          <Text style={styles.textAreaCommentplus} selectable={true}>
             {"Codigo Servicio:"}
             {Item?.AITNumero}
           </Text>
@@ -151,11 +154,7 @@ function CommentScreen(props) {
         </View>
         <Text></Text>
 
-        <View style={[styles.row, styles.center]}>
-          <Text style={{ margin: 5, color: "#5B5B5B" }}>
-            {"Fecha:  "}
-            {Item?.fechaPostFormato}
-          </Text>
+        <View style={[styles.row5, styles.center]}>
           {Item?.pdfPrincipal && (
             <TouchableOpacity
               onPress={() => uploadFile(Item.pdfPrincipal)}
@@ -170,6 +169,14 @@ function CommentScreen(props) {
             </TouchableOpacity>
           )}
         </View>
+
+        <View style={[styles.row5, styles.center]}>
+          <Text style={{ margin: 5, color: "#5B5B5B" }}>
+            {"Fecha:  "}
+            {Item?.fechaPostFormato}
+          </Text>
+        </View>
+        <Text></Text>
         <View style={styles.commentContainer}>
           <ImageExpo
             source={{ uri: props.user_photo }}
@@ -205,6 +212,7 @@ function CommentScreen(props) {
 
             return (
               <View>
+                <Text></Text>
                 <View style={[styles.row, styles.center]}>
                   <View style={[styles.row, styles.center]}>
                     <ImageExpo

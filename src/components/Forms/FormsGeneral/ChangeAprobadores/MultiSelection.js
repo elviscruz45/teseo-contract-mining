@@ -50,6 +50,7 @@ export const MultiSelectExample = (props) => {
       <MultipleSelectList
         setSelected={(val) => setSelected(val)}
         data={list}
+        maxHeight={400}
         save="value"
         onSelect={() => saveProperty(selected)}
         label="Categories"

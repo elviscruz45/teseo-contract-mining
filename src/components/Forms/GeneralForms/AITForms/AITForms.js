@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { styles } from "./AITForms.styles";
 import { Input } from "@rneui/themed";
 import { Modal } from "../../../shared/Modal/Modal";
-import { ChangeDisplaynumeroAIT } from "../../FormsAIT/ChangeNumeroAIT/ChangeDisplayNumeroAIT";
 import { ChangeDisplayArea } from "../../FormsAIT/ChangeArea/ChangeDisplayArea";
 import { ChangeDisplayTipoServicio } from "../../FormsAIT/ChangeTipoServicio/ChangeDisplayTipoServicio";
 import { ChangeDisplayAdminContracts } from "../../FormsAIT/ChangeContratos/ChangeDisplayContratos";
@@ -16,7 +15,6 @@ import { ChangeDisplayFechaFin } from "../../FormsAIT/ChangeFechaFin/ChangeDispl
 export function AITForms(props) {
   const { formik, setTituloserv, setAit, setTiposerv, setArea } = props;
   const [renderComponent, setRenderComponent] = useState(null);
-
   //state of displays
   const [numeroAIT, setnumeroAIT] = useState(null);
   const [areaservicio, setAreaservicio] = useState(null);
@@ -36,16 +34,6 @@ export function AITForms(props) {
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
   const selectComponent = (key) => {
-    if (key === "NumeroAIT") {
-      setRenderComponent(
-        <ChangeDisplaynumeroAIT
-          onClose={onCloseOpenModal}
-          formik={formik}
-          setnumeroAIT={setnumeroAIT}
-          setAit={setAit}
-        />
-      );
-    }
     if (key === "AreaServicio") {
       setRenderComponent(
         <ChangeDisplayArea
@@ -151,19 +139,8 @@ export function AITForms(props) {
           }}
           errorMessage={formik.errors.NumeroAIT}
         />
-        {/* <Input
-          value={numeroAIT}
-          placeholder="Numero AIT"
-          editable={false}
-          errorMessage={formik.errors.NumeroAIT}
-          rightIcon={{
-            type: "material-community",
-            name: "numeric",
-            // color: getColorIconMap(formik),
-            onPress: () => selectComponent("NumeroAIT"),
-          }}
-        /> */}
-        <Text style={styles.subtitleForm}>Detalles del Servicio:</Text>
+
+        <Text style={styles.subtitleForm}>Detalles del Servicio</Text>
 
         <Input
           value={areaservicio}
@@ -223,7 +200,7 @@ export function AITForms(props) {
             onPress: () => selectComponent("FechaFin"),
           }}
         />
-        <Text style={styles.subtitleForm}>Alcance del Servicio:</Text>
+        <Text style={styles.subtitleForm}>Alcance del Servicio</Text>
         <Input
           value={numerocotizacion}
           placeholder="Numero de Cotizacion"

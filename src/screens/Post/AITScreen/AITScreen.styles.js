@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
     right: 10,
   },
   addInformation: {
-    backgroundColor: "#8CBBF1",
+    backgroundColor: "#2A3B76",
     margin: 20,
   },
 });
