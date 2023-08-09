@@ -73,6 +73,7 @@ export const styles = StyleSheet.create({
     height: windowWidth * 1,
     width: windowWidth * 1,
     marginTop: 0,
+    borderWidth: 1,
   },
   container2: {
     flex: 1,

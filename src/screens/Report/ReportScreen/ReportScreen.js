@@ -55,7 +55,7 @@ const ReportScreenNoRedux = (props) => {
       style={{ backgroundColor: "white" }} // Add backgroundColor here
     >
       <Text></Text>
-      <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} />
+      {/* <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} /> */}
       <TouchableOpacity onPress={() => alert("lista de empresas")}>
         <Image
           source={require("../../../../assets/empresa.png")}
