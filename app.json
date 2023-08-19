@@ -5,7 +5,7 @@
     "description": "high perfomance for your industry",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/appTeseoLogol.png",
+    "icon": "./assets/icon1.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logoteseofinal2.png",

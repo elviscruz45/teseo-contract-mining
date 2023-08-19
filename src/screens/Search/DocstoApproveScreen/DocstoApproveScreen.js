@@ -105,6 +105,8 @@ function DocstoApproveScreenBare(props) {
     };
   }, []);
 
+  //Approval
+
   const docAprovals = async (emailUser, approvalPerformed, idApproval) => {
     const PostRef = doc(db, "approvals", idApproval);
 
@@ -136,6 +138,38 @@ function DocstoApproveScreenBare(props) {
     );
   };
 
+  //Rejection
+  const docRejection = async (emailUser, RejectionPerformed, idApproval) => {
+    const PostRef = doc(db, "approvals", idApproval);
+
+    Alert.alert(
+      "Desaprobacion",
+      "Estas Seguro de Desaprobar esta Solicitud?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Aceptar",
+          onPress: async () => {
+            if (RejectionPerformed?.includes(emailUser)) {
+              await updateDoc(PostRef, {
+                RejectionPerformed: arrayRemove(emailUser),
+              });
+            } else {
+              await updateDoc(PostRef, {
+                RejectionPerformed: arrayUnion(emailUser),
+              });
+            }
+            //aquie es
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
     // console.log("pdfHomescreen", uri);
@@ -153,22 +187,40 @@ function DocstoApproveScreenBare(props) {
 
   return (
     <KeyboardAwareScrollView>
-      <Text></Text>
-
       <FlatList
         data={approval}
+        style={{ backgroundColor: "white" }} // Add backgroundColor here
         scrollEnabled={false}
         renderItem={({ item, index }) => {
           const approvalRequestedLength = item.ApprovalRequestSentTo.length;
           const approvalPerformedLength = item.ApprovalPerformed.length;
           const approvalRequested = item.ApprovalRequestSentTo;
           const approvalPerformed = item.ApprovalPerformed;
+          const RejectionPerformed = item.RejectionPerformed;
           const emailUser = props.email;
-          const isIncluded = approvalPerformed.includes(emailUser);
+          const isIncludedapprovalRequested =
+            approvalRequested.includes(emailUser);
+
+          const isIncludedapprovalPerformed =
+            approvalPerformed.includes(emailUser);
+          const isIncludedRectionPerformed =
+            RejectionPerformed.includes(emailUser);
           const idApproval = item.idApproval;
+          console.log("approvalRequested:", approvalRequested);
+          console.log("approvalPerformed:", approvalPerformed);
+          console.log("emailUser:", emailUser);
+          console.log(
+            "isIncludedapprovalPerformed:",
+            isIncludedapprovalPerformed
+          );
 
           return (
-            <View>
+            <View
+              style={{
+                borderBottomWidth: 5,
+                borderBottomColor: "#f0f8ff",
+              }}
+            >
               <View>
                 <View style={styles.equipments2}>
                   <View style={styles.image2}>
@@ -183,31 +235,17 @@ function DocstoApproveScreenBare(props) {
                         cachePolicy={"memory-disk"}
                       />
                     </TouchableOpacity>
-
                     <ImageExpo
                       source={
                         approvalRequestedLength === approvalPerformedLength
                           ? require("../../../../assets/approvalGreen.png")
                           : approvalPerformedLength > 0
                           ? require("../../../../assets/approvalYellow.png")
-                          : require("../../../../assets/approvalRed.png")
+                          : require("../../../../assets/rejectedRed.png")
                       }
                       style={styles.image4}
                       cachePolicy={"memory-disk"}
                     />
-                    <TouchableOpacity
-                      onPress={() =>
-                        docAprovals(emailUser, approvalPerformed, idApproval)
-                      }
-                    >
-                      {!isIncluded && (
-                        <ImageExpo
-                          source={require("../../../../assets/sello.png")}
-                          style={styles.image5}
-                          cachePolicy={"memory-disk"}
-                        />
-                      )}
-                    </TouchableOpacity>
                   </View>
                   <View style={styles.article}>
                     <View style={[styles.row, styles.center]}>
@@ -245,13 +283,62 @@ function DocstoApproveScreenBare(props) {
                       </Text>
                     </View>
 
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Aprob:     "}</Text>
-                      <Text style={styles.info2}>
-                        {item.ApprovalPerformed.join(", ")}
-                      </Text>
-                    </View>
+                    {approvalPerformed.length !== 0 && (
+                      <View style={[styles.row, styles.center]}>
+                        <Text style={styles.info}>{"Aprob:     "}</Text>
+                        <Text style={styles.info2}>
+                          {item.ApprovalPerformed.join(", ")}
+                        </Text>
+                      </View>
+                    )}
 
+                    {RejectionPerformed.length !== 0 && (
+                      <View style={[styles.row, styles.center]}>
+                        <Text style={styles.info5}>{"Desap:     "}</Text>
+                        <Text style={styles.info6}>
+                          {item.RejectionPerformed.join(", ")}
+                        </Text>
+                      </View>
+                    )}
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      {isIncludedapprovalRequested &&
+                        !(
+                          isIncludedapprovalPerformed ||
+                          isIncludedRectionPerformed
+                        ) && (
+                          <>
+                            <Button
+                              title="Aprobar"
+                              buttonStyle={styles.btnActualizarStyles}
+                              onPress={() =>
+                                docAprovals(
+                                  emailUser,
+                                  approvalPerformed,
+                                  idApproval
+                                )
+                              }
+                            />
+
+                            <Button
+                              title="Desaprobar "
+                              buttonStyle={styles.btncerrarStyles}
+                              onPress={() =>
+                                docRejection(
+                                  emailUser,
+                                  RejectionPerformed,
+                                  idApproval
+                                )
+                              }
+                            />
+                          </>
+                        )}
+                    </View>
                     <Text></Text>
                   </View>
                 </View>

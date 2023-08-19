@@ -17,13 +17,20 @@ import {
 import { db } from "../../../utils";
 
 export const CircularProgress = ({
-  imageSource,
+  imageSourceDefault,
   imageStyle,
   avance,
   id,
   image,
+  titulo,
 }) => {
   const [avatar, setAvatar] = useState();
+
+  console.log("CircularProgress");
+  console.log(titulo);
+  console.log(avatar);
+  console.log("imageSourceDefault..", imageSourceDefault);
+  console.log("image..", image);
 
   const data = [
     { x: 1, y: parseInt(avance) },
@@ -136,9 +143,19 @@ export const CircularProgress = ({
           }
         />
       </Avatar>
-      {image ? (
+      {avatar ? (
         <ImageExpo
-          source={{ uri: avatar ?? image }}
+          source={{ uri: avatar }}
+          style={{
+            marginLeft: 10,
+            width: 100,
+            height: 100,
+            borderRadius: 80,
+          }}
+        />
+      ) : image ? (
+        <ImageExpo
+          source={{ uri: image }}
           style={{
             marginLeft: 10,
             width: 100,
@@ -148,7 +165,7 @@ export const CircularProgress = ({
         />
       ) : (
         <ImageExpo
-          source={imageSource}
+          source={imageSourceDefault}
           style={{
             marginLeft: 10,
             width: 100,

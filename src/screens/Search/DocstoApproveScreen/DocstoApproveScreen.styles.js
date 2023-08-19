@@ -124,4 +124,52 @@ export const styles = StyleSheet.create({
   article: {
     margin: 10,
   },
+  btnActualizarStyles: {
+    // marginTop: 30,
+    marginHorizontal: 20,
+
+    // marginLeft: 100,
+    borderRadius: 20,
+    backgroundColor: "green",
+    // marginHorizontal: windowWidth / 5,
+
+    // borderTopWidth: 1,
+    // borderTopColor: "#e3e3e3",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#e3e3e3",
+  },
+  btncerrarStyles: {
+    // marginTop: 5,
+    // marginBottom: 10,
+    // paddingVertical: 10,
+    marginHorizontal: 30,
+
+    borderRadius: 20,
+    backgroundColor: "red",
+    // borderTopWidth: 1,
+    // borderTopColor: "#e3e3e3",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#e3e3e3",
+    // marginHorizontal: 20,
+    marginBottom: 10,
+    marginTop: 10,
+  },
+
+  info5: {
+    color: "red",
+    // paddingRight: 100,
+    // alignItems: "flex-start",
+    marginTop: 3,
+    // marginLeft: windowWidth / 32,
+    fontWeight: "600",
+    // textAlignVertical: "top",
+    marginHorizontal: windowWidth * 0.02,
+  },
+  info6: {
+    color: "red",
+    // width:10,
+    paddingRight: 100,
+
+    marginTop: 3,
+  },
 });

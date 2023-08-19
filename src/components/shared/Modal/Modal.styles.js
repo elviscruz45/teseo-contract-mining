@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     top: -100,
     left: 0,
     right: 0,
-    zIndex: 9999,
+    zIndex: 99,
     bottom: -100,
   },
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { Input, Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -18,12 +18,78 @@ function ChangeManPowerBare(props) {
 
   const formik = useFormik({
     initialValues: initialValues(),
-    validationSchema: validationSchema(),
+
+    // validationSchema: validationSchema(),
+
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
         //retrieving data from Formik
         const newData = formValue;
+        //validations
+        if (
+          newData.TotalReparacion === "" ||
+          newData.Reparacion === "" ||
+          newData.TotalFabricacion === "" ||
+          newData.Fabricacion === "" ||
+          newData.TotalIngenieria === "" ||
+          newData.Ingenieria === "" ||
+          newData.TotalMaquinado === "" ||
+          newData.Maquinado === ""
+        ) {
+          console.log("entro aqui");
+
+          Alert.alert(
+            "Alerta",
+            "Complete todos los campos",
+            [
+              {
+                text: "OK",
+                onPress: () => console.log("OK button pressed"),
+              },
+            ],
+            { cancelable: false, zIndex: 1000 }
+          );
+          return;
+        }
+
+        if (parseInt(newData.Reparacion) > parseInt(newData.TotalReparacion)) {
+          Alert.alert(
+            "Alerta",
+            "Total Reparacion debe ser mayor que Disponible Reparacion",
+            [{ text: "OK", onPress: () => {} }]
+          );
+          return;
+        }
+        if (
+          parseInt(newData.Fabricacion) > parseInt(newData.TotalFabricacion)
+        ) {
+          Alert.alert(
+            "Alerta",
+            "Total Fabricacion debe ser mayor que Disponible Fabricacion",
+            [{ text: "OK", onPress: () => {} }]
+          );
+          return;
+        }
+
+        if (parseInt(newData.Ingenieria) > parseInt(newData.TotalIngenieria)) {
+          Alert.alert(
+            "Alerta",
+            "Total Ingenieria debe ser mayor que Disponible Ingenieria",
+            [{ text: "OK", onPress: () => {} }]
+          );
+          return;
+        }
+
+        if (parseInt(newData.Maquinado) > parseInt(newData.TotalMaquinado)) {
+          Alert.alert(
+            "Alerta",
+            "Total Maquinado debe ser mayor que Disponible Maquinado",
+            [{ text: "OK", onPress: () => {} }]
+          );
+          return;
+        }
+
         //sign up the users in Firestore Database
         newData.photoURL = props.user_photo;
         newData.email = props.email;

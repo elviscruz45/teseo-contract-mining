@@ -104,15 +104,19 @@ function InfoUser(props) {
         <Text> </Text>
         <Text> </Text>
         <Text> </Text>
-        <TouchableOpacity
-          style={styles.btnContainer4}
-          onPress={() => updateManpower()}
-        >
-          <Image
-            source={require("../../../../assets/manpower2.png")}
-            style={styles.roundImageUpload2}
-          />
-        </TouchableOpacity>
+
+        {props.email === "daniel@prodise.com" && (
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => updateManpower()}
+          >
+            <Image
+              source={require("../../../../assets/manpower2.png")}
+              style={styles.roundImageUpload2}
+            />
+          </TouchableOpacity>
+        )}
+
         <Text> </Text>
         <TouchableOpacity
           style={styles.btnContainer4}

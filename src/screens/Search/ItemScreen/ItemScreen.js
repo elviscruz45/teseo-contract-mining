@@ -50,6 +50,7 @@ function ItemScreenNotRedux(props) {
   const area = Item.AreaServicio;
   const indexareaList = areaLists.findIndex((item) => item.value === area);
   const imageSource = areaLists[indexareaList]?.image;
+  console.log("itemScreen....", imageSource);
   /// the algorithm to retrieve the amount with format
   const formattedAmount = new Intl.NumberFormat("en-US", {
     style: "decimal",
@@ -224,11 +225,12 @@ function ItemScreenNotRedux(props) {
           <View>
             <Text></Text>
             <CircularProgress
-              imageSource={imageSource}
+              imageSourceDefault={imageSource}
               imageStyle={styles.roundImage}
               avance={Item.AvanceEjecucion}
               id={Item.idServiciosAIT}
               image={Item.photoServiceURL}
+              titulo={Item.NombreServicio}
             />
 
             <Text></Text>

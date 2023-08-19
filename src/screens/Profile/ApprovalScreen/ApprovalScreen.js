@@ -51,7 +51,11 @@ function ApprovalScreenBare(props) {
         console.log("800.OnSnapshopApprovalLISTPROFILEScreen");
 
         const filteredArray = lista.filter(
-          (element) => !element.ApprovalPerformed?.includes(props.email)
+          (element) =>
+            !(
+              element.ApprovalPerformed?.includes(props.email) ||
+              element.RejectionPerformed?.includes(props.email)
+            )
         );
 
         setApprovalList(filteredArray);

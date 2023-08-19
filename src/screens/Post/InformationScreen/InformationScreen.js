@@ -101,9 +101,11 @@ function InformationScreen(props) {
                 ApprovalRequestedBy: props.email,
                 ApprovalRequestSentTo: matches,
                 ApprovalPerformed: [],
+                RejectionPerformed: [],
                 date: new Date(),
                 AreaServicio: props.actualServiceAIT.AreaServicio,
                 photoServiceURL: props.actualServiceAIT.photoServiceURL,
+                status: "Pendiente",
               };
               const docRef = await addDoc(collection(db, "approvals"), docData);
               docData.idApproval = docRef.id;
@@ -138,9 +140,11 @@ function InformationScreen(props) {
             ApprovalRequestedBy: props.email,
             ApprovalRequestSentTo: matches,
             ApprovalPerformed: [],
+            RejectionPerformed: [],
             date: new Date(),
             AreaServicio: props.actualServiceAIT.AreaServicio,
             photoServiceURL: props.actualServiceAIT.photoServiceURL,
+            status: "Pendiente",
           };
           const docRef = await addDoc(collection(db, "approvals"), docData);
           docData.idApproval = docRef.id;

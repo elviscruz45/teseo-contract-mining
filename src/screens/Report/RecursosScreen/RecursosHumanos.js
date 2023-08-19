@@ -91,9 +91,9 @@ export const RecursosHumanos = (props) => {
         unidad={"tecnicos"}
       />
       <RecursosProgress
-        cantidad={manpower?.Instalacion}
-        total={manpower?.TotalInstalacion}
-        porcentaje={manpower?.Instalacion / manpower?.TotalInstalacion}
+        cantidad={manpower?.Maquinado}
+        total={manpower?.TotalMaquinado}
+        porcentaje={manpower?.Maquinado / manpower?.TotalMaquinado}
         titulo={"Instalacion"}
         unidad={"tecnicos"}
       />
