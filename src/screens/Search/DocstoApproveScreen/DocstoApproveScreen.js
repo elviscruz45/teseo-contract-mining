@@ -250,7 +250,7 @@ function DocstoApproveScreenBare(props) {
                   <View style={styles.article}>
                     <View style={[styles.row, styles.center]}>
                       <Text style={styles.info}>{"Solicitud:"}</Text>
-                      <Text style={styles.info2}>
+                      <Text style={styles.info2} selectable={true}>
                         {item.solicitudComentario}
                       </Text>
                     </View>

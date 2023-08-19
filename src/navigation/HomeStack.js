@@ -73,7 +73,11 @@ function HomeStack(props) {
           post_array.push(doc.data());
         });
         const filteredArray = post_array.filter(
-          (element) => !element.ApprovalPerformed?.includes(email)
+          (element) =>
+            !(
+              element.ApprovalPerformed?.includes(props.email) ||
+              element.RejectionPerformed?.includes(props.email)
+            )
         );
 
         console.log("100.homestack02");

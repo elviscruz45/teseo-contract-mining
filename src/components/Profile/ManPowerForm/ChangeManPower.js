@@ -122,6 +122,12 @@ function ChangeManPowerBare(props) {
         newData.fechaPostFormato = formattedDate;
         newData.createdAt = new Date();
 
+        //create the algoritm to have the international date format of the post
+
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", options);
+        console.log(dateTimeFormat.format(date));
+        console.log(newData.createdAt);
+
         ///checking up if there are data in users
         const uuid = uuidv4();
         newData.uid = uuid;

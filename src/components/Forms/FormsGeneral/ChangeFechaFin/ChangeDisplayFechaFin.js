@@ -33,6 +33,7 @@ export function ChangeDisplayFechaFin(props) {
           mode={mode}
           is24Hour={true}
           onChange={onChange}
+          style={{ alignSelf: "center", backgroundColor: "#2A3B76" }}
         />
       )}
     </SafeAreaView>

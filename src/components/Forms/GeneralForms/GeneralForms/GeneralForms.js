@@ -18,7 +18,9 @@ import { ChangeDisplayMonto } from "../../FormsGeneral/ChangeNumeroMonto/ChangeD
 import { ChangeDisplayFechaFin } from "../../FormsGeneral/ChangeFechaFin/ChangeDisplayFechaFin";
 import { ChangeDisplayHH } from "../../FormsGeneral/ChangeNumeroHH/ChangeDisplayHH";
 import { ChangeDisplayFileTipo } from "../../FormsGeneral/ChangeFIleTipo/ChangeDisplayFileTipo";
-export function GeneralForms(props) {
+import { connect } from "react-redux";
+
+export function GeneralFormsBare(props) {
   const { formik } = props;
   const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -130,6 +132,16 @@ export function GeneralForms(props) {
     onCloseOpenModal();
   };
 
+  const handlesetAditional = () => {
+    if (props.email === "daniel@prodise.com") {
+      setAditional(true);
+    } else {
+      alert(
+        "Solicitar Autorizacion al Gerente de Proyecto para Modificar El Monto, Fecha Estimada y Horas Hombre"
+      );
+    }
+  };
+
   return (
     <View>
       <View style={styles.content}>
@@ -206,7 +218,7 @@ export function GeneralForms(props) {
         )}
 
         <View style={styles.iconMinMax}>
-          <TouchableOpacity onPress={() => setAditional(true)}>
+          <TouchableOpacity onPress={() => handlesetAditional()}>
             <Image
               source={require("../../../../../assets/plus3.png")}
               style={styles.roundImageUploadmas}
@@ -277,3 +289,16 @@ export function GeneralForms(props) {
     </View>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    profile: reducers.profile.firebase_user_name,
+    email: reducers.profile.email,
+    approvalQuantity: reducers.profile.approvalQuantity,
+    approvalList: reducers.home.approvalList,
+
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
+  };
+};
+
+export const GeneralForms = connect(mapStateToProps, {})(GeneralFormsBare);

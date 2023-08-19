@@ -122,7 +122,8 @@ function InformationScreen(props) {
         if (
           newData.etapa === "Contratista-Envio Cotizacion" ||
           newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-          newData.etapa === "Contratista-Envio EDP"
+          newData.etapa === "Contratista-Envio EDP" ||
+          newData.etapa === "Contratista-Solicitud Aprobacion Doc"
         ) {
           const regex = /(?<=\()[^)]*(?=\))/g;
           const matches = newData.aprobacion.match(regex);
