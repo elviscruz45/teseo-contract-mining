@@ -5,8 +5,6 @@ import { SearchScreen } from "../screens";
 import { ItemScreen } from "../screens/Search/ItemScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
-import { ConnectedDetailScreen } from "../screens/Search/DetailScreen/DetailScreen";
-import { PolinesScreen } from "../screens/Search/DataScreen/DataScreen";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";

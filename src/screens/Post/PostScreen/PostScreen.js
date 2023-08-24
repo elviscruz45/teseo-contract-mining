@@ -9,70 +9,29 @@ import { screen } from "../../../utils";
 import * as ImagePicker from "expo-image-picker";
 import { savePhotoUri } from "../../../actions/post";
 import * as ImageManipulator from "expo-image-manipulator";
-import { db } from "../../../utils";
-import {
-  collection,
-  onSnapshot,
-  query,
-  limit,
-  orderBy,
-} from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function PostScreen(props) {
   console.log("4PostScreen");
-  const SERVICES_PER_PAGE = 50; // Number of posts to retrieve per page from Firebase
 
   const emptyimage = require("../../../../assets/splash.png");
-  const [photos, setPhotos] = useState([]);
   const navigation = useNavigation();
   const [equipment, setEquipment] = useState(null);
   const [AIT, setAIT] = useState(null);
   const [searchText, setSearchText] = useState("");
-  const [lengPosts, setlengPosts] = useState(SERVICES_PER_PAGE);
   const [posts, setPosts] = useState([]);
   const [searchResults, setSearchResults] = useState(null);
 
   //retrieving serviceAIT list data from firebase
   useEffect(() => {
-    let unsubscribe; // Variable to store the unsubscribe function
-
-    //Order by LastEventPosted to send it a global state
-    async function fetchData() {
-      queryRef = query(
-        collection(db, "ServiciosAIT"),
-        limit(lengPosts),
-        orderBy("LastEventPosted", "desc")
-      );
-
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        props.saveActualAITServicesFirebaseGlobalState(lista); // to global state
-        console.log("4.OnSnapshop_POST_Publicar Service AIT");
-
-        //then creaste a new list to order by Created At to render in  screen PostScreen
-        const newOrderList = [...lista].sort((a, b) => {
-          return b.createdAt - a.createdAt;
-        });
-        // console.log(lista);
-
-        setPosts(newOrderList);
-      });
-      // setIsLoading(false);
-    }
-    fetchData();
-    return () => {
-      // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, []);
+    let servicesList = props.servicesData;
+    servicesList.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
+    setPosts(servicesList);
+  }, [props.servicesData]);
 
   //This is used to retrieve the servicies AIT we are looking for
 
@@ -280,13 +239,11 @@ const mapStateToProps = (reducers) => {
     firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
-    // profile: reducers.profile.profile,
-    // uid: reducers.profile.uid,
-    // equipmentListHeader: reducers.home.equipmentList,
+
+    servicesData: reducers.home.servicesData,
 
     savePhotoUri: reducers.post.savePhotoUri,
     actualServiceAIT: reducers.post.actualServiceAIT,
-    ActualServiceAITList: reducers.post.ActualServiceAITList,
   };
 };
 

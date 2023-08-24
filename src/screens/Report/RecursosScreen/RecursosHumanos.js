@@ -39,7 +39,7 @@ export const RecursosHumanos = (props) => {
           lista.push(doc.data());
         });
 
-        console.log("55.OnSnapshopManpower", lista);
+        console.log("55.OnsnapshotHeaderFETCH_MANPOWER", lista);
 
         setManpower(lista[0]);
       });

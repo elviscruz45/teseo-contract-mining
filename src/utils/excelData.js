@@ -4,7 +4,6 @@ import {
   collection,
   getDocs,
   doc,
-  onSnapshot,
   query,
   where,
   limit,

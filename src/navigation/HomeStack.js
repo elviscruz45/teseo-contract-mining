@@ -18,84 +18,20 @@ import { db } from "../utils";
 import { saveApprovalListnew } from "../actions/search";
 
 function HomeStack(props) {
-  console.log("100.---HomeStackScreen");
+  console.log("---HomeStackScreen---");
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
-  const [email, setEmail] = useState();
 
+  const user = getAuth().currentUser;
+  const { uid, photoURL, displayName, email } = user;
   useEffect(() => {
-    const user = getAuth().currentUser;
-
-    //this retrieve data from authentication Firebase and send it to the global redux state
-
-    const { uid, photoURL, displayName, email } = user;
-
     if (user) {
       props.update_firebasePhoto(photoURL);
       props.update_firebaseUserName(displayName);
       props.update_firebaseEmail(email);
       props.update_firebaseUid(uid);
-
-      async function fetchFirebaseData() {
-        try {
-          //this retrieve data from ServiciosAIT to show it in the header of homescreen collections from Firestore and send it ot the global redux state
-
-          const querySnapshot = await getDocs(
-            query(
-              collection(db, "ServiciosAIT"),
-              // where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio")
-              orderBy("LastEventPosted", "desc")
-            )
-          );
-          const post_array = [];
-          querySnapshot.forEach((doc) => {
-            post_array.push(doc.data());
-          });
-          console.log("100.ServiciosAIT", post_array);
-          props.saveActualAITServicesFirebaseGlobalState(post_array);
-          setEmail(email);
-        } catch (error) {
-          console.error("Error fetching Firebase data: ", error);
-        }
-      }
-
-      fetchFirebaseData();
     }
   }, []);
-
-  useEffect(() => {
-    //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
-
-    if (email) {
-      async function fetchDataApprovalList() {
-        const querySnapshot = await getDocs(
-          query(
-            collection(db, "approvals"),
-            where("ApprovalRequestSentTo", "array-contains", email),
-            orderBy("date", "desc")
-          )
-        );
-
-        const post_array = [];
-        querySnapshot.forEach((doc) => {
-          post_array.push(doc.data());
-        });
-        const filteredArray = post_array.filter(
-          (element) =>
-            !(
-              element.ApprovalPerformed?.includes(props.email) ||
-              element.RejectionPerformed?.includes(props.email)
-            )
-        );
-
-        console.log("100.approvals", post_array.length, post_array);
-
-        props.saveApprovalListnew(filteredArray);
-      }
-
-      fetchDataApprovalList();
-    }
-  }, [email]);
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {
@@ -109,9 +45,8 @@ function HomeStack(props) {
     });
   };
 
-  return props.email && props.user_photo ? (
+  return email && photoURL ? (
     <>
-      {console.log("HOMESTACKRENDERES COUNT")}
       <Stack.Navigator
         screenOptions={{
           headerShown: true,
@@ -126,7 +61,7 @@ function HomeStack(props) {
           headerRight: () => (
             <TouchableOpacity onPress={() => profile_screen()}>
               <ImageExpo
-                source={{ uri: props.user_photo }}
+                source={{ uri: photoURL }}
                 style={{
                   width: 40,
                   height: 40,
@@ -155,10 +90,7 @@ function HomeStack(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {
-    email: reducers.profile.email,
-    user_photo: reducers.profile.user_photo,
-  };
+  return {};
 };
 
 export const ConnectedHomeStack = connect(mapStateToProps, {

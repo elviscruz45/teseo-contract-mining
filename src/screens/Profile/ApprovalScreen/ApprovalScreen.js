@@ -14,7 +14,6 @@ import {
   query,
   where,
   orderBy,
-  onSnapshot,
   docs,
   getDocs,
   limit,
@@ -31,46 +30,6 @@ import { saveApprovalListnew } from "../../../actions/search";
 
 function ApprovalScreenBare(props) {
   const navigation = useNavigation();
-  const [approvalList, setApprovalList] = useState();
-
-  useEffect(() => {
-    let unsubscribe;
-    async function fetchData() {
-      let queryRef = query(
-        collection(db, "approvals"),
-        orderBy("date", "desc"),
-        where("ApprovalRequestSentTo", "array-contains", props.email)
-      );
-
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        console.log("800.OnSnapshopApprovalLISTPROFILEScreen");
-
-        const filteredArray = lista.filter(
-          (element) =>
-            !(
-              element.ApprovalPerformed?.includes(props.email) ||
-              element.RejectionPerformed?.includes(props.email)
-            )
-        );
-
-        setApprovalList(filteredArray);
-        props.saveApprovalListnew(filteredArray);
-      });
-    }
-
-    fetchData();
-
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, []);
-
   //create the algoritm to have the date format of the post
   const formatDate = (dateInput) => {
     const { seconds, nanoseconds } = dateInput;
@@ -126,7 +85,7 @@ function ApprovalScreenBare(props) {
       {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}
 
       <FlatList
-        data={approvalList}
+        data={props.approvalListNew}
         scrollEnabled={false}
         renderItem={({ item, index }) => {
           //the algoritm to retrieve the image source to render the icon
@@ -176,6 +135,7 @@ const mapStateToProps = (reducers) => {
   return {
     profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
+    approvalListNew: reducers.search.approvalListNew,
 
     ActualPostFirebase: reducers.post.ActualPostFirebase,
     approvalList: reducers.home.approvalList,

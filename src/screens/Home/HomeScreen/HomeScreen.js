@@ -53,7 +53,7 @@ function HomeScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("1.OnSnapshopHomeHomeScreen", lista.length, lista);
+        console.log("1.OnSnapshoFETCH_EVENTS", lista.length, lista);
         setPosts(lista);
         props.saveTotalEventServiceAITList(lista);
       });

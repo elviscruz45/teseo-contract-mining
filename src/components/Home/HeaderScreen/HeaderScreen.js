@@ -18,6 +18,7 @@ import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
 import { updateAITServicesDATA } from "../../../actions/home";
+import { saveApprovalListnew } from "../../../actions/search";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
@@ -31,7 +32,6 @@ function HeaderScreenNoRedux(props) {
         where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio"),
         where("companyName", "==", "prodise")
       );
-
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
@@ -42,20 +42,56 @@ function HeaderScreenNoRedux(props) {
           return b.fechaPostISO - a.fechaPostISO;
         });
 
-        //filter the list to remove the stand by services
-        const filteredArray = lista.filter((item) => {
-          return item.AvanceAdministrativoTexto !== "Stand by";
-        });
+        // //filter the list to remove the stand by services
+        // const filteredArray = lista.filter((item) => {
+        //   return item.AvanceAdministrativoTexto !== "Stand by";
+        // });
 
-        console.log("2.OnsnapshotHeaderScreenNoRedux", filteredArray);
-        setData(filteredArray);
-        props.updateAITServicesDATA(filteredArray);
+        console.log("2.OnsnapshotHeaderFETCH_SERVICIOAIT", lista);
+        setData(lista);
+        props.updateAITServicesDATA(lista);
       });
     }
     fetchData();
-
     return () => {
       // Cleanup function to unsubscribe from the previous listener
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    let unsubscribe;
+    async function fetchData() {
+      let queryRef = query(
+        collection(db, "approvals"),
+        orderBy("date", "desc"),
+        where("ApprovalRequestSentTo", "array-contains", props.email)
+      );
+
+      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+        const lista = [];
+        ItemFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
+        console.log("3.OnsnapshotHeaderAPROVALS", lista);
+
+        const filteredArray = lista.filter(
+          (element) =>
+            !(
+              element.ApprovalPerformed?.includes(props.email) ||
+              element.RejectionPerformed?.includes(props.email)
+            )
+        );
+
+        props.saveApprovalListnew(filteredArray);
+      });
+    }
+
+    fetchData();
+
+    return () => {
       if (unsubscribe) {
         unsubscribe();
       }
@@ -121,11 +157,14 @@ function HeaderScreenNoRedux(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {};
+  return {
+    email: reducers.profile.email,
+  };
 };
 
 export const HeaderScreen = connect(mapStateToProps, {
   // EquipmentListUpper,
   saveActualAITServicesFirebaseGlobalState,
   updateAITServicesDATA,
+  saveApprovalListnew,
 })(HeaderScreenNoRedux);

@@ -26,11 +26,11 @@ function SearchScreenNoRedux(props) {
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
 
-  let AITServiceList = props.ActualServiceAITList;
+  let AITServiceList = props.servicesData;
 
   //This is used to retrieve the equipment we are searching for
   useEffect(() => {
-    AITServiceList = props.ActualServiceAITList;
+    AITServiceList = props.servicesData;
     console.log("SearchScreenUseEffect");
     if (searchText === "") {
       setSearchResults(AITServiceList);
@@ -47,7 +47,7 @@ function SearchScreenNoRedux(props) {
 
       setSearchResults(result);
     }
-  }, [searchText, props.ActualServiceAITList]);
+  }, [searchText, props.servicesData]);
 
   //this method is used to go to a screen to see the status of the item
   const selectAsset = (item) => {
@@ -141,8 +141,7 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
-
-    ActualServiceAITList: reducers.post.ActualServiceAITList,
+    servicesData: reducers.home.servicesData,
   };
 };
 

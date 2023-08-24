@@ -22,7 +22,6 @@ import {
   query,
   where,
   orderBy,
-  onSnapshot,
   docs,
   getDocs,
   arrayUnion,
@@ -78,33 +77,12 @@ function DocstoApproveScreenBare(props) {
   };
 
   useEffect(() => {
-    let unsubscribe;
-
-    async function fetchData() {
-      let queryRef = query(
-        collection(db, "approvals"),
-        orderBy("date", "desc"),
-        where("IdAITService", "==", Item.idServiciosAIT)
-      );
-
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        console.log("55111.OnSnapshopDocsApprovalScreen");
-        setApproval(lista);
-      });
-    }
-
-    fetchData();
-
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, []);
+    let ApprovalList = props.approvalListNew;
+    const filteredArray = ApprovalList.filter(
+      (element) => element.IdAITService === Item.idServiciosAIT
+    );
+    setApproval(filteredArray);
+  }, [props.approvalListNew]);
 
   //Approval
 
@@ -358,6 +336,7 @@ const mapStateToProps = (reducers) => {
     profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
     ActualPostFirebase: reducers.post.ActualPostFirebase,
+    approvalListNew: reducers.search.approvalListNew, //important
   };
 };
 
