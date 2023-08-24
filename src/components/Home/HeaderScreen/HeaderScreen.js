@@ -23,14 +23,13 @@ function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
   const [data, setData] = useState();
   console.log("2RenderHeaderScreenNoRedux");
-
   useEffect(() => {
     let unsubscribe;
-
     async function fetchData() {
       let queryRef = query(
         collection(db, "ServiciosAIT"),
-        orderBy("LastEventPosted", "desc")
+        where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio"),
+        where("companyName", "==", "prodise")
       );
 
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
@@ -38,14 +37,21 @@ function HeaderScreenNoRedux(props) {
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
         });
+        //order the list by date
+        lista.sort((a, b) => {
+          return b.fechaPostISO - a.fechaPostISO;
+        });
 
-        console.log("2.OnsnapshotHeaderScreenNoRedux");
+        //filter the list to remove the stand by services
+        const filteredArray = lista.filter((item) => {
+          return item.AvanceAdministrativoTexto !== "Stand by";
+        });
 
-        setData(lista);
-        props.updateAITServicesDATA(lista);
+        console.log("2.OnsnapshotHeaderScreenNoRedux", filteredArray);
+        setData(filteredArray);
+        props.updateAITServicesDATA(filteredArray);
       });
     }
-
     fetchData();
 
     return () => {
@@ -56,7 +62,6 @@ function HeaderScreenNoRedux(props) {
     };
   }, []);
 
-  // props.totalEventServiceAITLIST
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
@@ -116,17 +121,7 @@ function HeaderScreenNoRedux(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {
-    // firebase_user_name: reducers.profile.firebase_user_name,
-    // user_photo: reducers.profile.user_photo,
-    // email: reducers.profile.email,
-    // profile: reducers.profile.profile,
-    // uid: reducers.profile.uid,
-    // equipmentListHeader: reducers.home.equipmentList,
-    ActualServiceAITList: reducers.post.ActualServiceAITList,
-    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
-    ActualPostFirebase: reducers.post.ActualPostFirebase,
-  };
+  return {};
 };
 
 export const HeaderScreen = connect(mapStateToProps, {

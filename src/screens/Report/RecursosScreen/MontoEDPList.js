@@ -43,7 +43,6 @@ export const MontoEDPList = (props) => {
   console.log(newTableData);
   newTableData.sort((a, b) => a.etapa.localeCompare(b.etapa));
 
-  // props.totalEventServiceAITLIST
   const goToInformation = (item) => {
     const result = data?.filter((dataItem) => {
       return dataItem.NumeroAIT === item;

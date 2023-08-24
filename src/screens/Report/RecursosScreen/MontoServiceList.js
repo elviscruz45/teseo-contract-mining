@@ -31,7 +31,6 @@ export const MontoServiceList = (props) => {
   }
 
   newTableData.sort((a, b) => b.price - a.price);
-  // props.totalEventServiceAITLIST
   const goToInformation = (item) => {
     const result = data?.filter((dataItem) => {
       return dataItem.NumeroAIT === item;

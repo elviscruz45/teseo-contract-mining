@@ -5,7 +5,7 @@ import Svg from "react-native-svg";
 
 export const PieChart = (props) => {
   const { data } = props;
-  console.log("10.PieChart");
+  console.log("5.3PieChart");
 
   let datas = [
     { x: "Rep", y: 10 },

@@ -14,7 +14,6 @@ export function home(state = INITIAL_STATE, action) {
     case "EQUIPMENTLISTUPPER":
       return { ...state, equipmentList: action.payload };
     case "SAVE_TOTALEVENTSERVICEAITLIST":
-      // return { ...state, totalEventServiceAITLIST: action.payload };
       return {
         ...state,
         totalEventServiceAITLIST: [

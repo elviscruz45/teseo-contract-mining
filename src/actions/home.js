@@ -1,4 +1,4 @@
-export const likePost = (uri) => async (dispatch) => {
+export const likePost = (uri) => (dispatch) => {
   try {
     dispatch({
       type: "LIKEPOST",
@@ -9,7 +9,7 @@ export const likePost = (uri) => async (dispatch) => {
   }
 };
 
-export const unlikePost = (item) => async (dispatch) => {
+export const unlikePost = (item) => (dispatch) => {
   try {
     dispatch({
       type: "UNLIKEPOST",
@@ -20,7 +20,7 @@ export const unlikePost = (item) => async (dispatch) => {
   }
 };
 
-export const comentaryPost = (uri) => async (dispatch) => {
+export const comentaryPost = (uri) => (dispatch) => {
   try {
     dispatch({
       type: "COMENTARYPOST",
@@ -31,7 +31,7 @@ export const comentaryPost = (uri) => async (dispatch) => {
   }
 };
 
-export const EquipmentListUpper = (list) => async (dispatch) => {
+export const EquipmentListUpper = (list) => (dispatch) => {
   try {
     dispatch({
       type: "EQUIPMENTLISTUPPER",
@@ -41,7 +41,7 @@ export const EquipmentListUpper = (list) => async (dispatch) => {
     alert(error.message);
   }
 };
-export const saveTotalEventServiceAITList = (item) => async (dispatch) => {
+export const saveTotalEventServiceAITList = (item) => (dispatch) => {
   try {
     dispatch({
       type: "SAVE_TOTALEVENTSERVICEAITLIST",
@@ -52,7 +52,7 @@ export const saveTotalEventServiceAITList = (item) => async (dispatch) => {
   }
 };
 
-export const resetPostPerPageHome = (item) => async (dispatch) => {
+export const resetPostPerPageHome = (item) => (dispatch) => {
   const newItem = item + 5;
   try {
     dispatch({
@@ -64,7 +64,7 @@ export const resetPostPerPageHome = (item) => async (dispatch) => {
   }
 };
 
-export const updateAITServicesDATA = (item) => async (dispatch) => {
+export const updateAITServicesDATA = (item) => (dispatch) => {
   try {
     dispatch({
       type: "UPDATE_AITSERVICESDATA",

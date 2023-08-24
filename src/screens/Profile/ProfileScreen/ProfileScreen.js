@@ -15,11 +15,9 @@ import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
-import { getExcelPerfil } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
   collection,
-  onSnapshot,
   query,
   where,
   orderBy,
@@ -32,7 +30,6 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ApprovalScreen } from "../ApprovalScreen/ApprovalScreen";
 
 function ProfileScreen(props) {
   const [_, setReload] = useState(false);

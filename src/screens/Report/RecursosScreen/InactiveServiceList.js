@@ -24,7 +24,6 @@ export const InactiveServiceList = (props) => {
     }
   }
 
-  // props.totalEventServiceAITLIST
   const goToInformation = (item) => {
     const result = data?.filter((dataItem) => {
       return dataItem.NumeroAIT === item;

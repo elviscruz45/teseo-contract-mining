@@ -17,9 +17,10 @@ import { MontoComprometido } from "../RecursosScreen/MontoComprometido";
 import { getExcelReportData } from "../../../utils/excelData";
 
 const ReportScreenNoRedux = (props) => {
-  console.log("5ReportScreen");
   //real time updates
   const [data, setData] = useState();
+  console.log("5.ReportScreen", data);
+
   //states of filters
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -33,8 +34,10 @@ const ReportScreenNoRedux = (props) => {
   const [comprometido, setComprometido] = useState(false);
 
   useEffect(() => {
-    console.log("15.USEEFFECTReportScreen");
-    setData(props.servicesData);
+    if (props.servicesData) {
+      console.log("5.1.USEEFFECTReportScreen");
+      setData(props.servicesData);
+    }
   }, [props.servicesData]);
 
   //Changing the value to activate again the filter to rende the posts
@@ -196,20 +199,8 @@ const ReportScreenNoRedux = (props) => {
 
 const mapStateToProps = (reducers) => {
   return {
-    // firebase_user_name: reducers.profile.firebase_user_name,
-    // user_photo: reducers.profile.user_photo,
-    // email: reducers.profile.email,
-    // profile: reducers.profile.profile,
-    // uid: reducers.profile.uid,
-    // equipmentListHeader: reducers.home.equipmentList,
-    ActualServiceAITList: reducers.post.ActualServiceAITList,
-    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
-    ActualPostFirebase: reducers.post.ActualPostFirebase,
     servicesData: reducers.home.servicesData,
   };
 };
 
-export const ReportScreen = connect(mapStateToProps, {
-  // EquipmentListUpper,
-  // saveActualAITServicesFirebaseGlobalState,
-})(ReportScreenNoRedux);
+export const ReportScreen = connect(mapStateToProps, {})(ReportScreenNoRedux);

@@ -296,8 +296,6 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     approvalQuantity: reducers.profile.approvalQuantity,
     approvalList: reducers.home.approvalList,
-
-    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

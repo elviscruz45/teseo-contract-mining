@@ -17,6 +17,8 @@ import { db } from "../../../utils";
 export const RecursosHumanos = (props) => {
   const [manpower, setManpower] = useState([]);
   const [company, setCompany] = useState("prodise");
+  console.log("5.2.REPORTERecursosHumanos");
+
   console.log(manpower);
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -37,7 +39,7 @@ export const RecursosHumanos = (props) => {
           lista.push(doc.data());
         });
 
-        console.log("55.OnSnapshopManpower");
+        console.log("55.OnSnapshopManpower", lista);
 
         setManpower(lista[0]);
       });

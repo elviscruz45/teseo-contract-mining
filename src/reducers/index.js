@@ -5,6 +5,7 @@ import { activity } from "./activity";
 import { home } from "./home";
 import { search } from "./search";
 import { auth } from "./auth";
+console.log("INDEXREDUCERS");
 
 export const rootReducers = combineReducers({
   home,

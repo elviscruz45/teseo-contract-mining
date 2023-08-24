@@ -31,6 +31,7 @@ function LoginForm(props) {
           formValue.email,
           formValue.password
         );
+        console.log("userCredential", userCredential);
         props.update_firebaseUserUid(userCredential.user.uid);
         const user_uid = userCredential.user.uid;
         const docRef = doc(db, "users", user_uid);

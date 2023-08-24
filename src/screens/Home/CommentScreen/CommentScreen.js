@@ -47,7 +47,7 @@ function CommentScreen(props) {
       });
 
       setPostsComments(post_array);
-      console.log("110.commentScreen");
+      console.log("1.2.commentScreen", post_array.length, post_array);
     }
     fetchDataEventServicesCommentsList();
 

@@ -5,7 +5,6 @@ import { getAuth, signOut } from "firebase/auth";
 import { ConnectedInfoUser } from "../../../components/Account";
 import { styles } from "./ApprovalScreen.styles";
 import { connect } from "react-redux";
-import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
 import { getExcelPerfil } from "../../../utils/excelData";
@@ -185,7 +184,6 @@ const mapStateToProps = (reducers) => {
 };
 
 export const ApprovalScreen = connect(mapStateToProps, {
-  update_firebaseUserUid,
   update_firebaseProfile,
   update_approvalQuantity,
   saveApprovalListnew,

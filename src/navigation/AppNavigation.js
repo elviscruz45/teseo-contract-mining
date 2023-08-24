@@ -11,6 +11,8 @@ import { ReportStack } from "./ReportStack";
 
 export function AppNavigation() {
   const Tab = createBottomTabNavigator();
+  console.log("AppNavigation");
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -52,7 +54,6 @@ export function AppNavigation() {
 
 function screenOptions(route, color, size) {
   let iconName;
-
   if (route.name === screen.home.tab) {
     iconName = "home-outline";
   }

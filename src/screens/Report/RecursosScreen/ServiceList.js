@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
 export const ServiceList = (props) => {
+  console.log("5.4.ServiceList");
+
   const { data } = props;
   const navigation = useNavigation();
 
@@ -24,7 +26,6 @@ export const ServiceList = (props) => {
     }
   }
 
-  // props.totalEventServiceAITLIST
   const goToInformation = (item) => {
     const result = data?.filter((dataItem) => {
       return dataItem.NumeroAIT === item;

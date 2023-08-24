@@ -1,4 +1,4 @@
-export const savePhotoUri = (uri) => async (dispatch) => {
+export const savePhotoUri = (uri) => (dispatch) => {
   try {
     dispatch({
       type: "SAVE_PHOTO_URI",
@@ -9,7 +9,7 @@ export const savePhotoUri = (uri) => async (dispatch) => {
   }
 };
 
-export const saveActualServiceAIT = (item) => async (dispatch) => {
+export const saveActualServiceAIT = (item) => (dispatch) => {
   try {
     dispatch({
       type: "SAVE_ACTUALSERVICEAIT",
@@ -20,7 +20,7 @@ export const saveActualServiceAIT = (item) => async (dispatch) => {
   }
 };
 
-export const saveActualPostFirebase = (item) => async (dispatch) => {
+export const saveActualPostFirebase = (item) => (dispatch) => {
   try {
     dispatch({
       type: "SAVE_ACTUALPOSTFIREBASE",
@@ -32,7 +32,7 @@ export const saveActualPostFirebase = (item) => async (dispatch) => {
 };
 
 export const saveActualAITServicesFirebaseGlobalState =
-  (item) => async (dispatch) => {
+  (item) => (dispatch) => {
     try {
       dispatch({
         type: "SAVE_ACTUALSERVICEAITLIST",

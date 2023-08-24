@@ -20,6 +20,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 const windowWidth = Dimensions.get("window").width;
 function SearchScreenNoRedux(props) {
+  console.log("SearchScreenNoRedux");
+
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
@@ -57,7 +59,6 @@ function SearchScreenNoRedux(props) {
 
   return (
     <KeyboardAwareScrollView>
-      {console.log("priemra parte")}
       <SearchBar
         placeholder="Buscar Equipo"
         value={searchText}
@@ -65,7 +66,6 @@ function SearchScreenNoRedux(props) {
       />
 
       {/* {!searchResults && <Loading show text="Cargando" />} */}
-      {console.log("segunda parte")}
 
       <FlatList
         data={searchResults}
@@ -91,6 +91,7 @@ function SearchScreenNoRedux(props) {
               onPress={() => selectAsset(item)}
               style={{ backgroundColor: "white" }} // Add backgroundColor here
             >
+              {console.log("FlatList SearchScreen")}
               <View style={styles.equipments}>
                 {item.photoServiceURL ? (
                   <ImageExpo
