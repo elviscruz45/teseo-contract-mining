@@ -292,10 +292,7 @@ export function GeneralFormsBare(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
-    approvalQuantity: reducers.profile.approvalQuantity,
-    approvalList: reducers.home.approvalList,
   };
 };
 

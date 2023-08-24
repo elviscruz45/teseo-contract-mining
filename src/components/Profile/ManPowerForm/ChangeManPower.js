@@ -220,14 +220,9 @@ function ChangeManPowerBare(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
-    profile: reducers.profile.profile,
     uid: reducers.profile.uid,
-
-    savePhotoUri: reducers.post.savePhotoUri,
-    actualEquipment: reducers.post.actualEquipment,
   };
 };
 

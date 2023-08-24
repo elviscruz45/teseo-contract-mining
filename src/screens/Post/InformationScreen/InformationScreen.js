@@ -345,8 +345,6 @@ function InformationScreen(props) {
 const mapStateToProps = (reducers) => {
   return {
     savePhotoUri: reducers.post.savePhotoUri,
-    actualEquipment: reducers.post.actualEquipment,
-    ActualPostFirebase: reducers.post.ActualPostFirebase,
 
     firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,

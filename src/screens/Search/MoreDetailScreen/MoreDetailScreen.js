@@ -286,14 +286,7 @@ function MoreDetailScreenNoRedux(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {
-    profile: reducers.profile.firebase_user_name,
-    user_photo: reducers.profile.user_photo,
-    savePhotoUri: reducers.post.savePhotoUri,
-    actualEquipment: reducers.post.actualEquipment,
-    uid: reducers.profile.uid,
-    equipmentListHeader: reducers.home.equipmentList,
-  };
+  return {};
 };
 
 export const MoreDetailScreen = connect(mapStateToProps, {

@@ -144,14 +144,9 @@ function InfoUser(props) {
 const mapStateToProps = (reducers) => {
   return {
     profile: reducers.profile.profile,
-    firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
     uid: reducers.profile.uid,
-    approvalList: reducers.home.approvalList,
-
-    savePhotoUri: reducers.post.savePhotoUri,
-    actualEquipment: reducers.post.actualEquipment,
     approvalListNew: reducers.search.approvalListNew,
   };
 };

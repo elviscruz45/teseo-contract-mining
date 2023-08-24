@@ -239,11 +239,7 @@ const mapStateToProps = (reducers) => {
     firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
-
     servicesData: reducers.home.servicesData,
-
-    savePhotoUri: reducers.post.savePhotoUri,
-    actualServiceAIT: reducers.post.actualServiceAIT,
   };
 };
 

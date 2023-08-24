@@ -69,15 +69,7 @@ function ProfileDateScreenNoRedux(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {
-    ActualPostFirebase: reducers.post.ActualPostFirebase,
-    firebase_user_name: reducers.profile.firebase_user_name,
-    user_photo: reducers.profile.user_photo,
-    email: reducers.profile.email,
-    profile: reducers.profile.profile,
-    uid: reducers.profile.uid,
-    equipmentListHeader: reducers.home.equipmentList,
-  };
+  return {};
 };
 
 export const ProfileDateScreen = connect(mapStateToProps, {
