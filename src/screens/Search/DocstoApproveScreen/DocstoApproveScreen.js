@@ -36,7 +36,6 @@ import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { update_approvalList } from "../../../actions/home";
-import { saveApprovalListnew } from "../../../actions/search";
 
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
@@ -344,5 +343,4 @@ export const DocstoApproveScreen = connect(mapStateToProps, {
   update_firebaseUserUid,
   update_firebaseProfile,
   update_approvalList,
-  saveApprovalListnew,
 })(DocstoApproveScreenBare);

@@ -39,7 +39,7 @@ function HeaderScreenNoRedux(props) {
         });
         //order the list by date
         lista.sort((a, b) => {
-          return b.fechaPostISO - a.fechaPostISO;
+          return b.LastEventPosted - a.LastEventPosted;
         });
 
         // //filter the list to remove the stand by services
@@ -77,15 +77,15 @@ function HeaderScreenNoRedux(props) {
         });
         console.log("3.OnsnapshotHeaderAPROVALS", lista);
 
-        const filteredArray = lista.filter(
-          (element) =>
-            !(
-              element.ApprovalPerformed?.includes(props.email) ||
-              element.RejectionPerformed?.includes(props.email)
-            )
-        );
+        // const filteredArray = lista.filter(
+        //   (element) =>
+        //     !(
+        //       element.ApprovalPerformed?.includes(props.email) ||
+        //       element.RejectionPerformed?.includes(props.email)
+        //     )
+        // );
 
-        props.saveApprovalListnew(filteredArray);
+        props.saveApprovalListnew(lista);
       });
     }
 

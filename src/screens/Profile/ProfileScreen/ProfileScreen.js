@@ -39,7 +39,6 @@ function ProfileScreen(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
-  const [quantityBell, setQuantityBell] = useState(0);
 
   const navigation = useNavigation();
 

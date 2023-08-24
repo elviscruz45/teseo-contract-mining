@@ -117,43 +117,6 @@ function InformationScreen(props) {
         }
         newData.pdfPrincipal = imageUrlPDF || "";
 
-        //--------Uploading request to a new collection called "aprovals" to manage aprovals
-
-        if (
-          newData.etapa === "Contratista-Envio Cotizacion" ||
-          newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-          newData.etapa === "Contratista-Envio EDP" ||
-          newData.etapa === "Contratista-Solicitud Aprobacion Doc"
-        ) {
-          const regex = /(?<=\()[^)]*(?=\))/g;
-          const matches = newData.aprobacion.match(regex);
-
-          const docData = {
-            solicitud: newData.etapa,
-            solicitudComentario: newData.comentarios,
-            etapa: newData.etapa,
-            NombreServicio: props.actualServiceAIT.NombreServicio,
-            IdAITService: props.actualServiceAIT.idServiciosAIT,
-            fileName:
-              newData?.pdfFile?.replace(/%20/g, "_").split("/").pop() ?? "",
-            pdfFile: imageUrlPDF ?? "",
-            tipoFile: newData.tipoFile ?? "",
-            ApprovalRequestedBy: props.email,
-            ApprovalRequestSentTo: matches,
-            ApprovalPerformed: [],
-            RejectionPerformed: [],
-            date: new Date(),
-            AreaServicio: props.actualServiceAIT.AreaServicio,
-            photoServiceURL: props.actualServiceAIT.photoServiceURL,
-            status: "Pendiente",
-          };
-          const docRef = await addDoc(collection(db, "approvals"), docData);
-          docData.idApproval = docRef.id;
-          const RefFirebase = doc(db, "approvals", docData.idApproval);
-          await updateDoc(RefFirebase, docData);
-          console.log("Approvalsss", docData);
-        }
-
         //preparing data to upload to  firestore Database
         newData.fotoPrincipal = imageUrl;
         newData.createdAt = new Date();
@@ -165,25 +128,15 @@ function InformationScreen(props) {
           newData.etapa === "Usuario-Envio Solicitud Servicio" ||
           newData.etapa === "Contratista-Envio Cotizacion" ||
           newData.etapa === "Usuario-Aprobacion Cotizacion" ||
-          newData.etapa === "Contratista-Inicio Servicio" ||
-          newData.etapa === "Stand by" ||
-          newData.etapa === "Cancelacion"
+          newData.etapa === "Contratista-Inicio Servicio"
         ) {
           newData.porcentajeAvance = "0";
         }
 
         if (
-          newData.etapa === "Contratista-Solicitud Aprobacion Doc" ||
-          newData.etapa === "Usuario-Aprobacion Doc" ||
-          newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-          newData.etapa === "Usuario-Aprobacion Ampliacion"
-        ) {
-          newData.porcentajeAvance = "50";
-        }
-
-        if (
           newData.etapa === "Contratista-Envio EDP" ||
           newData.etapa === "Usuario-Aprobacion EDP" ||
+          newData.etapa === "Contratista-Registro de Pago" ||
           newData.etapa === "Contratista-Fin servicio"
         ) {
           newData.porcentajeAvance = "100";

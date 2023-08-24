@@ -15,7 +15,6 @@ import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
 import { db } from "../utils";
-import { saveApprovalListnew } from "../actions/search";
 
 function HomeStack(props) {
   console.log("---HomeStackScreen---");
@@ -99,5 +98,4 @@ export const ConnectedHomeStack = connect(mapStateToProps, {
   update_firebaseEmail,
   update_firebaseUid,
   saveActualAITServicesFirebaseGlobalState,
-  saveApprovalListnew,
 })(HomeStack);

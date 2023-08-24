@@ -158,7 +158,13 @@ export function GeneralFormsBare(props) {
             onPress: () => selectComponent("etapa"),
           }}
         />
-        {etapa === "Contratista-Avance Ejecucion" && (
+        {(etapa === "Contratista-Avance Ejecucion" ||
+          etapa === "Contratista-Solicitud Aprobacion Doc" ||
+          etapa === "Usuario-Aprobacion Doc" ||
+          etapa === "Contratista-Solicitud Ampliacion Servicio" ||
+          etapa === "Usuario-Aprobacion Ampliacion" ||
+          etapa === "Stand by" ||
+          etapa === "Cancelacion") && (
           <Input
             value={avance ? `${avance} %` : null}
             placeholder="Avance del ejecucion"
@@ -171,10 +177,11 @@ export function GeneralFormsBare(props) {
             }}
           />
         )}
-        {(etapa === "Contratista-Envio Cotizacion" ||
+        {(etapa === "Usuario-Envio Solicitud Servicio" ||
+          etapa === "Contratista-Envio Cotizacion" ||
+          etapa === "Contratista-Solicitud Aprobacion Doc" ||
           etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-          etapa === "Contratista-Envio EDP" ||
-          etapa === "Contratista-Solicitud Aprobacion Doc") && (
+          etapa === "Contratista-Envio EDP") && (
           <Input
             value={aprobadores}
             placeholder="Aprobador"

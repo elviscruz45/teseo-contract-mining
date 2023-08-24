@@ -32,7 +32,9 @@ export const BarChartProceso = (props) => {
 
     const totalEntries = data?.length;
     for (let i = 0; i < totalEntries; i++) {
-      if (data[i].AvanceAdministrativoTexto === "Contratista-Fin servicio") {
+      if (
+        data[i].AvanceAdministrativoTexto === "Contratista-Registro de Pago"
+      ) {
         if (data[i].Moneda === "Dolares") {
           sumByEtapa["EDPPagados"] += parseInt(data[i].Monto) * 3.5;
         }

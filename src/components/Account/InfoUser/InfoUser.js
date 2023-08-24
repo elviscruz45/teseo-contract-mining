@@ -76,6 +76,13 @@ function InfoUser(props) {
   };
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
+  let approvalListPending = props.approvalListNew.filter((item) => {
+    return !(
+      item.ApprovalPerformed?.includes(props.email) ||
+      item.RejectionPerformed?.includes(props.email)
+    );
+  });
+
   return (
     <>
       <View style={styles.content}>
@@ -128,10 +135,8 @@ function InfoUser(props) {
           />
         </TouchableOpacity>
 
-        {props?.approvalListNew && (
-          <Text style={styles.bellNomber}>
-            {props?.approvalListNew?.length}
-          </Text>
+        {approvalListPending && (
+          <Text style={styles.bellNomber}>{approvalListPending.length}</Text>
         )}
       </View>
       <Modal show={showModal} close={onCloseOpenModal}>

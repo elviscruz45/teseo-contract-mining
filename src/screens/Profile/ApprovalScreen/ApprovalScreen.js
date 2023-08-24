@@ -26,7 +26,6 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { areaLists } from "../../../utils/areaList";
 import { update_approvalQuantity } from "../../../actions/profile";
-import { saveApprovalListnew } from "../../../actions/search";
 
 function ApprovalScreenBare(props) {
   const navigation = useNavigation();
@@ -76,6 +75,13 @@ function ApprovalScreenBare(props) {
 
   // <ConnectedInfoUser bellQuantity={props?.approvalList?.length} />
 
+  let approvalListPending = props.approvalListNew.filter((item) => {
+    return !(
+      item.ApprovalPerformed?.includes(props.email) ||
+      item.RejectionPerformed?.includes(props.email)
+    );
+  });
+
   return (
     <KeyboardAwareScrollView
       style={{ backgroundColor: "white" }} // Add backgroundColor here
@@ -85,7 +91,7 @@ function ApprovalScreenBare(props) {
       {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}
 
       <FlatList
-        data={props.approvalListNew}
+        data={approvalListPending}
         scrollEnabled={false}
         renderItem={({ item, index }) => {
           //the algoritm to retrieve the image source to render the icon
@@ -146,5 +152,4 @@ const mapStateToProps = (reducers) => {
 export const ApprovalScreen = connect(mapStateToProps, {
   update_firebaseProfile,
   update_approvalQuantity,
-  saveApprovalListnew,
 })(ApprovalScreenBare);

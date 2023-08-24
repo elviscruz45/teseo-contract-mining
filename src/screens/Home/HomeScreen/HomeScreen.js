@@ -36,14 +36,13 @@ function HomeScreen(props) {
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
-    // console.log("useeffectHomeScreen");
     let unsubscribe;
 
     async function fetchData() {
       let queryRef = query(
         collection(db, "events"),
         // limit(props.postPerPage),
-        limit(10),
+        limit(40),
         orderBy("createdAt", "desc")
       );
 
@@ -53,7 +52,7 @@ function HomeScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("1.OnSnapshoFETCH_EVENTS", lista.length, lista);
+        console.log("1.OnSnapshoFETCH_EVENTS", lista);
         setPosts(lista);
         props.saveTotalEventServiceAITList(lista);
       });
@@ -62,9 +61,8 @@ function HomeScreen(props) {
 
     fetchData();
 
+    // Cleanup function to unsubscribe from the previous listener
     return () => {
-      // Cleanup function to unsubscribe from the previous listener
-
       if (unsubscribe) {
         unsubscribe();
       }
@@ -101,18 +99,6 @@ function HomeScreen(props) {
       alert("Error opening PDF document", error);
     }
   }, []);
-
-  //----this goes to another screen using the params given in this screen, useCallBack---
-  const selectAsset = useCallback(
-    (item) => {
-      console.log(item);
-      navigation.navigate(screen.search.tab, {
-        screen: screen.search.item,
-        params: { Item: item },
-      });
-    },
-    [navigation]
-  );
 
   //---activate like/unlike Post using useCallback--------
   const likePost = useCallback(
@@ -189,7 +175,6 @@ function HomeScreen(props) {
                 <View style={[styles.row, styles.center]}>
                   <View style={[styles.row, styles.center]}>
                     <TouchableOpacity
-                      // onPress={() => selectAsset(item.equipoPostDatos)}
                       style={[styles.row, styles.center]}
                       activeOpacity={1}
                     >
@@ -271,7 +256,6 @@ function HomeScreen(props) {
                         type="material-community"
                         name="comment-processing-outline"
                       />
-
                       <Text>
                         {" "}
                         {item.comentariosUsuarios.length} Comentarios
@@ -295,7 +279,7 @@ function HomeScreen(props) {
         keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
         onEndReached={() => console.log("se re-rerenderiza mucho")}
         // onEndReached={() => loadMorePosts()}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.1}
       />
     );
   }

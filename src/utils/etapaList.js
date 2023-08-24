@@ -32,9 +32,9 @@ export const etapaLists = [
   {
     value: "Usuario-Aprobacion EDP",
   },
-  // {
-  //   value: "Contratista-Registro de Pago",
-  // },
+  {
+    value: "Contratista-Registro de Pago",
+  },
   {
     value: "Contratista-Fin servicio",
   },
