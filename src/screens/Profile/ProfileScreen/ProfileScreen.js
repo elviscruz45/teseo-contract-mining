@@ -32,6 +32,7 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
+  console.log("RenderProfileScreen");
   const [_, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -40,6 +41,7 @@ function ProfileScreen(props) {
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
 
+  console.log("PostprofileScreen", post);
   const navigation = useNavigation();
 
   const onReload = () => setReload((prevState) => !prevState);
@@ -77,48 +79,59 @@ function ProfileScreen(props) {
   useEffect(() => {
     console.log("UseEffectProfileScreen");
 
-    let unsubscribe;
-    let q;
-    async function fetchData() {
-      if (startDate && endDate) {
-        q = query(
-          collection(db, "events"),
-          orderBy("createdAt", "desc"),
-          where("emailPerfil", "==", props.email),
-          where("createdAt", ">=", startDate),
-          where("createdAt", "<=", endDate)
-        );
-      } else {
-        q = query(
-          collection(db, "events"),
-          orderBy("createdAt", "desc"),
-          where("emailPerfil", "==", props.email),
-          limit(10) // Add the desired limit value here
-        );
-      }
+    // let unsubscribe;
+    // let q;
+    // async function fetchData() {
+    //   if (startDate && endDate) {
+    //     q = query(
+    //       collection(db, "events"),
+    //       orderBy("createdAt", "desc"),
+    //       where("emailPerfil", "==", props.email),
+    //       where("createdAt", ">=", startDate),
+    //       where("createdAt", "<=", endDate)
+    //     );
+    //   } else {
+    //     q = query(
+    //       collection(db, "events"),
+    //       orderBy("createdAt", "desc"),
+    //       where("emailPerfil", "==", props.email),
+    //       limit(10) // Add the desired limit value here
+    //     );
+    //   }
 
-      try {
-        const querySnapshot = await getDocs(q);
-        const lista = [];
-        querySnapshot.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        // console.log("1.---GetDocsProfileScreen Item with date profile");
-        console.log("1.---longitudListaProfileScreen", lista.length);
+    //   try {
+    //     const querySnapshot = await getDocs(q);
+    //     const lista = [];
+    //     querySnapshot.forEach((doc) => {
+    //       lista.push(doc.data());
+    //     });
+    //     // console.log("1.---GetDocsProfileScreen Item with date profile");
+    //     console.log("1.---longitudListaProfileScreen", lista.length);
 
-        setPost(lista);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    }
-    fetchData();
-    return () => {
-      // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
+    //     setPost(lista);
+    //   } catch (error) {
+    //     console.error("Error fetching data: ", error);
+    //   }
+    // }
+    // fetchData();
+    // return () => {
+    //   // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
+    //   if (unsubscribe) {
+    //     unsubscribe();
+    //   }
+    // };
+
+    let EventList = props.totalEventServiceAITLIST.filter((item) => {
+      return item.emailPerfil === props.email;
+    });
+
+    EventList.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
+
+    setPost(EventList);
+    // }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
+  }, [props.totalEventServiceAITLIST]);
 
   const comentPost = (item) => {
     console.log("item", item);

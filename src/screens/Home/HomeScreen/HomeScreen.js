@@ -42,7 +42,7 @@ function HomeScreen(props) {
       let queryRef = query(
         collection(db, "events"),
         // limit(props.postPerPage),
-        limit(40),
+        limit(10),
         orderBy("createdAt", "desc")
       );
 

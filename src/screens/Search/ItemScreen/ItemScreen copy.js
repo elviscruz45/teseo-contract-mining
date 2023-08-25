@@ -149,17 +149,9 @@ function ItemScreenNotRedux(props) {
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
-          const dataschema = {
-            ...doc.data(),
-            time: "27 Ago",
-            title: doc.data().titulo,
-            description: doc.data().comentarios,
-            lineColor: "skyblue",
-            icon: require("../../../../assets/empresa.png"),
-            imageUrl: doc.data().fotoUsuarioPerfil,
-          };
-          lista.push(dataschema);
+          lista.push(doc.data());
         });
+
         console.log("1.OnSnapshoITEMSCREEN_EVENTS", lista);
         setAllData(lista);
       });
@@ -174,11 +166,60 @@ function ItemScreenNotRedux(props) {
 
   //This hook used to retrieve post data from Firebase and sorted by date
   useEffect(() => {
-    if (allData) {
-      console.log("UseEffectitemScreen");
-      setPost(allData);
+    console.log("UseEffectitemScreen");
+    let unsubscribe;
+    let q;
+    async function fetchData() {
+      if (startDate && endDate) {
+        q = query(
+          collection(db, "events"),
+          orderBy("createdAt", "desc"),
+          where("AITNombreServicio", "==", Item.NombreServicio),
+          where("createdAt", ">=", startDate),
+          where("createdAt", "<=", endDate)
+        );
+      } else {
+        console.log("removeFilter");
+        q = query(
+          collection(db, "events"),
+          orderBy("createdAt", "desc"),
+          where("AITNombreServicio", "==", Item.NombreServicio)
+          // limit(50) // Add the desired limit value here
+        );
+      }
+      try {
+        const querySnapshot = await getDocs(q);
+        const lista = [];
+        querySnapshot.forEach((doc) => {
+          const dataschema = {
+            ...doc.data(),
+            time: "27 Ago",
+            title: doc.data().titulo,
+            description: doc.data().comentarios,
+            lineColor: "skyblue",
+            icon: require("../../../../assets/empresa.png"),
+            imageUrl: doc.data().fotoUsuarioPerfil,
+          };
+          // lista.push(doc.data());
+          lista.push(dataschema);
+        });
+        console.log("120.getDocsItemSCREEN Item with date");
+
+        setPost(lista);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setIsLoading(false);
+      }
     }
-  }, [allData]);
+    fetchData();
+    return () => {
+      // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST, Item]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {

@@ -66,6 +66,7 @@ function ApprovalScreenBare(props) {
     serviceQuery.forEach((doc) => {
       post_array.push(doc.data());
     });
+    console.log("querySnapshot1");
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,

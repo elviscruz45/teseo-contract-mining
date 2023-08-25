@@ -35,6 +35,8 @@ export const MultiSelectExample = (props) => {
         };
         post_array.push(objectver2);
       });
+      console.log("querySnapshot1");
+      console.log("querySnapshot1");
 
       setList(post_array);
     }
