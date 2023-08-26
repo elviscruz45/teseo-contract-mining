@@ -26,7 +26,7 @@ function HeaderScreenNoRedux(props) {
   console.log("2RenderHeaderScreenNoRedux");
   useEffect(() => {
     let unsubscribe;
-    async function fetchData() {
+    function fetchData() {
       let queryRef = query(
         collection(db, "ServiciosAIT"),
         where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio"),
@@ -55,43 +55,6 @@ function HeaderScreenNoRedux(props) {
     fetchData();
     return () => {
       // Cleanup function to unsubscribe from the previous listener
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    let unsubscribe;
-    async function fetchData() {
-      let queryRef = query(
-        collection(db, "approvals"),
-        orderBy("date", "desc"),
-        where("ApprovalRequestSentTo", "array-contains", props.email)
-      );
-
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        console.log("3.OnsnapshotHeaderAPROVALS", lista);
-
-        // const filteredArray = lista.filter(
-        //   (element) =>
-        //     !(
-        //       element.ApprovalPerformed?.includes(props.email) ||
-        //       element.RejectionPerformed?.includes(props.email)
-        //     )
-        // );
-
-        props.saveApprovalListnew(lista);
-      });
-    }
-
-    fetchData();
-
-    return () => {
       if (unsubscribe) {
         unsubscribe();
       }

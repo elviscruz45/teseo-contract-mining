@@ -13,6 +13,7 @@ import {
   arrayUnion,
   arrayRemove,
   limit,
+  where,
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../../utils";
@@ -24,6 +25,8 @@ import { HeaderScreen } from "../../../components/Home";
 import { saveTotalEventServiceAITList } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
 import { resetPostPerPageHome } from "../../../actions/home";
+import { saveApprovalListnew } from "../../../actions/search";
+import { updateAITServicesDATA } from "../../../actions/home";
 
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
@@ -38,7 +41,7 @@ function HomeScreen(props) {
   useEffect(() => {
     let unsubscribe;
 
-    async function fetchData() {
+    function fetchData() {
       let queryRef = query(
         collection(db, "events"),
         // limit(props.postPerPage),
@@ -70,7 +73,44 @@ function HomeScreen(props) {
   }, []);
   // }, [props.postPerPage]);
 
-  //This function is designed to retrieve more posts when they reach the final view, as lazy loading
+  //
+
+  useEffect(() => {
+    let unsubscribe;
+    function fetchData() {
+      let queryRef = query(
+        collection(db, "approvals"),
+        orderBy("date", "desc"),
+        where("ApprovalRequestSentTo", "array-contains", props.email)
+      );
+
+      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+        const lista = [];
+        ItemFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
+        console.log("3.OnsnapshotHeaderAPROVALS", lista);
+
+        // const filteredArray = lista.filter(
+        //   (element) =>
+        //     !(
+        //       element.ApprovalPerformed?.includes(props.email) ||
+        //       element.RejectionPerformed?.includes(props.email)
+        //     )
+        // );
+
+        props.saveApprovalListnew(lista);
+      });
+    }
+
+    fetchData();
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   const loadMorePosts = () => {
     console.log("props.resetPostPerPageHome(props.postPerPage)");
@@ -146,7 +186,6 @@ function HomeScreen(props) {
     return <LoadingSpinner />;
   } else {
     console.log("--------loaded HOME SCREEN------");
-
     return (
       <FlatList
         data={posts}
@@ -169,6 +208,7 @@ function HomeScreen(props) {
                   // margin: 2,
                   borderBottomWidth: 5,
                   borderBottomColor: "#f0f8ff",
+                  paddingVertical: 10,
                 }}
               >
                 {console.log("1.-FlatListHOMESCREEN")}
@@ -277,7 +317,9 @@ function HomeScreen(props) {
           ) : null;
         }}
         keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
-        onEndReached={() => console.log("se re-rerenderiza mucho")}
+        onEndReached={() => {
+          console.log("se re-rerenderiza mucho");
+        }}
         // onEndReached={() => loadMorePosts()}
         onEndReachedThreshold={0.1}
       />
@@ -296,4 +338,6 @@ const mapStateToProps = (reducers) => {
 export const ConnectedHomeScreen = connect(mapStateToProps, {
   saveTotalEventServiceAITList,
   resetPostPerPageHome,
+  saveApprovalListnew,
+  updateAITServicesDATA,
 })(HomeScreen);

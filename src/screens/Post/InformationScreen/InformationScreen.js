@@ -141,10 +141,6 @@ function InformationScreen(props) {
         ) {
           newData.porcentajeAvance = "100";
         }
-        console.log("----------porcentaje de avance---------");
-        console.log(newData.porcentajeAvance);
-        console.log(newData);
-
         //data of the service AIT information
         newData.AITidServicios = props.actualServiceAIT.idServiciosAIT;
         newData.AITNombreServicio = props.actualServiceAIT.NombreServicio;
@@ -208,7 +204,7 @@ function InformationScreen(props) {
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
 
         // //Updating global State redux
-        props.saveActualPostFirebase(newData);
+        // props.saveActualPostFirebase(newData);
 
         // //reset pagination in HomeScreen to 15 to firebase
         // props.resetPostPerPageHome(5);
