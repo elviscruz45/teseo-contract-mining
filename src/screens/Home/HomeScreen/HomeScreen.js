@@ -77,40 +77,43 @@ function HomeScreen(props) {
 
   useEffect(() => {
     let unsubscribe;
-    function fetchData() {
-      let queryRef = query(
-        collection(db, "approvals"),
-        orderBy("date", "desc"),
-        where("ApprovalRequestSentTo", "array-contains", props.email)
-      );
 
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
+    if (props.email) {
+      function fetchData() {
+        let queryRef = query(
+          collection(db, "approvals"),
+          orderBy("date", "desc"),
+          where("ApprovalRequestSentTo", "array-contains", props.email)
+        );
+
+        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+          const lista = [];
+          ItemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+          console.log("3.OnsnapshotHeaderAPROVALS", lista);
+
+          // const filteredArray = lista.filter(
+          //   (element) =>
+          //     !(
+          //       element.ApprovalPerformed?.includes(props.email) ||
+          //       element.RejectionPerformed?.includes(props.email)
+          //     )
+          // );
+
+          props.saveApprovalListnew(lista);
         });
-        console.log("3.OnsnapshotHeaderAPROVALS", lista);
-
-        // const filteredArray = lista.filter(
-        //   (element) =>
-        //     !(
-        //       element.ApprovalPerformed?.includes(props.email) ||
-        //       element.RejectionPerformed?.includes(props.email)
-        //     )
-        // );
-
-        props.saveApprovalListnew(lista);
-      });
-    }
-
-    fetchData();
-
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
       }
-    };
-  }, []);
+
+      fetchData();
+
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
+    }
+  }, [props.email]);
 
   const loadMorePosts = () => {
     console.log("props.resetPostPerPageHome(props.postPerPage)");

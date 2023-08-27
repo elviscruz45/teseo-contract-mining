@@ -121,6 +121,20 @@ export const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: windowWidth / 32,
   },
+  alert1: {
+    color: "#828282",
+    paddingRight: 100,
+    marginTop: 3,
+    marginLeft: windowWidth / 32,
+    color: "red",
+  },
+  alert2: {
+    color: "#828282",
+    paddingRight: 100,
+    marginTop: 3,
+    marginLeft: windowWidth / 32,
+    color: "blue",
+  },
   titleText: {
     fontSize: 24,
     fontFamily: "Arial",

@@ -95,10 +95,12 @@ function HeaderScreenNoRedux(props) {
         renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AreaServicio;
+          console.log("area", area);
           const indexareaList = areaLists.findIndex(
             (item) => item.value === area
           );
           const imageSource = areaLists[indexareaList]?.image;
+          console.log("imageSource", imageSource);
           return (
             <TouchableOpacity onPress={() => selectAsset(item)}>
               <View style={styles.textImage}>

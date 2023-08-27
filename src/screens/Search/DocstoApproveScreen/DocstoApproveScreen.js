@@ -184,14 +184,12 @@ function DocstoApproveScreenBare(props) {
           const isIncludedRectionPerformed =
             RejectionPerformed.includes(emailUser);
           const idApproval = item.idApproval;
-          console.log("approvalRequested:", approvalRequested);
-          console.log("approvalPerformed:", approvalPerformed);
-          console.log("emailUser:", emailUser);
-          console.log(
-            "isIncludedapprovalPerformed:",
-            isIncludedapprovalPerformed
-          );
-
+          const { seconds, nanoseconds } = item.date;
+          //ID
+          let idTime = (
+            (seconds * 1000 + nanoseconds / 1000000) /
+            1000
+          ).toFixed(0);
           return (
             <View
               style={{
@@ -226,6 +224,12 @@ function DocstoApproveScreenBare(props) {
                     />
                   </View>
                   <View style={styles.article}>
+                    <View style={[styles.row, styles.center]}>
+                      <Text style={styles.info}>{"ID:"}</Text>
+                      <Text style={styles.info2} selectable={true}>
+                        {idTime}
+                      </Text>
+                    </View>
                     <View style={[styles.row, styles.center]}>
                       <Text style={styles.info}>{"Solicitud:"}</Text>
                       <Text style={styles.info2} selectable={true}>

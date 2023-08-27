@@ -49,7 +49,11 @@ function ItemScreenNotRedux(props) {
     },
   } = props;
   const navigation = useNavigation();
-
+  //calculate the amount of days to finish the service
+  let daysLeft = (
+    (Item.FechaFin.seconds * 1000 - Date.now()) /
+    86400000
+  ).toFixed(0);
   ///the algoritm to retrieve the image source to render the icon
   const area = Item.AreaServicio;
   const indexareaList = areaLists.findIndex((item) => item.value === area);
@@ -242,6 +246,17 @@ function ItemScreenNotRedux(props) {
               {"Ejecucion:  "} {Item.AvanceEjecucion}
               {" %"}
             </Text>
+            {daysLeft < 0 ? (
+              <Text style={styles.alert1}>
+                {"Dias de Retraso:  "} {daysLeft}
+                {" dias"}
+              </Text>
+            ) : (
+              <Text style={styles.alert2}>
+                {"Dias Restantes:  "} {daysLeft}
+                {" dias"}
+              </Text>
+            )}
           </View>
         </View>
         <Text></Text>
