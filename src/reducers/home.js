@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   home: "elvis",
   equipmentList: [],
-  totalEventServiceAITLIST: [],
+  totalEventServiceAITLIST: null,
   postPerPage: 10,
   servicesData: null,
   approvalList: null,
@@ -16,10 +16,7 @@ export function home(state = INITIAL_STATE, action) {
     case "SAVE_TOTALEVENTSERVICEAITLIST":
       return {
         ...state,
-        totalEventServiceAITLIST: [
-          ...state.totalEventServiceAITLIST,
-          ...action.payload,
-        ],
+        totalEventServiceAITLIST: action.payload,
       };
     case "RESET_POSTPERPAGEHOME":
       return { ...state, postPerPage: action.payload };

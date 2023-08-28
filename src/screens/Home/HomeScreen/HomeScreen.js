@@ -193,7 +193,7 @@ function HomeScreen(props) {
       <FlatList
         data={posts}
         ListHeaderComponent={<HeaderScreen />}
-        // scrollEnabled={false}
+        scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: "white" }} // Add backgroundColor here
         renderItem={({ item, index }) => {
@@ -214,7 +214,6 @@ function HomeScreen(props) {
                   paddingVertical: 10,
                 }}
               >
-                {console.log("1.-FlatListHOMESCREEN")}
                 <View style={[styles.row, styles.center]}>
                   <View style={[styles.row, styles.center]}>
                     <TouchableOpacity

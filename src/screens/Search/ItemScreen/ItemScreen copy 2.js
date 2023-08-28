@@ -40,9 +40,9 @@ function ItemScreenNotRedux(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
-  const [serviceInfo, setServiceInfo] = useState();
-  // const [allData, setAllData] = useState();
-  console.log("InfoService++++++++++", serviceInfo);
+  const [allData, setAllData] = useState();
+
+  console.log("allData", allData);
 
   //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
@@ -50,7 +50,6 @@ function ItemScreenNotRedux(props) {
       params: { Item },
     },
   } = props;
-
   const navigation = useNavigation();
   //calculate the amount of days to finish the service
   let daysLeft = (
@@ -146,36 +145,33 @@ function ItemScreenNotRedux(props) {
 
   // const arraytoCompareinFirebase = ["RyVnEJx2hjsSiJeILqrv"];
 
+  // const [allData, setAllData] = useState();
   useEffect(() => {
     let unsubscribe;
     async function fetchData() {
       let queryRef = query(
-        collection(db, "ServiciosAIT"),
+        collection(db, "events"),
         // orderBy("idDocFirestoreDB"), // Add this line
         orderBy("createdAt", "desc"),
-        where("idServiciosAIT", "==", Item.idServiciosAIT),
-        where("companyName", "==", "prodise")
-
+        where("AITNombreServicio", "==", Item.NombreServicio)
         // where("idDocFirestoreDB", "not-in", arraytoCompareinFirebase)
       );
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
-          doc.data().events.forEach((item) => {
-            const dataschema = {
-              ...item,
-              time: "27 Ago",
-              title: item.titulo,
-              description: item.comentarios,
-              lineColor: "skyblue",
-              icon: require("../../../../assets/empresa.png"),
-              imageUrl: item.fotoUsuarioPerfil,
-            };
-            lista.push(dataschema);
-          });
+          const dataschema = {
+            ...doc.data(),
+            time: "27 Ago",
+            title: doc.data().titulo,
+            description: doc.data().comentarios,
+            lineColor: "skyblue",
+            icon: require("../../../../assets/empresa.png"),
+            imageUrl: doc.data().fotoUsuarioPerfil,
+          };
+          lista.push(dataschema);
         });
-        console.log("999.OnSnapshot_Servicios_AITEVENTS_SCREEN", lista);
-        setPost(lista);
+        console.log("1.OnSnapshoITEMSCREEN_EVENTS", lista);
+        setAllData(lista);
       });
     }
     fetchData();
@@ -184,15 +180,15 @@ function ItemScreenNotRedux(props) {
         unsubscribe();
       }
     };
-  }, [Item]);
+  }, []);
 
   //This hook used to retrieve post data from Firebase and sorted by date
   useEffect(() => {
-    let InfoService = props.servicesData.filter((item) => {
-      return item.idServiciosAIT === Item.idServiciosAIT;
-    });
-    setServiceInfo(InfoService[0]);
-  }, [props.servicesData, Item]);
+    if (allData) {
+      console.log("UseEffectitemScreen");
+      setPost(allData);
+    }
+  }, [allData]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {
@@ -217,136 +213,129 @@ function ItemScreenNotRedux(props) {
       params: { Item: Item },
     });
   };
+  return (
+    <>
+      <ScrollView
+        style={{ backgroundColor: "white" }} // Add backgroundColor here
+      >
+        <Text></Text>
 
-  ///////////////////// serviceInfo
-  if (!serviceInfo) {
-    return;
-  } else {
-    return (
-      <>
-        <ScrollView
-          style={{ backgroundColor: "white" }} // Add backgroundColor here
+        <View style={[styles.row, styles.center]}>
+          <View>
+            <Text></Text>
+            <CircularProgress
+              imageSourceDefault={imageSource}
+              imageStyle={styles.roundImage}
+              avance={Item.AvanceEjecucion}
+              id={Item.idServiciosAIT}
+              image={Item.photoServiceURL}
+              titulo={Item.NombreServicio}
+            />
+
+            <Text></Text>
+          </View>
+          <View>
+            <Text style={styles.name}>{Item.NombreServicio}</Text>
+            <Text style={styles.info}>
+              {"Numero Serv:  "} {Item.NumeroAIT}
+            </Text>
+            <Text style={styles.info}>
+              {"Tipo:  "} {Item.TipoServicio}
+            </Text>
+            <Text style={styles.info}>
+              {"Fecha Inicio:  "} {formattedDateInicio}
+            </Text>
+            <Text style={styles.info}>
+              {"Fecha Fin:  "} {formattedDate}
+            </Text>
+            <Text style={styles.info}>
+              {"Ejecucion:  "} {Item.AvanceEjecucion}
+              {" %"}
+            </Text>
+            {daysLeft < 0 ? (
+              <Text style={styles.alert1}>
+                {"Dias de Retraso:  "} {daysLeft}
+                {" dias"}
+              </Text>
+            ) : (
+              <Text style={styles.alert2}>
+                {"Dias Restantes:  "} {daysLeft}
+                {" dias"}
+              </Text>
+            )}
+          </View>
+        </View>
+        <Text></Text>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "white",
+            justifyContent: "space-between",
+          }}
         >
-          <Text></Text>
-
-          <View style={[styles.row, styles.center]}>
-            <View>
-              <Text></Text>
-              <CircularProgress
-                imageSourceDefault={imageSource}
-                imageStyle={styles.roundImage}
-                avance={serviceInfo.AvanceEjecucion}
-                id={serviceInfo.idServiciosAIT}
-                image={serviceInfo.photoServiceURL}
-                titulo={serviceInfo.NombreServicio}
-              />
-
-              <Text></Text>
-            </View>
-            <View>
-              <Text style={styles.name}>{serviceInfo.NombreServicio}</Text>
-              <Text style={styles.info}>
-                {"Numero Serv:  "} {serviceInfo.NumeroAIT}
-              </Text>
-              <Text style={styles.info}>
-                {"Tipo:  "} {serviceInfo.TipoServicio}
-              </Text>
-              <Text style={styles.info}>
-                {"Fecha Inicio:  "} {formattedDateInicio}
-              </Text>
-              <Text style={styles.info}>
-                {"Fecha Fin:  "} {formattedDate}
-              </Text>
-              <Text style={styles.info}>
-                {"Ejecucion:  "} {serviceInfo.AvanceEjecucion}
-                {" %"}
-              </Text>
-              {daysLeft < 0 ? (
-                <Text style={styles.alert1}>
-                  {"Dias de Retraso:  "} {daysLeft}
-                  {" dias"}
-                </Text>
-              ) : (
-                <Text style={styles.alert2}>
-                  {"Dias Restantes:  "} {daysLeft}
-                  {" dias"}
-                </Text>
-              )}
-            </View>
-          </View>
-          <Text></Text>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "white",
-              justifyContent: "space-between",
-            }}
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => Detalles(Item)}
           >
-            <TouchableOpacity
-              style={styles.btnContainer4}
-              onPress={() => Detalles(serviceInfo)}
-            >
-              <Image
-                source={require("../../../../assets/more_information.png")}
-                style={styles.roundImageUpload}
-              />
-            </TouchableOpacity>
+            <Image
+              source={require("../../../../assets/more_information.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.btnContainer4}
-              onPress={() => goToPdf(serviceInfo)}
-            >
-              <Image
-                source={require("../../../../assets/pdf4.png")}
-                style={styles.roundImageUpload}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btnContainer4}
-              onPress={() => goToPublicar()}
-            >
-              <Image
-                source={require("../../../../assets/TakePhoto2.png")}
-                style={styles.roundImageUpload}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btnContainer4}
-              onPress={() => goToDocsToApprove()}
-            >
-              <Image
-                source={require("../../../../assets/approved.png")}
-                style={styles.roundImageUpload}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text></Text>
-          <Text></Text>
-
-          <Text
-            style={{
-              marginLeft: 15,
-              borderRadius: 5,
-              fontWeight: "700",
-              alignSelf: "center",
-            }}
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => goToPdf(Item)}
           >
-            Historial de Eventos
-          </Text>
+            <Image
+              source={require("../../../../assets/pdf4.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => goToPublicar()}
+          >
+            <Image
+              source={require("../../../../assets/TakePhoto2.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnContainer4}
+            onPress={() => goToDocsToApprove()}
+          >
+            <Image
+              source={require("../../../../assets/approved.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text></Text>
+        <Text></Text>
 
-          <GanttHistorial datas={post} comentPost={comentPost} />
-        </ScrollView>
-      </>
-    );
-  }
+        <Text
+          style={{
+            marginLeft: 15,
+            borderRadius: 5,
+            fontWeight: "700",
+            alignSelf: "center",
+          }}
+        >
+          Historial de Eventos
+        </Text>
+
+        <GanttHistorial datas={post} comentPost={comentPost} />
+      </ScrollView>
+    </>
+  );
 }
 
 const mapStateToProps = (reducers) => {
   return {
-    servicesData: reducers.home.servicesData,
-    // totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
+    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

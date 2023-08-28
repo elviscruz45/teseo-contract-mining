@@ -12,12 +12,16 @@ import { Icon } from "@rneui/themed";
 
 export const GanttHistorial = (props) => {
   const { datas, comentPost } = props;
+  const dataSorted = datas?.sort((a, b) => {
+    return b.createdAt - a.createdAt;
+  });
+
   return (
     <View style={styles.container}>
       <FlatList
         scrollEnabled={false}
         contentContainerStyle={props.listViewContainerStyle}
-        data={datas}
+        data={dataSorted}
         renderItem={({ item, index }) => {
           const timestampData = item.createdAt;
           const timestampInMilliseconds =

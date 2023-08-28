@@ -40,8 +40,9 @@ function ProfileScreen(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
+  console.log("-----PostprofileScreencamara------");
+  console.log("PostprofileScreencamara", post);
 
-  console.log("PostprofileScreen", post);
   const navigation = useNavigation();
 
   const onReload = () => setReload((prevState) => !prevState);
@@ -121,11 +122,11 @@ function ProfileScreen(props) {
     //   }
     // };
 
-    let EventList = props.totalEventServiceAITLIST.filter((item) => {
+    let EventList = props.totalEventServiceAITLIST?.filter((item) => {
       return item.emailPerfil === props.email;
     });
 
-    EventList.sort((a, b) => {
+    EventList?.sort((a, b) => {
       return b.createdAt - a.createdAt;
     });
 

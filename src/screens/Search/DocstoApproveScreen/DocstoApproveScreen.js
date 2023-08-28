@@ -108,7 +108,6 @@ function DocstoApproveScreenBare(props) {
                 ApprovalPerformed: arrayUnion(emailUser),
               });
             }
-            //aquie es
           },
         },
       ],

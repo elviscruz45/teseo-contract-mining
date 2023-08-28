@@ -146,28 +146,28 @@ function InformationScreen(props) {
         newData.AITNombreServicio = props.actualServiceAIT.NombreServicio;
         newData.AITAreaServicio = props.actualServiceAIT.AreaServicio;
         newData.AITphotoServiceURL = props.actualServiceAIT.photoServiceURL;
+        newData.AITNumero = props.actualServiceAIT.NumeroAIT;
 
         // //aditional data of the service AIT information
-        newData.AITAvanceEjecucion = props.actualServiceAIT.AvanceEjecucion;
-        newData.AITHHModificado = props.actualServiceAIT.FechaFin;
-        newData.AITHorasHombre = props.actualServiceAIT.HorasHombre;
-        newData.AITLastEventPosted = props.actualServiceAIT.LastEventPosted;
-        newData.AITMonto = props.actualServiceAIT.Monto;
-        newData.AITMoneda = props.actualServiceAIT.Moneda;
-        newData.AITMontoModificado = props.actualServiceAIT.MontoModificado;
-        newData.AITNuevaFechaEstimada =
-          props.actualServiceAIT.NuevaFechaEstimada;
-        newData.AITNumero = props.actualServiceAIT.NumeroAIT;
-        newData.AITNumeroCotizacion = props.actualServiceAIT.NumeroCotizacion;
-        newData.AITResponsableEmpresaContratista =
-          props.actualServiceAIT.ResponsableEmpresaContratista;
-        newData.AITTipoServicio = props.actualServiceAIT.TipoServicio;
-        newData.AITcompanyName = props.actualServiceAIT.companyName;
-        newData.AITcreatedAt = props.actualServiceAIT.createdAt;
-        newData.AITemailPerfil = props.actualServiceAIT.emailPerfil;
-        newData.AITfechaPostFormato = props.actualServiceAIT.fechaPostFormato;
-        newData.AITfechaPostISO = props.actualServiceAIT.fechaPostISO;
-        newData.AITnombrePerfil = props.actualServiceAIT.nombrePerfil;
+        // newData.AITAvanceEjecucion = props.actualServiceAIT.AvanceEjecucion;
+        // newData.AITHHModificado = props.actualServiceAIT.FechaFin;
+        // newData.AITHorasHombre = props.actualServiceAIT.HorasHombre;
+        // newData.AITLastEventPosted = props.actualServiceAIT.LastEventPosted;
+        // newData.AITMonto = props.actualServiceAIT.Monto;
+        // newData.AITMoneda = props.actualServiceAIT.Moneda;
+        // newData.AITMontoModificado = props.actualServiceAIT.MontoModificado;
+        // newData.AITNuevaFechaEstimada =
+        //   props.actualServiceAIT.NuevaFechaEstimada;
+        // newData.AITNumeroCotizacion = props.actualServiceAIT.NumeroCotizacion;
+        // newData.AITResponsableEmpresaContratista =
+        //   props.actualServiceAIT.ResponsableEmpresaContratista;
+        // newData.AITTipoServicio = props.actualServiceAIT.TipoServicio;
+        // newData.AITcompanyName = props.actualServiceAIT.companyName;
+        // newData.AITcreatedAt = props.actualServiceAIT.createdAt;
+        // newData.AITemailPerfil = props.actualServiceAIT.emailPerfil;
+        // newData.AITfechaPostFormato = props.actualServiceAIT.fechaPostFormato;
+        // newData.AITfechaPostISO = props.actualServiceAIT.fechaPostISO;
+        // newData.AITnombrePerfil = props.actualServiceAIT.nombrePerfil;
 
         //Uploading data to Firebase and adding the ID firestore
         const docRef = await addDoc(collection(db, "events"), newData);
@@ -183,15 +183,35 @@ function InformationScreen(props) {
           "ServiciosAIT",
           props.actualServiceAIT.idServiciosAIT
         );
+        const eventSchema = {
+          idDocFirestoreDB: newData.idDocFirestoreDB ?? "",
+          fotoPrincipal: newData.fotoPrincipal ?? "",
+          fotoUsuarioPerfil: newData.fotoUsuarioPerfil ?? "",
+          AITNombreServicio: newData.AITNombreServicio ?? "",
+          titulo: newData.titulo ?? "",
+          comentarios: newData.comentarios ?? "",
+          porcentajeAvance: newData.porcentajeAvance ?? "",
+          AITNumero: newData.AITNumero ?? "",
+          etapa: newData.etapa ?? "",
+          pdfPrincipal: newData?.pdfPrincipal ?? "",
+          fechaPostFormato: newData.fechaPostFormato ?? "",
+          createdAt: newData.createdAt ?? "",
+          emailPerfil: newData.emailPerfil ?? "",
+          imageUrl: newData.imageUrl ?? "",
+          nombrePerfil: newData.nombrePerfil ?? "",
+          pdfFile: newData.pdfFile ?? "",
+        };
 
         const updateDataLasEventPost = {
           LastEventPosted: newData.createdAt,
           AvanceEjecucion: newData.porcentajeAvance,
           AvanceAdministrativoTexto: newData.etapa,
-          MontoModificado: newData.MontoModificado,
+          MontoModificado: newData.MontoModificado ?? "",
           NuevaFechaEstimada: newData.NuevaFechaEstimada,
-          HHModificado: newData.HHModificado,
-        }; // Specify the field name and its updated value
+          HHModificado: newData.HHModificado ?? "",
+          events: arrayUnion(eventSchema),
+        };
+        // // Specify the field name and its updated value
 
         if (newData?.aprobacion !== undefined) {
           updateDataLasEventPost.aprobacion = arrayUnion(newData.aprobacion);

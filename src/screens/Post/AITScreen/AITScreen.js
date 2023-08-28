@@ -70,6 +70,9 @@ function AITNoReduxScreen(props) {
         newData.emailPerfil = props.email || "Anonimo";
         newData.nombrePerfil = props.firebase_user_name || "Anonimo";
 
+        //Data gattered from events
+        newData.events = [];
+
         //Data about the company belong this event
         const regex = /@(.+?)\./i;
         newData.companyName = props.email?.match(regex)?.[1] || "Anonimo";
