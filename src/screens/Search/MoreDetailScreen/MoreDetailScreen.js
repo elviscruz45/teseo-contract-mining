@@ -13,7 +13,6 @@ import { Image as ImageExpo } from "expo-image";
 import { styles } from "./MoreDetailScreen.styles";
 import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-
 import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
 import { screen } from "../../../utils";
@@ -100,10 +99,15 @@ function MoreDetailScreenNoRedux(props) {
   //Algoritm to calculate  "Avance Ejecucion Proyectado"
   const ActualDate = new Date();
   const DaysProyectedToCompleteTask = date - dateInicio;
-  const AvanceProyected =
+  let AvanceProyected =
     ((ActualDate - new Date(Item.createdAt.seconds * 1000)) * 100) /
     DaysProyectedToCompleteTask;
+  if (AvanceProyected > 100) {
+    AvanceProyected = 100;
+  }
 
+  console.log("AvanceProyected", AvanceProyected);
+  console.log("Item.AvanceEjecucion", Item.AvanceEjecucion);
   //Algorithm to   convert string to a list to render a list of names
   const ContratistaList = Item.ResponsableEmpresaContratista?.split(",");
   const UsuarioList = Item.ResponsableEmpresaUsuario?.split(",");
@@ -133,19 +137,25 @@ function MoreDetailScreenNoRedux(props) {
     const percentajeNormalized = (percentage * TotalSizeCompleted) / 100;
 
     getColor = (percentajeNormalized) => {
-      if (percentajeNormalized < (TotalSizeCompleted * 20) / 100) {
-        return "red";
-      } else if (percentajeNormalized < (TotalSizeCompleted * 40) / 100) {
-        return "magenta";
-      } else if (percentajeNormalized < (TotalSizeCompleted * 60) / 100) {
-        return "orange";
-      } else if (percentajeNormalized < (TotalSizeCompleted * 80) / 100) {
-        return "limegreen";
-      } else if (percentajeNormalized < TotalSizeCompleted) {
-        return "green";
-      } else {
+      if (Item.AvanceEjecucion > AvanceProyected) {
         return "blue";
+      } else {
+        return "red";
       }
+
+      // if (percentajeNormalized < (TotalSizeCompleted * 20) / 100) {
+      //   return "red";
+      // } else if (percentajeNormalized < (TotalSizeCompleted * 40) / 100) {
+      //   return "magenta";
+      // } else if (percentajeNormalized < (TotalSizeCompleted * 60) / 100) {
+      //   return "orange";
+      // } else if (percentajeNormalized < (TotalSizeCompleted * 80) / 100) {
+      //   return "limegreen";
+      // } else if (percentajeNormalized < TotalSizeCompleted) {
+      //   return "green";
+      // } else {
+      //   return "red";
+      // }
     };
     return (
       <View style={{ flexDirection: "row", height: 10, margin: 10 }}>

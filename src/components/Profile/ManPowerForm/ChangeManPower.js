@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, Text } from "react-native";
 import { Input, Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -56,7 +56,7 @@ function ChangeManPowerBare(props) {
         if (parseInt(newData.Reparacion) > parseInt(newData.TotalReparacion)) {
           Alert.alert(
             "Alerta",
-            "Total Reparacion debe ser mayor que Disponible Reparacion",
+            "1. Total Reparacion debe ser mayor que Disponible Reparacion",
             [{ text: "OK", onPress: () => {} }]
           );
           return;
@@ -66,7 +66,7 @@ function ChangeManPowerBare(props) {
         ) {
           Alert.alert(
             "Alerta",
-            "Total Fabricacion debe ser mayor que Disponible Fabricacion",
+            "3. Total Fabricacion debe ser mayor que Disponible Fabricacion",
             [{ text: "OK", onPress: () => {} }]
           );
           return;
@@ -75,7 +75,7 @@ function ChangeManPowerBare(props) {
         if (parseInt(newData.Ingenieria) > parseInt(newData.TotalIngenieria)) {
           Alert.alert(
             "Alerta",
-            "Total Ingenieria debe ser mayor que Disponible Ingenieria",
+            "5. Total Ingenieria debe ser mayor que Disponible Ingenieria",
             [{ text: "OK", onPress: () => {} }]
           );
           return;
@@ -84,7 +84,7 @@ function ChangeManPowerBare(props) {
         if (parseInt(newData.Maquinado) > parseInt(newData.TotalMaquinado)) {
           Alert.alert(
             "Alerta",
-            "Total Maquinado debe ser mayor que Disponible Maquinado",
+            "7. Total Maquinado debe ser mayor que Disponible Maquinado",
             [{ text: "OK", onPress: () => {} }]
           );
           return;
@@ -143,64 +143,117 @@ function ChangeManPowerBare(props) {
   return (
     <>
       <KeyboardAwareScrollView>
-        <Input
-          placeholder="Total Reparacion"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("TotalReparacion", text)}
-          // errorMessage={formik.errors.displayNameform}
-        />
-        <Input
-          placeholder="Disponible Reparacion"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("Reparacion", text)}
-          // errorMessage={formik.errors.cargo}
-        />
-        <Input
-          placeholder="Total Fabricacion"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) =>
-            formik.setFieldValue("TotalFabricacion", text)
-          }
-          // errorMessage={formik.errors.displayNameform}
-        />
-        <Input
-          placeholder="Disponible Fabricacion"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("Fabricacion", text)}
-          // errorMessage={formik.errors.cargo}
-        />
-        <Input
-          placeholder="Total Ingenieria"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("TotalIngenieria", text)}
-          // errorMessage={formik.errors.displayNameform}
-        />
-        <Input
-          placeholder="Disponible Ingenieria"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("Ingenieria", text)}
-          // errorMessage={formik.errors.cargo}
-        />
-        <Input
-          placeholder="Total Maquinado"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("TotalMaquinado", text)}
-          // errorMessage={formik.errors.displayNameform}
-        />
-        <Input
-          placeholder="Disponible Maquinado"
-          keyboardType="numeric"
-          multiline={true}
-          onChangeText={(text) => formik.setFieldValue("Maquinado", text)}
-          // errorMessage={formik.errors.cargo}
-        />
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"1."}
+          </Text>
+          <Input
+            placeholder="Total Reparacion"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) =>
+              formik.setFieldValue("TotalReparacion", text)
+            }
+            // errorMessage={formik.errors.displayNameform}
+          />
+        </View>
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"2."}
+          </Text>
+          <Input
+            placeholder="Disponible Reparacion"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) => formik.setFieldValue("Reparacion", text)}
+            // errorMessage={formik.errors.cargo}
+          />
+        </View>
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"3."}
+          </Text>
+          <Input
+            placeholder="Total Fabricacion"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) =>
+              formik.setFieldValue("TotalFabricacion", text)
+            }
+            // errorMessage={formik.errors.displayNameform}
+          />
+        </View>
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"4."}
+          </Text>
+          <Input
+            placeholder="Disponible Fabricacion"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) => formik.setFieldValue("Fabricacion", text)}
+            // errorMessage={formik.errors.cargo}
+          />
+        </View>
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"5."}
+          </Text>
+          <Input
+            placeholder="Total Ingenieria"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) =>
+              formik.setFieldValue("TotalIngenieria", text)
+            }
+            // errorMessage={formik.errors.displayNameform}
+          />
+        </View>
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"6."}
+          </Text>
+          <Input
+            placeholder="Disponible Ingenieria"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) => formik.setFieldValue("Ingenieria", text)}
+            // errorMessage={formik.errors.cargo}
+          />
+        </View>
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"7."}
+          </Text>
+          <Input
+            placeholder="Total Maquinado"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) =>
+              formik.setFieldValue("TotalMaquinado", text)
+            }
+            // errorMessage={formik.errors.displayNameform}
+          />
+        </View>
+
+        <View style={[styles.row, styles.center]}>
+          <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
+            {"8."}
+          </Text>
+          <Input
+            placeholder="Disponible Maquinado"
+            keyboardType="numeric"
+            multiline={true}
+            onChangeText={(text) => formik.setFieldValue("Maquinado", text)}
+            // errorMessage={formik.errors.cargo}
+          />
+        </View>
+
         <Button
           title="Actualizar"
           containerStyle={styles.btnContainer}
