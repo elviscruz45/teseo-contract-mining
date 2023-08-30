@@ -64,9 +64,11 @@ function SearchScreenNoRedux(props) {
         data={searchResults}
         ListHeaderComponent={
           <SearchBar
-            placeholder="Buscar Equipo"
+            placeholder="Buscar AIT o nombre del servicio"
             value={searchText}
             onChangeText={(text) => setSearchText(text)}
+            lightTheme={true}
+            inputContainerStyle={{ backgroundColor: "white" }}
           />
         }
         showsVerticalScrollIndicator={false}

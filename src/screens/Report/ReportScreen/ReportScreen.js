@@ -15,6 +15,7 @@ import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
 import { BarInactiveServices } from "../RecursosScreen/BarInactiveServices";
 import { MontoComprometido } from "../RecursosScreen/MontoComprometido";
 import { getExcelReportData } from "../../../utils/excelData";
+import { EstadoServiceList } from "../RecursosScreen/EstadoServiceList";
 
 const ReportScreenNoRedux = (props) => {
   //real time updates
@@ -28,6 +29,7 @@ const ReportScreenNoRedux = (props) => {
 
   //states to view the tables
   const [serviciosActivos, setServiciosActivos] = useState(false);
+  const [estadoServicios, setEstadoServicios] = useState(false);
   const [serviciosInactivos, setServiciosInactivos] = useState(false);
   const [montoServicios, setMontoServicios] = useState(false);
   const [montoEDP, setMontoEDP] = useState(false);
@@ -71,11 +73,12 @@ const ReportScreenNoRedux = (props) => {
       <RecursosHumanos />
       <Text></Text>
       <Text></Text>
-      <View style={styles.container22}>
-        <Text style={styles.titleText}>Servicios Activos Asignados</Text>
-      </View>
+
       <Text></Text>
       <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Servicios Activos Asignados</Text>
+        </View>
         <TouchableOpacity onPress={() => setServiciosActivos(true)}>
           <Image
             source={require("../../../../assets/plus3.png")}
@@ -91,15 +94,41 @@ const ReportScreenNoRedux = (props) => {
         </TouchableOpacity>
       </View>
 
-      <PieChart data={data} />
-      {serviciosActivos && <ServiceList data={data} />}
+      {serviciosActivos && (
+        <>
+          <PieChart data={data} />
+          <ServiceList data={data} />
+        </>
+      )}
       <Text></Text>
       <Text></Text>
-      <View style={styles.container22}>
-        <Text style={styles.titleText}>Servicios Inactivos</Text>
+
+      <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Estado de Servicios Activos</Text>
+        </View>
+        <TouchableOpacity onPress={() => setEstadoServicios(true)}>
+          <Image
+            source={require("../../../../assets/plus3.png")}
+            style={styles.roundImageUploadmas}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setEstadoServicios(false)}>
+          <Image
+            source={require("../../../../assets/minus3.png")}
+            style={styles.roundImageUploadmas}
+          />
+        </TouchableOpacity>
       </View>
+      {estadoServicios && <EstadoServiceList data={data} />}
+      <Text></Text>
+
       <Text></Text>
       <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Servicios Inactivos</Text>
+        </View>
         <TouchableOpacity onPress={() => setServiciosInactivos(true)}>
           <Image
             source={require("../../../../assets/plus3.png")}
@@ -116,25 +145,31 @@ const ReportScreenNoRedux = (props) => {
       </View>
       <Text></Text>
 
-      <Text style={styles.iconMinMax}>
-        <BarInactiveServices
-          data={data}
-          titulo={"Stand by"}
-          unidad={"servicios"}
-        />
-        <BarInactiveServices
-          data={data}
-          titulo={"Cancelacion"}
-          unidad={"servicios"}
-        />
-      </Text>
-      {serviciosInactivos && <InactiveServiceList data={data} />}
+      {serviciosInactivos && (
+        <>
+          <Text style={{ margin: 10 }}>
+            <BarInactiveServices
+              data={data}
+              titulo={"Stand by"}
+              unidad={"servicios"}
+            />
+          </Text>
+          <Text style={{ marginLeft: 10 }}>
+            <BarInactiveServices
+              data={data}
+              titulo={"Cancelacion"}
+              unidad={"servicios"}
+            />
+          </Text>
+          <InactiveServiceList data={data} />
+        </>
+      )}
       <Text></Text>
-      <Text></Text>
-      <View style={styles.container22}>
-        <Text style={styles.titleText}>Monto Servicios</Text>
-      </View>
+
       <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Monto Servicios</Text>
+        </View>
         <TouchableOpacity onPress={() => setMontoServicios(true)}>
           <Image
             source={require("../../../../assets/plus3.png")}
@@ -149,14 +184,19 @@ const ReportScreenNoRedux = (props) => {
           />
         </TouchableOpacity>
       </View>
-      <BarChartMontoServicios data={data} />
-      {montoServicios && <MontoServiceList data={data} />}
+      {montoServicios && (
+        <>
+          <BarChartMontoServicios data={data} />
+          <MontoServiceList data={data} />
+        </>
+      )}
       <Text></Text>
-      <View style={styles.container22}>
-        <Text style={styles.titleText}>Monto Estado de Pago</Text>
-      </View>
+
       <Text></Text>
       <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Monto Estado de Pago</Text>
+        </View>
         <TouchableOpacity onPress={() => setMontoEDP(true)}>
           <Image
             source={require("../../../../assets/plus3.png")}
@@ -171,16 +211,39 @@ const ReportScreenNoRedux = (props) => {
           />
         </TouchableOpacity>
       </View>
-      <BarChartProceso data={data} />
-      {montoEDP && <MontoEDPList data={data} />}
+      {montoEDP && (
+        <>
+          <BarChartProceso data={data} />
+          <MontoEDPList data={data} />
+        </>
+      )}
 
       <Text></Text>
-      <View style={styles.container22}>
-        <Text style={styles.titleText}>Montos Comprometidos</Text>
+
+      <Text></Text>
+
+      <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Montos Comprometidos</Text>
+        </View>
+        <TouchableOpacity onPress={() => setComprometido(true)}>
+          <Image
+            source={require("../../../../assets/plus3.png")}
+            style={styles.roundImageUploadmas}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setComprometido(false)}>
+          <Image
+            source={require("../../../../assets/minus3.png")}
+            style={styles.roundImageUploadmas}
+          />
+        </TouchableOpacity>
       </View>
+
+      {comprometido && <MontoComprometido data={data} />}
       <Text></Text>
 
-      <MontoComprometido data={data} />
       <TouchableOpacity
         // style={styles.btnContainer4}
         onPress={

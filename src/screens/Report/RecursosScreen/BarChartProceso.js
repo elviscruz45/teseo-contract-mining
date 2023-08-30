@@ -13,14 +13,7 @@ import { tipoServicioList } from "../../../utils/tipoServicioList";
 
 export const BarChartProceso = (props) => {
   const { data } = props;
-
-  let datas = [
-    { label: "EDP Pagados", value: 100, unidad: "Soles" },
-    { label: "EDP Pendiente", value: 100, unidad: "Soles" },
-    { label: "Serv Compl", value: 100, unidad: "Soles" },
-    { label: "Serv Compl2", value: 100, unidad: "Soles" },
-    // Add more data points as needed
-  ];
+  let datas;
   let sumByEtapa;
   if (data) {
     sumByEtapa = {
@@ -88,27 +81,29 @@ export const BarChartProceso = (props) => {
 
     datas = [
       {
-        label: "EDP Pagados",
+        label: "Pagado",
         value: sumByEtapa["EDPPagados"],
         unidad: "Soles",
       },
       {
-        label: "EDP Pendiente",
+        label: "No Pagado",
         value: sumByEtapa["EDPNoPagados"],
         unidad: "Soles",
       },
       {
-        label: "Compl",
+        label: "Completado",
         value: sumByEtapa["Compl"],
         unidad: "Soles",
       },
       {
-        label: "No Compl",
+        label: "Ejecucion",
         value: sumByEtapa["NoCompl"],
         unidad: "Soles",
       },
     ];
-    console.log(datas);
+  }
+  if (!datas) {
+    return null;
   }
   return (
     <View style={styles.container}>

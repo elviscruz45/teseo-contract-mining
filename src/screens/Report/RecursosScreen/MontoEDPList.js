@@ -13,7 +13,8 @@ export const MontoEDPList = (props) => {
     for (let i = 0; i < data.length; i++) {
       if (
         data[i].AvanceAdministrativoTexto !== "Stand by" &&
-        data[i].AvanceAdministrativoTexto !== "Cancelacion"
+        data[i].AvanceAdministrativoTexto !== "Cancelacion" &&
+        data[i].AvanceAdministrativoTexto !== "Contratista-Fin servicio"
       ) {
         newTableData.push({
           id: data[i].NumeroAIT,
@@ -27,21 +28,21 @@ export const MontoEDPList = (props) => {
           moneda: data[i].Moneda,
           etapa:
             data[i]["AvanceAdministrativoTexto"] === "Contratista-Fin servicio"
-              ? "EDPPagados"
+              ? "Pagado"
               : data[i]["AvanceAdministrativoTexto"] === "Contratista-Envio EDP"
-              ? "EDPNoPagados"
+              ? "NoPagado"
               : data[i]["AvanceAdministrativoTexto"] ===
                   "Contratista-Avance Ejecucion" &&
                 data[i]["AvanceEjecucion"] === "100"
               ? "Compl"
-              : "NoCompl",
+              : "Ejec",
         });
       }
     }
   }
 
   console.log(newTableData);
-  newTableData.sort((a, b) => a.etapa.localeCompare(b.etapa));
+  newTableData?.sort((a, b) => b.price - a.price);
 
   const goToInformation = (item) => {
     const result = data?.filter((dataItem) => {
@@ -71,21 +72,40 @@ export const MontoEDPList = (props) => {
         {newTableData.map((item) => (
           <DataTable.Row key={item.id}>
             <Text
-              style={styles.multiLineColumn}
+              style={{
+                flex: 2,
+                alignSelf: "center",
+
+                color: item.etapa === "NoPagado" ? "red" : "black",
+              }}
               onPress={() => goToInformation(item.id)}
             >
               {item.name}
             </Text>
-            <DataTable.Cell style={styles.shortColumn2}>
+            <Text
+              style={{
+                flex: 1,
+                alignSelf: "center",
+
+                color: item.etapa === "NoPagado" ? "red" : "black",
+              }}
+            >
               {item.etapa}
-            </DataTable.Cell>
-            <DataTable.Cell style={styles.column}>
+            </Text>
+            <Text
+              style={{
+                flex: 0,
+                alignSelf: "center",
+
+                color: item.etapa === "NoPagado" ? "red" : "black",
+              }}
+            >
               {" "}
               {"S/ "}
               {parseFloat(item.price).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}
-            </DataTable.Cell>
+            </Text>
           </DataTable.Row>
         ))}
       </DataTable>
@@ -99,12 +119,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
-  column: {
-    flex: 1,
-  },
-  column4: {
-    flex: 1,
-  },
+
   shortColumn1: {
     flex: 0.77, // Adjust the value as per your requirement for the width
     maxWidth: 200, // Adjust the maxWidth as per your requirement

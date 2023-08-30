@@ -42,11 +42,6 @@ function HeaderScreenNoRedux(props) {
           return b.LastEventPosted - a.LastEventPosted;
         });
 
-        // //filter the list to remove the stand by services
-        // const filteredArray = lista.filter((item) => {
-        //   return item.AvanceAdministrativoTexto !== "Stand by";
-        // });
-
         console.log("2.OnsnapshotHeaderFETCH_SERVICIOAIT", lista);
         setData(lista);
         props.updateAITServicesDATA(lista);
@@ -54,7 +49,6 @@ function HeaderScreenNoRedux(props) {
     }
     fetchData();
     return () => {
-      // Cleanup function to unsubscribe from the previous listener
       if (unsubscribe) {
         unsubscribe();
       }
@@ -69,7 +63,6 @@ function HeaderScreenNoRedux(props) {
   };
 
   // create an algorithm to reduce the total text of the service description
-
   const ShortTextComponent = (item) => {
     const longText = item;
     const maxLength = 20; // Maximum length of the short text
@@ -88,7 +81,7 @@ function HeaderScreenNoRedux(props) {
           backgroundColor: "white",
           paddingTop: 10,
           paddingVertical: 10,
-        }} // Add backgroundColor here
+        }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={data}
@@ -115,7 +108,7 @@ function HeaderScreenNoRedux(props) {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.NumeroAIT} // Provide a unique key for each item
+        keyExtractor={(item) => item.NumeroAIT}
       />
     </>
   );

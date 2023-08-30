@@ -88,13 +88,13 @@ export const MontoComprometido = (props) => {
         {/* Table data */}
         {ServicesByYearAndMonthList.map((item) => (
           <DataTable.Row key={item.date}>
-            <DataTable.Cell style={styles.shortColumn2}>
+            <DataTable.Cell style={styles.multiLineColumn}>
               {item.year}
             </DataTable.Cell>
-            <DataTable.Cell style={styles.shortColumn2}>
+            <DataTable.Cell style={styles.multiLineColumn}>
               {item.month}
             </DataTable.Cell>
-            <DataTable.Cell style={styles.column}>
+            <DataTable.Cell style={styles.multiLineColumn}>
               {"S/ "}
               {parseFloat(item.valueSum).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -113,23 +113,8 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
-  column: {
-    flex: 1,
-  },
-  column4: {
-    flex: 1,
-  },
-  shortColumn1: {
-    flex: 0.77, // Adjust the value as per your requirement for the width
-    maxWidth: 200, // Adjust the maxWidth as per your requirement
-  },
-  shortColumn2: {
-    flex: 1, // Adjust the value as per your requirement for the width
-  },
-  shortColumn3: {
-    flex: 0.4, // Adjust the value as per your requirement for the width
-  },
+
   multiLineColumn: {
-    flex: 2,
+    flex: 1,
   },
 });

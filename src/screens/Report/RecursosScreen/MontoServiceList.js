@@ -13,7 +13,8 @@ export const MontoServiceList = (props) => {
     for (let i = 0; i < data.length; i++) {
       if (
         data[i].AvanceAdministrativoTexto !== "Standy by" &&
-        data[i].AvanceAdministrativoTexto !== "Cancelacion"
+        data[i].AvanceAdministrativoTexto !== "Cancelacion" &&
+        data[i].AvanceAdministrativoTexto !== "Contratista-Fin servicio"
       ) {
         newTableData.push({
           id: data[i].NumeroAIT,
@@ -30,7 +31,7 @@ export const MontoServiceList = (props) => {
     }
   }
 
-  newTableData.sort((a, b) => b.price - a.price);
+  newTableData?.sort((a, b) => b.price - a.price);
   const goToInformation = (item) => {
     const result = data?.filter((dataItem) => {
       return dataItem.NumeroAIT === item;
@@ -48,11 +49,9 @@ export const MontoServiceList = (props) => {
       <DataTable>
         {/* Table header */}
         <DataTable.Header>
-          <DataTable.Title style={styles.shortColumn1}>ID</DataTable.Title>
-          <DataTable.Title style={styles.multiLineColumn}>
-            Nombre
-          </DataTable.Title>
-          <DataTable.Title style={styles.shortColumn2}>Valor</DataTable.Title>
+          <DataTable.Title style={styles.titulo1}>ID</DataTable.Title>
+          <DataTable.Title style={styles.titulo2}>Nombre</DataTable.Title>
+          <DataTable.Title style={styles.titulo3}>Valor</DataTable.Title>
         </DataTable.Header>
 
         {/* Table data */}
@@ -87,11 +86,16 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
-  column: {
-    flex: 1,
+  titulo1: {
+    flex: 0.77, // Adjust the value as per your requirement for the width
+    maxWidth: 200, // Adjust the maxWidth as per your requirement
   },
-  column4: {
-    flex: 1,
+  titulo2: {
+    flex: 1, // Adjust the value as per your requirement for the width
+  },
+  titulo3: {
+    flex: 0.45,
+    // alignItems: "center",
   },
   shortColumn1: {
     flex: 0.77, // Adjust the value as per your requirement for the width
@@ -99,9 +103,6 @@ const styles = StyleSheet.create({
   },
   shortColumn2: {
     flex: 1, // Adjust the value as per your requirement for the width
-  },
-  shortColumn3: {
-    flex: 0.4, // Adjust the value as per your requirement for the width
   },
   multiLineColumn: {
     flex: 2,

@@ -90,8 +90,14 @@ function PostScreen(props) {
     console.log("area", area);
     const indexareaList = areaLists.findIndex((item) => item.value === area);
     const imageSource = areaLists[indexareaList]?.image;
+    const imageUpdated = AIT.photoServiceURL;
+
+    if (imageUpdated) {
+      setEquipment({ uri: imageUpdated });
+    } else {
+      setEquipment(imageSource);
+    }
     setAIT(AIT);
-    setEquipment(imageSource);
     props.saveActualServiceAIT(AIT);
   };
 
@@ -101,6 +107,8 @@ function PostScreen(props) {
         placeholder="Buscar AIT o nombre del servicio"
         value={searchText}
         onChangeText={(text) => setSearchText(text)}
+        lightTheme={true}
+        inputContainerStyle={{ backgroundColor: "white" }}
       />
       <View style={styles.equipments2}>
         <View>
@@ -140,7 +148,9 @@ function PostScreen(props) {
           ></Avatar>
           <View>
             <Text style={styles.name}>{AIT?.TipoServicio || "Escoge AIT"}</Text>
-            <Text style={styles.info}>{AIT?.NumeroAIT || "de la lista"}</Text>
+            <Text style={styles.info}>
+              {`Serv:${AIT?.NumeroAIT}` || "de la lista"}
+            </Text>
           </View>
         </View>
       </View>
