@@ -116,7 +116,6 @@ function SearchStackBare(props) {
 const mapStateToProps = (reducers) => {
   return {
     user_photo: reducers.profile.user_photo,
-    email: reducers.profile.email,
   };
 };
 

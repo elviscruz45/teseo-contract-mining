@@ -278,13 +278,23 @@ function InformationScreen(props) {
       style={{ backgroundColor: "white" }} // Add backgroundColor here
     >
       <View style={styles.equipments}>
-        <Avatar
-          size="large"
-          rounded
-          containerStyle={styles.avatar}
-          icon={{ type: "material", name: "person" }}
-          source={imageSource}
-        ></Avatar>
+        {props.actualServiceAIT.photoServiceURL ? (
+          <Avatar
+            size="large"
+            rounded
+            containerStyle={styles.avatar}
+            icon={{ type: "material", name: "person" }}
+            source={{ uri: props.actualServiceAIT?.photoServiceURL }}
+          ></Avatar>
+        ) : (
+          <Avatar
+            size="large"
+            rounded
+            containerStyle={styles.avatar}
+            icon={{ type: "material", name: "person" }}
+            source={imageSource}
+          ></Avatar>
+        )}
 
         <View>
           <Text></Text>

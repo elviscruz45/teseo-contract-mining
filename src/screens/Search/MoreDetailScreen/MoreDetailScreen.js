@@ -208,8 +208,14 @@ function MoreDetailScreenNoRedux(props) {
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
 
-      <Image source={imageSource} style={styles.roundImage} />
-
+      {Item.photoServiceURL ? (
+        <Image
+          source={{ uri: Item.photoServiceURL }}
+          style={styles.roundImage}
+        />
+      ) : (
+        <Image source={imageSource} style={styles.roundImage} />
+      )}
       <View>
         <Text></Text>
         <View style={[styles.row, styles.center]}>

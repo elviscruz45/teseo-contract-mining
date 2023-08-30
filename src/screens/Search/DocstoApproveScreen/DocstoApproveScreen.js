@@ -36,9 +36,19 @@ import { screen } from "../../../utils";
 import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { update_approvalList } from "../../../actions/home";
+import * as MailComposer from "expo-mail-composer";
 
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
+  const [isMailAvailable, setIsMailAvailable] = useState(false);
+
+  useEffect(() => {
+    async function checkAvailability() {
+      const available = await MailComposer.isAvailableAsync();
+      setIsMailAvailable(available);
+    }
+    checkAvailability();
+  }, []);
 
   //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
@@ -83,10 +93,46 @@ function DocstoApproveScreenBare(props) {
     setApproval(filteredArray);
   }, [props.approvalListNew]);
 
-  //Approval
+  // create a function that uses MailComposer to send an email
 
-  const docAprovals = async (emailUser, approvalPerformed, idApproval) => {
+  const sendEmail = (
+    tipo,
+    idTime,
+    solicitudComentario = "",
+    solicitud = "",
+    fileName = "",
+    ApprovalRequestedBy = "",
+    ApprovalRequestSentTo = [],
+    formatDate
+  ) => {
+    MailComposer.composeAsync({
+      recipients: ApprovalRequestSentTo,
+      subject: ` ${tipo} de solicitud ID: ${idTime}`,
+      body: `Se confirma la ${tipo} de: \n 
+      Solicitud: ${solicitud} \n
+      Comentario: ${solicitudComentario} \n 
+      Archivo: ${fileName} \n 
+      Autor: ${ApprovalRequestedBy} \n
+      Fecha de la Solicitud: ${formatDate} \n
+      Aprobaciones Requeridas: ${ApprovalRequestSentTo.join(", ")} \n 
+      `,
+    });
+  };
+
+  //Approval
+  const docAprovals = async (
+    emailUser,
+    idApproval,
+    idTime,
+    solicitudComentario,
+    solicitud,
+    fileName,
+    ApprovalRequestedBy,
+    ApprovalRequestSentTo,
+    formatDate
+  ) => {
     const PostRef = doc(db, "approvals", idApproval);
+    console.log("docAprovals");
 
     Alert.alert(
       "Aprobacion",
@@ -99,15 +145,26 @@ function DocstoApproveScreenBare(props) {
         {
           text: "Aprobar",
           onPress: async () => {
-            if (approvalPerformed?.includes(emailUser)) {
-              await updateDoc(PostRef, {
-                ApprovalPerformed: arrayRemove(emailUser),
-              });
-            } else {
-              await updateDoc(PostRef, {
-                ApprovalPerformed: arrayUnion(emailUser),
-              });
-            }
+            console.log("updateDoc prev");
+
+            await updateDoc(PostRef, {
+              ApprovalPerformed: arrayUnion(emailUser),
+            });
+            const tipo = "Aprobacion";
+            console.log("updateDoc post");
+
+            console.log("Aprobacion email prev send");
+            sendEmail(
+              tipo,
+              idTime,
+              solicitudComentario,
+              solicitud,
+              fileName,
+              ApprovalRequestedBy,
+              ApprovalRequestSentTo,
+              formatDate
+            );
+            console.log("Aprobacion email post send");
           },
         },
       ],
@@ -116,7 +173,17 @@ function DocstoApproveScreenBare(props) {
   };
 
   //Rejection
-  const docRejection = async (emailUser, RejectionPerformed, idApproval) => {
+  const docRejection = async (
+    emailUser,
+    idApproval,
+    idTime,
+    solicitudComentario,
+    solicitud,
+    fileName,
+    ApprovalRequestedBy,
+    ApprovalRequestSentTo,
+    formatDate
+  ) => {
     const PostRef = doc(db, "approvals", idApproval);
 
     Alert.alert(
@@ -130,16 +197,23 @@ function DocstoApproveScreenBare(props) {
         {
           text: "Aceptar",
           onPress: async () => {
-            if (RejectionPerformed?.includes(emailUser)) {
-              await updateDoc(PostRef, {
-                RejectionPerformed: arrayRemove(emailUser),
-              });
-            } else {
-              await updateDoc(PostRef, {
-                RejectionPerformed: arrayUnion(emailUser),
-              });
-            }
-            //aquie es
+            await updateDoc(PostRef, {
+              RejectionPerformed: arrayUnion(emailUser),
+            });
+            const tipo = "Desaprobacion";
+
+            console.log("Desaprobacion email prev send");
+            sendEmail(
+              tipo,
+              idTime,
+              solicitudComentario,
+              solicitud,
+              fileName,
+              ApprovalRequestedBy,
+              ApprovalRequestSentTo,
+              formatDate
+            );
+            console.log("Desaprobacion email post send");
           },
         },
       ],
@@ -183,7 +257,12 @@ function DocstoApproveScreenBare(props) {
           const isIncludedRectionPerformed =
             RejectionPerformed.includes(emailUser);
           const idApproval = item.idApproval;
+
+          //format date
+          const formatDateSol = formatDate(item.date);
+
           const { seconds, nanoseconds } = item.date;
+
           //ID
           let idTime = (
             (seconds * 1000 + nanoseconds / 1000000) /
@@ -254,7 +333,7 @@ function DocstoApproveScreenBare(props) {
 
                     <View style={[styles.row, styles.center]}>
                       <Text style={styles.info}>{"Fecha:     "}</Text>
-                      <Text style={styles.info2}>{formatDate(item.date)}</Text>
+                      <Text style={styles.info2}>{formatDateSol}</Text>
                     </View>
 
                     <View style={[styles.row, styles.center]}>
@@ -289,6 +368,7 @@ function DocstoApproveScreenBare(props) {
                       }}
                     >
                       {isIncludedapprovalRequested &&
+                        isMailAvailable &&
                         !(
                           isIncludedapprovalPerformed ||
                           isIncludedRectionPerformed
@@ -300,8 +380,13 @@ function DocstoApproveScreenBare(props) {
                               onPress={() =>
                                 docAprovals(
                                   emailUser,
-                                  approvalPerformed,
-                                  idApproval
+                                  idApproval,
+                                  idTime,
+                                  item.solicitudComentario,
+                                  item.solicitud,
+                                  item.fileName,
+                                  item.ApprovalRequestedBy,
+                                  item.ApprovalRequestSentTo
                                 )
                               }
                             />
@@ -312,8 +397,14 @@ function DocstoApproveScreenBare(props) {
                               onPress={() =>
                                 docRejection(
                                   emailUser,
-                                  RejectionPerformed,
-                                  idApproval
+                                  idApproval,
+                                  idTime,
+                                  item.solicitudComentario,
+                                  item.solicitud,
+                                  item.fileName,
+                                  item.ApprovalRequestedBy,
+                                  item.ApprovalRequestSentTo,
+                                  formatDateSol
                                 )
                               }
                             />

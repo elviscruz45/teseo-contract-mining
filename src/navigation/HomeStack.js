@@ -60,7 +60,7 @@ function HomeStack(props) {
           headerRight: () => (
             <TouchableOpacity onPress={() => profile_screen()}>
               <ImageExpo
-                source={{ uri: photoURL }}
+                source={{ uri: props.user_photo }}
                 style={{
                   width: 40,
                   height: 40,
@@ -89,7 +89,9 @@ function HomeStack(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {};
+  return {
+    user_photo: reducers.profile.user_photo,
+  };
 };
 
 export const ConnectedHomeStack = connect(mapStateToProps, {

@@ -203,8 +203,20 @@ function HomeScreen(props) {
             (item) => item.value === area
           );
           const imageSource = areaLists[indexareaList]?.image;
-          // return props.servicesData ? (
-          return true ? (
+
+          // //retrieving uri photo service
+          // const idService = item.AITidServicios;
+          // const serviceData = props.servicesData?.filter((item) => {
+          //   console.log("item.idServiciosAIT", item.idServiciosAIT);
+          //   return item.idServiciosAIT === idService;
+          // });
+          // console.log("idService", idService);
+
+          // console.log("serviceData", serviceData);
+
+          // //retrieving uri photo perfil
+
+          return item ? (
             <>
               <View
                 style={{
@@ -332,6 +344,7 @@ function HomeScreen(props) {
 const mapStateToProps = (reducers) => {
   return {
     email: reducers.profile.email,
+    user_photo: reducers.profile.user_photo,
     // postPerPage: reducers.home.postPerPage,
     // servicesData: reducers.home.servicesData,
   };
