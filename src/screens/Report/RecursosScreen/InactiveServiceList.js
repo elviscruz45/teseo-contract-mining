@@ -16,6 +16,8 @@ export const InactiveServiceList = (props) => {
         data[i].AvanceAdministrativoTexto === "Cancelacion"
       ) {
         newTableData.push({
+          idServiciosAIT: data[i].idServiciosAIT,
+
           id: data[i].NumeroAIT,
           name: data[i].NombreServicio,
           estado: data[i].AvanceAdministrativoTexto,
@@ -24,14 +26,20 @@ export const InactiveServiceList = (props) => {
     }
   }
 
-  const goToInformation = (item) => {
-    const result = data?.filter((dataItem) => {
-      return dataItem.NumeroAIT === item;
-    });
+  const goToInformation = (idServiciosAIT) => {
+    // const result = data?.filter((dataItem) => {
+    //   return dataItem.NumeroAIT === item;
+    // });
+    // console.log(result[0]);
+
+    // navigation.navigate(screen.search.tab, {
+    //   screen: screen.search.item,
+    //   params: { Item: result[0] },
+    // });
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
-      params: { Item: result[0] },
+      params: { Item: idServiciosAIT },
     });
   };
 
@@ -57,7 +65,7 @@ export const InactiveServiceList = (props) => {
               </DataTable.Cell>
               <Text
                 style={styles.multiLineColumn}
-                onPress={() => goToInformation(item.id)}
+                onPress={() => goToInformation(item.idServiciosAIT)}
               >
                 {item.name}
               </Text>

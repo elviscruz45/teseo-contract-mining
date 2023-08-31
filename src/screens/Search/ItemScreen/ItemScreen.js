@@ -35,13 +35,7 @@ import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";
 function ItemScreenNotRedux(props) {
   console.log("22.itemScreen");
   const [post, setPost] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [removeFilter, setRemoveFilter] = useState(true);
   const [serviceInfo, setServiceInfo] = useState();
-  // const [allData, setAllData] = useState();
   console.log("InfoService++++++++++", serviceInfo);
 
   //Retrieve data Item that comes from the previous screen to render the Updated Status
@@ -54,12 +48,12 @@ function ItemScreenNotRedux(props) {
   const navigation = useNavigation();
   //calculate the amount of days to finish the service
   let daysLeft = (
-    (Item.FechaFin.seconds * 1000 - Date.now()) /
+    (serviceInfo?.FechaFin.seconds * 1000 - Date.now()) /
     86400000
   ).toFixed(0);
   ///the algoritm to retrieve the image source to render the icon
-  const area = Item.AreaServicio;
-  const indexareaList = areaLists.findIndex((item) => item.value === area);
+  const area = serviceInfo?.AreaServicio;
+  const indexareaList = areaLists?.findIndex((item) => item.value === area);
   const imageSource = areaLists[indexareaList]?.image;
   console.log("itemScreen....", imageSource);
   /// the algorithm to retrieve the amount with format
@@ -68,9 +62,9 @@ function ItemScreenNotRedux(props) {
     useGrouping: true,
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(Item.Monto);
+  }).format(serviceInfo?.Monto);
   ///algoritm to change the format of FechaFin from ServiciosAIT firebase collection
-  const date = new Date(Item?.FechaFin?.seconds * 1000);
+  const date = new Date(serviceInfo?.FechaFin?.seconds * 1000);
   console.log(date);
   const monthNames = [
     "ene.",
@@ -94,7 +88,7 @@ function ItemScreenNotRedux(props) {
   const formattedDate = `${day} ${month} ${year}`;
 
   ///algoritm to change the format of FechaInicio from ServiciosAIT firebase collection
-  const dateInicio = new Date(Item?.createdAt?.seconds * 1000);
+  const dateInicio = new Date(serviceInfo?.createdAt?.seconds * 1000);
   const monthNamesInicio = [
     "ene.",
     "feb.",
@@ -114,19 +108,6 @@ function ItemScreenNotRedux(props) {
   const yearInicio = dateInicio.getFullYear();
   const formattedDateInicio = `${dayInicio} ${monthInicio} ${yearInicio}`;
 
-  //Changing the value to activate again the filter to rende the posts
-  const filter = (start, end) => {
-    console.log("filter");
-    setStartDate(start);
-    setEndDate(end);
-  };
-  const quitfilter = () => {
-    setRemoveFilter((prev) => !prev);
-    setStartDate(null);
-    setEndDate(null);
-    console.log("removeFilter");
-  };
-
   //Using navigation.navigate I send it to another screen (post)
   const goToPublicar = () => {
     navigation.goBack();
@@ -144,22 +125,23 @@ function ItemScreenNotRedux(props) {
     });
   };
 
-  // const arraytoCompareinFirebase = ["RyVnEJx2hjsSiJeILqrv"];
-
   useEffect(() => {
     let unsubscribe;
     async function fetchData() {
       let queryRef = query(
         collection(db, "ServiciosAIT"),
-        // orderBy("idDocFirestoreDB"), // Add this line
         orderBy("createdAt", "desc"),
-        where("idServiciosAIT", "==", Item.idServiciosAIT),
+        where("idServiciosAIT", "==", Item),
         where("companyName", "==", "prodise")
-
-        // where("idDocFirestoreDB", "not-in", arraytoCompareinFirebase)
       );
+
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
+        const InfoService = [];
+        ItemFirebase.forEach((doc) => {
+          InfoService.push(doc.data());
+        });
+        console.log("InfoService", InfoService);
         ItemFirebase.forEach((doc) => {
           doc.data().events.forEach((item) => {
             const dataschema = {
@@ -174,8 +156,9 @@ function ItemScreenNotRedux(props) {
             lista.push(dataschema);
           });
         });
-        console.log("999.OnSnapshot_Servicios_AITEVENTS_SCREEN", lista);
+        // console.log("999.OnSnapshot_Servicios_AITEVENTS_SCREEN", lista);
         setPost(lista);
+        setServiceInfo(InfoService[0]);
       });
     }
     fetchData();
@@ -185,14 +168,15 @@ function ItemScreenNotRedux(props) {
       }
     };
   }, [Item]);
+  // }, [Item, props.servicesData]);
 
-  //This hook used to retrieve post data from Firebase and sorted by date
-  useEffect(() => {
-    let InfoService = props.servicesData.filter((item) => {
-      return item.idServiciosAIT === Item.idServiciosAIT;
-    });
-    setServiceInfo(InfoService[0]);
-  }, [props.servicesData, Item]);
+  // //This hook used to retrieve post data from Firebase and sorted by date
+  // useEffect(() => {
+  //   let InfoService = props.servicesData.filter((item) => {
+  //     return item.idServiciosAIT === Item.idServiciosAIT;
+  //   });
+  //   setServiceInfo(InfoService[0]);
+  // }, [props.servicesData, Item]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {
@@ -211,15 +195,15 @@ function ItemScreenNotRedux(props) {
   };
 
   //this function goes to homeTab=>commentScreen
-  const goToDocsToApprove = () => {
+  const goToDocsToApprove = (item) => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.approve,
-      params: { Item: Item },
+      params: { Item: item },
     });
   };
 
   ///////////////////// serviceInfo
-  if (!serviceInfo) {
+  if (!serviceInfo || !post) {
     return;
   } else {
     return (
@@ -243,6 +227,7 @@ function ItemScreenNotRedux(props) {
 
               <Text></Text>
             </View>
+            <Text> </Text>
             <View>
               <Text style={styles.name}>{serviceInfo.NombreServicio}</Text>
               <Text style={styles.info}>
@@ -314,7 +299,7 @@ function ItemScreenNotRedux(props) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnContainer4}
-              onPress={() => goToDocsToApprove()}
+              onPress={() => goToDocsToApprove(serviceInfo)}
             >
               <Image
                 source={require("../../../../assets/approved.png")}
@@ -345,7 +330,7 @@ function ItemScreenNotRedux(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    servicesData: reducers.home.servicesData,
+    // servicesData: reducers.home.servicesData,
     // totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };

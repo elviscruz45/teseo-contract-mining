@@ -1,6 +1,5 @@
-import { StyleSheet, Dimensions } from "react-native";
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
+import { StyleSheet } from "react-native";
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,15 +31,8 @@ export const styles = StyleSheet.create({
     width: 40,
     height: 40,
     alignSelf: "center",
-    flexDirection: "row",
-    marginLeft: windowWidth * 0.4,
-  },
-  excel: {
-    width: 40,
-    height: 40,
-    alignSelf: "center",
-    flexDirection: "row",
-    // marginLeft: windowWidth * 0.4,
+
+    // borderRadius: 50, // half of width and height
   },
   roundImageUploadmas: {
     width: 30,
@@ -51,19 +43,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontWeight: "900",
     textAlign: "center",
-  },
-  history: {
-    flexDirection: "row",
-    alignItems: "center",
-    // marginRight: windowWidth * 0.1,
-    marginLeft: windowWidth * 0.3,
-
-    width: 40,
-    height: 40,
-    alignSelf: "flex-end",
-    // marginRight: 10,
-
-    // position: "absolute",
   },
   container22: {
     flex: 1,

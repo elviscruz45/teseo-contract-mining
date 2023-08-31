@@ -142,13 +142,27 @@ function MoreDetailScreenNoRedux(props) {
       } else {
         return "red";
       }
+
+      // if (percentajeNormalized < (TotalSizeCompleted * 20) / 100) {
+      //   return "red";
+      // } else if (percentajeNormalized < (TotalSizeCompleted * 40) / 100) {
+      //   return "magenta";
+      // } else if (percentajeNormalized < (TotalSizeCompleted * 60) / 100) {
+      //   return "orange";
+      // } else if (percentajeNormalized < (TotalSizeCompleted * 80) / 100) {
+      //   return "limegreen";
+      // } else if (percentajeNormalized < TotalSizeCompleted) {
+      //   return "green";
+      // } else {
+      //   return "red";
+      // }
     };
     return (
       <View style={{ flexDirection: "row", height: 10, margin: 10 }}>
         <View
           style={{
             backgroundColor: getColor(percentajeNormalized),
-            width: percentajeNormalized ? percentajeNormalized : 0,
+            width: percentajeNormalized,
             borderRadius: 5,
           }}
         />

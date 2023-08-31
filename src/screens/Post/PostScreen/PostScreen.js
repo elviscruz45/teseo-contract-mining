@@ -12,6 +12,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { areaLists } from "../../../utils/areaList";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Image as ImageExpo } from "expo-image";
 
 function PostScreen(props) {
   console.log("4PostScreen");
@@ -211,12 +212,17 @@ function PostScreen(props) {
             >
               <View style={styles.equipments}>
                 {item.photoServiceURL ? (
-                  <Image
+                  <ImageExpo
                     source={{ uri: item.photoServiceURL }}
                     style={styles.image}
+                    cachePolicy={"memory-disk"}
                   />
                 ) : (
-                  <Image source={imageSource} style={styles.image} />
+                  <ImageExpo
+                    source={imageSource}
+                    style={styles.image}
+                    cachePolicy={"memory-disk"}
+                  />
                 )}
 
                 <View>

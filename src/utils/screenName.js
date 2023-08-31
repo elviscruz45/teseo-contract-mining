@@ -31,8 +31,7 @@ const postStack = {
 const reportStack = {
   tab: "ReportTab",
   report: "Report",
-  login: "Login",
-  register: "Register",
+  history: "History",
 };
 
 const profileStack = {

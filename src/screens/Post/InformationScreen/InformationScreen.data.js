@@ -9,7 +9,7 @@ export function initialValues() {
     pdfFile: "",
     FilenameTitle: "",
     MontoModificado: "",
-    NuevaFechaEstimada: new Date(),
+    NuevaFechaEstimada: null,
     HHModificado: "",
     tipoFile: "",
   };

@@ -181,45 +181,45 @@ export const getExcelPerfil = async (emailProfile) => {
   }
 };
 
-export const getExcelReportData = async () => {
-  const querySnapshot = collection(db, "ServiciosAIT");
+export const getExcelReportData = async (datas = []) => {
+  // const querySnapshot = collection(db, "ServiciosAIT");
   const post_array = [];
   console.log("getExcelGLobal");
 
-  querySnapshot.forEach((doc) => {
+  datas.forEach((data) => {
     const table = {
       //Datos principales del servicio
-      NumeroServicio: doc.data().NumeroAIT,
-      NombreServicio: doc.data().NombreServicio,
-      TipoServicio: doc.data().TipoServicio,
-      companyName: doc.data().companyName,
-      fechaPostFormato: doc.data().fechaPostFormato,
+      NumeroServicio: data.NumeroAIT,
+      NombreServicio: data.NombreServicio,
+      TipoServicio: data.TipoServicio,
+      companyName: data.companyName,
+      fechaPostFormato: data.fechaPostFormato,
       // LastEventPosted: doc.data().LastEventPosted,
-      NumeroCotizacion: doc.data().NumeroCotizacion,
+      NumeroCotizacion: data.NumeroCotizacion,
       // FechaFin: doc.data().FechaFin,
       //Usuario
-      emailPerfil: doc.data().emailPerfil,
-      nombreAutor: doc.data().nombrePerfil,
+      emailPerfil: data.emailPerfil,
+      nombreAutor: data.nombrePerfil,
       // Responsables ,interacciones
-      ResponsableEmpresaUsuario: doc.data().ResponsableEmpresaUsuario,
-      ResponsableEmpresaContratista: doc.data().ResponsableEmpresaContratista,
-      AreaServicio: doc.data().AreaServicio,
+      ResponsableEmpresaUsuario: data.ResponsableEmpresaUsuario,
+      ResponsableEmpresaContratista: data.ResponsableEmpresaContratista,
+      AreaServicio: data.AreaServicio,
       //Monto y HH
-      HorasHombre: doc.data().HorasHombre,
-      Moneda: doc.data().Moneda,
-      Monto: doc.data().Monto,
+      HorasHombre: data.HorasHombre,
+      Moneda: data.Moneda,
+      Monto: data.Monto,
       //Fechas
-      fechaPostISO: doc.data().fechaPostISO,
+      fechaPostISO: data.fechaPostISO,
       // createdAt: doc.data().createdAt,
       //Avances
-      AvanceEjecucion: doc.data().AvanceEjecucion,
-      AvanceAdministrativo: doc.data().AvanceAdministrativo,
-      AvanceEjecucionTexto: doc.data().AvanceEjecucionTexto,
-      AvanceAdministrativoTexto: doc.data().AvanceAdministrativoTexto,
+      AvanceEjecucion: data.AvanceEjecucion,
+      AvanceAdministrativo: data.AvanceAdministrativo,
+      AvanceEjecucionTexto: data.AvanceEjecucionTexto,
+      AvanceAdministrativoTexto: data.AvanceAdministrativoTexto,
       //Modificaciones
       // NuevaFechaEstimada: doc.data().NuevaFechaEstimada,
-      HHModificado: doc.data().HHModificado,
-      MontoModificado: doc.data().MontoModificado,
+      HHModificado: data.HHModificado,
+      MontoModificado: data.MontoModificado,
     };
     post_array.push(table);
   });

@@ -20,15 +20,25 @@ export const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
-  rowlikes: {
-    flexDirection: "row",
-    margin: 10,
-  },
   center: {
     alignItems: "center",
     justifyContent: "space-between",
     margin: 0,
   },
+  row1: {
+    flexDirection: "row",
+    alignSelf: "center",
+  },
+  center1: {
+    // alignItems: "center",
+    // justifyContent: "space-between",
+    // margin: 0,
+  },
+  rowlikes: {
+    flexDirection: "row",
+    margin: 10,
+  },
+
   roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
   roundImage5: { width: 60, height: 60, borderRadius: 30, marginLeft: 20 },
   textImage: { alignItems: "center" },
@@ -82,5 +92,26 @@ export const styles = StyleSheet.create({
   avatar: {
     marginRight: 20,
     backgroundColor: "green",
+  },
+  filterViewButton: {
+    // flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  filterbutton: {
+    backgroundColor: "#2A3B76", // Background color of the button
+    padding: 10,
+    borderRadius: 5, // Rounded corners
+    opacity: 1,
+  },
+  filterbutton2: {
+    backgroundColor: "#2A3B76", // Background color of the button
+    padding: 10,
+    borderRadius: 5, // Rounded corners
+    opacity: 0.7,
+  },
+  filterButtonText: {
+    color: "#fff", // Text color
+    fontSize: 16,
   },
 });

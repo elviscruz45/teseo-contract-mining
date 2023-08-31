@@ -22,12 +22,17 @@ export const EstadoServiceList = (props) => {
           "Contratista-Solicitud Ampliacion Servicio" ||
         data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Ampliacion"
       ) {
-        let daysLeft = (
-          (data[i].FechaFin.seconds * 1000 - Date.now()) /
-          86400000
-        ).toFixed(0);
+        let daysLeft = data[i].NuevaFechaEstimada
+          ? (
+              (data[i].NuevaFechaEstimada.seconds * 1000 - Date.now()) /
+              86400000
+            ).toFixed(0)
+          : ((data[i].FechaFin.seconds * 1000 - Date.now()) / 86400000).toFixed(
+              0
+            );
 
         newTableData.push({
+          idServiciosAIT: data[i].idServiciosAIT,
           id: data[i].NumeroAIT,
           avance: data[i].AvanceEjecucion,
           name: data[i].NombreServicio,
@@ -38,15 +43,20 @@ export const EstadoServiceList = (props) => {
   }
 
   newTableData?.sort((a, b) => a.diasPendientes - b.diasPendientes);
-  const goToInformation = (item) => {
-    const result = data?.filter((dataItem) => {
-      return dataItem.NumeroAIT === item;
-    });
-    console.log(result[0]);
+  const goToInformation = (idServiciosAIT) => {
+    // const result = data?.filter((dataItem) => {
+    //   return dataItem.NumeroAIT === item;
+    // });
+    // console.log(result[0]);
+
+    // navigation.navigate(screen.search.tab, {
+    //   screen: screen.search.item,
+    //   params: { Item: result[0] },
+    // });
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
-      params: { Item: result[0] },
+      params: { Item: idServiciosAIT },
     });
   };
 
@@ -97,7 +107,7 @@ export const EstadoServiceList = (props) => {
                     : "red",
                 alignSelf: "center",
               }}
-              onPress={() => goToInformation(item.id)}
+              onPress={() => goToInformation(item.idServiciosAIT)}
             >
               {item.name}
             </Text>

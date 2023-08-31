@@ -49,90 +49,86 @@ function SearchScreenNoRedux(props) {
   }, [searchText, props.servicesData]);
 
   //this method is used to go to a screen to see the status of the item
-  const selectAsset = (item) => {
+  const selectAsset = (idServiciosAIT) => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
-      params: { Item: item },
+      params: { Item: idServiciosAIT },
     });
   };
 
   return (
-    <>
-      {/* {!searchResults && <Loading show text="Cargando" />} */}
+    <FlatList
+      data={searchResults}
+      ListHeaderComponent={
+        <SearchBar
+          placeholder="Buscar AIT o nombre del servicio"
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
+          lightTheme={true}
+          inputContainerStyle={{ backgroundColor: "white" }}
+        />
+      }
+      showsVerticalScrollIndicator={false}
+      scrollEnabled={true}
+      renderItem={({ item, index }) => {
+        //the algoritm to retrieve the image source to render the icon
 
-      <FlatList
-        data={searchResults}
-        ListHeaderComponent={
-          <SearchBar
-            placeholder="Buscar AIT o nombre del servicio"
-            value={searchText}
-            onChangeText={(text) => setSearchText(text)}
-            lightTheme={true}
-            inputContainerStyle={{ backgroundColor: "white" }}
-          />
-        }
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={true}
-        renderItem={({ item, index }) => {
-          //the algoritm to retrieve the image source to render the icon
+        const area = item.AreaServicio;
+        const indexareaList = areaLists.findIndex(
+          (item) => item.value === area
+        );
+        const imageSource = areaLists[indexareaList]?.image;
+        // the algorithm to retrieve the amount with format
+        const formattedAmount = new Intl.NumberFormat("en-US", {
+          style: "decimal",
+          useGrouping: true,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(item.Monto);
 
-          const area = item.AreaServicio;
-          const indexareaList = areaLists.findIndex(
-            (item) => item.value === area
-          );
-          const imageSource = areaLists[indexareaList]?.image;
-          // the algorithm to retrieve the amount with format
-          const formattedAmount = new Intl.NumberFormat("en-US", {
-            style: "decimal",
-            useGrouping: true,
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          }).format(item.Monto);
+        return (
+          <TouchableOpacity
+            onPress={() => selectAsset(item.idServiciosAIT)}
+            style={{ backgroundColor: "white" }} // Add backgroundColor here
+          >
+            {console.log("FlatList SearchScreen")}
+            <View style={styles.equipments}>
+              {item.photoServiceURL ? (
+                <ImageExpo
+                  source={{ uri: item.photoServiceURL }}
+                  style={styles.image}
+                  cachePolicy={"memory-disk"}
+                />
+              ) : (
+                <ImageExpo
+                  source={imageSource}
+                  style={styles.image}
+                  cachePolicy={"memory-disk"}
+                />
+              )}
 
-          return (
-            <TouchableOpacity
-              onPress={() => selectAsset(item)}
-              style={{ backgroundColor: "white" }} // Add backgroundColor here
-            >
-              {console.log("FlatList SearchScreen")}
-              <View style={styles.equipments}>
-                {item.photoServiceURL ? (
-                  <ImageExpo
-                    source={{ uri: item.photoServiceURL }}
-                    style={styles.image}
-                    cachePolicy={"memory-disk"}
-                  />
-                ) : (
-                  <ImageExpo
-                    source={imageSource}
-                    style={styles.image}
-                    cachePolicy={"memory-disk"}
-                  />
-                )}
+              <View>
+                <Text style={styles.name}>{item.NombreServicio}</Text>
+                <Text style={styles.info}>
+                  {"Codigo Servicio: "}
+                  {item.NumeroAIT}
+                </Text>
+                <Text style={styles.info}>
+                  {"Tipo: "}
+                  {item.TipoServicio}
+                </Text>
 
-                <View>
-                  <Text style={styles.name}>{item.NombreServicio}</Text>
-                  <Text style={styles.info}>
-                    {"Codigo Servicio: "}
-                    {item.NumeroAIT}
-                  </Text>
-                  <Text style={styles.info}>
-                    {"Tipo: "}
-                    {item.TipoServicio}
-                  </Text>
-
-                  <Text style={styles.info}>
-                    {"Fecha Inicio: "}
-                    {item.fechaPostFormato}
-                  </Text>
-                </View>
+                <Text style={styles.info}>
+                  {"Fecha Inicio: "}
+                  {item.fechaPostFormato}
+                </Text>
               </View>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item) => item.NumeroAIT}
-      />
-    </>
+            </View>
+          </TouchableOpacity>
+        );
+      }}
+      keyExtractor={(item) => item.NumeroAIT}
+    />
   );
 }
 

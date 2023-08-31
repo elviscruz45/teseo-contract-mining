@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { styles } from "./ReportScreen.styles";
+import { styles } from "./HistoryScreen.styles";
+import { RecursosProgress } from "../RecursosScreen/RecursosProgress";
 import { PieChart } from "../RecursosScreen/PieStatus";
+import { DateScreen } from "../../../components/Report/DateScreen/DateScreen";
 import { BarChartMontoServicios } from "../RecursosScreen/BarChartMontoServicios";
 import { BarChartProceso } from "../RecursosScreen/BarChartProceso";
 import { ServiceList } from "../RecursosScreen/ServiceList";
@@ -13,36 +15,87 @@ import { RecursosHumanos } from "../RecursosScreen/RecursosHumanos";
 import { BarInactiveServices } from "../RecursosScreen/BarInactiveServices";
 import { MontoComprometido } from "../RecursosScreen/MontoComprometido";
 import { getExcelReportData } from "../../../utils/excelData";
-import { EstadoServiceList } from "../RecursosScreen/EstadoServiceList";
-import { useNavigation } from "@react-navigation/native";
-import { screen } from "../../../utils";
+import { HistoryEstadoServiceList } from "../RecursosScreen/HistoryEstadoServiceList";
+import { HistoryServiceList } from "../RecursosScreen/HistoryServiceList";
+import { db } from "../../../utils";
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  limit,
+} from "firebase/firestore";
 
-const ReportScreenNoRedux = (props) => {
+const HistoryScreenNoRedux = (props) => {
   //real time updates
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   console.log("5.ReportScreen", data);
-  const navigation = useNavigation();
+
+  //states of filters
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [removeFilter, setRemoveFilter] = useState(true);
 
   //states to view the tables
   const [serviciosActivos, setServiciosActivos] = useState(false);
   const [estadoServicios, setEstadoServicios] = useState(false);
   const [serviciosInactivos, setServiciosInactivos] = useState(false);
   const [montoServicios, setMontoServicios] = useState(false);
-  const [montoEDP, setMontoEDP] = useState(false);
-  const [comprometido, setComprometido] = useState(false);
+  const [historial, setHistorial] = useState(false);
 
   useEffect(() => {
     if (props.servicesData) {
-      console.log("5.1.USEEFFECTReportScreen");
       setData(props.servicesData);
     }
-  }, [props.servicesData]);
+  }, [props.servicesData, removeFilter]);
 
-  // go to a history screen
-  const goToHistoryScreen = () => {
-    navigation.navigate(screen.report.tab, {
-      screen: screen.report.history,
-    });
+  useEffect(() => {
+    let unsubscribe;
+    let q;
+    if (startDate && endDate) {
+      async function fetchData() {
+        q = query(
+          collection(db, "ServiciosAIT"),
+          orderBy("createdAt", "desc"),
+          where("createdAt", ">=", startDate),
+          where("createdAt", "<=", endDate)
+        );
+
+        try {
+          const querySnapshot = await getDocs(q);
+          const lista = [];
+          querySnapshot.forEach((doc) => {
+            lista.push(doc.data());
+          });
+          console.log("GETDOCquerySnapshotHistoryScreenNoRedux");
+
+          setData(lista);
+        } catch (error) {
+          console.error("Error fetching data: ", error);
+        }
+      }
+
+      fetchData();
+
+      return () => {
+        // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
+    }
+  }, [startDate, endDate]);
+
+  //Changing the value to activate again the filter to rende the posts
+  const filter = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+  const quitfilter = () => {
+    setRemoveFilter((prev) => !prev);
+    setStartDate(null);
+    setEndDate(null);
   };
 
   return (
@@ -50,31 +103,26 @@ const ReportScreenNoRedux = (props) => {
       style={{ backgroundColor: "white" }} // Add backgroundColor here
     >
       <Text></Text>
-      <View style={{ flexDirection: "row", alignSelf: "center" }}>
-        <TouchableOpacity onPress={() => alert("lista de empresas")}>
-          <Image
-            source={require("../../../../assets/empresa.png")}
-            style={styles.roundImageUpload}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => goToHistoryScreen()}>
-          <Image
-            source={require("../../../../assets/historyIcon.png")}
-            style={styles.history}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.company}>PRODISE</Text>
+      <TouchableOpacity onPress={() => alert("lista de empresas")}>
+        <Image
+          source={require("../../../../assets/empresa.png")}
+          style={styles.roundImageUpload}
+        />
+      </TouchableOpacity>
 
+      <Text style={styles.company}>PRODISE</Text>
       <Text></Text>
-      <RecursosHumanos />
+      <Text></Text>
+
+      <DateScreen filterButton={filter} quitFilterButton={() => quitfilter()} />
+
       <Text></Text>
       <Text></Text>
 
       <Text></Text>
       <View style={styles.iconMinMax}>
         <View style={styles.container22}>
-          <Text style={styles.titleText}>Servicios Activos Asignados</Text>
+          <Text style={styles.titleText}>Historial Servicios Asignados</Text>
         </View>
         <TouchableOpacity onPress={() => setServiciosActivos(true)}>
           <Image
@@ -91,18 +139,14 @@ const ReportScreenNoRedux = (props) => {
         </TouchableOpacity>
       </View>
 
-      {serviciosActivos && (
-        <>
-          <PieChart data={data} />
-          <ServiceList data={data} />
-        </>
-      )}
-      <Text></Text>
-      <Text></Text>
+      <PieChart data={data} />
 
+      {serviciosActivos && <ServiceList data={data} />}
+      <Text></Text>
+      <Text></Text>
       <View style={styles.iconMinMax}>
         <View style={styles.container22}>
-          <Text style={styles.titleText}>Estado de Servicios Activos</Text>
+          <Text style={styles.titleText}>Fecha Historial Servicios</Text>
         </View>
         <TouchableOpacity onPress={() => setEstadoServicios(true)}>
           <Image
@@ -118,9 +162,30 @@ const ReportScreenNoRedux = (props) => {
           />
         </TouchableOpacity>
       </View>
-      {estadoServicios && <EstadoServiceList data={data} />}
-      <Text></Text>
+      {estadoServicios && <HistoryServiceList data={data} />}
 
+      <Text></Text>
+      <Text></Text>
+      <View style={styles.iconMinMax}>
+        <View style={styles.container22}>
+          <Text style={styles.titleText}>Estado Historial Servicios</Text>
+        </View>
+        <TouchableOpacity onPress={() => setHistorial(true)}>
+          <Image
+            source={require("../../../../assets/plus3.png")}
+            style={styles.roundImageUploadmas}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setHistorial(false)}>
+          <Image
+            source={require("../../../../assets/minus3.png")}
+            style={styles.roundImageUploadmas}
+          />
+        </TouchableOpacity>
+      </View>
+      {historial && <HistoryEstadoServiceList data={data} />}
+      <Text></Text>
       <Text></Text>
       <View style={styles.iconMinMax}>
         <View style={styles.container22}>
@@ -183,62 +248,12 @@ const ReportScreenNoRedux = (props) => {
       </View>
       {montoServicios && (
         <>
-          <BarChartMontoServicios data={data} />
+          {/* <BarChartMontoServicios data={data} /> */}
           <MontoServiceList data={data} />
         </>
       )}
       <Text></Text>
 
-      <Text></Text>
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Monto Estado de Pago</Text>
-        </View>
-        <TouchableOpacity onPress={() => setMontoEDP(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setMontoEDP(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-      {montoEDP && (
-        <>
-          <BarChartProceso data={data} />
-          <MontoEDPList data={data} />
-        </>
-      )}
-
-      <Text></Text>
-
-      <Text></Text>
-
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Montos Comprometidos</Text>
-        </View>
-        <TouchableOpacity onPress={() => setComprometido(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setComprometido(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-
-      {comprometido && <MontoComprometido data={data} />}
       <Text></Text>
 
       <TouchableOpacity
@@ -250,7 +265,7 @@ const ReportScreenNoRedux = (props) => {
       >
         <Image
           source={require("../../../../assets/excel2.png")}
-          style={styles.excel}
+          style={styles.roundImageUpload}
         />
       </TouchableOpacity>
     </ScrollView>
@@ -263,4 +278,4 @@ const mapStateToProps = (reducers) => {
   };
 };
 
-export const ReportScreen = connect(mapStateToProps, {})(ReportScreenNoRedux);
+export const HistoryScreen = connect(mapStateToProps, {})(HistoryScreenNoRedux);

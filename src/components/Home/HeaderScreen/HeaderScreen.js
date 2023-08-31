@@ -95,7 +95,7 @@ function HeaderScreenNoRedux(props) {
           const imageSource = areaLists[indexareaList]?.image;
           console.log("imageSource", imageSource);
           return (
-            <TouchableOpacity onPress={() => selectAsset(item)}>
+            <TouchableOpacity onPress={() => selectAsset(item.idServiciosAIT)}>
               <View style={styles.textImage}>
                 <CircularProgress
                   imageSource={imageSource}

@@ -63,6 +63,7 @@ function AITNoReduxScreen(props) {
         newData.createdAt = new Date();
         newData.LastEventPosted = new Date();
         newData.NuevaFechaEstimada = new Date();
+        newData.fechaFinEjecucion = new Date();
 
         //Photo of the service
         newData.photoServiceURL = "";

@@ -156,8 +156,7 @@ function InformationScreen(props) {
         // newData.AITMonto = props.actualServiceAIT.Monto;
         // newData.AITMoneda = props.actualServiceAIT.Moneda;
         // newData.AITMontoModificado = props.actualServiceAIT.MontoModificado;
-        // newData.AITNuevaFechaEstimada =
-        //   props.actualServiceAIT.NuevaFechaEstimada;
+
         // newData.AITNumeroCotizacion = props.actualServiceAIT.NumeroCotizacion;
         // newData.AITResponsableEmpresaContratista =
         //   props.actualServiceAIT.ResponsableEmpresaContratista;
@@ -207,10 +206,16 @@ function InformationScreen(props) {
           AvanceEjecucion: newData.porcentajeAvance,
           AvanceAdministrativoTexto: newData.etapa,
           MontoModificado: newData.MontoModificado ?? "",
-          NuevaFechaEstimada: newData.NuevaFechaEstimada,
+          NuevaFechaEstimada: newData.NuevaFechaEstimada ?? null,
           HHModificado: newData.HHModificado ?? "",
           events: arrayUnion(eventSchema),
+          fechaFinEjecucion:
+            newData.porcentajeAvance === "100" &&
+            newData.etapa === "Contratista-Avance Ejecucion"
+              ? new Date()
+              : null,
         };
+
         // // Specify the field name and its updated value
 
         if (newData?.aprobacion !== undefined) {

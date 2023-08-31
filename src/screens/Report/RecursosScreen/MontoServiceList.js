@@ -13,10 +13,11 @@ export const MontoServiceList = (props) => {
     for (let i = 0; i < data.length; i++) {
       if (
         data[i].AvanceAdministrativoTexto !== "Standy by" &&
-        data[i].AvanceAdministrativoTexto !== "Cancelacion" &&
-        data[i].AvanceAdministrativoTexto !== "Contratista-Fin servicio"
+        data[i].AvanceAdministrativoTexto !== "Cancelacion"
       ) {
         newTableData.push({
+          idServiciosAIT: data[i].idServiciosAIT,
+
           id: data[i].NumeroAIT,
           name: data[i].NombreServicio,
           price:
@@ -32,15 +33,20 @@ export const MontoServiceList = (props) => {
   }
 
   newTableData?.sort((a, b) => b.price - a.price);
-  const goToInformation = (item) => {
-    const result = data?.filter((dataItem) => {
-      return dataItem.NumeroAIT === item;
-    });
-    console.log(result[0]);
+  const goToInformation = (idServiciosAIT) => {
+    // const result = data?.filter((dataItem) => {
+    //   return dataItem.NumeroAIT === item;
+    // });
+    // console.log(result[0]);
+
+    // navigation.navigate(screen.search.tab, {
+    //   screen: screen.search.item,
+    //   params: { Item: result[0] },
+    // });
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
-      params: { Item: result[0] },
+      params: { Item: idServiciosAIT },
     });
   };
 
@@ -49,7 +55,6 @@ export const MontoServiceList = (props) => {
       <DataTable>
         {/* Table header */}
         <DataTable.Header>
-          <DataTable.Title style={styles.titulo1}>ID</DataTable.Title>
           <DataTable.Title style={styles.titulo2}>Nombre</DataTable.Title>
           <DataTable.Title style={styles.titulo3}>Valor</DataTable.Title>
         </DataTable.Header>
@@ -57,12 +62,9 @@ export const MontoServiceList = (props) => {
         {/* Table data */}
         {newTableData.map((item) => (
           <DataTable.Row key={item.id}>
-            <DataTable.Cell style={styles.shortColumn1}>
-              {item.id}
-            </DataTable.Cell>
             <Text
               style={styles.multiLineColumn}
-              onPress={() => goToInformation(item.id)}
+              onPress={() => goToInformation(item.idServiciosAIT)}
             >
               {item.name}
             </Text>

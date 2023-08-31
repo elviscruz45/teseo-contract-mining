@@ -4,7 +4,8 @@ import { DataTable } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
-export const MontoEDPList = (props) => {
+export const HistoryEstadoServiceList = (props) => {
+  console.log("5.4.EstadoServiceList");
   const { data } = props;
   const navigation = useNavigation();
   const newTableData = [];
@@ -12,41 +13,44 @@ export const MontoEDPList = (props) => {
   if (data) {
     for (let i = 0; i < data.length; i++) {
       if (
-        data[i].AvanceAdministrativoTexto !== "Stand by" &&
-        data[i].AvanceAdministrativoTexto !== "Cancelacion"
+        data[i].AvanceAdministrativoTexto === "Contratista-Inicio Servicio" ||
+        data[i].AvanceAdministrativoTexto ===
+          "Contratista-Solicitud Aprobacion Doc" ||
+        data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Doc" ||
+        data[i].AvanceAdministrativoTexto === "Contratista-Avance Ejecucion" ||
+        data[i].AvanceAdministrativoTexto ===
+          "Contratista-Solicitud Ampliacion Servicio" ||
+        data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Ampliacion"
       ) {
+        let daysLeft = (
+          (data[i].FechaFin.seconds * 1000 - Date.now()) /
+          86400000
+        ).toFixed(0);
+
         newTableData.push({
           idServiciosAIT: data[i].idServiciosAIT,
           id: data[i].NumeroAIT,
+          avance: data[i].AvanceEjecucion,
           name: data[i].NombreServicio,
-          price:
-            data[i].Moneda === "Dolares"
-              ? data[i].Monto * 3.5
-              : data[i].Moneda === "Euros"
-              ? data[i].Monto * 4
-              : data[i].Monto,
-          moneda: data[i].Moneda,
-          etapa:
-            data[i]["AvanceAdministrativoTexto"] ===
-              "Contratista-Fin servicio" ||
-            data[i]["AvanceAdministrativoTexto"] ===
-              "Contratista-Registro de Pago"
-              ? "Pagado"
-              : data[i]["AvanceAdministrativoTexto"] ===
-                  "Usuario-Aprobacion EDP" ||
-                data[i]["AvanceAdministrativoTexto"] === "Contratista-Envio EDP"
-              ? "NoPagado"
-              : data[i]["AvanceEjecucion"] === "100"
-              ? "Compl"
-              : "Ejec",
+          diasPendientes: daysLeft,
+          fechaPostFormato: data[i].fechaPostFormato,
+          createdAt: data[i].createdAt,
+          estadoFinalEjecucion:
+            data[i].NuevaFechaEstimada &&
+            data[i].fechaFinEjecucion &&
+            data[i].fechaFinEjecucion - data[i].NuevaFechaEstimada > 0
+              ? "Atrasado"
+              : data[i].FechaFin &&
+                data[i].fechaFinEjecucion &&
+                data[i].fechaFinEjecucion - data[i].FechaFin > 0
+              ? "Atrasado"
+              : "En tiempo",
         });
       }
     }
   }
 
-  console.log(newTableData);
-  newTableData?.sort((a, b) => b.price - a.price);
-
+  newTableData?.sort((a, b) => a.createdAt - b.createdAt);
   const goToInformation = (idServiciosAIT) => {
     // const result = data?.filter((dataItem) => {
     //   return dataItem.NumeroAIT === item;
@@ -64,6 +68,10 @@ export const MontoEDPList = (props) => {
     });
   };
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <DataTable>
@@ -72,8 +80,9 @@ export const MontoEDPList = (props) => {
           <DataTable.Title style={styles.multiLineColumn}>
             Nombre
           </DataTable.Title>
-          <DataTable.Title style={styles.shortColumn2}>Etapa</DataTable.Title>
-          <DataTable.Title style={styles.column4}>Valor</DataTable.Title>
+          <DataTable.Title style={styles.shortColumn2}>
+            Dias Pendientes
+          </DataTable.Title>
         </DataTable.Header>
 
         {/* Table data */}
@@ -82,9 +91,9 @@ export const MontoEDPList = (props) => {
             <Text
               style={{
                 flex: 2,
+                color:
+                  item.estadoFinalEjecucion === "En tiempo" ? "black" : "red",
                 alignSelf: "center",
-
-                color: item.etapa === "NoPagado" ? "red" : "black",
               }}
               onPress={() => goToInformation(item.idServiciosAIT)}
             >
@@ -93,26 +102,13 @@ export const MontoEDPList = (props) => {
             <Text
               style={{
                 flex: 1,
+                color:
+                  item.estadoFinalEjecucion === "En tiempo" ? "black" : "red",
                 alignSelf: "center",
-
-                color: item.etapa === "NoPagado" ? "red" : "black",
+                textAlign: "center",
               }}
             >
-              {item.etapa}
-            </Text>
-            <Text
-              style={{
-                flex: 0,
-                alignSelf: "center",
-
-                color: item.etapa === "NoPagado" ? "red" : "black",
-              }}
-            >
-              {" "}
-              {"S/ "}
-              {parseFloat(item.price).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-              })}
+              {item.estadoFinalEjecucion}
             </Text>
           </DataTable.Row>
         ))}
@@ -133,12 +129,9 @@ const styles = StyleSheet.create({
     maxWidth: 200, // Adjust the maxWidth as per your requirement
   },
   shortColumn2: {
-    flex: 1, // Adjust the value as per your requirement for the width
-  },
-  shortColumn3: {
-    flex: 0.4, // Adjust the value as per your requirement for the width
+    flex: 0, // Adjust the value as per your requirement for the width
   },
   multiLineColumn: {
-    flex: 2,
+    flex: 1,
   },
 });

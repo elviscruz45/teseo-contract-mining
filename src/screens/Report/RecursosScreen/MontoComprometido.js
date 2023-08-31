@@ -40,8 +40,7 @@ export const MontoComprometido = (props) => {
     data.forEach((item) => {
       if (
         item.AvanceAdministrativoTexto !== "Stand by" &&
-        item.AvanceAdministrativoTexto !== "Cancelacion" &&
-        item.AvanceAdministrativoTexto !== "Contratista-Fin servicio"
+        item.AvanceAdministrativoTexto !== "Cancelacion"
       ) {
         const date =
           convertFirebaseTimestampToJSDate(item.NuevaFechaEstimada) >

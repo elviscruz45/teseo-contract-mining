@@ -4,31 +4,43 @@ import { DataTable } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
-export const ServiceList = (props) => {
-  console.log("5.4.ServiceList");
-
+export const HistoryServiceList = (props) => {
+  console.log("5.4.EstadoServiceList");
   const { data } = props;
   const navigation = useNavigation();
-
   const newTableData = [];
+
   if (data) {
     for (let i = 0; i < data.length; i++) {
       if (
-        data[i].AvanceAdministrativoTexto !== "Standy by" &&
-        data[i].AvanceAdministrativoTexto !== "Cancelacion"
+        data[i].AvanceAdministrativoTexto === "Contratista-Inicio Servicio" ||
+        data[i].AvanceAdministrativoTexto ===
+          "Contratista-Solicitud Aprobacion Doc" ||
+        data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Doc" ||
+        data[i].AvanceAdministrativoTexto === "Contratista-Avance Ejecucion" ||
+        data[i].AvanceAdministrativoTexto ===
+          "Contratista-Solicitud Ampliacion Servicio" ||
+        data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Ampliacion"
       ) {
+        let daysLeft = (
+          (data[i].FechaFin.seconds * 1000 - Date.now()) /
+          86400000
+        ).toFixed(0);
+
         newTableData.push({
           idServiciosAIT: data[i].idServiciosAIT,
-
           id: data[i].NumeroAIT,
+          avance: data[i].AvanceEjecucion,
           name: data[i].NombreServicio,
-          TipoServicio: data[i].TipoServicio,
+          diasPendientes: daysLeft,
+          fechaPostFormato: data[i].fechaPostFormato,
+          createdAt: data[i].createdAt,
         });
       }
     }
   }
-  newTableData?.sort((a, b) => a.TipoServicio.localeCompare(b.TipoServicio));
 
+  newTableData?.sort((a, b) => a.createdAt - b.createdAt);
   const goToInformation = (idServiciosAIT) => {
     // const result = data?.filter((dataItem) => {
     //   return dataItem.NumeroAIT === item;
@@ -46,12 +58,16 @@ export const ServiceList = (props) => {
     });
   };
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <DataTable>
         {/* Table header */}
         <DataTable.Header>
-          <DataTable.Title style={styles.shortColumn1}>Tipo</DataTable.Title>
+          <DataTable.Title style={styles.shortColumn1}>Fecha</DataTable.Title>
           <DataTable.Title style={styles.multiLineColumn}>
             Nombre
           </DataTable.Title>
@@ -60,12 +76,22 @@ export const ServiceList = (props) => {
         {/* Table data */}
         {newTableData.map((item) => (
           <DataTable.Row key={item.id}>
-            <DataTable.Cell style={styles.shortColumn1}>
-              {item.TipoServicio}
-            </DataTable.Cell>
-
             <Text
-              style={styles.multiLineColumn}
+              style={{
+                flex: 0.75,
+
+                alignSelf: "center",
+                textAlign: "left",
+              }}
+            >
+              {item.fechaPostFormato}
+            </Text>
+            <Text
+              style={{
+                flex: 2,
+
+                alignSelf: "center",
+              }}
               onPress={() => goToInformation(item.idServiciosAIT)}
             >
               {item.name}
@@ -89,9 +115,9 @@ const styles = StyleSheet.create({
     maxWidth: 200, // Adjust the maxWidth as per your requirement
   },
   shortColumn2: {
-    flex: 1, // Adjust the value as per your requirement for the width
+    flex: 0, // Adjust the value as per your requirement for the width
   },
   multiLineColumn: {
-    flex: 2,
+    flex: 1,
   },
 });
