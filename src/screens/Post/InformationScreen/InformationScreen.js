@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { Avatar, Button } from "@rneui/themed";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { styles } from "./InformationScreen.styles";
 import { GeneralForms } from "../../../components/Forms/GeneralForms/GeneralForms/GeneralForms";
@@ -18,16 +18,47 @@ import {
   doc,
   addDoc,
   updateDoc,
+  onSnapshot,
+  orderBy,
   arrayUnion,
+  query,
 } from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
 import { TitleForms } from "../../../components/Forms/GeneralForms/TitleForms/TitleForms";
 import { resetPostPerPageHome } from "../../../actions/home";
+import { saveTotalUsers } from "../../../actions/post";
 
 function InformationScreen(props) {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
+
+  //fetching data from firebase to retrieve all users
+  useEffect(() => {
+    let unsubscribe;
+
+    function fetchData() {
+      let queryRef = query(collection(db, "users"), orderBy("email", "desc"));
+
+      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+        const lista = [];
+        ItemFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
+
+        console.log("OnSnapshoFETCH_USERS", lista);
+        props.saveTotalUsers(lista);
+      });
+    }
+
+    fetchData();
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
+
   // retrieving data from formik forms ,data from ./InfomartionScreen.data.js
   const formik = useFormik({
     initialValues: initialValues(),
@@ -343,4 +374,5 @@ const mapStateToProps = (reducers) => {
 export const ConnectedInformationScreen = connect(mapStateToProps, {
   saveActualPostFirebase,
   resetPostPerPageHome,
+  saveTotalUsers,
 })(InformationScreen);

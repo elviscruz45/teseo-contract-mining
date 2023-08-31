@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { Icon, Avatar, Input, Button } from "@rneui/themed";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { styles } from "./AITScreen.styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -10,18 +10,56 @@ import { initialValues, validationSchema } from "./AITScreen.data";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { useFormik } from "formik";
 import { db } from "../../../utils";
-import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  limit,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import { AITForms } from "../../../components/Forms/GeneralForms/AITForms/AITForms";
 import { areaLists } from "../../../utils/areaList";
+import { saveTotalUsers } from "../../../actions/post";
 
 function AITNoReduxScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
-
   const navigation = useNavigation();
   const [tituloserv, setTituloserv] = useState();
   const [ait, setAit] = useState();
   const [tiposerv, setTiposerv] = useState();
   const [area, setArea] = useState();
+
+  //fetching data from firebase to retrieve all users
+  useEffect(() => {
+    let unsubscribe;
+
+    function fetchData() {
+      let queryRef = query(collection(db, "users"), orderBy("email", "desc"));
+
+      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+        const lista = [];
+        ItemFirebase.forEach((doc) => {
+          lista.push(doc.data());
+        });
+
+        console.log("OnSnapshoFETCH_USERS", lista);
+        props.saveTotalUsers(lista);
+      });
+    }
+
+    fetchData();
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   // find Index of areaList array where there is the image of the area to render the icon Avatar
   const IndexObjectImageArea = areaLists.findIndex((obj) => obj.value === area);
@@ -163,4 +201,5 @@ const mapStateToProps = (reducers) => {
 
 export const AITScreen = connect(mapStateToProps, {
   saveActualPostFirebase,
+  saveTotalUsers,
 })(AITNoReduxScreen);

@@ -42,3 +42,14 @@ export const saveActualAITServicesFirebaseGlobalState =
       alert(error.message);
     }
   };
+
+export const saveTotalUsers = (item) => (dispatch) => {
+  try {
+    dispatch({
+      type: "SAVE_TOTALUSERS",
+      payload: item,
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};

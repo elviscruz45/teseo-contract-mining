@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   actualServiceAIT: null,
   ActualPostFirebase: null,
   ActualServiceAITList: null,
+  saveTotalUsers: null,
 };
 
 export function post(state = INITIAL_STATE, action) {
@@ -27,6 +28,12 @@ export function post(state = INITIAL_STATE, action) {
         ...state,
         ActualServiceAITList: action.payload,
       };
+    case "SAVE_TOTALUSERS":
+      return {
+        ...state,
+        saveTotalUsers: action.payload,
+      };
+
     default:
       return state;
   }

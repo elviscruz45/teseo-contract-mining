@@ -63,8 +63,6 @@ function HomeScreen(props) {
     }
 
     fetchData();
-
-    // Cleanup function to unsubscribe from the previous listener
     return () => {
       if (unsubscribe) {
         unsubscribe();

@@ -15,31 +15,36 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { connect } from "react-redux";
 
-export const MultiSelectExample = (props) => {
+const MultiSelectExampleBare = (props) => {
   const [selected, setSelected] = React.useState([]);
   const [list, setList] = useState([]);
   const { formik } = props;
 
   useEffect(() => {
-    async function fetchData() {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      const post_array = [];
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        const object = doc.data();
-        const objectver2 = {
-          ...object,
-          value: `${object.displayNameform}(${object.email})`,
-          email: object.email,
-        };
-        post_array.push(objectver2);
-      });
+    if (props.saveTotalUsers) {
+      async function fetchData() {
+        // const querySnapshot = await getDocs(collection(db, "users"));
+        const post_array = [];
+        props.saveTotalUsers.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          // const object = doc.data();
+          const object = doc;
+          const objectver2 = {
+            ...object,
+            value: `${object.displayNameform}\n(${object.email})`,
+            email: object.email,
+          };
+          post_array.push(objectver2);
+        });
+        console.log("querySnapshot1");
 
-      setList(post_array);
+        setList(post_array);
+      }
+      fetchData();
     }
-    fetchData();
-  }, []);
+  }, [props.saveTotalUsers]);
 
   function saveProperty(itemValue) {
     formik.setFieldValue("equipoTrabajo", itemValue.join(","));
@@ -57,3 +62,14 @@ export const MultiSelectExample = (props) => {
     </>
   );
 };
+
+const mapStateToProps = (reducers) => {
+  return {
+    saveTotalUsers: reducers.post.saveTotalUsers,
+  };
+};
+
+export const MultiSelectExample = connect(
+  mapStateToProps,
+  {}
+)(MultiSelectExampleBare);
