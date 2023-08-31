@@ -20,6 +20,10 @@ export const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
+  row1: {
+    flexDirection: "row",
+    alignSelf: "center",
+  },
   rowlikes: {
     flexDirection: "row",
     margin: 10,
@@ -82,5 +86,26 @@ export const styles = StyleSheet.create({
   avatar: {
     marginRight: 20,
     backgroundColor: "green",
+  },
+  filterViewButton: {
+    // flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  filterbutton: {
+    backgroundColor: "#2A3B76", // Background color of the button
+    padding: 10,
+    borderRadius: 5, // Rounded corners
+    opacity: 1,
+  },
+  filterbutton2: {
+    backgroundColor: "#2A3B76", // Background color of the button
+    padding: 10,
+    borderRadius: 5, // Rounded corners
+    opacity: 0.7,
+  },
+  filterButtonText: {
+    color: "#fff", // Text color
+    fontSize: 16,
   },
 });

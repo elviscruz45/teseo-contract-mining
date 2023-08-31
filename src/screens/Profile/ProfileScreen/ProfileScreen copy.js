@@ -37,8 +37,6 @@ function ProfileScreen(props) {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
   const [post, setPost] = useState(null);
-  //states of filters
-
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
@@ -66,6 +64,7 @@ function ProfileScreen(props) {
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
+    console.log(start, end);
     setStartDate(start);
     setEndDate(end);
   };
@@ -73,12 +72,55 @@ function ProfileScreen(props) {
     setRemoveFilter((prev) => !prev);
     setStartDate(null);
     setEndDate(null);
+    console.log("removeFilter");
   };
 
   //This hook used to retrieve post data from Firebase and sorted by date
 
   useEffect(() => {
     console.log("UseEffectProfileScreen");
+
+    // let unsubscribe;
+    // let q;
+    // async function fetchData() {
+    //   if (startDate && endDate) {
+    //     q = query(
+    //       collection(db, "events"),
+    //       orderBy("createdAt", "desc"),
+    //       where("emailPerfil", "==", props.email),
+    //       where("createdAt", ">=", startDate),
+    //       where("createdAt", "<=", endDate)
+    //     );
+    //   } else {
+    //     q = query(
+    //       collection(db, "events"),
+    //       orderBy("createdAt", "desc"),
+    //       where("emailPerfil", "==", props.email),
+    //       limit(10) // Add the desired limit value here
+    //     );
+    //   }
+
+    //   try {
+    //     const querySnapshot = await getDocs(q);
+    //     const lista = [];
+    //     querySnapshot.forEach((doc) => {
+    //       lista.push(doc.data());
+    //     });
+    //     // console.log("1.---GetDocsProfileScreen Item with date profile");
+    //     console.log("1.---longitudListaProfileScreen", lista.length);
+
+    //     setPost(lista);
+    //   } catch (error) {
+    //     console.error("Error fetching data: ", error);
+    //   }
+    // }
+    // fetchData();
+    // return () => {
+    //   // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
+    //   if (unsubscribe) {
+    //     unsubscribe();
+    //   }
+    // };
 
     let EventList = props.totalEventServiceAITLIST?.filter((item) => {
       return item.emailPerfil === props.email;
@@ -89,43 +131,8 @@ function ProfileScreen(props) {
     });
 
     setPost(EventList);
-  }, [props.totalEventServiceAITLIST, removeFilter]);
-
-  useEffect(() => {
-    let unsubscribe;
-    let q;
-    if (startDate && endDate) {
-      async function fetchData() {
-        q = query(
-          collection(db, "events"),
-          orderBy("createdAt", "desc"),
-          where("createdAt", ">=", startDate),
-          where("createdAt", "<=", endDate)
-        );
-
-        try {
-          const querySnapshot = await getDocs(q);
-          const lista = [];
-          querySnapshot.forEach((doc) => {
-            lista.push(doc.data());
-          });
-          console.log("GETDOCquerySnapshotHistoryScreenNoRedux");
-
-          setPost(lista);
-        } catch (error) {
-          console.error("Error fetching data: ", error);
-        }
-      }
-
-      fetchData();
-
-      return () => {
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      };
-    }
-  }, [startDate, endDate]);
+    // }, [startDate, endDate, removeFilter, props.totalEventServiceAITLIST]);
+  }, [props.totalEventServiceAITLIST]);
 
   const comentPost = (item) => {
     console.log("item", item);
@@ -134,6 +141,7 @@ function ProfileScreen(props) {
       params: { Item: item },
     });
   };
+
   return (
     <>
       <KeyboardAwareScrollView

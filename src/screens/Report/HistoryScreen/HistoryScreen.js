@@ -79,7 +79,6 @@ const HistoryScreenNoRedux = (props) => {
       fetchData();
 
       return () => {
-        // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
         if (unsubscribe) {
           unsubscribe();
         }
