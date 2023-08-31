@@ -237,7 +237,7 @@ function MoreDetailScreenNoRedux(props) {
         </View>
 
         {BarProgress(AvanceProyected)}
-
+        {/* 
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Avance Administrativo:  "}</Text>
           <Text style={styles.info2}>
@@ -246,7 +246,7 @@ function MoreDetailScreenNoRedux(props) {
           </Text>
         </View>
 
-        {BarProgress(Item.AvanceAdministrativo)}
+        {BarProgress(Item.AvanceAdministrativo)} */}
 
         <Text></Text>
 

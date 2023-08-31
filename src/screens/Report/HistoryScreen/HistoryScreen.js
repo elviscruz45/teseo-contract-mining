@@ -121,7 +121,7 @@ const HistoryScreenNoRedux = (props) => {
       <Text></Text>
       <View style={styles.iconMinMax}>
         <View style={styles.container22}>
-          <Text style={styles.titleText}>Historial Servicios Asignados</Text>
+          <Text style={styles.titleText}>Historial Tipo Servicios </Text>
         </View>
         <TouchableOpacity onPress={() => setServiciosActivos(true)}>
           <Image

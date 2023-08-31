@@ -117,8 +117,7 @@ function AITNoReduxScreen(props) {
         newData.companyName = props.email?.match(regex)?.[1] || "Anonimo";
         //Progress of Service
         newData.AvanceEjecucion = 5;
-        newData.AvanceAdministrativo = 0;
-        newData.AvanceEjecucionTexto = "";
+        // newData.AvanceAdministrativo = 0;
         newData.AvanceAdministrativoTexto = "";
         //Monto and HH updated in the proccess of the service
         newData.HHModificado = 0;

@@ -189,40 +189,44 @@ export const getExcelReportData = async (datas = []) => {
   datas.forEach((data) => {
     const table = {
       //Datos principales del servicio
-      NumeroServicio: data.NumeroAIT,
-      NombreServicio: data.NombreServicio,
-      TipoServicio: data.TipoServicio,
-      companyName: data.companyName,
-      fechaPostFormato: data.fechaPostFormato,
-      // LastEventPosted: doc.data().LastEventPosted,
-      NumeroCotizacion: data.NumeroCotizacion,
-      // FechaFin: doc.data().FechaFin,
+      Numero_Servicio: data.NumeroAIT, //ok
+      Nombre_Servicio: data.NombreServicio, //ok
+      Tipo_Servicio: data.TipoServicio, //ok
+      Nombre_Empresa: data.companyName, //ok
+      Fecha_Post_Formato: data.fechaPostFormato, //ok
+      Fecha_Ultimo_Evento_Posteado: data.LastEventPosted?.toDate().getTime(), //ok
+      Numero_Cotizacion: data.NumeroCotizacion, //ok
+      FechaFin_original: data.FechaFin, //ok
       //Usuario
-      emailPerfil: data.emailPerfil,
-      nombreAutor: data.nombrePerfil,
+      Email_Creador_servicio: data.emailPerfil, //ok
+      Nombre_Autor: data.nombrePerfil, //ok
       // Responsables ,interacciones
-      ResponsableEmpresaUsuario: data.ResponsableEmpresaUsuario,
-      ResponsableEmpresaContratista: data.ResponsableEmpresaContratista,
-      AreaServicio: data.AreaServicio,
+      ResponsableEmpresaUsuario: data.ResponsableEmpresaUsuario, //ok
+      ResponsableEmpresaContratista: data.ResponsableEmpresaContratista, //ok
+      AreaServicio: data.AreaServicio, //ok
       //Monto y HH
-      HorasHombre: data.HorasHombre,
-      Moneda: data.Moneda,
-      Monto: data.Monto,
+      HorasHombre: data.HorasHombre, //ok
+      Moneda: data.Moneda, //ok
+      Monto: data.Monto, //ok
       //Fechas
-      fechaPostISO: data.fechaPostISO,
-      // createdAt: doc.data().createdAt,
+      FechaPostISO: data.fechaPostISO, //ok
+      Fecha_Creacion: data.createdAt?.toDate().getTime(), //ok
+      Fecha_Final_Ejecucion: data.fechaFinEjecucion?.toDate().getTime(), //ok
       //Avances
-      AvanceEjecucion: data.AvanceEjecucion,
-      AvanceAdministrativo: data.AvanceAdministrativo,
-      AvanceEjecucionTexto: data.AvanceEjecucionTexto,
-      AvanceAdministrativoTexto: data.AvanceAdministrativoTexto,
+      AvanceEjecucion: data.AvanceEjecucion, //ok
+      AvanceAdministrativoTexto: data.AvanceAdministrativoTexto, //ok
       //Modificaciones
-      // NuevaFechaEstimada: doc.data().NuevaFechaEstimada,
-      HHModificado: data.HHModificado,
-      MontoModificado: data.MontoModificado,
+      Nueva_Fecha_Fin_Estimada: data.NuevaFechaEstimada, //ok
+      HHModificado: data.HHModificado, //ok
+      MontoModificado: data.MontoModificado, //ok
+      //events
+      // Events: JSON.stringify(data.events), //ok
+      Id_Servicios_Cloud: data.idServiciosAIT, //ok
+      Cantidad_Docs: data.pdfFiles?.length, //ok
     };
     post_array.push(table);
   });
+  console.log("getExcelGLobalFINALL");
 
   const worksheet = XLSX.utils.json_to_sheet(post_array);
   const workbook = XLSX.utils.book_new();
