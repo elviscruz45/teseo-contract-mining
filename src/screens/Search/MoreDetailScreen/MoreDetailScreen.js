@@ -154,18 +154,23 @@ function MoreDetailScreenNoRedux(props) {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
       <Text></Text>
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
 
       {Item.photoServiceURL ? (
-        <Image
+        <ImageExpo
           source={{ uri: Item.photoServiceURL }}
           style={styles.roundImage}
+          cachePolicy={"memory-disk"}
         />
       ) : (
-        <Image source={imageSource} style={styles.roundImage} />
+        <ImageExpo
+          source={imageSource}
+          style={styles.roundImage}
+          cachePolicy={"memory-disk"}
+        />
       )}
 
       <View>
