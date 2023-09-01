@@ -210,6 +210,7 @@ function ItemScreenNotRedux(props) {
       <>
         <ScrollView
           style={{ backgroundColor: "white" }} // Add backgroundColor here
+          showsVerticalScrollIndicator={false}
         >
           <Text></Text>
 

@@ -48,6 +48,7 @@ const ReportScreenNoRedux = (props) => {
   return (
     <ScrollView
       style={{ backgroundColor: "white" }} // Add backgroundColor here
+      showsVerticalScrollIndicator={false}
     >
       <Text></Text>
       <View style={{ flexDirection: "row", alignSelf: "center" }}>

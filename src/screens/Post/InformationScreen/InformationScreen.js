@@ -137,6 +137,7 @@ function InformationScreen(props) {
                 AreaServicio: props.actualServiceAIT.AreaServicio,
                 photoServiceURL: props.actualServiceAIT.photoServiceURL,
                 status: "Pendiente",
+                idTimeApproval: date.getTime(),
               };
               const docRef = await addDoc(collection(db, "approvals"), docData);
               docData.idApproval = docRef.id;

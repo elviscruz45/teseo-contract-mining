@@ -103,7 +103,7 @@ function PostScreen(props) {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
       <SearchBar
         placeholder="Buscar AIT o nombre del servicio"
         value={searchText}

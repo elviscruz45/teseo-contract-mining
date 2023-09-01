@@ -58,19 +58,21 @@ function ApprovalScreenBare(props) {
   };
 
   goToApprove = async (item) => {
-    // retrieve the actual service to use the data to go to approve what is required
-    const serviceQuery = await getDocs(
-      query(collection(db, "ServiciosAIT"), where("idServiciosAIT", "==", item))
-    );
-    const post_array = [];
-    serviceQuery.forEach((doc) => {
-      post_array.push(doc.data());
-    });
-    console.log("querySnapshot1");
+    // // retrieve the actual service to use the data to go to approve what is required
+    // const serviceQuery = await getDocs(
+    //   query(collection(db, "ServiciosAIT"), where("idServiciosAIT", "==", item))
+    // );
+    // const post_array = [];
+    // serviceQuery.forEach((doc) => {
+    //   post_array.push(doc.data());
+    // });
+    // console.log("querySnapshot1");
 
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
-      params: { Item: post_array[0] },
+      params: { Item: item },
+
+      // params: { Item: post_array[0] },
     });
   };
 

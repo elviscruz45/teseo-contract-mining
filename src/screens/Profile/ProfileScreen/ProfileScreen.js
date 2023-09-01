@@ -138,6 +138,7 @@ function ProfileScreen(props) {
     <>
       <KeyboardAwareScrollView
         style={{ backgroundColor: "white" }} // Add backgroundColor here
+        showsVerticalScrollIndicator={false}
       >
         <Text></Text>
         <View>

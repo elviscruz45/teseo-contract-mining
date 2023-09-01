@@ -103,7 +103,7 @@ function DocstoApproveScreenBare(props) {
     fileName = "",
     ApprovalRequestedBy = "",
     ApprovalRequestSentTo = [],
-    formatDate
+    formatDate = ""
   ) => {
     MailComposer.composeAsync({
       recipients: ApprovalRequestSentTo,
@@ -236,191 +236,218 @@ function DocstoApproveScreenBare(props) {
     }
   }, []);
 
+  const openGoogleDriveLink = useCallback(async (uri) => {
+    // console.log("pdfHomescreen", uri);
+    try {
+      const supported = await Linking.canOpenURL(uri);
+      if (supported) {
+        await Linking.openURL(uri);
+      } else {
+        alert("Este archivo no tiene Documento adjunto");
+      }
+    } catch (error) {
+      alert("No Hay Documento Adjunto", error);
+    }
+  }, []);
+
   return (
-    <KeyboardAwareScrollView>
-      <FlatList
-        data={approval}
-        style={{ backgroundColor: "white" }} // Add backgroundColor here
-        scrollEnabled={false}
-        renderItem={({ item, index }) => {
-          const approvalRequestedLength = item.ApprovalRequestSentTo.length;
-          const approvalPerformedLength = item.ApprovalPerformed.length;
-          const approvalRequested = item.ApprovalRequestSentTo;
-          const approvalPerformed = item.ApprovalPerformed;
-          const RejectionPerformed = item.RejectionPerformed;
-          const emailUser = props.email;
-          const isIncludedapprovalRequested =
-            approvalRequested.includes(emailUser);
+    <FlatList
+      data={approval}
+      style={{ backgroundColor: "white" }} // Add backgroundColor here
+      scrollEnabled={true}
+      showsVerticalScrollIndicator={false}
+      renderItem={({ item }) => {
+        const approvalRequestedLength = item.ApprovalRequestSentTo.length;
+        const approvalPerformedLength = item.ApprovalPerformed.length;
+        const emailUser = props.email;
 
-          const isIncludedapprovalPerformed =
-            approvalPerformed.includes(emailUser);
-          const isIncludedRectionPerformed =
-            RejectionPerformed.includes(emailUser);
-          const idApproval = item.idApproval;
+        //reviewing the conditionals
+        const isIncludedapprovalRequested =
+          item.ApprovalRequestSentTo.includes(emailUser);
+        const isIncludedapprovalPerformed =
+          item.ApprovalPerformed.includes(emailUser);
+        const isIncludedRectionPerformed =
+          item.RejectionPerformed.includes(emailUser);
+        const idApproval = item.idApproval;
 
-          //format date
-          const formatDateSol = formatDate(item.date);
+        //id format date
+        const formatDateSol = formatDate(item.date);
+        const { seconds, nanoseconds } = item.date;
+        let idTime =
+          item.idTimeApproval ??
+          ((seconds * 1000 + nanoseconds / 1000000) / 1000).toFixed(0);
 
-          const { seconds, nanoseconds } = item.date;
+        // confirmation if the requestment is a drive document:
+        const inputString = item.solicitudComentario;
+        const pattern = /drive\.google\.com/i;
+        const isDriveDoc = pattern.test(inputString);
 
-          //ID
-          let idTime = (
-            (seconds * 1000 + nanoseconds / 1000000) /
-            1000
-          ).toFixed(0);
-          return (
-            <View
-              style={{
-                borderBottomWidth: 5,
-                borderBottomColor: "#f0f8ff",
-              }}
-            >
-              <View>
-                <View style={styles.equipments2}>
-                  <View style={styles.image2}>
-                    <TouchableOpacity onPress={() => uploadFile(item.pdfFile)}>
-                      <ImageExpo
-                        source={
-                          item.pdfFile
-                            ? require("../../../../assets/docIcon.png")
-                            : require("../../../../assets/mailIcon.png")
-                        }
-                        style={styles.image3}
-                        cachePolicy={"memory-disk"}
-                      />
-                    </TouchableOpacity>
+        return (
+          <View
+            style={{
+              borderBottomWidth: 5,
+              borderBottomColor: "#f0f8ff",
+            }}
+          >
+            <View>
+              <View style={styles.equipments2}>
+                <View style={styles.image2}>
+                  <TouchableOpacity onPress={() => uploadFile(item.pdfFile)}>
                     <ImageExpo
                       source={
-                        approvalRequestedLength === approvalPerformedLength
-                          ? require("../../../../assets/approvalGreen.png")
-                          : approvalPerformedLength > 0
-                          ? require("../../../../assets/approvalYellow.png")
-                          : require("../../../../assets/rejectedRed.png")
+                        item.pdfFile
+                          ? require("../../../../assets/docIcon.png")
+                          : require("../../../../assets/mailIcon.png")
                       }
-                      style={styles.image4}
+                      style={styles.image3}
                       cachePolicy={"memory-disk"}
                     />
+                  </TouchableOpacity>
+                  <ImageExpo
+                    source={
+                      approvalRequestedLength === approvalPerformedLength
+                        ? require("../../../../assets/approvalGreen.png")
+                        : approvalPerformedLength > 0
+                        ? require("../../../../assets/approvalYellow.png")
+                        : require("../../../../assets/rejectedRed.png")
+                    }
+                    style={styles.image4}
+                    cachePolicy={"memory-disk"}
+                  />
+                </View>
+                <View style={styles.article}>
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"ID:            "}</Text>
+                    <Text style={styles.info2} selectable={true}>
+                      {idTime}
+                    </Text>
                   </View>
-                  <View style={styles.article}>
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"ID:"}</Text>
-                      <Text style={styles.info2} selectable={true}>
-                        {idTime}
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Solicitud:"}</Text>
+                    {isDriveDoc ? (
+                      <Text
+                        style={styles.info2}
+                        selectable={true}
+                        onPress={() =>
+                          openGoogleDriveLink(item.solicitudComentario)
+                        }
+                      >
+                        {item.solicitudComentario}
                       </Text>
-                    </View>
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Solicitud:"}</Text>
+                    ) : (
                       <Text style={styles.info2} selectable={true}>
                         {item.solicitudComentario}
                       </Text>
-                    </View>
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Tipo:        "}</Text>
-                      <Text style={styles.info2}>{item.solicitud}</Text>
-                    </View>
-
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Archivo:  "}</Text>
-                      <Text style={styles.info2}>{item.fileName}</Text>
-                    </View>
-
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Autor:      "}</Text>
-                      <Text style={styles.info2}>
-                        {item.ApprovalRequestedBy}
-                      </Text>
-                    </View>
-
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Fecha:     "}</Text>
-                      <Text style={styles.info2}>{formatDateSol}</Text>
-                    </View>
-
-                    <View style={[styles.row, styles.center]}>
-                      <Text style={styles.info}>{"Req:         "}</Text>
-                      <Text style={styles.info2}>
-                        {item.ApprovalRequestSentTo.join(", ")}
-                      </Text>
-                    </View>
-
-                    {approvalPerformed.length !== 0 && (
-                      <View style={[styles.row, styles.center]}>
-                        <Text style={styles.info}>{"Aprob:     "}</Text>
-                        <Text style={styles.info2}>
-                          {item.ApprovalPerformed.join(", ")}
-                        </Text>
-                      </View>
                     )}
-
-                    {RejectionPerformed.length !== 0 && (
-                      <View style={[styles.row, styles.center]}>
-                        <Text style={styles.info5}>{"Desap:     "}</Text>
-                        <Text style={styles.info6}>
-                          {item.RejectionPerformed.join(", ")}
-                        </Text>
-                      </View>
-                    )}
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      {isIncludedapprovalRequested &&
-                        isMailAvailable &&
-                        !(
-                          isIncludedapprovalPerformed ||
-                          isIncludedRectionPerformed
-                        ) && (
-                          <>
-                            <Button
-                              title="Aprobar"
-                              buttonStyle={styles.btnActualizarStyles}
-                              onPress={() =>
-                                docAprovals(
-                                  emailUser,
-                                  idApproval,
-                                  idTime,
-                                  item.solicitudComentario,
-                                  item.solicitud,
-                                  item.fileName,
-                                  item.ApprovalRequestedBy,
-                                  item.ApprovalRequestSentTo
-                                )
-                              }
-                            />
-
-                            <Button
-                              title="Desaprobar "
-                              buttonStyle={styles.btncerrarStyles}
-                              onPress={() =>
-                                docRejection(
-                                  emailUser,
-                                  idApproval,
-                                  idTime,
-                                  item.solicitudComentario,
-                                  item.solicitud,
-                                  item.fileName,
-                                  item.ApprovalRequestedBy,
-                                  item.ApprovalRequestSentTo,
-                                  formatDateSol
-                                )
-                              }
-                            />
-                          </>
-                        )}
-                    </View>
-                    <Text></Text>
                   </View>
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Tipo:        "}</Text>
+                    <Text style={styles.info2}>{item.solicitud}</Text>
+                  </View>
+
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Archivo:  "}</Text>
+                    <Text style={styles.info2}>{item.fileName}</Text>
+                  </View>
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Doc:         "}</Text>
+                    <Text style={styles.info2}>{item.tipoFile}</Text>
+                  </View>
+
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Autor:      "}</Text>
+                    <Text style={styles.info2}>{item.ApprovalRequestedBy}</Text>
+                  </View>
+
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Fecha:     "}</Text>
+                    <Text style={styles.info2}>{formatDateSol}</Text>
+                  </View>
+
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Req:         "}</Text>
+                    <Text style={styles.info2}>
+                      {item.ApprovalRequestSentTo.join(", ")}
+                    </Text>
+                  </View>
+
+                  {item.ApprovalPerformed.length !== 0 && (
+                    <View style={[styles.row, styles.center]}>
+                      <Text style={styles.info}>{"Aprob:     "}</Text>
+                      <Text style={styles.info2}>
+                        {item.ApprovalPerformed.join(", ")}
+                      </Text>
+                    </View>
+                  )}
+
+                  {item.RejectionPerformed.length !== 0 && (
+                    <View style={[styles.row, styles.center]}>
+                      <Text style={styles.info5}>{"Desap:     "}</Text>
+                      <Text style={styles.info6}>
+                        {item.RejectionPerformed.join(", ")}
+                      </Text>
+                    </View>
+                  )}
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    {isIncludedapprovalRequested &&
+                      isMailAvailable &&
+                      !(
+                        isIncludedapprovalPerformed ||
+                        isIncludedRectionPerformed
+                      ) && (
+                        <>
+                          <Button
+                            title="Aprobar"
+                            buttonStyle={styles.btnActualizarStyles}
+                            onPress={() =>
+                              docAprovals(
+                                emailUser,
+                                idApproval,
+                                idTime,
+                                item.solicitudComentario,
+                                item.solicitud,
+                                item.fileName,
+                                item.ApprovalRequestedBy,
+                                item.ApprovalRequestSentTo
+                              )
+                            }
+                          />
+
+                          <Button
+                            title="Desaprobar "
+                            buttonStyle={styles.btncerrarStyles}
+                            onPress={() =>
+                              docRejection(
+                                emailUser,
+                                idApproval,
+                                idTime,
+                                item.solicitudComentario,
+                                item.solicitud,
+                                item.fileName,
+                                item.ApprovalRequestedBy,
+                                item.ApprovalRequestSentTo,
+                                formatDateSol
+                              )
+                            }
+                          />
+                        </>
+                      )}
+                  </View>
+                  <Text></Text>
                 </View>
               </View>
             </View>
-          );
-        }}
-        keyExtractor={(item) => item.date} // Provide a unique key for each item
-      />
-    </KeyboardAwareScrollView>
+          </View>
+        );
+      }}
+      keyExtractor={(item) => item.date} // Provide a unique key for each item
+    />
   );
 }
 
