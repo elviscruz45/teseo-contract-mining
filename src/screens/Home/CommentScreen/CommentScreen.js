@@ -19,6 +19,7 @@ import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/Loadin
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { screen } from "../../../utils";
 
 function CommentScreen(props) {
   let unsubscribe;
@@ -95,9 +96,18 @@ function CommentScreen(props) {
     setComment("");
   };
 
-  // AITNombreServicio
+  // goToServiceInfo
+  const goToServiceInfo = () => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.item,
+      params: { Item: Item.AITidServicios },
+    });
+    console.log("ITEMMMM", Item);
 
-  if (isLoading) {
+    console.log("tem.idServiciosAIT", Item.AITidServicios);
+  };
+
+  if (isLoading & !postsComments) {
     return <LoadingSpinner />;
   } else {
     return (
@@ -106,77 +116,85 @@ function CommentScreen(props) {
         // contentContainerStyle={{ flexGrow: 1 }} // Allow the content to grow inside the ScrollView
         // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
       >
+        <Text></Text>
+        <Text
+          style={{
+            color: "black",
+            fontWeight: "700",
+            alignSelf: "center",
+          }}
+          onPress={() => goToServiceInfo()}
+        >
+          {Item?.AITNombreServicio}
+        </Text>
+        {/* <Text></Text> */}
+
+        <View>
+          {/* <Text style={styles.textAreaTitle}>{Item?.titulo}</Text> */}
+          {/* <Text></Text>
+          <Text style={styles.textAreaComment} selectable={true}>
+            {Item?.comentarios}
+          </Text>
+          <Text></Text> */}
+
+          {/* <Text style={styles.textAreaTitleplus}>Estado General : </Text> */}
+          {/* <Text style={styles.textAreaCommentplus}>
+            {"Progreso: "}
+
+            {Item?.porcentajeAvance}
+            {"%"}
+          </Text> */}
+          {/* <View style={{ flexDirection: "row", margin: 10 }}>
+            <Text>{"Codigo Servicio:"}</Text>
+
+            <Text style={styles.textAreaCommentplus} selectable={true}>
+              {Item?.AITNumero}
+            </Text>
+          </View> */}
+          {/* <Text style={styles.textAreaCommentplus}>
+            {"Etapa: "}
+            {Item?.etapa}
+          </Text> */}
+        </View>
+        <Text></Text>
+
+        <Text></Text>
+
         <ImageExpo
           source={{ uri: Item?.fotoPrincipal }}
           style={styles.postPhoto}
           cachePolicy={"memory-disk"}
         />
-
-        <Text></Text>
-        <Text
-          style={{
-            marginLeft: 5,
-            marginTop: -5,
-            color: "black",
-            fontWeight: "700",
-            alignSelf: "center",
-          }}
-        >
-          {Item?.AITNombreServicio}
-        </Text>
-        <Text></Text>
-
-        <View>
-          <Text style={styles.textAreaTitle}>{Item?.titulo}</Text>
-          <Text></Text>
-          <Text style={styles.textAreaComment} selectable={true}>
-            {Item?.comentarios}
-          </Text>
-          <Text></Text>
-
-          <Text style={styles.textAreaTitleplus}>Estado General : </Text>
-          <Text style={styles.textAreaCommentplus}>
-            {"Progreso: "}
-
-            {Item?.porcentajeAvance}
-            {"%"}
-          </Text>
-
-          <Text style={styles.textAreaCommentplus} selectable={true}>
-            {"Codigo Servicio:"}
-            {Item?.AITNumero}
-          </Text>
-
-          <Text style={styles.textAreaCommentplus}>
-            {"Etapa: "}
-            {Item?.etapa}
-          </Text>
-        </View>
         <Text></Text>
 
         <View style={[styles.row5, styles.center]}>
           {Item?.pdfPrincipal && (
-            <TouchableOpacity
-              onPress={() => uploadFile(Item.pdfPrincipal)}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginRight: 10,
-              }}
-            >
-              <Icon type="material-community" name="paperclip" />
-              <Text>Pdf</Text>
-            </TouchableOpacity>
+            <>
+              <Text style={{ fontWeight: "bold", alignSelf: "center" }}>
+                {" "}
+                Archivo Adjunto:
+              </Text>
+              <TouchableOpacity
+                onPress={() => uploadFile(Item.pdfPrincipal)}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginRight: 60,
+                }}
+              >
+                <Icon type="material-community" name="paperclip" />
+                <Text>Pdf</Text>
+              </TouchableOpacity>
+            </>
           )}
-        </View>
 
-        <View style={[styles.row5, styles.center]}>
           <Text style={{ margin: 5, color: "#5B5B5B" }}>
             {"Fecha:  "}
             {Item?.fechaPostFormato}
           </Text>
         </View>
         <Text></Text>
+
         <View style={styles.commentContainer}>
           <ImageExpo
             source={{ uri: props.user_photo }}
@@ -197,6 +215,7 @@ function CommentScreen(props) {
             <Feather name="send" size={16} color="white" />
           </TouchableOpacity>
         </View>
+
         <FlatList
           data={postsComments}
           scrollEnabled={false}

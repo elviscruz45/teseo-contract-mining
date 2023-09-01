@@ -42,11 +42,25 @@ export const styles = StyleSheet.create({
   Texticons: { alignItems: "center", marginLeft: 20 },
 
   postPhoto: {
-    height: windowWidth * 0.45,
-    width: windowWidth * 0.35,
+    height: windowWidth * 0.48,
+    width: windowWidth * 0.48,
     marginTop: 0,
-    borderRadius: 15,
+    borderRadius: 5,
     borderWidth: 1,
+  },
+  textAreaTitle: {
+    width: windowWidth * 0.6,
+    marginLeft: 10,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  textAreaComment: {
+    width: windowWidth * 0.6,
+    marginLeft: 10,
+    fontSize: 14,
+  },
+  NombreServicio: {
+    maxWidth: windowWidth * 0.48,
   },
   container2: {
     flex: 1,
@@ -63,20 +77,13 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 5,
   },
-  textAreaComment: {
-    width: windowWidth * 0.6,
-    marginLeft: 10,
-  },
+
   textAreaCommentplus: {
     width: windowWidth * 0.6,
     marginLeft: 10,
     fontWeight: "300",
   },
-  textAreaTitle: {
-    width: windowWidth * 0.6,
-    marginLeft: 10,
-    fontWeight: "bold",
-  },
+
   textAreaTitleplus: {
     width: windowWidth * 0.6,
     marginLeft: 10,

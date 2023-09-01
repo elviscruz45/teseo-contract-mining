@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   row5: {
     flexDirection: "row",
-    alignSelf: "flex-end",
+    // alignSelf: "flex-center",
     // backgroundColor: "red",
   },
   center: {
@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
     // width: windowWidth * 0.6,
     // height: windowWidth * 0.2,
     // padding: 0,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   textAreaCommentplus: {
     width: windowWidth * 0.6,
@@ -105,7 +105,7 @@ export const styles = StyleSheet.create({
   },
   textAreaTitle: {
     // width: windowWidth * 0.6,
-    marginLeft: 5,
+    marginLeft: 10,
     fontWeight: "600",
   },
   textAreaTitleplus: {

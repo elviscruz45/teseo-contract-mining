@@ -170,17 +170,13 @@ function HomeScreen(props) {
     [navigation]
   );
 
-  // create an algorithm to reduce the total text of the service description
-  const ShortTextComponent = (item) => {
-    const longText = item || "";
-    const maxLength = 25; // Maximum length of the short text
-    let shortText = longText;
-    if (longText.length > maxLength) {
-      shortText = `${longText.substring(0, maxLength)}...`;
-    }
-    return <Text selectable={true}>{shortText}</Text>;
+  // goToServiceInfo
+  const goToServiceInfo = (item) => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.item,
+      params: { Item: item.AITidServicios },
+    });
   };
-  console.log("1.-Screen");
 
   if (isLoading) {
     console.log("--------loadingHOME SCREEN------");
@@ -202,18 +198,6 @@ function HomeScreen(props) {
           );
           const imageSource = areaLists[indexareaList]?.image;
 
-          // //retrieving uri photo service
-          // const idService = item.AITidServicios;
-          // const serviceData = props.servicesData?.filter((item) => {
-          //   console.log("item.idServiciosAIT", item.idServiciosAIT);
-          //   return item.idServiciosAIT === idService;
-          // });
-          // console.log("idService", idService);
-
-          // console.log("serviceData", serviceData);
-
-          // //retrieving uri photo perfil
-
           return item ? (
             <>
               <View
@@ -228,7 +212,8 @@ function HomeScreen(props) {
                   <View style={[styles.row, styles.center]}>
                     <TouchableOpacity
                       style={[styles.row, styles.center]}
-                      activeOpacity={1}
+                      onPress={() => goToServiceInfo(item)}
+                      // activeOpacity={1}
                     >
                       {item.AITphotoServiceURL ? (
                         <ImageExpo
@@ -243,9 +228,9 @@ function HomeScreen(props) {
                           cachePolicy={"memory-disk"}
                         />
                       )}
-
-                      {/* <Text>{item.equipoPostDatos?.tag}</Text> */}
-                      {ShortTextComponent(item.AITNombreServicio)}
+                      <Text style={styles.NombreServicio}>
+                        {item.AITNombreServicio}
+                      </Text>
                     </TouchableOpacity>
 
                     <ImageExpo
@@ -262,6 +247,7 @@ function HomeScreen(props) {
                     {item.fechaPostFormato}
                   </Text>
                 </View>
+                <Text></Text>
                 <View style={styles.equipments}>
                   <TouchableOpacity onPress={() => commentPost(item)}>
                     <ImageExpo
@@ -276,6 +262,7 @@ function HomeScreen(props) {
                       {/* {"Evento: "} */}
                       {item.titulo}
                     </Text>
+                    <Text></Text>
                     <Text style={styles.textAreaComment}>
                       {item.comentarios}
                     </Text>
