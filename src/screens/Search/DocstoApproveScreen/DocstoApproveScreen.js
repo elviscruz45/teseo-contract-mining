@@ -103,18 +103,26 @@ function DocstoApproveScreenBare(props) {
     fileName = "",
     ApprovalRequestedBy = "",
     ApprovalRequestSentTo = [],
-    formatDate = ""
+    formatDate = "",
+    emailUser = "",
+    nombreServicio = "",
+    tipoFile = "",
+    companyName = ""
   ) => {
     MailComposer.composeAsync({
       recipients: ApprovalRequestSentTo,
-      subject: ` ${tipo} de solicitud ID: ${idTime}`,
+      subject: `${companyName} - ${nombreServicio} ${tipo} de solicitud ID: ${idTime}`,
       body: `Se confirma la ${tipo} de: \n 
+      Servicio: ${nombreServicio} \n
       Solicitud: ${solicitud} \n
       Comentario: ${solicitudComentario} \n 
       Archivo: ${fileName} \n 
-      Autor: ${ApprovalRequestedBy} \n
+      Tipo de Archivo: ${tipoFile} \n
+      Usuario que requiere aprobacion: ${ApprovalRequestedBy} \n
+      Usuario Aprobador: ${emailUser} \n
       Fecha de la Solicitud: ${formatDate} \n
       Aprobaciones Requeridas: ${ApprovalRequestSentTo.join(", ")} \n 
+      Empresa:${companyName}
       `,
     });
   };
@@ -129,7 +137,10 @@ function DocstoApproveScreenBare(props) {
     fileName,
     ApprovalRequestedBy,
     ApprovalRequestSentTo,
-    formatDate
+    formatDate,
+    nombreServicio,
+    tipoFile,
+    companyName
   ) => {
     const PostRef = doc(db, "approvals", idApproval);
     console.log("docAprovals");
@@ -162,7 +173,11 @@ function DocstoApproveScreenBare(props) {
               fileName,
               ApprovalRequestedBy,
               ApprovalRequestSentTo,
-              formatDate
+              formatDate,
+              emailUser,
+              nombreServicio,
+              tipoFile,
+              companyName
             );
             console.log("Aprobacion email post send");
           },
@@ -182,7 +197,10 @@ function DocstoApproveScreenBare(props) {
     fileName,
     ApprovalRequestedBy,
     ApprovalRequestSentTo,
-    formatDate
+    formatDate,
+    nombreServicio,
+    tipoFile,
+    companyName
   ) => {
     const PostRef = doc(db, "approvals", idApproval);
 
@@ -211,7 +229,11 @@ function DocstoApproveScreenBare(props) {
               fileName,
               ApprovalRequestedBy,
               ApprovalRequestSentTo,
-              formatDate
+              formatDate,
+              emailUser,
+              nombreServicio,
+              tipoFile,
+              companyName
             );
             console.log("Desaprobacion email post send");
           },
@@ -353,6 +375,10 @@ function DocstoApproveScreenBare(props) {
                     <Text style={styles.info}>{"Doc:         "}</Text>
                     <Text style={styles.info2}>{item.tipoFile}</Text>
                   </View>
+                  <View style={[styles.row, styles.center]}>
+                    <Text style={styles.info}>{"Empresa:"}</Text>
+                    <Text style={styles.info2}>{item.companyName}</Text>
+                  </View>
 
                   <View style={[styles.row, styles.center]}>
                     <Text style={styles.info}>{"Autor:      "}</Text>
@@ -414,7 +440,11 @@ function DocstoApproveScreenBare(props) {
                                 item.solicitud,
                                 item.fileName,
                                 item.ApprovalRequestedBy,
-                                item.ApprovalRequestSentTo
+                                item.ApprovalRequestSentTo,
+                                formatDateSol,
+                                item.NombreServicio,
+                                item.tipoFile,
+                                item.companyName
                               )
                             }
                           />
@@ -432,7 +462,10 @@ function DocstoApproveScreenBare(props) {
                                 item.fileName,
                                 item.ApprovalRequestedBy,
                                 item.ApprovalRequestSentTo,
-                                formatDateSol
+                                formatDateSol,
+                                item.NombreServicio,
+                                item.tipoFile,
+                                item.companyName
                               )
                             }
                           />

@@ -57,7 +57,7 @@ export function FileScreen(props) {
       <FlatList
         data={Item.pdfFile}
         scrollEnabled={false}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           return (
             <TouchableOpacity onPress={() => uploadFile(item)}>
               <View />

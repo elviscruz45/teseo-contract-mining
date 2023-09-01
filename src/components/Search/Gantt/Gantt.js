@@ -54,7 +54,7 @@ export const GanttHistorial = (props) => {
           const matches = item.emailPerfil.match(regex);
 
           return (
-            <>
+            <View style={{ margin: 10 }}>
               <Text></Text>
               <View style={[styles.rowContainer]}>
                 <View style={styles.timeWrapper}>
@@ -124,7 +124,7 @@ export const GanttHistorial = (props) => {
                   )}
                 </TouchableOpacity>
               </View>
-            </>
+            </View>
           );
         }}
         keyExtractor={(item) => item.createdAt}

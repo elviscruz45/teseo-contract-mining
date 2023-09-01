@@ -109,44 +109,44 @@ function InformationScreen(props) {
           const snapshotPDF = await uploadPdf(newData.pdfFile);
           const imagePathPDF = snapshotPDF.metadata.fullPath;
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
-
-          if (newData.aprobacion) {
-            //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
-            if (
-              newData.etapa === "Contratista-Solicitud Aprobacion Doc" ||
-              newData.etapa === "Contratista-Envio Cotizacion" ||
-              newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
-              newData.etapa === "Contratista-Envio EDP"
-            ) {
-              const regex = /(?<=\()[^)]*(?=\))/g;
-              const matches = newData.aprobacion.match(regex);
-              const docData = {
-                solicitud: newData.etapa,
-                solicitudComentario: newData.comentarios,
-                etapa: newData.etapa,
-                NombreServicio: props.actualServiceAIT.NombreServicio,
-                IdAITService: props.actualServiceAIT.idServiciosAIT,
-                fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
-                pdfFile: imageUrlPDF,
-                tipoFile: newData.tipoFile,
-                ApprovalRequestedBy: props.email,
-                ApprovalRequestSentTo: matches,
-                ApprovalPerformed: [],
-                RejectionPerformed: [],
-                date: new Date(),
-                AreaServicio: props.actualServiceAIT.AreaServicio,
-                photoServiceURL: props.actualServiceAIT.photoServiceURL,
-                status: "Pendiente",
-                idTimeApproval: date.getTime(),
-              };
-              const docRef = await addDoc(collection(db, "approvals"), docData);
-              docData.idApproval = docRef.id;
-              const RefFirebase = doc(db, "approvals", docData.idApproval);
-              await updateDoc(RefFirebase, docData);
-              console.log("docDataApproval", docData);
-            }
-          }
         }
+        //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
+        if (
+          newData.aprobacion &&
+          (newData.etapa === "Contratista-Solicitud Aprobacion Doc" ||
+            newData.etapa === "Contratista-Envio Cotizacion" ||
+            newData.etapa === "Contratista-Solicitud Ampliacion Servicio" ||
+            newData.etapa === "Contratista-Envio EDP")
+        ) {
+          const regex = /(?<=\()[^)]*(?=\))/g;
+          const matches = newData.aprobacion.match(regex);
+          const docData = {
+            solicitud: newData.etapa,
+            solicitudComentario: newData.comentarios,
+            etapa: newData.etapa,
+            NombreServicio: props.actualServiceAIT.NombreServicio,
+            IdAITService: props.actualServiceAIT.idServiciosAIT,
+            fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
+            pdfFile: imageUrlPDF ?? "",
+            tipoFile: newData.tipoFile,
+            ApprovalRequestedBy: props.email,
+            ApprovalRequestSentTo: matches,
+            ApprovalPerformed: [],
+            RejectionPerformed: [],
+            date: new Date(),
+            AreaServicio: props.actualServiceAIT.AreaServicio,
+            photoServiceURL: props.actualServiceAIT.photoServiceURL,
+            status: "Pendiente",
+            idTimeApproval: date.getTime(),
+            companyName: props.actualServiceAIT.companyName,
+          };
+          const docRef = await addDoc(collection(db, "approvals"), docData);
+          docData.idApproval = docRef.id;
+          const RefFirebase = doc(db, "approvals", docData.idApproval);
+          await updateDoc(RefFirebase, docData);
+          console.log("docDataApproval", docData);
+        }
+
         newData.pdfPrincipal = imageUrlPDF || "";
 
         //preparing data to upload to  firestore Database

@@ -280,7 +280,7 @@ function ItemScreenNotRedux(props) {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.btnContainer4}
               onPress={() => goToPdf(serviceInfo)}
             >
@@ -288,7 +288,7 @@ function ItemScreenNotRedux(props) {
                 source={require("../../../../assets/pdf4.png")}
                 style={styles.roundImageUpload}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.btnContainer4}
               onPress={() => goToPublicar()}
