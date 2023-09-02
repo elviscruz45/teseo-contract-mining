@@ -1,5 +1,6 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+
+import { View, StyleSheet, Text } from "react-native";
 import {
   VictoryChart,
   VictoryBar,
@@ -13,6 +14,7 @@ import { tipoServicioList } from "../../../utils/tipoServicioList";
 
 export const BarChartProceso = (props) => {
   const { data } = props;
+  console.log("dataaaaa", data);
   let datas;
   let sumByEtapa;
   if (data) {
@@ -102,8 +104,15 @@ export const BarChartProceso = (props) => {
       },
     ];
   }
-  if (!datas) {
-    return null;
+  if (data?.length === 0) {
+    return (
+      <>
+        <Text></Text>
+        <Text style={{ alignSelf: "center" }}>
+          No hay datos para mostrar grafica
+        </Text>
+      </>
+    );
   }
   return (
     <View style={styles.container}>

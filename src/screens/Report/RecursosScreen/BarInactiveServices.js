@@ -5,10 +5,11 @@ const windowWidth = Dimensions.get("window").width - 30;
 
 export const BarInactiveServices = (props) => {
   const { data, titulo, unidad } = props;
+  console.log("datassss", data);
 
   let inactiveCantidad = 0;
   let barWidth;
-  if (data) {
+  if (data?.length > 0) {
     const TotalServices = data.length;
 
     for (let i = 0; i < TotalServices; i++) {

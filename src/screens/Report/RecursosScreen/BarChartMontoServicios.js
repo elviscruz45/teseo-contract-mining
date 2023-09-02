@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import {
   VictoryChart,
   VictoryBar,
@@ -80,8 +80,15 @@ export const BarChartMontoServicios = (props) => {
       },
     ];
   }
-  if (!data) {
-    return null;
+  if (data?.length === 0) {
+    return (
+      <>
+        <Text></Text>
+        <Text style={{ alignSelf: "center" }}>
+          No hay datos para mostrar grafica
+        </Text>
+      </>
+    );
   }
   return (
     <View style={styles.container}>
