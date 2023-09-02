@@ -40,6 +40,9 @@ function LoginForm(props) {
           props.update_firebaseProfile(docSnap.data());
         } else {
           alert("Actualice sus datos en el perfil para comenzar");
+          navigation.navigate(screen.profile.tab, {
+            screen: screen.profile.account,
+          });
         }
       } catch (error) {
         alert("Usuario o Contraseña incorrecta");

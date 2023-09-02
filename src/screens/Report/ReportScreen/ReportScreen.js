@@ -31,6 +31,7 @@ const ReportScreenNoRedux = (props) => {
   const [montoEDP, setMontoEDP] = useState(false);
   const [comprometido, setComprometido] = useState(false);
 
+  console.log("data", data);
   useEffect(() => {
     if (props.servicesData) {
       console.log("5.1.USEEFFECTReportScreen");
@@ -45,217 +46,240 @@ const ReportScreenNoRedux = (props) => {
     });
   };
 
-  return (
-    <ScrollView
-      style={{ backgroundColor: "white" }} // Add backgroundColor here
-      showsVerticalScrollIndicator={false}
-    >
-      <Text></Text>
-      <View style={{ flexDirection: "row", alignSelf: "center" }}>
-        <TouchableOpacity onPress={() => alert("lista de empresas")}>
-          <Image
-            source={require("../../../../assets/empresa.png")}
-            style={styles.roundImageUpload}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => goToHistoryScreen()}>
-          <Image
-            source={require("../../../../assets/historyIcon.png")}
-            style={styles.history}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.company}>PRODISE</Text>
-
-      <Text></Text>
-      <RecursosHumanos />
-      <Text></Text>
-      <Text></Text>
-
-      <Text></Text>
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Servicios Activos Asignados</Text>
-        </View>
-        <TouchableOpacity onPress={() => setServiciosActivos(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setServiciosActivos(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-
-      {serviciosActivos && (
-        <>
-          <PieChart data={data} />
-          <ServiceList data={data} />
-        </>
-      )}
-      <Text></Text>
-      <Text></Text>
-
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Estado de Servicios Activos</Text>
-        </View>
-        <TouchableOpacity onPress={() => setEstadoServicios(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setEstadoServicios(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-      {estadoServicios && <EstadoServiceList data={data} />}
-      <Text></Text>
-
-      <Text></Text>
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Servicios Inactivos</Text>
-        </View>
-        <TouchableOpacity onPress={() => setServiciosInactivos(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setServiciosInactivos(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text></Text>
-
-      {serviciosInactivos && (
-        <>
-          <Text style={{ margin: 10 }}>
-            <BarInactiveServices
-              data={data}
-              titulo={"Stand by"}
-              unidad={"servicios"}
-            />
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            <BarInactiveServices
-              data={data}
-              titulo={"Cancelacion"}
-              unidad={"servicios"}
-            />
-          </Text>
-          <InactiveServiceList data={data} />
-        </>
-      )}
-      <Text></Text>
-
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Monto Servicios</Text>
-        </View>
-        <TouchableOpacity onPress={() => setMontoServicios(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setMontoServicios(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-      {montoServicios && (
-        <>
-          <BarChartMontoServicios data={data} />
-          <MontoServiceList data={data} />
-        </>
-      )}
-      <Text></Text>
-
-      <Text></Text>
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Monto Estado de Pago</Text>
-        </View>
-        <TouchableOpacity onPress={() => setMontoEDP(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setMontoEDP(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-      {montoEDP && (
-        <>
-          <BarChartProceso data={data} />
-          <MontoEDPList data={data} />
-        </>
-      )}
-
-      <Text></Text>
-
-      <Text></Text>
-
-      <View style={styles.iconMinMax}>
-        <View style={styles.container22}>
-          <Text style={styles.titleText}>Montos Comprometidos</Text>
-        </View>
-        <TouchableOpacity onPress={() => setComprometido(true)}>
-          <Image
-            source={require("../../../../assets/plus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setComprometido(false)}>
-          <Image
-            source={require("../../../../assets/minus3.png")}
-            style={styles.roundImageUploadmas}
-          />
-        </TouchableOpacity>
-      </View>
-
-      {comprometido && <MontoComprometido data={data} />}
-      <Text></Text>
-
-      <TouchableOpacity
-        // style={styles.btnContainer4}
-        onPress={
-          () => getExcelReportData(data)
-          // alert("Pendiente todavia")
-        }
+  if (!data) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Image
-          source={require("../../../../assets/excel2.png")}
-          style={styles.excel}
-        />
-      </TouchableOpacity>
-    </ScrollView>
-  );
+        <Text
+          style={{
+            fontSize: 50,
+            fontFamily: "Arial",
+            color: "#2A3B76",
+          }}
+        >
+          Bienvenido
+        </Text>
+      </View>
+    );
+  } else {
+    return (
+      <ScrollView
+        style={{ backgroundColor: "white" }} // Add backgroundColor here
+        showsVerticalScrollIndicator={false}
+      >
+        <Text></Text>
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <TouchableOpacity onPress={() => alert("lista de empresas")}>
+            <Image
+              source={require("../../../../assets/empresa.png")}
+              style={styles.roundImageUpload}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => goToHistoryScreen()}>
+            <Image
+              source={require("../../../../assets/historyIcon.png")}
+              style={styles.history}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.company}>PRODISE</Text>
+
+        <Text></Text>
+        <RecursosHumanos />
+        <Text></Text>
+        <Text></Text>
+
+        <Text></Text>
+        <View style={styles.iconMinMax}>
+          <View style={styles.container22}>
+            <Text style={styles.titleText}>Servicios Activos Asignados</Text>
+          </View>
+          <TouchableOpacity onPress={() => setServiciosActivos(true)}>
+            <Image
+              source={require("../../../../assets/plus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setServiciosActivos(false)}>
+            <Image
+              source={require("../../../../assets/minus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {serviciosActivos && (
+          <>
+            <PieChart data={data} />
+            <ServiceList data={data} />
+          </>
+        )}
+        <Text></Text>
+        <Text></Text>
+
+        <View style={styles.iconMinMax}>
+          <View style={styles.container22}>
+            <Text style={styles.titleText}>Estado de Servicios Activos</Text>
+          </View>
+          <TouchableOpacity onPress={() => setEstadoServicios(true)}>
+            <Image
+              source={require("../../../../assets/plus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setEstadoServicios(false)}>
+            <Image
+              source={require("../../../../assets/minus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+        </View>
+        {estadoServicios && <EstadoServiceList data={data} />}
+        <Text></Text>
+
+        <Text></Text>
+        <View style={styles.iconMinMax}>
+          <View style={styles.container22}>
+            <Text style={styles.titleText}>Servicios Inactivos</Text>
+          </View>
+          <TouchableOpacity onPress={() => setServiciosInactivos(true)}>
+            <Image
+              source={require("../../../../assets/plus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setServiciosInactivos(false)}>
+            <Image
+              source={require("../../../../assets/minus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text></Text>
+
+        {serviciosInactivos && (
+          <>
+            <Text style={{ margin: 10 }}>
+              <BarInactiveServices
+                data={data}
+                titulo={"Stand by"}
+                unidad={"servicios"}
+              />
+            </Text>
+            <Text style={{ marginLeft: 10 }}>
+              <BarInactiveServices
+                data={data}
+                titulo={"Cancelacion"}
+                unidad={"servicios"}
+              />
+            </Text>
+            <InactiveServiceList data={data} />
+          </>
+        )}
+        <Text></Text>
+
+        <View style={styles.iconMinMax}>
+          <View style={styles.container22}>
+            <Text style={styles.titleText}>Monto Servicios</Text>
+          </View>
+          <TouchableOpacity onPress={() => setMontoServicios(true)}>
+            <Image
+              source={require("../../../../assets/plus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setMontoServicios(false)}>
+            <Image
+              source={require("../../../../assets/minus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+        </View>
+        {montoServicios && (
+          <>
+            <BarChartMontoServicios data={data} />
+            <MontoServiceList data={data} />
+          </>
+        )}
+        <Text></Text>
+
+        <Text></Text>
+        <View style={styles.iconMinMax}>
+          <View style={styles.container22}>
+            <Text style={styles.titleText}>Monto Estado de Pago</Text>
+          </View>
+          <TouchableOpacity onPress={() => setMontoEDP(true)}>
+            <Image
+              source={require("../../../../assets/plus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setMontoEDP(false)}>
+            <Image
+              source={require("../../../../assets/minus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+        </View>
+        {montoEDP && (
+          <>
+            <BarChartProceso data={data} />
+            <MontoEDPList data={data} />
+          </>
+        )}
+
+        <Text></Text>
+
+        <Text></Text>
+
+        <View style={styles.iconMinMax}>
+          <View style={styles.container22}>
+            <Text style={styles.titleText}>Montos Comprometidos</Text>
+          </View>
+          <TouchableOpacity onPress={() => setComprometido(true)}>
+            <Image
+              source={require("../../../../assets/plus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setComprometido(false)}>
+            <Image
+              source={require("../../../../assets/minus3.png")}
+              style={styles.roundImageUploadmas}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {comprometido && <MontoComprometido data={data} />}
+        <Text></Text>
+
+        <TouchableOpacity
+          // style={styles.btnContainer4}
+          onPress={
+            () => getExcelReportData(data)
+            // alert("Pendiente todavia")
+          }
+        >
+          <Image
+            source={require("../../../../assets/excel2.png")}
+            style={styles.excel}
+          />
+        </TouchableOpacity>
+      </ScrollView>
+    );
+  }
 };
 
 const mapStateToProps = (reducers) => {

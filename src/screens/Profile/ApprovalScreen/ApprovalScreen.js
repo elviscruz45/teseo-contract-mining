@@ -78,7 +78,7 @@ function ApprovalScreenBare(props) {
 
   // <ConnectedInfoUser bellQuantity={props?.approvalList?.length} />
 
-  let approvalListPending = props.approvalListNew.filter((item) => {
+  let approvalListPending = props.approvalListNew?.filter((item) => {
     return !(
       item.ApprovalPerformed?.includes(props.email) ||
       item.RejectionPerformed?.includes(props.email)

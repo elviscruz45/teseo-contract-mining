@@ -28,7 +28,7 @@ function PostScreen(props) {
   //retrieving serviceAIT list data from firebase
   useEffect(() => {
     let servicesList = props.servicesData;
-    servicesList.sort((a, b) => {
+    servicesList?.sort((a, b) => {
       return b.createdAt - a.createdAt;
     });
     setPosts(servicesList);
@@ -219,7 +219,9 @@ function PostScreen(props) {
                   />
                 ) : (
                   <ImageExpo
-                    source={imageSource}
+                    source={
+                      imageSource || require("../../../../assets/icon1.png")
+                    }
                     style={styles.image}
                     cachePolicy={"memory-disk"}
                   />

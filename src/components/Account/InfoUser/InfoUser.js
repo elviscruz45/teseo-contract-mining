@@ -76,7 +76,7 @@ function InfoUser(props) {
   };
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
-  let approvalListPending = props.approvalListNew.filter((item) => {
+  let approvalListPending = props.approvalListNew?.filter((item) => {
     return !(
       item.ApprovalPerformed?.includes(props.email) ||
       item.RejectionPerformed?.includes(props.email)

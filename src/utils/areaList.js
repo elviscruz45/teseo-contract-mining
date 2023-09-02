@@ -147,4 +147,9 @@ export const areaLists = [
     tag: "HIDRO",
     image: require("../../assets/equipmentplant/ImageIcons/Hidro.jpeg"),
   },
+  {
+    value: "Otra Area",
+    tag: "OTRO",
+    // image: require("../../assets/equipmentplant/ImageIcons/Hidro.jpeg"),
+  },
 ];

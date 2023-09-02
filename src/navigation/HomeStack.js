@@ -23,6 +23,8 @@ function HomeStack(props) {
 
   const user = getAuth().currentUser;
   const { uid, photoURL, displayName, email } = user;
+  console.log("user", user);
+
   useEffect(() => {
     if (user) {
       props.update_firebasePhoto(photoURL);
@@ -91,6 +93,7 @@ function HomeStack(props) {
 const mapStateToProps = (reducers) => {
   return {
     user_photo: reducers.profile.user_photo,
+    profile: reducers.profile.profile,
   };
 };
 

@@ -101,7 +101,9 @@ function SearchScreenNoRedux(props) {
                 />
               ) : (
                 <ImageExpo
-                  source={imageSource}
+                  source={
+                    imageSource || require("../../../../assets/icon1.png")
+                  }
                   style={styles.image}
                   cachePolicy={"memory-disk"}
                 />

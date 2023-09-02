@@ -32,10 +32,7 @@ function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  console.log("1HomeScreen");
-  // console.log(props.postPerPage);
-
-  // props.resetPostPerPageHome(5); // PROVING RERENDERING-------------
+  console.log("1HomeScreen", posts);
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -44,7 +41,6 @@ function HomeScreen(props) {
     function fetchData() {
       let queryRef = query(
         collection(db, "events"),
-        // limit(props.postPerPage),
         limit(10),
         orderBy("createdAt", "desc")
       );
@@ -71,11 +67,8 @@ function HomeScreen(props) {
   }, []);
   // }, [props.postPerPage]);
 
-  //
-
   useEffect(() => {
     let unsubscribe;
-
     if (props.email) {
       function fetchData() {
         let queryRef = query(
@@ -90,15 +83,6 @@ function HomeScreen(props) {
             lista.push(doc.data());
           });
           console.log("3.OnsnapshotHeaderAPROVALS", lista);
-
-          // const filteredArray = lista.filter(
-          //   (element) =>
-          //     !(
-          //       element.ApprovalPerformed?.includes(props.email) ||
-          //       element.RejectionPerformed?.includes(props.email)
-          //     )
-          // );
-
           props.saveApprovalListnew(lista);
         });
       }
@@ -179,141 +163,164 @@ function HomeScreen(props) {
   };
 
   if (isLoading) {
-    console.log("--------loadingHOME SCREEN------");
     return <LoadingSpinner />;
+  } else if (posts?.length === 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <HeaderScreen />
+
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "white",
+            // justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 50,
+              fontFamily: "Arial",
+              color: "#2A3B76",
+            }}
+          >
+            Bienvenido
+          </Text>
+        </View>
+      </View>
+    );
   } else {
-    console.log("--------loaded HOME SCREEN------");
+    console.log("oaaaaaaaa----------");
     return (
       <FlatList
         data={posts}
         ListHeaderComponent={<HeaderScreen />}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: "white" }} // Add backgroundColor here
-        renderItem={({ item, index }) => {
+        style={{ backgroundColor: "white" }}
+        renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AITAreaServicio;
           const indexareaList = areaLists.findIndex(
             (item) => item.value === area
           );
-          const imageSource = areaLists[indexareaList]?.image;
+          const imageSource =
+            areaLists[indexareaList]?.image ??
+            require("../../../../assets/icon1.png");
+          console.log("ttttttttttttt----");
 
-          return item ? (
-            <>
-              <View
-                style={{
-                  // margin: 2,
-                  borderBottomWidth: 5,
-                  borderBottomColor: "#f0f8ff",
-                  paddingVertical: 10,
-                }}
-              >
+          return (
+            <View
+              style={{
+                // margin: 2,
+                borderBottomWidth: 5,
+                borderBottomColor: "#f0f8ff",
+                paddingVertical: 10,
+              }}
+            >
+              <View style={[styles.row, styles.center]}>
                 <View style={[styles.row, styles.center]}>
-                  <View style={[styles.row, styles.center]}>
-                    <TouchableOpacity
-                      style={[styles.row, styles.center]}
-                      onPress={() => goToServiceInfo(item)}
-                      // activeOpacity={1}
-                    >
-                      {item.AITphotoServiceURL ? (
-                        <ImageExpo
-                          source={{ uri: item.AITphotoServiceURL }}
-                          style={styles.roundImage}
-                          cachePolicy={"memory-disk"}
-                        />
-                      ) : (
-                        <ImageExpo
-                          source={imageSource}
-                          style={styles.roundImage}
-                          cachePolicy={"memory-disk"}
-                        />
-                      )}
-                      <Text style={styles.NombreServicio}>
-                        {item.AITNombreServicio}
-                      </Text>
-                    </TouchableOpacity>
-
-                    <ImageExpo
-                      source={{ uri: item.fotoUsuarioPerfil }}
-                      style={styles.roundImage}
-                      cachePolicy={"memory-disk"}
-                    />
-                    <Text>{item.nombrePerfil}</Text>
-                  </View>
-                </View>
-                <View style={[styles.row, styles.center]}>
-                  <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
-                    {"Fecha:  "}
-                    {item.fechaPostFormato}
-                  </Text>
-                </View>
-                <Text></Text>
-                <View style={styles.equipments}>
-                  <TouchableOpacity onPress={() => commentPost(item)}>
-                    <ImageExpo
-                      source={{ uri: item.fotoPrincipal }}
-                      style={styles.postPhoto}
-                      cachePolicy={"memory-disk"}
-                    />
+                  <TouchableOpacity
+                    style={[styles.row, styles.center]}
+                    onPress={() => goToServiceInfo(item)}
+                  >
+                    {item.AITphotoServiceURL ? (
+                      <ImageExpo
+                        source={{ uri: item.AITphotoServiceURL }}
+                        style={styles.roundImage}
+                        cachePolicy={"memory-disk"}
+                      />
+                    ) : (
+                      <ImageExpo
+                        source={imageSource}
+                        style={styles.roundImage}
+                        cachePolicy={"memory-disk"}
+                      />
+                    )}
+                    <Text style={styles.NombreServicio}>
+                      {item.AITNombreServicio}
+                    </Text>
                   </TouchableOpacity>
 
-                  <View>
-                    <Text style={styles.textAreaTitle}>
-                      {/* {"Evento: "} */}
-                      {item.titulo}
-                    </Text>
-                    <Text></Text>
-                    <Text style={styles.textAreaComment}>
-                      {item.comentarios}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowlikes}>
-                  <View style={styles.likeComment}>
-                    <TouchableOpacity
-                      onPress={() => likePost(item)}
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <Icon
-                        type="material-community"
-                        name={
-                          item.likes.includes(props.email)
-                            ? "thumb-up"
-                            : "thumb-up-outline"
-                        }
-                      />
-
-                      <Text> {item.likes.length} Revisado</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.likeComment}>
-                    <TouchableOpacity
-                      onPress={() => commentPost(item)}
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <Icon
-                        type="material-community"
-                        name="comment-processing-outline"
-                      />
-                      <Text>
-                        {" "}
-                        {item.comentariosUsuarios.length} Comentarios
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                  {item.pdfPrincipal && (
-                    <TouchableOpacity
-                      onPress={() => uploadFile(item.pdfPrincipal)}
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <Icon type="material-community" name="paperclip" />
-                      <Text>Pdf File</Text>
-                    </TouchableOpacity>
-                  )}
+                  <ImageExpo
+                    source={{ uri: item.fotoUsuarioPerfil }}
+                    style={styles.roundImage}
+                    cachePolicy={"memory-disk"}
+                  />
+                  <Text>{item.nombrePerfil}</Text>
                 </View>
               </View>
-            </>
-          ) : null;
+              <View style={[styles.row, styles.center]}>
+                <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                  {"Fecha:  "}
+                  {item.fechaPostFormato}
+                </Text>
+              </View>
+              <Text></Text>
+              <View style={styles.equipments}>
+                <TouchableOpacity onPress={() => commentPost(item)}>
+                  <ImageExpo
+                    source={{ uri: item.fotoPrincipal }}
+                    style={styles.postPhoto}
+                    cachePolicy={"memory-disk"}
+                  />
+                </TouchableOpacity>
+
+                <View>
+                  <Text style={styles.textAreaTitle}>
+                    {/* {"Evento: "} */}
+                    {item.titulo}
+                  </Text>
+                  <Text></Text>
+                  <Text style={styles.textAreaComment}>{item.comentarios}</Text>
+                </View>
+              </View>
+              <View style={styles.rowlikes}>
+                <View style={styles.likeComment}>
+                  <TouchableOpacity
+                    onPress={() => likePost(item)}
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                  >
+                    <Icon
+                      type="material-community"
+                      name={
+                        item.likes.includes(props.email)
+                          ? "thumb-up"
+                          : "thumb-up-outline"
+                      }
+                    />
+
+                    <Text> {item.likes.length} Revisado</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.likeComment}>
+                  <TouchableOpacity
+                    onPress={() => commentPost(item)}
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                  >
+                    <Icon
+                      type="material-community"
+                      name="comment-processing-outline"
+                    />
+                    <Text> {item.comentariosUsuarios.length} Comentarios</Text>
+                  </TouchableOpacity>
+                </View>
+                {item.pdfPrincipal && (
+                  <TouchableOpacity
+                    onPress={() => uploadFile(item.pdfPrincipal)}
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                  >
+                    <Icon type="material-community" name="paperclip" />
+                    <Text>Pdf File</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          );
         }}
         keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
         onEndReached={() => {
@@ -331,7 +338,6 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     user_photo: reducers.profile.user_photo,
     // postPerPage: reducers.home.postPerPage,
-    // servicesData: reducers.home.servicesData,
   };
 };
 

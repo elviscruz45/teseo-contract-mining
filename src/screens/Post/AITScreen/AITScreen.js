@@ -100,8 +100,8 @@ function AITNoReduxScreen(props) {
         newData.fechaPostISO = new Date().toISOString();
         newData.createdAt = new Date();
         newData.LastEventPosted = new Date();
-        newData.NuevaFechaEstimada = new Date();
-        newData.fechaFinEjecucion = new Date();
+        newData.NuevaFechaEstimada = 0;
+        newData.fechaFinEjecucion = 0;
 
         //Photo of the service
         newData.photoServiceURL = "";
@@ -116,7 +116,7 @@ function AITNoReduxScreen(props) {
         const regex = /@(.+?)\./i;
         newData.companyName = props.email?.match(regex)?.[1] || "Anonimo";
         //Progress of Service
-        newData.AvanceEjecucion = 5;
+        newData.AvanceEjecucion = 1;
         // newData.AvanceAdministrativo = 0;
         newData.AvanceAdministrativoTexto = "";
         //Monto and HH updated in the proccess of the service

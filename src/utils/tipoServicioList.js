@@ -15,6 +15,9 @@ export const tipoServicioList = [
   {
     value: "IngenieriayFabricacion",
   },
+  {
+    value: "Otro",
+  },
 ];
 
 export const Reparacion = [

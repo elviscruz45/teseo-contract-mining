@@ -33,6 +33,42 @@ export function AITForms(props) {
   const [showModal, setShowModal] = useState(false);
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
+  ///function to date format
+  const formatdate = (item) => {
+    const date = new Date(item);
+    const monthNames = [
+      "de enero del",
+      "de febrero del",
+      "de marzo del",
+      "de abril del",
+      "de mayo del",
+      "de junio del",
+      "de julio del",
+      "de agosto del",
+      "de septiembre del",
+      "de octubre del",
+      "de noviembre del",
+      "de diciembre del",
+    ];
+    const day = date.getDate();
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const formattedDate = `${day} ${month} ${year} `;
+    const fechaPostFormato = formattedDate;
+    console.log("fechaPostFormato", fechaPostFormato);
+    return fechaPostFormato;
+  };
+
+  //function to format money
+  const formatNumber = (item) => {
+    const amount = item;
+
+    const formattedAmount = new Intl.NumberFormat("en-US").format(amount);
+    return formattedAmount;
+  };
+
   const selectComponent = (key) => {
     if (key === "AreaServicio") {
       setRenderComponent(
@@ -189,7 +225,7 @@ export function AITForms(props) {
           }}
         />
         <Input
-          value={fechafin}
+          value={formatdate(fechafin)}
           placeholder="Fecha de Fin Comprometida"
           multiline={true}
           editable={false}
@@ -225,7 +261,7 @@ export function AITForms(props) {
           }}
         />
         <Input
-          value={monto}
+          value={formatNumber(monto)}
           placeholder="Monto Total"
           editable={false}
           errorMessage={formik.errors.Monto}
@@ -238,7 +274,7 @@ export function AITForms(props) {
         />
 
         <Input
-          value={horashombre}
+          value={formatNumber(horashombre)}
           placeholder="Horas Hombre"
           editable={false}
           errorMessage={formik.errors.HorasHombre}

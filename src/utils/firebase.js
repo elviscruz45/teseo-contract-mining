@@ -17,6 +17,15 @@ const firebaseConfig = {
   measurementId: "G-M2CMHVRCN9",
 };
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAnI4AkUZQvTbE6012n9Uw02rqQ41otjAw",
+//   authDomain: "teseo-contract-mining.firebaseapp.com",
+//   projectId: "teseo-contract-mining",
+//   storageBucket: "teseo-contract-mining.appspot.com",
+//   messagingSenderId: "188698485308",
+//   appId: "1:188698485308:web:a962b1b2e770f87a8cd939",
+// };
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
