@@ -184,7 +184,7 @@ function HomeScreen(props) {
           <Text
             style={{
               fontSize: 50,
-              fontFamily: "Arial",
+              // fontFamily: "Arial",
               color: "#2A3B76",
             }}
           >
