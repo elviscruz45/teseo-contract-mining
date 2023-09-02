@@ -54,7 +54,25 @@ export const RecursosHumanos = (props) => {
     };
   }, []);
   console.log("hoaa", manpower?.Reparacion / manpower?.TotalReparacion);
-
+  if (!manpower) {
+    return (
+      <>
+        <View style={styles2.container22}>
+          <Text
+            style={{
+              paddingHorizontal: 15,
+              fontWeight: "600",
+              textAlign: "center",
+            }}
+          >
+            Disponibiliad Recursos
+          </Text>
+        </View>
+        <Text></Text>
+        <Text style={{ alignSelf: "center" }}>No Se ha reportado Todavia</Text>
+      </>
+    );
+  }
   return (
     <>
       <View style={styles2.container22}>

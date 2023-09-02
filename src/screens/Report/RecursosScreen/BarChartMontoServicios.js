@@ -14,38 +14,36 @@ import { tipoServicioList } from "../../../utils/tipoServicioList";
 export const BarChartMontoServicios = (props) => {
   const { data } = props;
 
-  let datas = [
-    { label: tipoServicioList[0].value, value: 0, unidad: "Soles" },
-    { label: tipoServicioList[1].value, value: 0, unidad: "Soles" },
-    { label: tipoServicioList[2].value, value: 0, unidad: "Soles" },
-    { label: tipoServicioList[3].value, value: 0, unidad: "Soles" },
-    { label: tipoServicioList[3].value, value: 0, unidad: "Soles" },
-  ];
+  let datas;
 
   let sumByTipoServicio;
   if (data) {
     sumByTipoServicio = {
-      Reparacion: 1,
-      Fabricacion: 1,
-      Ingenieria: 1,
-      Instalacion: 1,
-      IngenieriayFabricacion: 1,
+      Reparacion: 0,
+      Fabricacion: 0,
+      Ingenieria: 0,
+      Instalacion: 0,
+      IngenieriayFabricacion: 0,
+      Otro: 0,
     };
 
     const totalEntries = data?.length;
     for (let i = 0; i < totalEntries; i++) {
       const tipoServicio = data[i].TipoServicio;
-      if (sumByTipoServicio[tipoServicio]) {
-        if (data[i]["Moneda"] === "Dolares") {
-          sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 3.5;
-        }
-        if (data[i]["Moneda"] === "Euros") {
-          sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 4;
-        }
+      console.log("BarChartMontoServicios", tipoServicio);
 
-        if (data[i]["Moneda"] === "Soles") {
-          sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto);
-        }
+      if (data[i]["Moneda"] === "Dolares") {
+        sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 3.5;
+        console.log("MONEDA", parseInt(data[i].Monto) * 3.5);
+      }
+      if (data[i]["Moneda"] === "Euros") {
+        sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto) * 4;
+        console.log("MONEDA", parseInt(data[i].Monto) * 3.5);
+      }
+
+      if (data[i]["Moneda"] === "Soles") {
+        sumByTipoServicio[tipoServicio] += parseInt(data[i].Monto);
+        console.log("MONEDA", parseInt(data[i].Monto) * 3.5);
       }
     }
 
@@ -75,9 +73,16 @@ export const BarChartMontoServicios = (props) => {
         value: sumByTipoServicio["IngenieriayFabricacion"] ?? 0,
         unidad: "Soles",
       },
+      {
+        label: "Otro",
+        value: sumByTipoServicio["Otro"] ?? 0,
+        unidad: "Soles",
+      },
     ];
   }
-
+  if (!data) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <VictoryChart

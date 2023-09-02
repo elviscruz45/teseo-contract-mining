@@ -5,15 +5,9 @@ import Svg from "react-native-svg";
 
 export const PieChart = (props) => {
   const { data } = props;
-  console.log("5.3PieChart");
+  console.log("5.3PieChart", data);
 
-  let datas = [
-    { x: "Rep", y: 10 },
-    { x: "Fab", y: 10 },
-    { x: "Ing", y: 10 },
-    { x: "Maq", y: 10 },
-    { x: "IngFab", y: 10 },
-  ];
+  let datas;
 
   // Function to calculate the sum and quantity of different kinds of "TipoServicio"
 
@@ -36,7 +30,10 @@ export const PieChart = (props) => {
       { x: "Ing", y: sumByTipoServicio["Ingenieria"] ?? 0 },
       { x: "Maq", y: sumByTipoServicio["Maquinado"] ?? 0 },
       { x: "IngFab", y: sumByTipoServicio["IngFab"] ?? 0 },
+      { x: "Otro", y: sumByTipoServicio["Otro"] ?? 0 },
     ];
+
+    datas = datas.filter((item) => item.y !== 0);
   }
 
   const [selectedSlice, setSelectedSlice] = useState(null); // Initialize with no slice selected
@@ -55,6 +52,7 @@ export const PieChart = (props) => {
   const handleSvgClick = () => {
     setSelectedSlice(null); // Reset selectedSlice when clicking outside the pie
   };
+  if (!datas) return null;
   return (
     <TouchableOpacity onPress={handleSvgClick} activeOpacity={1}>
       <View

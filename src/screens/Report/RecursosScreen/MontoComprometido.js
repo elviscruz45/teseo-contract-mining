@@ -43,9 +43,9 @@ export const MontoComprometido = (props) => {
         item.AvanceAdministrativoTexto !== "Cancelacion"
       ) {
         const date =
-          convertFirebaseTimestampToJSDate(item.NuevaFechaEstimada) >
+          convertFirebaseTimestampToJSDate(item.NuevaFechaEstimada ?? 0) >
           convertFirebaseTimestampToJSDate(item.FechaFin)
-            ? convertFirebaseTimestampToJSDate(item.NuevaFechaEstimada)
+            ? convertFirebaseTimestampToJSDate(item.NuevaFechaEstimada ?? 0)
             : convertFirebaseTimestampToJSDate(item.FechaFin);
 
         const year = date.getFullYear();

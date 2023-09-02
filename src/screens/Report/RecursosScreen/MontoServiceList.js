@@ -108,5 +108,6 @@ const styles = StyleSheet.create({
   },
   multiLineColumn: {
     flex: 2,
+    alignSelf: "center",
   },
 });
