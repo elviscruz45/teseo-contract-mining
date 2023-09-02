@@ -8,9 +8,9 @@ export function initialValues() {
     aprobacion: "",
     pdfFile: "",
     FilenameTitle: "",
-    MontoModificado: "",
+    MontoModificado: null,
     NuevaFechaEstimada: null,
-    HHModificado: "",
+    HHModificado: null,
     tipoFile: "",
   };
 }

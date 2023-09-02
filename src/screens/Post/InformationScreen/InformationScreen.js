@@ -90,6 +90,13 @@ function InformationScreen(props) {
         const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
         newData.fechaPostFormato = formattedDate;
 
+        //data of the service AIT information
+        newData.AITidServicios = props.actualServiceAIT?.idServiciosAIT;
+        newData.AITNombreServicio = props.actualServiceAIT?.NombreServicio;
+        newData.AITAreaServicio = props.actualServiceAIT?.AreaServicio;
+        newData.AITphotoServiceURL = props.actualServiceAIT?.photoServiceURL;
+        newData.AITNumero = props.actualServiceAIT?.NumeroAIT;
+
         // send profile information
         newData.emailPerfil = props.email || "Anonimo";
         newData.nombrePerfil = props.firebase_user_name || "Anonimo";
@@ -176,12 +183,6 @@ function InformationScreen(props) {
         ) {
           newData.porcentajeAvance = "100";
         }
-        //data of the service AIT information
-        newData.AITidServicios = props.actualServiceAIT?.idServiciosAIT;
-        newData.AITNombreServicio = props.actualServiceAIT?.NombreServicio;
-        newData.AITAreaServicio = props.actualServiceAIT?.AreaServicio;
-        newData.AITphotoServiceURL = props.actualServiceAIT?.photoServiceURL;
-        newData.AITNumero = props.actualServiceAIT?.NumeroAIT;
 
         // Posting data to Firebase and adding the ID firestore
         const docRef = await addDoc(collection(db, "events"), newData);
@@ -218,9 +219,6 @@ function InformationScreen(props) {
           LastEventPosted: newData.createdAt,
           AvanceEjecucion: newData.porcentajeAvance,
           AvanceAdministrativoTexto: newData.etapa,
-          MontoModificado: newData.MontoModificado ?? "",
-          NuevaFechaEstimada: newData.NuevaFechaEstimada ?? null,
-          HHModificado: newData.HHModificado ?? "",
           events: arrayUnion(eventSchema),
           fechaFinEjecucion:
             newData.porcentajeAvance === "100" &&
@@ -228,13 +226,21 @@ function InformationScreen(props) {
               ? new Date()
               : null,
         };
-        console.log("uploadPdf-------00000000");
-
-        if (newData?.aprobacion !== undefined) {
-          updateDataLasEventPost.aprobacion = arrayUnion(newData.aprobacion);
+        if (newData?.MontoModificado) {
+          updateDataLasEventPost.MontoModificado = newData.MontoModificado;
+        }
+        if (newData?.NuevaFechaEstimada) {
+          updateDataLasEventPost.NuevaFechaEstimada =
+            newData.NuevaFechaEstimada;
+        }
+        if (newData?.HHModificado) {
+          updateDataLasEventPost.HHModificado = newData.HHModificado;
         }
 
-        if (imageUrlPDF !== undefined) {
+        if (newData?.aprobacion) {
+          updateDataLasEventPost.aprobacion = arrayUnion(newData.aprobacion);
+        }
+        if (imageUrlPDF) {
           updateDataLasEventPost.pdfFile = arrayUnion(imageUrlPDF);
         }
 

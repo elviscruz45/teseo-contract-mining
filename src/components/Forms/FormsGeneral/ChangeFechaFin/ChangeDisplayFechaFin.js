@@ -18,7 +18,7 @@ export function ChangeDisplayFechaFin(props) {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
-    setFechafin(currentDate.toLocaleString());
+    setFechafin(currentDate);
     formik.setFieldValue("NuevaFechaEstimada", currentDate);
     onClose();
   };

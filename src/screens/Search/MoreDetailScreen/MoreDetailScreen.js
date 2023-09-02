@@ -53,51 +53,57 @@ function MoreDetailScreenNoRedux(props) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(Item.Monto);
-  ///algoritm to change the format of FechaFin from ServiciosAIT firebase collection
-  const date = new Date(Item.FechaFin.seconds * 1000);
-  const monthNames = [
-    "ene.",
-    "feb.",
-    "mar.",
-    "abr.",
-    "may.",
-    "jun.",
-    "jul.",
-    "ago.",
-    "sep.",
-    "oct.",
-    "nov.",
-    "dic.",
-  ];
-  const day = date.getDate();
-  const month = monthNames[date.getMonth()];
-  const year = date.getFullYear();
-  const formattedDate = `${day} ${month} ${year}`;
 
-  ///algoritm to change the format of FechaInicio from ServiciosAIT firebase collection
-  const dateInicio = new Date(Item.createdAt.seconds * 1000);
-  const monthNamesInicio = [
-    "ene.",
-    "feb.",
-    "mar.",
-    "abr.",
-    "may.",
-    "jun.",
-    "jul.",
-    "ago.",
-    "sep.",
-    "oct.",
-    "nov.",
-    "dic.",
-  ];
-  const dayInicio = dateInicio.getDate();
-  const monthInicio = monthNamesInicio[dateInicio.getMonth()];
-  const yearInicio = dateInicio.getFullYear();
-  const formattedDateInicio = `${dayInicio} ${monthInicio} ${yearInicio}`;
+  ///function to change the format of FechaFin from ServiciosAIT firebase collection
+  const formatDate = (item) => {
+    const date = new Date(item);
+
+    const monthNames = [
+      "ene.",
+      "feb.",
+      "mar.",
+      "abr.",
+      "may.",
+      "jun.",
+      "jul.",
+      "ago.",
+      "sep.",
+      "oct.",
+      "nov.",
+      "dic.",
+    ];
+    const day = date.getDate();
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const formattedDate = `${day} ${month} ${year}`;
+    return formattedDate;
+  };
+
+  // Considering if there are a modification in the service
+  const HHModificado = Item?.HHModificado ?? 0;
+  const MontoModificado = Item?.MontoModificado ?? 0;
+  const NuevaFechaEstimada = Item?.NuevaFechaEstimada ?? 0;
+
+  const HHtoRender =
+    HHModificado > Item.HorasHombre ? HHModificado : Item.HorasHombre;
+  const MontoModificadotoRender =
+    MontoModificado > Item.Monto ? MontoModificado : Item.Monto;
+  const NuevaFechaEstimadatoRender =
+    NuevaFechaEstimada > Item?.FechaFin
+      ? formatDate(NuevaFechaEstimada?.seconds * 1000)
+      : formatDate(Item?.createdAt?.seconds * 1000);
+
+  const NuevaFechaEstimadatoCalculate =
+    NuevaFechaEstimada > Item?.FechaFin
+      ? NuevaFechaEstimada?.seconds * 1000
+      : Item?.createdAt?.seconds * 1000;
 
   //Algoritm to calculate  "Avance Ejecucion Proyectado"
   const ActualDate = new Date();
-  const DaysProyectedToCompleteTask = date - dateInicio;
+  const DaysProyectedToCompleteTask =
+    NuevaFechaEstimadatoCalculate - new Date(Item.createdAt.seconds * 1000);
   let AvanceProyected =
     ((ActualDate - new Date(Item.createdAt.seconds * 1000)) * 100) /
     DaysProyectedToCompleteTask;
@@ -127,14 +133,14 @@ function MoreDetailScreenNoRedux(props) {
       </View>
     );
   };
-  //Algorithm to render the bar status
 
+  //Algorithm to render the bar status
   const BarProgress = (percentage) => {
     const TotalSizeCompleted = windowWidth - 20;
     const percentajeNormalized = (percentage * TotalSizeCompleted) / 100;
 
-    getColor = (percentajeNormalized) => {
-      if (Item.AvanceEjecucion > AvanceProyected) {
+    getColor = () => {
+      if (Item.AvanceEjecucion >= AvanceProyected) {
         return "blue";
       } else {
         return "red";
@@ -144,7 +150,7 @@ function MoreDetailScreenNoRedux(props) {
       <View style={{ flexDirection: "row", height: 10, margin: 10 }}>
         <View
           style={{
-            backgroundColor: getColor(percentajeNormalized),
+            backgroundColor: getColor(),
             width: percentajeNormalized ? percentajeNormalized : 0,
             borderRadius: 5,
           }}
@@ -211,11 +217,13 @@ function MoreDetailScreenNoRedux(props) {
         </View>
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Fecha de Asignacion:  "}</Text>
-          <Text style={styles.info2}>{formattedDateInicio}</Text>
+          <Text style={styles.info2}>
+            {formatDate(Item?.createdAt?.seconds * 1000)}
+          </Text>
         </View>
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Fecha de Fin Propuesto:  "}</Text>
-          <Text style={styles.info2}>{formattedDate}</Text>
+          <Text style={styles.info2}>{NuevaFechaEstimadatoRender}</Text>
         </View>
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Horas Hombre Cotizadas:  "}</Text>

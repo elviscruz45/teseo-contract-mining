@@ -46,11 +46,7 @@ function ItemScreenNotRedux(props) {
   } = props;
 
   const navigation = useNavigation();
-  //calculate the amount of days to finish the service
-  let daysLeft = (
-    (serviceInfo?.FechaFin.seconds * 1000 - Date.now()) /
-    86400000
-  ).toFixed(0);
+
   ///the algoritm to retrieve the image source to render the icon
   const area = serviceInfo?.AreaServicio;
   const indexareaList = areaLists?.findIndex((item) => item.value === area);
@@ -63,50 +59,60 @@ function ItemScreenNotRedux(props) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(serviceInfo?.Monto);
-  ///algoritm to change the format of FechaFin from ServiciosAIT firebase collection
-  const date = new Date(serviceInfo?.FechaFin?.seconds * 1000);
-  console.log(date);
-  const monthNames = [
-    "ene.",
-    "feb.",
-    "mar.",
-    "abr.",
-    "may.",
-    "jun.",
-    "jul.",
-    "ago.",
-    "sep.",
-    "oct.",
-    "nov.",
-    "dic.",
-  ];
-  const day = date.getDate();
-  const month = monthNames[date.getMonth()];
-  const year = date.getFullYear();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const formattedDate = `${day} ${month} ${year}`;
 
-  ///algoritm to change the format of FechaInicio from ServiciosAIT firebase collection
-  const dateInicio = new Date(serviceInfo?.createdAt?.seconds * 1000);
-  const monthNamesInicio = [
-    "ene.",
-    "feb.",
-    "mar.",
-    "abr.",
-    "may.",
-    "jun.",
-    "jul.",
-    "ago.",
-    "sep.",
-    "oct.",
-    "nov.",
-    "dic.",
-  ];
-  const dayInicio = dateInicio.getDate();
-  const monthInicio = monthNamesInicio[dateInicio.getMonth()];
-  const yearInicio = dateInicio.getFullYear();
-  const formattedDateInicio = `${dayInicio} ${monthInicio} ${yearInicio}`;
+  ///function to change the format of FechaFin from ServiciosAIT firebase collection
+  const formatDate = (item) => {
+    const date = new Date(item);
+
+    const monthNames = [
+      "ene.",
+      "feb.",
+      "mar.",
+      "abr.",
+      "may.",
+      "jun.",
+      "jul.",
+      "ago.",
+      "sep.",
+      "oct.",
+      "nov.",
+      "dic.",
+    ];
+    const day = date.getDate();
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const formattedDate = `${day} ${month} ${year}`;
+    return formattedDate;
+  };
+
+  // Considering if there are a modification in the service
+  const HHModificado = serviceInfo?.HHModificado ?? 0;
+  const MontoModificado = serviceInfo?.MontoModificado ?? 0;
+  const NuevaFechaEstimada = serviceInfo?.NuevaFechaEstimada ?? 0;
+
+  const HHtoRender =
+    HHModificado > serviceInfo?.HorasHombre
+      ? HHModificado
+      : serviceInfo?.HorasHombre;
+  const MontoModificadotoRender =
+    MontoModificado > serviceInfo?.Monto ? MontoModificado : serviceInfo?.Monto;
+  const NuevaFechaEstimadatoRender =
+    NuevaFechaEstimada > serviceInfo?.FechaFin
+      ? formatDate(NuevaFechaEstimada?.seconds * 1000)
+      : formatDate(serviceInfo?.createdAt?.seconds * 1000);
+
+  const NuevaFechaEstimadatoCalculate =
+    NuevaFechaEstimada > serviceInfo?.FechaFin
+      ? NuevaFechaEstimada?.seconds * 1000
+      : serviceInfo?.createdAt?.seconds * 1000;
+
+  //calculate the amount of days to finish the service based if there are a new modification or not
+  let daysLeft = (
+    (NuevaFechaEstimadatoCalculate - Date.now()) /
+    86400000
+  ).toFixed(0);
 
   //Using navigation.navigate I send it to another screen (post)
   const goToPublicar = () => {
@@ -114,14 +120,6 @@ function ItemScreenNotRedux(props) {
 
     navigation.navigate(screen.post.tab, {
       screen: screen.post.camera,
-    });
-  };
-
-  //Using navigation.navigate I send it to another screen (post)
-  const goToPdf = (item) => {
-    navigation.navigate(screen.search.tab, {
-      screen: screen.search.pdf,
-      params: { Item: item },
     });
   };
 
@@ -159,6 +157,7 @@ function ItemScreenNotRedux(props) {
         // console.log("999.OnSnapshot_Servicios_AITEVENTS_SCREEN", lista);
         setPost(lista);
         setServiceInfo(InfoService[0]);
+        props.saveActualServiceAIT(InfoService[0]);
       });
     }
     fetchData();
@@ -238,10 +237,11 @@ function ItemScreenNotRedux(props) {
                 {"Tipo:  "} {serviceInfo.TipoServicio}
               </Text>
               <Text style={styles.info}>
-                {"Fecha Inicio:  "} {formattedDateInicio}
+                {"Fecha Inicio:  "}{" "}
+                {formatDate(serviceInfo?.createdAt?.seconds * 1000)}
               </Text>
               <Text style={styles.info}>
-                {"Fecha Fin:  "} {formattedDate}
+                {"Fecha Fin:  "} {NuevaFechaEstimadatoRender}
               </Text>
               <Text style={styles.info}>
                 {"Ejecucion:  "} {serviceInfo.AvanceEjecucion}
@@ -280,15 +280,6 @@ function ItemScreenNotRedux(props) {
               />
             </TouchableOpacity>
 
-            {/* <TouchableOpacity
-              style={styles.btnContainer4}
-              onPress={() => goToPdf(serviceInfo)}
-            >
-              <Image
-                source={require("../../../../assets/pdf4.png")}
-                style={styles.roundImageUpload}
-              />
-            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.btnContainer4}
               onPress={() => goToPublicar()}
