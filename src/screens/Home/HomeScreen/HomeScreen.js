@@ -32,7 +32,7 @@ function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  console.log("1HomeScreen", posts);
+  console.log("1HomeScreen");
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -41,7 +41,7 @@ function HomeScreen(props) {
     function fetchData() {
       let queryRef = query(
         collection(db, "events"),
-        limit(10),
+        limit(20),
         orderBy("createdAt", "desc")
       );
 
@@ -51,7 +51,7 @@ function HomeScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("1.OnSnapshoFETCH_EVENTS", lista);
+        console.log("1.OnSnapshoFETCH_EVENTS");
         setPosts(lista);
         props.saveTotalEventServiceAITList(lista);
       });
@@ -82,7 +82,7 @@ function HomeScreen(props) {
           ItemFirebase.forEach((doc) => {
             lista.push(doc.data());
           });
-          console.log("3.OnsnapshotHeaderAPROVALS", lista);
+          console.log("3.OnsnapshotHeaderAPROVALS");
           props.saveApprovalListnew(lista);
         });
       }
@@ -276,7 +276,9 @@ function HomeScreen(props) {
                     {item.titulo}
                   </Text>
                   <Text></Text>
-                  <Text style={styles.textAreaComment}>{item.comentarios}</Text>
+                  <Text style={styles.textAreaComment} selectable={true}>
+                    {item.comentarios}
+                  </Text>
                 </View>
               </View>
               <View style={styles.rowlikes}>

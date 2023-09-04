@@ -13,13 +13,26 @@ console.log("InicioApp.after rootReducers");
 import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { ConnectedLoginNavigator } from "./src/navigation/LoginNavigator";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 
 console.log("InicioApp.j");
 
 LogBox.ignoreAllLogs();
 
-const composedEnhancers = compose(applyMiddleware(reduxThunk, logger));
+// let store;
+
+// if (process.env.NODE_ENV === 'development') {
+//   const middleware = applyMiddleware(logger);
+//   store = createStore(rootReducers, {}, composedEnhancers);
+// } else {
+//   // For production or other environments, don't include logger
+//   store = createStore(rootReducers, {}, composedEnhancers);
+// }
+
+// const composedEnhancers = compose(applyMiddleware(reduxThunk, logger));
+// const store = createStore(rootReducers, {}, composedEnhancers);
+
+const composedEnhancers = compose(applyMiddleware(reduxThunk));
 const store = createStore(rootReducers, {}, composedEnhancers);
 
 // //the corrected way
