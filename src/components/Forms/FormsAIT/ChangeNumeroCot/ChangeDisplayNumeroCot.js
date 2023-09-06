@@ -13,7 +13,7 @@ export function ChangeDisplaynumeroCot(props) {
         <Input
           placeholder="Numero de Cotizacion"
           // editable={true}
-          keyboardType="numeric"
+          // keyboardType="numeric"
           onChangeText={(text) => setText(text)}
           errorMessage={formik.errors.NumeroAIT}
         />

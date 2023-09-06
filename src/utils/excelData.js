@@ -211,7 +211,8 @@ export const getExcelReportData = async (datas = []) => {
       //Fechas
       FechaPostISO: data.fechaPostISO, //ok
       Fecha_Creacion: data.createdAt?.toDate().getTime(), //ok
-      Fecha_Final_Ejecucion: data.fechaFinEjecucion?.toDate().getTime(), //ok
+      Fecha_Final_Ejecucion: data?.fechaFinEjecucion,
+      //ok
       //Avances
       AvanceEjecucion: data.AvanceEjecucion, //ok
       AvanceAdministrativoTexto: data.AvanceAdministrativoTexto, //ok

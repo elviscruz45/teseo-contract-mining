@@ -10,15 +10,15 @@ export const RecursosProgress = (props) => {
 
   const getColor = (porcentaje) => {
     if (porcentaje < 25) {
-      return "green";
+      return "red";
     } else if (porcentaje < 50) {
-      return "limegreen";
-    } else if (porcentaje < 75) {
       return "orange";
+    } else if (porcentaje < 75) {
+      return "limegreen";
     } else if (porcentaje < 100) {
-      return "red";
+      return "green";
     } else {
-      return "red";
+      return "green";
     }
   };
 

@@ -11,6 +11,7 @@ import { db } from "../../../utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { update_firebaseProfile } from "../../../actions/profile";
+import { update_firebaseUserName } from "../../../actions/profile";
 
 function ChangeDisplayNameForm(props) {
   const { onClose } = props;
@@ -39,6 +40,7 @@ function ChangeDisplayNameForm(props) {
         const docRef = doc(collection(db, "users"), newData.uid);
         await setDoc(docRef, newData);
         props.update_firebaseProfile(newData);
+        props.update_firebaseUserName(newData.displayNameform);
         onClose();
       } catch (error) {
         Toast.show({
@@ -109,4 +111,5 @@ const mapStateToProps = (reducers) => {
 
 export const ConnectedChangeDisplayNameForm = connect(mapStateToProps, {
   update_firebaseProfile,
+  update_firebaseUserName,
 })(ChangeDisplayNameForm);

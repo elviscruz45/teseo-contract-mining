@@ -93,12 +93,13 @@ function MoreDetailScreenNoRedux(props) {
   const NuevaFechaEstimadatoRender =
     NuevaFechaEstimada > Item?.FechaFin
       ? formatDate(NuevaFechaEstimada?.seconds * 1000)
-      : formatDate(Item?.createdAt?.seconds * 1000);
+      : formatDate(Item?.FechaFin?.seconds * 1000);
+  console.log("oaaa", NuevaFechaEstimada);
 
   const NuevaFechaEstimadatoCalculate =
     NuevaFechaEstimada > Item?.FechaFin
       ? NuevaFechaEstimada?.seconds * 1000
-      : Item?.createdAt?.seconds * 1000;
+      : Item?.FechaFin?.seconds * 1000;
 
   //Algoritm to calculate  "Avance Ejecucion Proyectado"
   const ActualDate = new Date();
