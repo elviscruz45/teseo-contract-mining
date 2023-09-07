@@ -28,7 +28,7 @@ export const PieChart = (props) => {
       { x: "Fab", y: sumByTipoServicio["Fabricacion"] ?? 0 },
       { x: "Ing", y: sumByTipoServicio["Ingenieria"] ?? 0 },
       { x: "Maq", y: sumByTipoServicio["Maquinado"] ?? 0 },
-      { x: "IngFab", y: sumByTipoServicio["IngFab"] ?? 0 },
+      { x: "IngFab", y: sumByTipoServicio["IngenieriayFabricacion"] ?? 0 },
       { x: "Otro", y: sumByTipoServicio["Otro"] ?? 0 },
     ];
 
