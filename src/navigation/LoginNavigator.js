@@ -4,7 +4,6 @@ import { AuthScreen } from "../screens/Auth/AuthScreen";
 import { connect } from "react-redux";
 
 function LoginNavigator(props) {
-  console.log("LoginNavigator");
   const content = props.firebase_user_uid ? <AppNavigation /> : <AuthScreen />;
 
   return <>{content}</>; //this screen shows a form to log in

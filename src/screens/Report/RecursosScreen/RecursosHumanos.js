@@ -17,12 +17,9 @@ import { db } from "../../../utils";
 export const RecursosHumanos = (props) => {
   const [manpower, setManpower] = useState([]);
   const [company, setCompany] = useState("prodise");
-  console.log("5.2.REPORTERecursosHumanos");
 
-  console.log(manpower);
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
-    // console.log("useeffectHomeScreen");
     let unsubscribe;
 
     async function fetchData() {
@@ -39,8 +36,6 @@ export const RecursosHumanos = (props) => {
           lista.push(doc.data());
         });
 
-        console.log("55.OnsnapshotHeaderFETCH_MANPOWER", lista);
-
         setManpower(lista[0]);
       });
     }
@@ -53,7 +48,6 @@ export const RecursosHumanos = (props) => {
       }
     };
   }, []);
-  console.log("hoaa", manpower?.Reparacion / manpower?.TotalReparacion);
   if (!manpower) {
     return (
       <>

@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
 export const HistoryEstadoServiceList = (props) => {
-  console.log("5.4.EstadoServiceList");
   const { data } = props;
   const navigation = useNavigation();
   const newTableData = [];
@@ -52,16 +51,6 @@ export const HistoryEstadoServiceList = (props) => {
 
   newTableData?.sort((a, b) => a.createdAt - b.createdAt);
   const goToInformation = (idServiciosAIT) => {
-    // const result = data?.filter((dataItem) => {
-    //   return dataItem.NumeroAIT === item;
-    // });
-    // console.log(result[0]);
-
-    // navigation.navigate(screen.search.tab, {
-    //   screen: screen.search.item,
-    //   params: { Item: result[0] },
-    // });
-
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: idServiciosAIT },

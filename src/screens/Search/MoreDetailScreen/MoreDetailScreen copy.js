@@ -26,7 +26,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 const windowWidth = Dimensions.get("window").width;
 function MoreDetailScreenNoRedux(props) {
-  console.log("itemScreen");
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
@@ -40,7 +39,6 @@ function MoreDetailScreenNoRedux(props) {
       params: { Item },
     },
   } = props;
-  console.log("porps ITEM");
   const navigation = useNavigation();
 
   ///the algoritm to retrieve the image source to render the icon
@@ -106,8 +104,6 @@ function MoreDetailScreenNoRedux(props) {
     AvanceProyected = 100;
   }
 
-  console.log("AvanceProyected", AvanceProyected);
-  console.log("Item.AvanceEjecucion", Item.AvanceEjecucion);
   //Algorithm to   convert string to a list to render a list of names
   const ContratistaList = Item.ResponsableEmpresaContratista?.split(",");
   const UsuarioList = Item.ResponsableEmpresaUsuario?.split(",");
@@ -173,10 +169,8 @@ function MoreDetailScreenNoRedux(props) {
   return (
     <KeyboardAwareScrollView>
       <Text></Text>
-      {console.log("1")}
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
-      {console.log("2")}
 
       {Item.photoServiceURL ? (
         <Image
@@ -186,29 +180,24 @@ function MoreDetailScreenNoRedux(props) {
       ) : (
         <Image source={imageSource} style={styles.roundImage} />
       )}
-      {console.log("3")}
 
       <View>
         <Text></Text>
-        {console.log("4")}
 
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Numero de AIT:  "}</Text>
           <Text style={styles.info2}>{Item.NumeroAIT}</Text>
         </View>
-        {console.log("5")}
 
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Numero de Cotizacion:  "}</Text>
           <Text style={styles.info2}>{Item.NumeroCotizacion}</Text>
         </View>
-        {console.log("6")}
 
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Tipo de Servicio:  "}</Text>
           <Text style={styles.info2}>{Item.TipoServicio}</Text>
         </View>
-        {console.log("7")}
 
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Area del Servicio:  "}</Text>
@@ -249,7 +238,6 @@ function MoreDetailScreenNoRedux(props) {
             {Item.AvanceEjecucion}
             {" %"}
           </Text>
-          {console.log("8")}
         </View>
         {BarProgress(Item.AvanceEjecucion)}
 
@@ -260,7 +248,6 @@ function MoreDetailScreenNoRedux(props) {
             {" %"}
           </Text>
         </View>
-        {console.log("9")}
 
         {BarProgress(AvanceProyected)}
 
@@ -271,16 +258,13 @@ function MoreDetailScreenNoRedux(props) {
             {" %"}
           </Text>
         </View>
-        {console.log("10")}
 
         {BarProgress(Item.AvanceAdministrativo)}
 
         <Text></Text>
-        {console.log("11")}
 
         <Text style={styles.info}>{"Administradores de Contratos:  "}</Text>
         {ResposableList(ContratistaList)}
-        {console.log("12")}
 
         <Text style={styles.info}>{"Supervisores Responsables:  "}</Text>
         {ResposableList(UsuarioList)}

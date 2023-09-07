@@ -14,7 +14,6 @@ import { tipoServicioList } from "../../../utils/tipoServicioList";
 
 export const BarChartProceso = (props) => {
   const { data } = props;
-  console.log("dataaaaa", data);
   let datas;
   let sumByEtapa;
   if (data) {

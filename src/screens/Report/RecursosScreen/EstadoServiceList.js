@@ -5,8 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
 export const EstadoServiceList = (props) => {
-  console.log("5.4.EstadoServiceList");
   const { data } = props;
+
   const navigation = useNavigation();
   const newTableData = [];
 
@@ -44,16 +44,6 @@ export const EstadoServiceList = (props) => {
 
   newTableData?.sort((a, b) => a.diasPendientes - b.diasPendientes);
   const goToInformation = (idServiciosAIT) => {
-    // const result = data?.filter((dataItem) => {
-    //   return dataItem.NumeroAIT === item;
-    // });
-    // console.log(result[0]);
-
-    // navigation.navigate(screen.search.tab, {
-    //   screen: screen.search.item,
-    //   params: { Item: result[0] },
-    // });
-
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: idServiciosAIT },

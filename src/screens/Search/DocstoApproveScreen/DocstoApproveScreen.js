@@ -143,7 +143,6 @@ function DocstoApproveScreenBare(props) {
     companyName
   ) => {
     const PostRef = doc(db, "approvals", idApproval);
-    console.log("docAprovals");
 
     Alert.alert(
       "Aprobacion",
@@ -156,15 +155,11 @@ function DocstoApproveScreenBare(props) {
         {
           text: "Aprobar",
           onPress: async () => {
-            console.log("updateDoc prev");
-
             await updateDoc(PostRef, {
               ApprovalPerformed: arrayUnion(emailUser),
             });
             const tipo = "Aprobacion";
-            console.log("updateDoc post");
 
-            console.log("Aprobacion email prev send");
             sendEmail(
               tipo,
               idTime,
@@ -179,7 +174,6 @@ function DocstoApproveScreenBare(props) {
               tipoFile,
               companyName
             );
-            console.log("Aprobacion email post send");
           },
         },
       ],
@@ -220,7 +214,6 @@ function DocstoApproveScreenBare(props) {
             });
             const tipo = "Desaprobacion";
 
-            console.log("Desaprobacion email prev send");
             sendEmail(
               tipo,
               idTime,
@@ -235,7 +228,6 @@ function DocstoApproveScreenBare(props) {
               tipoFile,
               companyName
             );
-            console.log("Desaprobacion email post send");
           },
         },
       ],
@@ -245,7 +237,6 @@ function DocstoApproveScreenBare(props) {
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
-    // console.log("pdfHomescreen", uri);
     try {
       const supported = await Linking.canOpenURL(uri);
       if (supported) {
@@ -259,7 +250,6 @@ function DocstoApproveScreenBare(props) {
   }, []);
 
   const openGoogleDriveLink = useCallback(async (uri) => {
-    // console.log("pdfHomescreen", uri);
     try {
       const supported = await Linking.canOpenURL(uri);
       if (supported) {

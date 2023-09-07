@@ -20,7 +20,6 @@ import { screen } from "../../../utils";
 const ReportScreenNoRedux = (props) => {
   //real time updates
   const [data, setData] = useState();
-  console.log("5.ReportScreen", data);
   const navigation = useNavigation();
 
   //states to view the tables
@@ -31,10 +30,8 @@ const ReportScreenNoRedux = (props) => {
   const [montoEDP, setMontoEDP] = useState(false);
   const [comprometido, setComprometido] = useState(false);
 
-  console.log("data", data);
   useEffect(() => {
     if (props.servicesData) {
-      console.log("5.1.USEEFFECTReportScreen");
       setData(props.servicesData);
     }
   }, [props.servicesData]);

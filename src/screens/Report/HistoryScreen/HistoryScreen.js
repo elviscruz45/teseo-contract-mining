@@ -30,7 +30,6 @@ import {
 const HistoryScreenNoRedux = (props) => {
   //real time updates
   const [data, setData] = useState([]);
-  console.log("5.ReportScreen", data);
 
   //states of filters
   const [startDate, setStartDate] = useState();
@@ -68,7 +67,6 @@ const HistoryScreenNoRedux = (props) => {
           querySnapshot.forEach((doc) => {
             lista.push(doc.data());
           });
-          console.log("GETDOCquerySnapshotHistoryScreenNoRedux");
 
           setData(lista);
         } catch (error) {

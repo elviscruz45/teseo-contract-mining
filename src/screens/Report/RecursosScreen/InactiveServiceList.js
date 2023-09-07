@@ -27,16 +27,6 @@ export const InactiveServiceList = (props) => {
   }
 
   const goToInformation = (idServiciosAIT) => {
-    // const result = data?.filter((dataItem) => {
-    //   return dataItem.NumeroAIT === item;
-    // });
-    // console.log(result[0]);
-
-    // navigation.navigate(screen.search.tab, {
-    //   screen: screen.search.item,
-    //   params: { Item: result[0] },
-    // });
-
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: idServiciosAIT },

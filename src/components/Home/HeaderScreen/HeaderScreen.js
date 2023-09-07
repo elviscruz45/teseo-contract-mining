@@ -23,7 +23,6 @@ import { saveApprovalListnew } from "../../../actions/search";
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
   const [data, setData] = useState();
-  console.log("2RenderHeaderScreenNoRedux");
   useEffect(() => {
     let unsubscribe;
     function fetchData() {
@@ -42,7 +41,6 @@ function HeaderScreenNoRedux(props) {
           return b.LastEventPosted - a.LastEventPosted;
         });
 
-        console.log("2.OnsnapshotHeaderFETCH_SERVICIOAIT", lista);
         setData(lista);
         props.updateAITServicesDATA(lista);
       });
@@ -88,12 +86,10 @@ function HeaderScreenNoRedux(props) {
         renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AreaServicio;
-          console.log("area", area);
           const indexareaList = areaLists.findIndex(
             (item) => item.value === area
           );
           const imageSource = areaLists[indexareaList]?.image;
-          console.log("imageSource", imageSource);
           return (
             <TouchableOpacity onPress={() => selectAsset(item.idServiciosAIT)}>
               <View style={styles.textImage}>

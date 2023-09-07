@@ -32,7 +32,6 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
-  console.log("RenderProfileScreen");
   const [_, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -40,8 +39,6 @@ function ProfileScreen(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
-  console.log("-----PostprofileScreencamara------");
-  console.log("PostprofileScreencamara", post);
 
   const navigation = useNavigation();
 
@@ -64,7 +61,6 @@ function ProfileScreen(props) {
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
-    console.log(start, end);
     setStartDate(start);
     setEndDate(end);
   };
@@ -72,56 +68,11 @@ function ProfileScreen(props) {
     setRemoveFilter((prev) => !prev);
     setStartDate(null);
     setEndDate(null);
-    console.log("removeFilter");
   };
 
   //This hook used to retrieve post data from Firebase and sorted by date
 
   useEffect(() => {
-    console.log("UseEffectProfileScreen");
-
-    // let unsubscribe;
-    // let q;
-    // async function fetchData() {
-    //   if (startDate && endDate) {
-    //     q = query(
-    //       collection(db, "events"),
-    //       orderBy("createdAt", "desc"),
-    //       where("emailPerfil", "==", props.email),
-    //       where("createdAt", ">=", startDate),
-    //       where("createdAt", "<=", endDate)
-    //     );
-    //   } else {
-    //     q = query(
-    //       collection(db, "events"),
-    //       orderBy("createdAt", "desc"),
-    //       where("emailPerfil", "==", props.email),
-    //       limit(10) // Add the desired limit value here
-    //     );
-    //   }
-
-    //   try {
-    //     const querySnapshot = await getDocs(q);
-    //     const lista = [];
-    //     querySnapshot.forEach((doc) => {
-    //       lista.push(doc.data());
-    //     });
-    //     // console.log("1.---GetDocsProfileScreen Item with date profile");
-    //     console.log("1.---longitudListaProfileScreen", lista.length);
-
-    //     setPost(lista);
-    //   } catch (error) {
-    //     console.error("Error fetching data: ", error);
-    //   }
-    // }
-    // fetchData();
-    // return () => {
-    //   // Unsubscribe from the previous listener when the component is unmounted or when the dependencies change
-    //   if (unsubscribe) {
-    //     unsubscribe();
-    //   }
-    // };
-
     let EventList = props.totalEventServiceAITLIST?.filter((item) => {
       return item.emailPerfil === props.email;
     });
@@ -135,7 +86,6 @@ function ProfileScreen(props) {
   }, [props.totalEventServiceAITLIST]);
 
   const comentPost = (item) => {
-    console.log("item", item);
     navigation.navigate(screen.home.tab, {
       screen: screen.home.comment,
       params: { Item: item },

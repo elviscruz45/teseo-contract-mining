@@ -7,9 +7,7 @@ export function UploadImagesForm() {
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
-    onSubmit: async (formValue) => {
-      console.log(formValue);
-    },
+    onSubmit: async (formValue) => {},
   });
   return (
     <View>

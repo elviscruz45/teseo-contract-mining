@@ -44,7 +44,6 @@ function InformationScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("OnSnapshoFETCH_USERS", lista);
         props.saveTotalUsers(lista);
       });
     }
@@ -110,15 +109,10 @@ function InformationScreen(props) {
         //manage the file updated to ask for aprovals
         let imageUrlPDF;
         if (newData.pdfFile) {
-          console.log("pdf", newData.pdfFile);
-          console.log("uploadPdf-------99999999999999999999999999");
-
           const snapshotPDF = await uploadPdf(newData.pdfFile);
           const imagePathPDF = snapshotPDF.metadata.fullPath;
-          console.log("uploadPdf-------aaaaaa");
 
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
-          console.log("uploadPdf-------bbbbbbb");
         }
         //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
         if (
@@ -154,7 +148,6 @@ function InformationScreen(props) {
           docData.idApproval = docRef.id;
           const RefFirebase = doc(db, "approvals", docData.idApproval);
           await updateDoc(RefFirebase, docData);
-          console.log("docDataApproval", docData);
         }
 
         newData.pdfPrincipal = imageUrlPDF || "";
@@ -265,23 +258,17 @@ function InformationScreen(props) {
   });
 
   const uploadPdf = async (uri) => {
-    console.log("uploadPdf-------");
     const uuid = uuidv4();
     const response = await fetch(uri);
     const blob = await response.blob();
     const fileSize = blob.size;
-    console.log("uploadPdf-------1");
 
     if (fileSize > 25 * 1024 * 1024) {
-      console.log("uploadPdf-------2");
-
       throw new Error("El archivo excede los 25 MB");
     }
     const storage = getStorage();
-    console.log("uploadPdf-------3");
 
     const storageRef = ref(storage, `pdfPost/${uuid}`);
-    console.log("uploadPdf-------33");
 
     return uploadBytes(storageRef, blob);
   };

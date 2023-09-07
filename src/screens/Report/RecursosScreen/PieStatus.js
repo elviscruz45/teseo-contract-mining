@@ -5,7 +5,6 @@ import Svg from "react-native-svg";
 
 export const PieChart = (props) => {
   const { data } = props;
-  console.log("5.3PieChart", data);
 
   let datas;
 
@@ -37,7 +36,6 @@ export const PieChart = (props) => {
   }
 
   const [selectedSlice, setSelectedSlice] = useState(null); // Initialize with no slice selected
-  console.log(selectedSlice);
 
   const handleSliceClick = (event, slice) => {
     setSelectedSlice(slice.datum);

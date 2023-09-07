@@ -9,7 +9,6 @@ import { Linking } from "react-native";
 
 export function AuthScreen(props) {
   const navigation = useNavigation();
-  console.log("AuthScreen");
 
   const goToRegister = () => {
     Linking.openURL("https://www.teseosoftwarecompany.com/"); // to register a new user , it show to get in touch with a personel from Teseo

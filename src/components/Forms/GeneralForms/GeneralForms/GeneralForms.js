@@ -85,7 +85,6 @@ export function GeneralFormsBare(props) {
     const minute = date.getMinutes();
     const formattedDate = `${day} ${month} ${year} `;
     const fechaPostFormato = formattedDate;
-    console.log("fechaPostFormato", fechaPostFormato);
     return fechaPostFormato;
   };
 

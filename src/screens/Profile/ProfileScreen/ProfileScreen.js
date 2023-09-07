@@ -32,7 +32,6 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
-  console.log("RenderProfileScreen");
   const [_, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -42,8 +41,6 @@ function ProfileScreen(props) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [removeFilter, setRemoveFilter] = useState(true);
-  console.log("-----PostprofileScreencamara------");
-  console.log("PostprofileScreencamara", post);
 
   const navigation = useNavigation();
 
@@ -78,8 +75,6 @@ function ProfileScreen(props) {
   //This hook used to retrieve post data from Firebase and sorted by date
 
   useEffect(() => {
-    console.log("UseEffectProfileScreen");
-
     let EventList = props.totalEventServiceAITLIST?.filter((item) => {
       return item.emailPerfil === props.email;
     });
@@ -109,7 +104,6 @@ function ProfileScreen(props) {
           querySnapshot.forEach((doc) => {
             lista.push(doc.data());
           });
-          console.log("GETDOCquerySnapshotHistoryScreenNoRedux");
 
           setPost(lista);
         } catch (error) {
@@ -128,7 +122,6 @@ function ProfileScreen(props) {
   }, [startDate, endDate]);
 
   const comentPost = (item) => {
-    console.log("item", item);
     navigation.navigate(screen.home.tab, {
       screen: screen.home.comment,
       params: { Item: item },

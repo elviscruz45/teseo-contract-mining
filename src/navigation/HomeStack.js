@@ -17,13 +17,11 @@ import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
 import { db } from "../utils";
 
 function HomeStack(props) {
-  console.log("---HomeStackScreen---");
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
   const user = getAuth().currentUser;
   const { uid, photoURL, displayName, email } = user;
-  console.log("user", user);
 
   useEffect(() => {
     if (user) {

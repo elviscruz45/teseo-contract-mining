@@ -26,12 +26,6 @@ export const CircularProgress = ({
 }) => {
   const [avatar, setAvatar] = useState();
 
-  console.log("CircularProgress");
-  console.log(titulo);
-  console.log(avatar);
-  console.log("imageSourceDefault..", imageSourceDefault);
-  console.log("image..", image);
-
   const data = [
     { x: 1, y: parseInt(avance) },
     { x: 2, y: 100 - parseInt(avance) },
@@ -67,15 +61,11 @@ export const CircularProgress = ({
     const imageRef = ref(storage, imagePath);
     const imageUrl = await getDownloadURL(imageRef);
     const RefFirebaseServiceAIT = doc(db, "ServiciosAIT", id);
-    console.log("imageUrl");
-
-    console.log(imageUrl);
 
     const updateDataLasEventPost = {
       photoServiceURL: imageUrl,
     };
     await updateDoc(RefFirebaseServiceAIT, updateDataLasEventPost);
-    console.log("Exito");
 
     setAvatar(imageUrl);
 

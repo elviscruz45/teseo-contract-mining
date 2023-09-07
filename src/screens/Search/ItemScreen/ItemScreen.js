@@ -33,10 +33,8 @@ import { CircularProgress } from "./CircularProgress";
 import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";
 
 function ItemScreenNotRedux(props) {
-  console.log("22.itemScreen");
   const [post, setPost] = useState(null);
   const [serviceInfo, setServiceInfo] = useState();
-  console.log("InfoService++++++++++", serviceInfo);
 
   //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
@@ -51,7 +49,6 @@ function ItemScreenNotRedux(props) {
   const area = serviceInfo?.AreaServicio;
   const indexareaList = areaLists?.findIndex((item) => item.value === area);
   const imageSource = areaLists[indexareaList]?.image;
-  console.log("itemScreen....", imageSource);
   /// the algorithm to retrieve the amount with format
   const formattedAmount = new Intl.NumberFormat("en-US", {
     style: "decimal",
@@ -101,12 +98,12 @@ function ItemScreenNotRedux(props) {
   const NuevaFechaEstimadatoRender =
     NuevaFechaEstimada > serviceInfo?.FechaFin
       ? formatDate(NuevaFechaEstimada?.seconds * 1000)
-      : formatDate(serviceInfo?.createdAt?.seconds * 1000);
+      : formatDate(serviceInfo?.FechaFin?.seconds * 1000);
 
   const NuevaFechaEstimadatoCalculate =
     NuevaFechaEstimada > serviceInfo?.FechaFin
       ? NuevaFechaEstimada?.seconds * 1000
-      : serviceInfo?.createdAt?.seconds * 1000;
+      : serviceInfo?.FechaFin?.seconds * 1000;
 
   //calculate the amount of days to finish the service based if there are a new modification or not
   let daysLeft = (
@@ -139,7 +136,6 @@ function ItemScreenNotRedux(props) {
         ItemFirebase.forEach((doc) => {
           InfoService.push(doc.data());
         });
-        console.log("InfoService", InfoService);
         ItemFirebase.forEach((doc) => {
           doc.data().events.forEach((item) => {
             const dataschema = {
@@ -154,7 +150,6 @@ function ItemScreenNotRedux(props) {
             lista.push(dataschema);
           });
         });
-        // console.log("999.OnSnapshot_Servicios_AITEVENTS_SCREEN", lista);
         setPost(lista);
         setServiceInfo(InfoService[0]);
         props.saveActualServiceAIT(InfoService[0]);

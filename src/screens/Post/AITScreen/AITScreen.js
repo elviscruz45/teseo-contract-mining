@@ -48,7 +48,6 @@ function AITNoReduxScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("OnSnapshoFETCH_USERS", lista);
         props.saveTotalUsers(lista);
       });
     }
@@ -134,7 +133,6 @@ function AITNoReduxScreen(props) {
         // navigation.navigate(screen.home.tab, {
         //   screen: screen.home.home,
         // });
-        console.log(newData);
         alert("Se ha subido correctamente");
       } catch (error) {
         alert(error);

@@ -33,8 +33,6 @@ export function FileScreen(props) {
   } = props;
 
   const uploadFile = useCallback(async (uri) => {
-    console.log("pdfFILESCREEN", uri);
-
     try {
       const supported = await Linking.canOpenURL(uri);
       if (supported) {

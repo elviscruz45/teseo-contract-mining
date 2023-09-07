@@ -19,7 +19,6 @@ import { db } from "./firebase";
 
 export const getExcelGLobal = async () => {
   const querySnapshot = await getDocs(collection(db, "posts"));
-  console.log("getExcelGLobal");
 
   const post_array = [];
   querySnapshot.forEach((doc) => {
@@ -74,7 +73,6 @@ export const getExcelEquipo = async (tagEquipo) => {
   const queryEquipo = await getDocs(
     query(collection(db, "posts"), where("equipoTag", "==", tagEquipo))
   );
-  console.log("getExcelGLobal");
 
   const post_array = [];
   queryEquipo.forEach((doc) => {
@@ -125,11 +123,9 @@ export const getExcelEquipo = async (tagEquipo) => {
 };
 
 export const getExcelPerfil = async (emailProfile) => {
-  console.log(emailProfile);
   const queryProfile = await getDocs(
     query(collection(db, "posts"), where("emailPerfil", "==", emailProfile))
   );
-  console.log("getExcelGLobal");
 
   const post_array = [];
   queryProfile.forEach((doc) => {
@@ -184,7 +180,6 @@ export const getExcelPerfil = async (emailProfile) => {
 export const getExcelReportData = async (datas = []) => {
   // const querySnapshot = collection(db, "ServiciosAIT");
   const post_array = [];
-  console.log("getExcelGLobal");
 
   datas.forEach((data) => {
     const table = {
@@ -227,7 +222,6 @@ export const getExcelReportData = async (datas = []) => {
     };
     post_array.push(table);
   });
-  console.log("getExcelGLobalFINALL");
 
   const worksheet = XLSX.utils.json_to_sheet(post_array);
   const workbook = XLSX.utils.book_new();

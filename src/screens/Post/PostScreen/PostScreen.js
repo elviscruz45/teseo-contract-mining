@@ -15,8 +15,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Image as ImageExpo } from "expo-image";
 
 function PostScreen(props) {
-  console.log("4PostScreen");
-
   const emptyimage = require("../../../../assets/splash.png");
   const navigation = useNavigation();
   const [equipment, setEquipment] = useState(null);
@@ -66,7 +64,6 @@ function PostScreen(props) {
     navigation.navigate(screen.post.form);
 
     if (!result.canceled) {
-      console.log("Upload Image");
     }
     setEquipment(null);
   };
@@ -88,7 +85,6 @@ function PostScreen(props) {
 
   const selectAsset = (AIT) => {
     const area = AIT.AreaServicio;
-    console.log("area", area);
     const indexareaList = areaLists.findIndex((item) => item.value === area);
     const imageSource = areaLists[indexareaList]?.image;
     const imageUpdated = AIT.photoServiceURL;

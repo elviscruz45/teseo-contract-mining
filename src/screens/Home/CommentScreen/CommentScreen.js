@@ -27,8 +27,6 @@ function CommentScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [comment, setComment] = useState("");
 
-  console.log("CommentScreen");
-
   const navigation = useNavigation();
   const {
     route: {
@@ -48,7 +46,6 @@ function CommentScreen(props) {
       });
 
       setPostsComments(post_array);
-      console.log("1.2.commentScreen", post_array);
     }
     fetchDataEventServicesCommentsList();
 
@@ -57,7 +54,6 @@ function CommentScreen(props) {
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
-    console.log("pdfHomescreen", uri);
     try {
       const supported = await Linking.canOpenURL(uri);
       if (supported) {
@@ -102,9 +98,6 @@ function CommentScreen(props) {
       screen: screen.search.item,
       params: { Item: Item.AITidServicios },
     });
-    console.log("ITEMMMM", Item);
-
-    console.log("tem.idServiciosAIT", Item.AITidServicios);
   };
 
   if (isLoading & !postsComments) {

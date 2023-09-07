@@ -37,8 +37,6 @@ function ChangeManPowerBare(props) {
           newData.TotalMaquinado === "" ||
           newData.Maquinado === ""
         ) {
-          console.log("entro aqui");
-
           Alert.alert(
             "Alerta",
             "Complete todos los campos",

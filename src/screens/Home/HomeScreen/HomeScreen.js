@@ -32,7 +32,6 @@ function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  console.log("1HomeScreen");
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
@@ -51,7 +50,6 @@ function HomeScreen(props) {
           lista.push(doc.data());
         });
 
-        console.log("1.OnSnapshoFETCH_EVENTS");
         setPosts(lista);
         props.saveTotalEventServiceAITList(lista);
       });
@@ -82,7 +80,6 @@ function HomeScreen(props) {
           ItemFirebase.forEach((doc) => {
             lista.push(doc.data());
           });
-          console.log("3.OnsnapshotHeaderAPROVALS");
           props.saveApprovalListnew(lista);
         });
       }
@@ -98,7 +95,6 @@ function HomeScreen(props) {
   }, [props.email]);
 
   const loadMorePosts = () => {
-    console.log("props.resetPostPerPageHome(props.postPerPage)");
     props.resetPostPerPageHome(props.postPerPage);
   };
 
@@ -112,7 +108,6 @@ function HomeScreen(props) {
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
-    // console.log("pdfHomescreen", uri);
     try {
       const supported = await Linking.canOpenURL(uri);
       if (supported) {
@@ -194,7 +189,6 @@ function HomeScreen(props) {
       </View>
     );
   } else {
-    console.log("oaaaaaaaa----------");
     return (
       <FlatList
         data={posts}
@@ -211,7 +205,6 @@ function HomeScreen(props) {
           const imageSource =
             areaLists[indexareaList]?.image ??
             require("../../../../assets/icon1.png");
-          console.log("ttttttttttttt----");
 
           return (
             <View

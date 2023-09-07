@@ -26,7 +26,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 const windowWidth = Dimensions.get("window").width;
 function MoreDetailScreenNoRedux(props) {
-  console.log("itemScreen");
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
@@ -94,7 +93,6 @@ function MoreDetailScreenNoRedux(props) {
     NuevaFechaEstimada > Item?.FechaFin
       ? formatDate(NuevaFechaEstimada?.seconds * 1000)
       : formatDate(Item?.FechaFin?.seconds * 1000);
-  console.log("oaaa", NuevaFechaEstimada);
 
   const NuevaFechaEstimadatoCalculate =
     NuevaFechaEstimada > Item?.FechaFin

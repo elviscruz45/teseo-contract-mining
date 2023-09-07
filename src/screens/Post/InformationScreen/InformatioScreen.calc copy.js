@@ -14,7 +14,6 @@ import { screen } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 
 export const handleFormSubmit = async (formValue, props) => {
-  console.log("handleFormSubmit");
   const navigation = useNavigation();
   try {
     const newData = formValue;
@@ -35,7 +34,6 @@ export const handleFormSubmit = async (formValue, props) => {
     //manage the file updated to ask for aprovals
     let imageUrlPDF;
     if (newData.pdfFile) {
-      console.log("pdf", newData.pdfFile);
       const snapshotPDF = await uploadPdf(newData.pdfFile);
       const imagePathPDF = snapshotPDF.metadata.fullPath;
       imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
@@ -72,7 +70,6 @@ export const handleFormSubmit = async (formValue, props) => {
           docData.idApproval = docRef.id;
           const RefFirebase = doc(db, "approvals", docData.idApproval);
           await updateDoc(RefFirebase, docData);
-          console.log("docDataApproval", docData);
         }
       }
     }
@@ -111,7 +108,6 @@ export const handleFormSubmit = async (formValue, props) => {
       docData.idApproval = docRef.id;
       const RefFirebase = doc(db, "approvals", docData.idApproval);
       await updateDoc(RefFirebase, docData);
-      console.log("Approvalsss", docData);
     }
 
     //preparing data to upload to  firestore Database
@@ -212,7 +208,6 @@ export const handleFormSubmit = async (formValue, props) => {
     });
     alert("Se ha subido correctamente");
   } catch (error) {
-    console.log(error);
     alert(error);
   }
 };

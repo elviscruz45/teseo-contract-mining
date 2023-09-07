@@ -6,7 +6,6 @@ export const RecursosProgress = (props) => {
   const data = 70;
   const { cantidad, titulo, unidad, porcentaje, total } = props;
   // Example: 20% progress
-  console.log(data);
 
   const getColor = (porcentaje) => {
     if (porcentaje < 25) {

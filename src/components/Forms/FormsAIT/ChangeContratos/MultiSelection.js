@@ -22,8 +22,6 @@ const MultiSelectExampleBare = (props) => {
   const [list, setList] = useState([]);
   const { formik, setText } = props;
 
-  console.log("holaaa MultiSelectExample");
-
   useEffect(() => {
     if (props.saveTotalUsers) {
       async function fetchData() {
@@ -40,7 +38,6 @@ const MultiSelectExampleBare = (props) => {
           };
           post_array.push(objectver2);
         });
-        console.log("querySnapshot1");
 
         setList(post_array);
       }
