@@ -38,6 +38,7 @@ export const styles = StyleSheet.create({
   center2: {
     // alignItems: "center",
     justifyContent: "space-between",
+    marginLeft: 10,
     marginRight: 5,
     marginTop: 5,
     fontWeight: "200",
@@ -65,6 +66,13 @@ export const styles = StyleSheet.create({
     margin: 10,
   },
   roundImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    // margin: 5,
+    alignSelf: "flex-end",
+  },
+  roundImage10: {
     width: 20,
     height: 20,
     borderRadius: 20,

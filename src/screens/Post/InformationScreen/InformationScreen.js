@@ -192,6 +192,7 @@ function InformationScreen(props) {
         );
         const eventSchema = {
           idDocFirestoreDB: newData.idDocFirestoreDB ?? "",
+          idDocAITFirestoreDB: props.actualServiceAIT?.idServiciosAIT ?? "",
           fotoPrincipal: newData.fotoPrincipal ?? "",
           fotoUsuarioPerfil: newData.fotoUsuarioPerfil ?? "",
           AITNombreServicio: newData.AITNombreServicio ?? "",
@@ -206,7 +207,6 @@ function InformationScreen(props) {
           emailPerfil: newData.emailPerfil ?? "",
           imageUrl: newData.imageUrl ?? "",
           nombrePerfil: newData.nombrePerfil ?? "",
-          pdfFile: newData.pdfFile ?? "",
         };
 
         const updateDataLasEventPost = {
@@ -235,7 +235,14 @@ function InformationScreen(props) {
           updateDataLasEventPost.aprobacion = arrayUnion(newData.aprobacion);
         }
         if (imageUrlPDF) {
-          updateDataLasEventPost.pdfFile = arrayUnion(imageUrlPDF);
+          const file = {
+            fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
+            imageUrlPDF: imageUrlPDF,
+            tipo: newData.tipoFile,
+            autor: props.email,
+            fecha: new Date(),
+          };
+          updateDataLasEventPost.pdfFile = arrayUnion(file);
         }
 
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);

@@ -42,7 +42,6 @@ function ItemScreenNotRedux(props) {
       params: { Item },
     },
   } = props;
-
   const navigation = useNavigation();
 
   ///the algoritm to retrieve the image source to render the icon
@@ -146,6 +145,7 @@ function ItemScreenNotRedux(props) {
               lineColor: "skyblue",
               icon: require("../../../../assets/empresa.png"),
               imageUrl: item.fotoUsuarioPerfil,
+              idDocAITFirestoreDB: Item,
             };
             lista.push(dataschema);
           });
@@ -192,6 +192,14 @@ function ItemScreenNotRedux(props) {
   const goToDocsToApprove = (item) => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.approve,
+      params: { Item: item },
+    });
+  };
+
+  //Using navigation.navigate I send it to another screen (post)
+  const goToDocs = (item) => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.pdf,
       params: { Item: item },
     });
   };
@@ -274,7 +282,15 @@ function ItemScreenNotRedux(props) {
                 style={styles.roundImageUpload}
               />
             </TouchableOpacity>
-
+            <TouchableOpacity
+              style={styles.btnContainer4}
+              onPress={() => goToDocs(serviceInfo)}
+            >
+              <Image
+                source={require("../../../../assets/docsIcon.png")}
+                style={styles.roundImageUpload}
+              />
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnContainer4}
               onPress={() => goToPublicar()}

@@ -17,6 +17,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
   getDoc,
   deleteDoc,
 } from "firebase/firestore";
@@ -120,9 +121,24 @@ function CommentScreen(props) {
         {
           text: "Aceptar",
           onPress: async () => {
+            //delete the doc from events collections
             navigation.navigate(screen.home.home);
-
             await deleteDoc(doc(db, "events", idDoc));
+
+            //updating events in ServiciosAIT to filter the deleted event
+            const Ref = doc(db, "ServiciosAIT", Item?.idDocAITFirestoreDB);
+            const docSnapshot = await getDoc(Ref);
+            const eventList = docSnapshot.data().events;
+
+            const filteredList = eventList.filter(
+              (obj) => obj.idDocFirestoreDB !== Item.idDocFirestoreDB
+            );
+
+            const updatedData = {
+              events: filteredList,
+            };
+
+            await updateDoc(Ref, updatedData);
           },
         },
       ],
@@ -136,6 +152,8 @@ function CommentScreen(props) {
     return (
       <KeyboardAwareScrollView
         style={{ backgroundColor: "white" }} // Add backgroundColor here
+        showsVerticalScrollIndicator={false}
+
         // contentContainerStyle={{ flexGrow: 1 }} // Allow the content to grow inside the ScrollView
         // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
       >
@@ -168,7 +186,7 @@ function CommentScreen(props) {
           >
             <ImageExpo
               source={require("../../../../assets/deleteIcon.png")}
-              style={styles.roundImage}
+              style={styles.roundImage10}
               cachePolicy={"memory-disk"}
             />
           </TouchableOpacity>
@@ -271,7 +289,7 @@ function CommentScreen(props) {
             };
 
             return (
-              <View>
+              <View style={{ paddingHorizontal: 10 }}>
                 <Text></Text>
                 <View style={[styles.row, styles.center]}>
                   <View style={[styles.row, styles.center]}>
@@ -289,6 +307,7 @@ function CommentScreen(props) {
                     {new Date(item.date).toLocaleString(undefined, options)}
                   </Text>
                 </View>
+                <Text></Text>
                 <View style={styles.center3}>
                   <Text style={styles.center4}>{item.comment}</Text>
                 </View>

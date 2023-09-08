@@ -130,6 +130,15 @@ export const styles = StyleSheet.create({
 
     marginEnd: 3,
   },
+  image3: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    marginBottom: 25,
+    alignSelf: "center",
+
+    // marginEnd: 3,
+  },
   equipments2: {
     flexDirection: "row",
     marginHorizontal: 5,

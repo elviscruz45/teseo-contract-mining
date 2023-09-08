@@ -51,6 +51,13 @@ export function FileScreen(props) {
 
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
+      <TouchableOpacity onPress={() => uploadFile()}>
+        <ImageExpo
+          source={require("../../../../assets/AddIcon2.png")}
+          style={styles.image3}
+          cachePolicy={"memory-disk"}
+        />
+      </TouchableOpacity>
 
       <FlatList
         data={Item.pdfFile}

@@ -169,14 +169,16 @@ function MoreDetailScreenNoRedux(props) {
       <Text></Text>
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
-      <TouchableOpacity onPress={() => goToEditAITScreen(Item)}>
-        <View style={{ marginRight: 10 }}>
-          <ImageExpo
-            source={require("../../../../assets/editIcon2.png")}
-            style={styles.editIcon}
-          />
-        </View>
-      </TouchableOpacity>
+      {props.email === Item.emailPerfil && (
+        <TouchableOpacity onPress={() => goToEditAITScreen(Item)}>
+          <View style={{ marginRight: 10 }}>
+            <ImageExpo
+              source={require("../../../../assets/editIcon2.png")}
+              style={styles.editIcon}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
       {Item.photoServiceURL ? (
         <ImageExpo
           source={{ uri: Item.photoServiceURL }}
@@ -286,7 +288,9 @@ function MoreDetailScreenNoRedux(props) {
 }
 
 const mapStateToProps = (reducers) => {
-  return {};
+  return {
+    email: reducers.profile.email,
+  };
 };
 
 export const MoreDetailScreen = connect(mapStateToProps, {

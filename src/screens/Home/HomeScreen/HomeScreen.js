@@ -189,7 +189,6 @@ function HomeScreen(props) {
       </View>
     );
   } else {
-    console.log("haaa");
     return (
       <FlatList
         data={posts}
