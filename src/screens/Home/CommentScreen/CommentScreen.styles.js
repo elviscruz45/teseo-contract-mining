@@ -64,16 +64,25 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
   },
-  roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
+  roundImage: {
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    // margin: 5,
+    alignSelf: "flex-end",
+  },
   roundImage5: { width: 60, height: 60, borderRadius: 30, marginLeft: 20 },
   textImage: { alignItems: "center" },
   Texticons: { alignItems: "center", marginLeft: 20 },
 
   postPhoto: {
-    height: windowWidth * 1,
-    width: windowWidth * 1,
+    height: windowWidth * 0.98,
+    width: windowWidth * 0.98,
+
     marginTop: 0,
-    borderWidth: 1,
+    borderRadius: 10,
+    borderWidth: 0.1,
+    alignSelf: "center",
   },
   container2: {
     flex: 1,

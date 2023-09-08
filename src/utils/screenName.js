@@ -16,6 +16,7 @@ const searchStack = {
   detail: "Detail",
   polines: "Polines",
   approve: "Approve",
+  editAIT: "EditAIT",
 };
 
 const postStack = {

@@ -40,7 +40,7 @@ function HomeScreen(props) {
     function fetchData() {
       let queryRef = query(
         collection(db, "events"),
-        limit(20),
+        limit(10),
         orderBy("createdAt", "desc")
       );
 
@@ -189,6 +189,7 @@ function HomeScreen(props) {
       </View>
     );
   } else {
+    console.log("haaa");
     return (
       <FlatList
         data={posts}
@@ -301,7 +302,7 @@ function HomeScreen(props) {
                       type="material-community"
                       name="comment-processing-outline"
                     />
-                    <Text> {item.comentariosUsuarios.length} Comentarios</Text>
+                    <Text>{item?.comentariosUsuarios?.length} Comentarios</Text>
                   </TouchableOpacity>
                 </View>
                 {item.pdfPrincipal && (

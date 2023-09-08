@@ -38,7 +38,7 @@ export const CircularProgress = ({
       aspect: [4, 3],
     });
 
-    if (!result.canceled) uploadImage(result.uri);
+    if (!result.canceled) uploadImage(result.assets[0].uri);
   };
 
   const uploadImage = async (uri) => {

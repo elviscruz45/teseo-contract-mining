@@ -29,9 +29,6 @@ function MoreDetailScreenNoRedux(props) {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [removeFilter, setRemoveFilter] = useState(true);
 
   //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
@@ -158,12 +155,28 @@ function MoreDetailScreenNoRedux(props) {
     );
   };
 
+  // go to edit screen
+  const goToEditAITScreen = (item) => {
+    console.log("hoal");
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.editAIT,
+      params: { Item: item },
+    });
+  };
+
   return (
     <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
       <Text></Text>
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
-
+      <TouchableOpacity onPress={() => goToEditAITScreen(Item)}>
+        <View style={{ marginRight: 10 }}>
+          <ImageExpo
+            source={require("../../../../assets/editIcon2.png")}
+            style={styles.editIcon}
+          />
+        </View>
+      </TouchableOpacity>
       {Item.photoServiceURL ? (
         <ImageExpo
           source={{ uri: Item.photoServiceURL }}

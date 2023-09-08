@@ -63,6 +63,9 @@ function AITNoReduxScreen(props) {
   // find Index of areaList array where there is the image of the area to render the icon Avatar
   const IndexObjectImageArea = areaLists.findIndex((obj) => obj.value === area);
   const imageSource = areaLists[IndexObjectImageArea]?.image || emptyimage;
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -113,7 +116,8 @@ function AITNoReduxScreen(props) {
 
         //Data about the company belong this event
         const regex = /@(.+?)\./i;
-        newData.companyName = props.email?.match(regex)?.[1] || "Anonimo";
+        newData.companyName =
+          capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
         //Progress of Service
         newData.AvanceEjecucion = 1;
         // newData.AvanceAdministrativo = 0;
@@ -123,6 +127,7 @@ function AITNoReduxScreen(props) {
         newData.MontoModificado = 0;
 
         //Uploading data to Firebase and adding the ID firestore
+
         const docRef = await addDoc(collection(db, "ServiciosAIT"), newData);
         newData.idServiciosAIT = docRef.id;
         const RefFirebase = doc(db, "ServiciosAIT", newData.idServiciosAIT);

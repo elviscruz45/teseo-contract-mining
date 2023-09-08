@@ -5,7 +5,6 @@ import * as ImagePicker from "expo-image-picker";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { styles } from "./InfoUser.styles";
-import { ConnectedChangeDisplayNameForm } from "../ChangeDisplayNameForm";
 import { Modal } from "../Modal";
 import { connect } from "react-redux";
 import { update_firebasePhoto } from "../../../actions/profile";
@@ -32,7 +31,7 @@ function InfoUser(props) {
       aspect: [4, 3],
     });
 
-    if (!result.canceled) uploadImage(result.uri);
+    if (!result.canceled) uploadImage(result.assets[0].uri);
   };
 
   const uploadImage = async (uri) => {
@@ -60,8 +59,8 @@ function InfoUser(props) {
     updateProfile(auth.currentUser, { photoURL: imageUrl });
 
     setAvatar(imageUrl);
-    props.update_firebasePhoto(imageUrl);
     setLoading(false);
+    props.update_firebasePhoto(imageUrl);
   };
 
   const goToApprovalScreen = () => {

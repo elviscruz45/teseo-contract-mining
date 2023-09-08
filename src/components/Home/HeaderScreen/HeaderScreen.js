@@ -23,6 +23,7 @@ import { saveApprovalListnew } from "../../../actions/search";
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
   const [data, setData] = useState();
+
   useEffect(() => {
     let unsubscribe;
     function fetchData() {

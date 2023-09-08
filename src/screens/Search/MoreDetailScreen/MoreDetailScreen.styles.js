@@ -174,6 +174,21 @@ export const styles = StyleSheet.create({
     marginLeft: windowWidth / 2 - 50,
   },
 
+  editIcon: {
+    // flexDirection: "row",
+    // alignItems: "center",
+    // marginRight: windowWidth * 0.1,
+    // marginLeft: windowWidth * 0.1,
+    paddingHorizontal: 15,
+    width: 40,
+    height: 40,
+    alignSelf: "flex-end",
+    // marginRight: 10,
+    marginTop: windowHeight * 0.01,
+    zIndex: 1000,
+    position: "absolute",
+  },
+
   buttonFollow: {
     alignItems: "center",
     justifyContent: "center",

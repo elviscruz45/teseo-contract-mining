@@ -7,12 +7,19 @@ import {
   Dimensions,
   Linking,
   TextInput,
+  Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./CommentScreen.styles";
-import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../../../utils";
 import { saveActualPostFirebase } from "../../../actions/post";
 import { LoadingSpinner } from "../../../components/shared/LoadingSpinner/LoadingSpinner";
@@ -39,7 +46,7 @@ function CommentScreen(props) {
     async function fetchDataEventServicesCommentsList() {
       const docRef = doc(db, "events", Item.idDocFirestoreDB);
       const docSnapshot = await getDoc(docRef);
-      const post_array = docSnapshot.data().comentariosUsuarios;
+      const post_array = docSnapshot.data().comentariosUsuarios || "";
 
       post_array.sort((a, b) => {
         return b.date - a.date;
@@ -100,6 +107,29 @@ function CommentScreen(props) {
     });
   };
 
+  //Delete function
+  const docDelete = async (idDoc) => {
+    Alert.alert(
+      "Eliminar Evento",
+      "Estas Seguro que desear Eliminar el evento?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Aceptar",
+          onPress: async () => {
+            navigation.navigate(screen.home.home);
+
+            await deleteDoc(doc(db, "events", idDoc));
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   if (isLoading & !postsComments) {
     return <LoadingSpinner />;
   } else {
@@ -110,46 +140,39 @@ function CommentScreen(props) {
         // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
       >
         <Text></Text>
-        <Text
-          style={{
-            color: "black",
-            fontWeight: "700",
-            alignSelf: "center",
-          }}
-          onPress={() => goToServiceInfo()}
-        >
-          {Item?.AITNombreServicio}
-        </Text>
-        {/* <Text></Text> */}
+        <Text></Text>
 
-        <View>
-          {/* <Text style={styles.textAreaTitle}>{Item?.titulo}</Text> */}
-          {/* <Text></Text>
-          <Text style={styles.textAreaComment} selectable={true}>
-            {Item?.comentarios}
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <Text
+            style={{
+              color: "black",
+              fontWeight: "700",
+              alignSelf: "center",
+              fontSize: 20,
+              paddingHorizontal: 30,
+            }}
+            onPress={() => goToServiceInfo()}
+          >
+            {Item?.AITNombreServicio}
           </Text>
-          <Text></Text> */}
 
-          {/* <Text style={styles.textAreaTitleplus}>Estado General : </Text> */}
-          {/* <Text style={styles.textAreaCommentplus}>
-            {"Progreso: "}
-
-            {Item?.porcentajeAvance}
-            {"%"}
-          </Text> */}
-          {/* <View style={{ flexDirection: "row", margin: 10 }}>
-            <Text>{"Codigo Servicio:"}</Text>
-
-            <Text style={styles.textAreaCommentplus} selectable={true}>
-              {Item?.AITNumero}
-            </Text>
-          </View> */}
-          {/* <Text style={styles.textAreaCommentplus}>
-            {"Etapa: "}
-            {Item?.etapa}
-          </Text> */}
+          {/* <Text></Text> */}
         </View>
         <Text></Text>
+        {props.email === Item?.emailPerfil && (
+          <TouchableOpacity
+            onPress={() => docDelete(Item.idDocFirestoreDB)}
+            style={{
+              marginRight: 15,
+            }}
+          >
+            <ImageExpo
+              source={require("../../../../assets/deleteIcon.png")}
+              style={styles.roundImage}
+              cachePolicy={"memory-disk"}
+            />
+          </TouchableOpacity>
+        )}
 
         <Text></Text>
 
@@ -158,6 +181,31 @@ function CommentScreen(props) {
           style={styles.postPhoto}
           cachePolicy={"memory-disk"}
         />
+        <Text></Text>
+        <Text></Text>
+        <Text
+          style={{
+            // color: "black",
+            fontWeight: "700",
+            // alignSelf: "center",
+            // fontSize: 20,
+            paddingHorizontal: 5,
+          }}
+        >
+          {Item?.titulo}
+        </Text>
+        <Text></Text>
+        <Text
+          style={{
+            // color: "black",
+            // fontWeight: "700",
+            // alignSelf: "center",
+            // fontSize: 20,
+            paddingHorizontal: 5,
+          }}
+        >
+          {Item?.comentarios}
+        </Text>
         <Text></Text>
 
         <View style={[styles.row5, styles.center]}>
