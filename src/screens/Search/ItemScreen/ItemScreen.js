@@ -127,7 +127,7 @@ function ItemScreenNotRedux(props) {
         collection(db, "ServiciosAIT"),
         orderBy("createdAt", "desc"),
         where("idServiciosAIT", "==", Item),
-        where("companyName", "==", "prodise")
+        where("companyName", "==", "Prodise")
       );
 
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
