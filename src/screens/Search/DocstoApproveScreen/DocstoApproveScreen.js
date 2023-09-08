@@ -107,11 +107,12 @@ function DocstoApproveScreenBare(props) {
     emailUser = "",
     nombreServicio = "",
     tipoFile = "",
-    companyName = ""
+    companyName = "",
+    NumeroServicio = ""
   ) => {
     MailComposer.composeAsync({
       recipients: ApprovalRequestSentTo,
-      subject: `${companyName} - ${nombreServicio} ${tipo} de solicitud ID: ${idTime}`,
+      subject: `${companyName} - Num Serv:${NumeroServicio} ${nombreServicio} ${tipo} de solicitud ID: ${idTime}`,
       body: `Se confirma la ${tipo} de: \n 
       Servicio: ${nombreServicio} \n
       Solicitud: ${solicitud} \n
@@ -140,7 +141,8 @@ function DocstoApproveScreenBare(props) {
     formatDate,
     nombreServicio,
     tipoFile,
-    companyName
+    companyName,
+    NumeroServicio
   ) => {
     const PostRef = doc(db, "approvals", idApproval);
 
@@ -172,7 +174,8 @@ function DocstoApproveScreenBare(props) {
               emailUser,
               nombreServicio,
               tipoFile,
-              companyName
+              companyName,
+              NumeroServicio
             );
           },
         },
@@ -194,7 +197,8 @@ function DocstoApproveScreenBare(props) {
     formatDate,
     nombreServicio,
     tipoFile,
-    companyName
+    companyName,
+    NumeroServicio
   ) => {
     const PostRef = doc(db, "approvals", idApproval);
 
@@ -226,7 +230,8 @@ function DocstoApproveScreenBare(props) {
               emailUser,
               nombreServicio,
               tipoFile,
-              companyName
+              companyName,
+              NumeroServicio
             );
           },
         },
@@ -434,7 +439,8 @@ function DocstoApproveScreenBare(props) {
                                 formatDateSol,
                                 item.NombreServicio,
                                 item.tipoFile,
-                                item.companyName
+                                item.companyName,
+                                item.NumeroServicio
                               )
                             }
                           />
@@ -455,7 +461,8 @@ function DocstoApproveScreenBare(props) {
                                 formatDateSol,
                                 item.NombreServicio,
                                 item.tipoFile,
-                                item.companyName
+                                item.companyName,
+                                item.NumeroServicio
                               )
                             }
                           />

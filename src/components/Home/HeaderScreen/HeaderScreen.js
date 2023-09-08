@@ -30,7 +30,7 @@ function HeaderScreenNoRedux(props) {
       let queryRef = query(
         collection(db, "ServiciosAIT"),
         where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio"),
-        where("companyName", "==", "prodise")
+        where("companyName", "==", "Prodise")
       );
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];

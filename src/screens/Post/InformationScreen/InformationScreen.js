@@ -129,6 +129,7 @@ function InformationScreen(props) {
             solicitudComentario: newData.comentarios,
             etapa: newData.etapa,
             NombreServicio: props.actualServiceAIT.NombreServicio,
+            NumeroServicio: props.actualServiceAIT.NumeroAIT,
             IdAITService: props.actualServiceAIT.idServiciosAIT,
             fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
             pdfFile: imageUrlPDF ?? "",
@@ -320,6 +321,9 @@ function InformationScreen(props) {
           <Text style={styles.info}>
             {"Area: "}
             {props.actualServiceAIT?.AreaServicio}
+          </Text>
+          <Text style={styles.info}>
+            {"Tipo Servicio:  "} {props.actualServiceAIT?.TipoServicio}
           </Text>
         </View>
       </View>
