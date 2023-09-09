@@ -58,6 +58,7 @@ function ItemScreenNotRedux(props) {
 
   ///function to change the format of FechaFin from ServiciosAIT firebase collection
   const formatDate = (item) => {
+    if (!item) return;
     const date = new Date(item);
 
     const monthNames = [
@@ -189,10 +190,10 @@ function ItemScreenNotRedux(props) {
   };
 
   //this function goes to homeTab=>commentScreen
-  const goToDocsToApprove = () => {
+  const goToDocsToApprove = (item) => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.approve,
-      // params: { Item: item },
+      params: { Item: item },
     });
   };
 
@@ -241,7 +242,8 @@ function ItemScreenNotRedux(props) {
               </Text>
               <Text style={styles.info}>
                 {"Fecha Inicio:  "}{" "}
-                {formatDate(serviceInfo?.createdAt?.seconds * 1000)}
+                {formatDate(serviceInfo?.FechaInicio?.seconds * 1000) ||
+                  formatDate(serviceInfo?.createdAt?.seconds * 1000)}
               </Text>
               <Text style={styles.info}>
                 {"Fecha Fin:  "} {NuevaFechaEstimadatoRender}

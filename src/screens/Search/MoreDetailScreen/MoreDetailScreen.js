@@ -52,6 +52,8 @@ function MoreDetailScreenNoRedux(props) {
 
   ///function to change the format of FechaFin from ServiciosAIT firebase collection
   const formatDate = (item) => {
+    if (!item) return;
+
     const date = new Date(item);
 
     const monthNames = [
@@ -232,7 +234,8 @@ function MoreDetailScreenNoRedux(props) {
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Fecha de Asignacion:  "}</Text>
           <Text style={styles.info2}>
-            {formatDate(Item?.createdAt?.seconds * 1000)}
+            {formatDate(Item?.FechaInicio?.seconds * 1000) ||
+              formatDate(Item?.createdAt?.seconds * 1000)}
           </Text>
         </View>
         <View style={[styles.row, styles.center]}>
