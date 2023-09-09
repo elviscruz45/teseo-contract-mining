@@ -12,6 +12,7 @@ import { MoreDetailScreen } from "../screens/Search/MoreDetailScreen/MoreDetailS
 import { FileScreen } from "../screens/Search/FilesScreen/FileScreen";
 import { DocstoApproveScreen } from "../screens/Search/DocstoApproveScreen/DocstoApproveScreen";
 import { EditAITScreen } from "../screens/Search/EditAITScreen/EditAITScreen";
+import { AddDocsForm } from "../components/Forms/GeneralForms/AddDocsForm/AddForms";
 
 function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -115,6 +116,12 @@ function SearchStackBare(props) {
       <Stack.Screen
         name={screen.search.editAIT}
         component={EditAITScreen}
+        options={{ title: " " }}
+      />
+
+      <Stack.Screen
+        name={screen.search.addDocs}
+        component={AddDocsForm}
         options={{ title: " " }}
       />
     </Stack.Navigator>

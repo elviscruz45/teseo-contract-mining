@@ -189,10 +189,10 @@ function ItemScreenNotRedux(props) {
   };
 
   //this function goes to homeTab=>commentScreen
-  const goToDocsToApprove = (item) => {
+  const goToDocsToApprove = () => {
     navigation.navigate(screen.search.tab, {
       screen: screen.search.approve,
-      params: { Item: item },
+      // params: { Item: item },
     });
   };
 

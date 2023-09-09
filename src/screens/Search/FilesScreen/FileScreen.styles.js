@@ -142,6 +142,7 @@ export const styles = StyleSheet.create({
   equipments2: {
     flexDirection: "row",
     marginHorizontal: 5,
+    marginTop: 15,
   },
   name2: {
     fontWeight: "bold",
@@ -157,18 +158,20 @@ export const styles = StyleSheet.create({
   info2: {
     // color: "#828282",
     // paddingRight: 10,
-    marginTop: 3,
+    // marginTop: 3,
     fontWeight: "normal",
     // marginHorizontal: windowWidth * 0.28,
-    // marginRight: 40,
-    margin: 10,
-    paddingRight: 60,
+    marginRight: windowWidth * 0.2,
+    // margin: 10,
+    // paddingRight: 60,
   },
   info3: {
     // color: "#828282",
-    paddingLeft: 15,
-    marginTop: 3,
     fontWeight: "normal",
+    // marginHorizontal: windowWidth * 0.28,
+    marginRight: windowWidth * 0.2,
+    alignSelf: "flex-end",
+    marginTop: 10,
   },
   row: {
     flexDirection: "row",

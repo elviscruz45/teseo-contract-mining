@@ -236,11 +236,16 @@ function InformationScreen(props) {
         }
         if (imageUrlPDF) {
           const file = {
-            fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
-            imageUrlPDF: imageUrlPDF,
-            tipo: newData.tipoFile,
-            autor: props.email,
+            FilenameTitle: newData.pdfFile
+              .replace(/%20/g, "_")
+              .split("/")
+              .pop(),
+            pdfPrincipal: imageUrlPDF,
+            tipoFile: newData.tipoFile,
+            email: props.email,
             fecha: new Date(),
+            fechaPostFormato: formattedDate,
+            pdfFile: newData.pdfFile,
           };
           updateDataLasEventPost.pdfFile = arrayUnion(file);
         }

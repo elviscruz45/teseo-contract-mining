@@ -17,6 +17,7 @@ const searchStack = {
   polines: "Polines",
   approve: "Approve",
   editAIT: "EditAIT",
+  addDocs: "AddDocs",
 };
 
 const postStack = {

@@ -31,6 +31,7 @@ export function FileScreen(props) {
       params: { Item },
     },
   } = props;
+  const navigation = useNavigation();
 
   const uploadFile = useCallback(async (uri) => {
     try {
@@ -45,13 +46,22 @@ export function FileScreen(props) {
     }
   }, []);
 
+  const goToAddDocsForm = () => {
+    navigation.navigate(screen.search.tab, {
+      screen: screen.search.addDocs,
+      // params: { Item: item },
+    });
+  };
+
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "white" }} // Add backgroundColor here
+    >
       <Text></Text>
 
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
-      <TouchableOpacity onPress={() => uploadFile()}>
+      <TouchableOpacity onPress={() => goToAddDocsForm()}>
         <ImageExpo
           source={require("../../../../assets/AddIcon2.png")}
           style={styles.image3}
@@ -64,7 +74,7 @@ export function FileScreen(props) {
         scrollEnabled={false}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => uploadFile(item)}>
+            <TouchableOpacity onPress={() => uploadFile(item.pdfPrincipal)}>
               <View />
               <View>
                 <View style={styles.equipments2}>
@@ -74,7 +84,20 @@ export function FileScreen(props) {
                     cachePolicy={"memory-disk"}
                   />
                   <View>
-                    <Text style={styles.info2}>{item}</Text>
+                    <Text style={styles.info2}>
+                      {"Titulo: "} {item.FilenameTitle || item}
+                    </Text>
+                    <Text style={styles.info2}>
+                      {"Tipo de Documento:  "} {item.tipoFile}
+                    </Text>
+                    <Text style={styles.info2}>
+                      {"Autor: "} {item.email}
+                    </Text>
+
+                    <Text style={styles.info3}>
+                      {"Fecha: "}
+                      {item.fechaPostFormato}
+                    </Text>
                   </View>
                 </View>
               </View>
