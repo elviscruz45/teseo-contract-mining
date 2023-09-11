@@ -102,16 +102,32 @@ function MoreDetailScreenNoRedux(props) {
   const ActualDate = new Date();
   const DaysProyectedToCompleteTask =
     NuevaFechaEstimadatoCalculate - new Date(Item.createdAt.seconds * 1000);
-  let AvanceProyected =
-    ((ActualDate - new Date(Item.createdAt.seconds * 1000)) * 100) /
-    DaysProyectedToCompleteTask;
+  let AvanceProyected;
+
+  if (!Item?.FechaInicio) {
+    AvanceProyected =
+      ((ActualDate - new Date(Item.createdAt.seconds * 1000)) * 100) /
+      DaysProyectedToCompleteTask;
+  } else {
+    AvanceProyected =
+      ((ActualDate - new Date(Item.FechaInicio.seconds * 1000)) * 100) /
+      DaysProyectedToCompleteTask;
+  }
+
   if (AvanceProyected > 100) {
     AvanceProyected = 100;
   }
 
   //Algorithm to   convert string to a list to render a list of names
-  const ContratistaList = Item.ResponsableEmpresaContratista?.split(",");
-  const UsuarioList = Item.ResponsableEmpresaUsuario?.split(",");
+
+  const UsuarioAdministrador = Item.ResponsableEmpresaUsuario?.split(",");
+  const UsuarioPlaneamiento = Item.ResponsableEmpresaUsuario2?.split(",");
+  const UsuarioMantenimiento = Item.ResponsableEmpresaUsuario3?.split(",");
+
+  const ContratistaGerente = Item.ResponsableEmpresaContratista?.split(",");
+  const ContratistaPlanificador =
+    Item.ResponsableEmpresaContratista2?.split(",");
+  const ContratistaSupervisor = Item.ResponsableEmpresaContratista3?.split(",");
 
   const ResposableList = (array) => {
     return (
@@ -280,11 +296,21 @@ function MoreDetailScreenNoRedux(props) {
 
         <Text></Text>
 
-        <Text style={styles.info}>{"Administradores de Contratos:  "}</Text>
-        {ResposableList(ContratistaList)}
+        <Text style={styles.info}>
+          {"Administrador de Contratos Cerro Verde:  "}
+        </Text>
+        {ResposableList(UsuarioAdministrador)}
+        <Text style={styles.info}>{"Planeamiento Cerro Verde:  "}</Text>
+        {ResposableList(UsuarioPlaneamiento)}
+        <Text style={styles.info}>{"Mantenimiento Cerro Verde:  "}</Text>
+        {ResposableList(UsuarioMantenimiento)}
 
-        <Text style={styles.info}>{"Supervisores Responsables:  "}</Text>
-        {ResposableList(UsuarioList)}
+        <Text style={styles.info}>{"Gerente Contratista:  "}</Text>
+        {ResposableList(ContratistaGerente)}
+        <Text style={styles.info}>{"Planificador Contratista:  "}</Text>
+        {ResposableList(ContratistaPlanificador)}
+        <Text style={styles.info}>{"Supervisores Contratista:  "}</Text>
+        {ResposableList(ContratistaSupervisor)}
       </View>
     </KeyboardAwareScrollView>
   );

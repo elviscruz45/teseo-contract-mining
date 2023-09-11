@@ -16,8 +16,13 @@ export const PieChart = (props) => {
     const totalEntries = data?.length;
 
     for (let i = 0; i < totalEntries; i++) {
+      const AvanceAdministrativoTexto = data[i].AvanceAdministrativoTexto;
       const tipoServicio = data[i].TipoServicio;
-      if (sumByTipoServicio[tipoServicio]) {
+      if (
+        sumByTipoServicio[tipoServicio] &&
+        AvanceAdministrativoTexto !== "Stand by" &&
+        AvanceAdministrativoTexto !== "Cancelacion"
+      ) {
         sumByTipoServicio[tipoServicio]++;
       } else {
         sumByTipoServicio[tipoServicio] = 1;

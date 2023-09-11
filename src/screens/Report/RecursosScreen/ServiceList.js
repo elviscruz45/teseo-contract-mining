@@ -12,7 +12,7 @@ export const ServiceList = (props) => {
   if (data) {
     for (let i = 0; i < data.length; i++) {
       if (
-        data[i].AvanceAdministrativoTexto !== "Standy by" &&
+        data[i].AvanceAdministrativoTexto !== "Stand by" &&
         data[i].AvanceAdministrativoTexto !== "Cancelacion"
       ) {
         newTableData.push({

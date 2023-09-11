@@ -109,10 +109,14 @@ function InformationScreen(props) {
         //manage the file updated to ask for aprovals
         let imageUrlPDF;
         if (newData.pdfFile) {
+          console.log("1");
           const snapshotPDF = await uploadPdf(newData.pdfFile);
+          console.log("2");
           const imagePathPDF = snapshotPDF.metadata.fullPath;
+          console.log("3");
 
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
+          console.log("4");
         }
         //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
         if (
@@ -276,14 +280,19 @@ function InformationScreen(props) {
     const blob = await response.blob();
     const fileSize = blob.size;
 
-    if (fileSize > 25 * 1024 * 1024) {
-      throw new Error("El archivo excede los 25 MB");
+    try {
+      if (fileSize > 25 * 1024 * 1024) {
+        throw new Error("El archivo excede los 25 MB");
+      }
+      const storage = getStorage();
+
+      const storageRef = ref(storage, `pdfPost/${uuid}`);
+
+      return uploadBytes(storageRef, blob);
+    } catch (error) {
+      console.log(error);
+      alert(error);
     }
-    const storage = getStorage();
-
-    const storageRef = ref(storage, `pdfPost/${uuid}`);
-
-    return uploadBytes(storageRef, blob);
   };
 
   const uploadImage = async (uri) => {
