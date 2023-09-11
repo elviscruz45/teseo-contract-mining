@@ -8,6 +8,10 @@ export const TipoFileLists = [
   {
     value: "3D",
   },
+
+  {
+    value: "Alcance",
+  },
   {
     value: "Otro",
   },
