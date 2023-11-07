@@ -32,22 +32,39 @@ function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+  //Data about the company belong this event
+  const regex = /@(.+?)\./i;
+  const companyName = props.email?.match(regex)?.[1] || "";
 
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
     let unsubscribe;
 
     function fetchData() {
-      let queryRef = query(
-        collection(db, "events"),
-        limit(10),
-        orderBy("createdAt", "desc")
-      );
+      let queryRef;
+
+      if (companyName !== "fmi") {
+        queryRef = query(
+          collection(db, "events"),
+          limit(15),
+          orderBy("createdAt", "desc")
+        );
+      } else {
+        queryRef = query(
+          collection(db, "events"),
+          limit(15),
+          where("visibilidad", "!=", "Solo Empresa Contratista")
+        );
+      }
 
       unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
         const lista = [];
         ItemFirebase.forEach((doc) => {
           lista.push(doc.data());
+        });
+        //order the list by date
+        lista.sort((a, b) => {
+          return b.createdAt - a.createdAt;
         });
 
         setPosts(lista);

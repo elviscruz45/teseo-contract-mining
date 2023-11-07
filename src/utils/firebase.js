@@ -8,7 +8,7 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-//---------Prueba------
+// ---------Prueba------
 
 const firebaseConfig = {
   apiKey: "AIzaSyD12JVsdmR1IMXdbtW3EXtWxYzgAsD07MI",
@@ -19,7 +19,7 @@ const firebaseConfig = {
   appId: "1:794583488224:web:f3a6076c904aa1c6352285",
   measurementId: "G-M2CMHVRCN9",
 };
-// //---------Cerro Verde------
+//---------Cerro Verde------
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAnI4AkUZQvTbE6012n9Uw02rqQ41otjAw",
@@ -39,6 +39,17 @@ const firebaseConfig = {
 //   storageBucket: "teseo-angloamerican.appspot.com",
 //   messagingSenderId: "566966681851",
 //   appId: "1:566966681851:web:10dec08127796c48de305e",
+// };
+
+//---------Prodise------
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCXDbxa1Qs90RlUFOxMob9jY3SBLoj_tRA",
+//   authDomain: "teseo-prodise.firebaseapp.com",
+//   projectId: "teseo-prodise",
+//   storageBucket: "teseo-prodise.appspot.com",
+//   messagingSenderId: "997153190348",
+//   appId: "1:997153190348:web:e1b2494f61e601fce6ad69",
 // };
 
 // Initialize Firebase

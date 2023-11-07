@@ -18,6 +18,7 @@ import { ChangeDisplayMonto } from "../../FormsGeneral/ChangeNumeroMonto/ChangeD
 import { ChangeDisplayFechaFin } from "../../FormsGeneral/ChangeFechaFin/ChangeDisplayFechaFin";
 import { ChangeDisplayHH } from "../../FormsGeneral/ChangeNumeroHH/ChangeDisplayHH";
 import { ChangeDisplayFileTipo } from "../../FormsGeneral/ChangeFIleTipo/ChangeDisplayFileTipo";
+import { ChangeDisplayVisibility } from "../../FormsGeneral/ChangeVisibility/ChangeDisplayVisibility";
 import { connect } from "react-redux";
 
 export function GeneralFormsBare(props) {
@@ -33,6 +34,10 @@ export function GeneralFormsBare(props) {
   const [horashombre, setHorashombre] = useState(null);
   const [aditional, setAditional] = useState(false);
   const [tipoFile, setTipoFile] = useState(null);
+  const [visibilidad, setVisibilidad] = useState(null);
+  //Data about the company belong this event
+  const regex = /@(.+?)\./i;
+  const companyName = props.email?.match(regex)?.[1] || "";
 
   //configuring the name of the pdf file to make it readable
   let shortNameFile = "";
@@ -97,6 +102,15 @@ export function GeneralFormsBare(props) {
   };
 
   const selectComponent = (key) => {
+    if (key === "visibilidad") {
+      setRenderComponent(
+        <ChangeDisplayVisibility
+          onClose={onCloseOpenModal}
+          formik={formik}
+          setVisibilidad={setVisibilidad}
+        />
+      );
+    }
     if (key === "etapa") {
       setRenderComponent(
         <ChangeDisplayEtapa
@@ -167,7 +181,7 @@ export function GeneralFormsBare(props) {
   };
 
   const handlesetAditional = () => {
-    if (props.email === "daniel@prodise.com") {
+    if (props.email === "daniel@prodise.com.pe") {
       setAditional(true);
     } else {
       alert(
@@ -180,6 +194,20 @@ export function GeneralFormsBare(props) {
     <View>
       <View style={styles.content}>
         {/* <Text style={styles.subtitleForm}>Avance del Servicio:</Text> */}
+
+        {companyName !== "fmi" && (
+          <Input
+            value={visibilidad}
+            placeholder="Visibilidad del evento"
+            editable={false}
+            errorMessage={formik.errors.visibilidad}
+            rightIcon={{
+              type: "material-community",
+              name: "arrow-right-circle-outline",
+              onPress: () => selectComponent("visibilidad"),
+            }}
+          />
+        )}
 
         <Input
           value={etapa}

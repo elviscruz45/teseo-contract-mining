@@ -211,6 +211,7 @@ function InformationScreen(props) {
           emailPerfil: newData.emailPerfil ?? "",
           imageUrl: newData.imageUrl ?? "",
           nombrePerfil: newData.nombrePerfil ?? "",
+          visibilidad: newData.visibilidad ?? "",
         };
 
         const updateDataLasEventPost = {

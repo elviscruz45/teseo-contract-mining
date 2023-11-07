@@ -44,6 +44,11 @@ function ItemScreenNotRedux(props) {
   } = props;
   const navigation = useNavigation();
 
+  //Data about the company belong this event
+  const regex = /@(.+?)\./i;
+  const companyName = props.email?.match(regex)?.[1] || "";
+  console.log(companyName);
+
   ///the algoritm to retrieve the image source to render the icon
   const area = serviceInfo?.AreaServicio;
   const indexareaList = areaLists?.findIndex((item) => item.value === area);
@@ -151,7 +156,17 @@ function ItemScreenNotRedux(props) {
             lista.push(dataschema);
           });
         });
-        setPost(lista);
+
+        if (companyName !== "fmi") {
+          setPost(lista);
+        } else {
+          const filteredLista = lista.filter((item) => {
+            return item.visibilidad !== "Solo Empresa Contratista";
+          });
+
+          setPost(filteredLista);
+        }
+
         setServiceInfo(InfoService[0]);
         props.saveActualServiceAIT(InfoService[0]);
       });
@@ -335,6 +350,8 @@ function ItemScreenNotRedux(props) {
 
 const mapStateToProps = (reducers) => {
   return {
+    email: reducers.profile.email,
+
     // servicesData: reducers.home.servicesData,
     // totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
