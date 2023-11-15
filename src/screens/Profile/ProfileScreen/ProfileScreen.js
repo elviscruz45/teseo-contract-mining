@@ -32,19 +32,15 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
-  const [_, setReload] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
   const [post, setPost] = useState(null);
   //states of filters
-
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [removeFilter, setRemoveFilter] = useState(true);
 
   const navigation = useNavigation();
-
-  const onReload = () => setReload((prevState) => !prevState);
 
   const logout = async () => {
     const auth = getAuth();
@@ -52,6 +48,7 @@ function ProfileScreen(props) {
     props.update_firebaseUserUid("");
     props.update_firebaseProfile("");
   };
+  const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
   const update_Data = () => {
     setRenderComponent(
@@ -59,7 +56,6 @@ function ProfileScreen(props) {
     );
     setShowModal(true);
   };
-  const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {
@@ -127,6 +123,7 @@ function ProfileScreen(props) {
       params: { Item: item },
     });
   };
+
   return (
     <>
       <KeyboardAwareScrollView
@@ -135,7 +132,6 @@ function ProfileScreen(props) {
       >
         <Text></Text>
         <View>
-          {/* <ConnectedInfoUser bellQuantity={props?.approvalList?.length} /> */}
           <ConnectedInfoUser />
           <View
             style={{
@@ -147,7 +143,7 @@ function ProfileScreen(props) {
               title="Editar"
               buttonStyle={styles.btnActualizarStyles}
               titleStyle={styles.btnTextStyle}
-              onPress={update_Data}
+              onPress={() => update_Data()}
             />
 
             <Button
@@ -209,7 +205,6 @@ const mapStateToProps = (reducers) => {
     email: reducers.profile.email,
     approvalQuantity: reducers.profile.approvalQuantity,
     approvalList: reducers.home.approvalList,
-
     totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };

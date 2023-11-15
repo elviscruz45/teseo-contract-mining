@@ -13,7 +13,6 @@ import { Image as ImageExpo } from "expo-image";
 import { styles } from "./FileScreen.styles";
 import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-
 import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
 import { screen } from "../../../utils";
@@ -32,7 +31,9 @@ export function FileScreen(props) {
     },
   } = props;
   const navigation = useNavigation();
-
+  const documents = Item.pdfFile.filter((item) => {
+    return typeof item !== "string";
+  });
   const uploadFile = useCallback(async (uri) => {
     try {
       const supported = await Linking.canOpenURL(uri);
@@ -70,13 +71,12 @@ export function FileScreen(props) {
       </TouchableOpacity>
 
       <FlatList
-        data={Item.pdfFile}
+        data={documents}
         scrollEnabled={false}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity onPress={() => uploadFile(item.pdfPrincipal)}>
-              <View />
-              <View>
+              <View style={{ marginBottom: 20 }}>
                 <View style={styles.equipments2}>
                   <ImageExpo
                     source={require("../../../../assets/pdf4.png")}
@@ -84,27 +84,36 @@ export function FileScreen(props) {
                     cachePolicy={"memory-disk"}
                   />
                   <View>
-                    <Text style={styles.info2}>
-                      {"Titulo: "} {item.FilenameTitle || item}
-                    </Text>
-                    <Text style={styles.info2}>
-                      {"Tipo de Documento:  "} {item.tipoFile}
-                    </Text>
-                    <Text style={styles.info2}>
-                      {"Autor: "} {item.email}
-                    </Text>
+                    <View style={[{ flexDirection: "row" }]}>
+                      <Text style={{ fontWeight: "bold" }}>{"Titulo: "}</Text>
+                      <Text style={[styles.info2, { marginRight: "30%" }]}>
+                        {item.FilenameTitle}
+                      </Text>
+                    </View>
+                    <View style={[{ flexDirection: "row" }]}>
+                      <Text style={{ fontWeight: "bold" }}>
+                        {"Tipo de Documento: "}
+                      </Text>
+                      <Text style={styles.info2}>{item.tipoFile}</Text>
+                    </View>
+                    <View style={[{ flexDirection: "row" }]}>
+                      <Text style={{ fontWeight: "bold" }}>{"Autor: "}</Text>
+                      <Text style={styles.info2}>{item.email}</Text>
+                    </View>
 
-                    <Text style={styles.info3}>
-                      {"Fecha: "}
-                      {item.fechaPostFormato}
-                    </Text>
+                    <View style={[{ flexDirection: "row" }]}>
+                      <Text style={{ fontWeight: "bold" }}>{"Fecha: "}</Text>
+                      <Text style={{}}>
+                        {item.fechaPostFormato || "No definido"}
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item} // Provide a unique key for each item
+        keyExtractor={(item) => `${item.FilenameTitle}-${item.pdfPrincipal}`} // Provide a unique key for each item
       />
     </KeyboardAwareScrollView>
   );

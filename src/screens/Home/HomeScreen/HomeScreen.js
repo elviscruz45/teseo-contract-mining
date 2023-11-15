@@ -37,12 +37,13 @@ function HomeScreen(props) {
   const companyName = props.email?.match(regex)?.[1] || "";
 
   // this useEffect is used to retrive all data from firebase
+  console.log("postss", posts);
+
   useEffect(() => {
     let unsubscribe;
 
     function fetchData() {
       let queryRef;
-
       if (companyName !== "fmi") {
         queryRef = query(
           collection(db, "events"),
@@ -80,7 +81,6 @@ function HomeScreen(props) {
       }
     };
   }, []);
-  // }, [props.postPerPage]);
 
   useEffect(() => {
     let unsubscribe;
@@ -100,9 +100,7 @@ function HomeScreen(props) {
           props.saveApprovalListnew(lista);
         });
       }
-
       fetchData();
-
       return () => {
         if (unsubscribe) {
           unsubscribe();
@@ -114,14 +112,6 @@ function HomeScreen(props) {
   const loadMorePosts = () => {
     props.resetPostPerPageHome(props.postPerPage);
   };
-
-  //This function retrieve the image file to render equipments from the header horizontal bar
-  const chooseImageEquipment = useCallback((tags) => {
-    const result = equipmentList.find((item) => {
-      return item.tag === tags;
-    });
-    return result?.image;
-  }, []);
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
@@ -261,7 +251,9 @@ function HomeScreen(props) {
                     style={styles.roundImage}
                     cachePolicy={"memory-disk"}
                   />
-                  <Text>{item.nombrePerfil}</Text>
+                  <Text style={styles.NombrePerfilCorto}>
+                    {item.nombrePerfil}
+                  </Text>
                 </View>
               </View>
               <View style={[styles.row, styles.center]}>

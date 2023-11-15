@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 function LoginNavigator(props) {
   const content = props.firebase_user_uid ? <AppNavigation /> : <AuthScreen />;
 
-  return <>{content}</>; //this screen shows a form to log in
+  return <>{content}</>;
 }
 
 const mapStateToProps = (reducers) => {

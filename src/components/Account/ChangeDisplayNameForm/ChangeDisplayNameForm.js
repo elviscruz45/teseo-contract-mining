@@ -64,7 +64,7 @@ function ChangeDisplayNameForm(props) {
             color: "#c2c2c2",
           }}
           onChangeText={(text) => formik.setFieldValue("displayNameform", text)}
-          errorMessage={formik.errors.displayNameform}
+          // errorMessage={formik.errors.displayNameform}
         />
         <Input
           placeholder="Escribe tu cargo"
@@ -75,10 +75,10 @@ function ChangeDisplayNameForm(props) {
             color: "#c2c2c2",
           }}
           onChangeText={(text) => formik.setFieldValue("cargo", text)}
-          errorMessage={formik.errors.cargo}
+          // errorMessage={formik.errors.cargo}
         />
         <Input
-          placeholder="Describete"
+          placeholder="Descripcion"
           multiline={true}
           rightIcon={{
             type: "material-community",

@@ -60,7 +60,12 @@ export const styles = StyleSheet.create({
     fontSize: 14,
   },
   NombreServicio: {
-    maxWidth: windowWidth * 0.48,
+    // maxWidth: windowWidth * 0.48,
+    width: windowWidth * 0.4,
+    // color: true ? "black" : "red",
+  },
+  NombrePerfilCorto: {
+    width: windowWidth * 0.33,
   },
   container2: {
     flex: 1,

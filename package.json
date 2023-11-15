@@ -7,10 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest"
+    "test": "jest --watch "
   },
   "dependencies": {
-    "@babel/preset-env": "^7.22.5",
     "@dietime/react-native-date-picker": "1.2.0",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-community/datetimepicker": "6.7.3",
@@ -67,20 +66,14 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.5",
     "@babel/core": "^7.22.5",
-    "@testing-library/react-native": "^12.1.2",
+    "@testing-library/react-native": "^12.3.2",
     "babel-jest": "^29.5.0",
-    "jest": "^29.5.0",
-    "jest-expo": "^48.0.2",
+    "jest": "^29.2.1",
+    "jest-expo": "^48.0.0",
     "react-native-testing-library": "^6.0.0",
     "redux-mock-store": "^1.5.4"
   },
-  "private": true,
-  "jest": {
-    "preset": "react-native",
-    "verbose": true,
-    "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|@rneui/themed)"
-    ]
-  }
+  "private": true
 }

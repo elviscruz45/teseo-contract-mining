@@ -87,6 +87,7 @@ function DateScreenNoRedux(props) {
         {androidDate && (
           <Button
             onPress={showDatepickerStart}
+            color={"#2A3B76"}
             title={`${dateStart.toLocaleDateString(undefined, {
               year: "numeric",
               month: "2-digit",
@@ -108,6 +109,7 @@ function DateScreenNoRedux(props) {
         {androidDate && (
           <Button
             onPress={showDatepickerEnd}
+            color={"#2A3B76"}
             title={`${dateEnd.toLocaleDateString(undefined, {
               year: "numeric",
               month: "2-digit",

@@ -14,30 +14,23 @@ import { update_firebaseUid } from "../../../actions/profile";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ChangeManPower } from "../../Profile/ManPowerForm/ChangeManPower";
+
 function InfoUser(props) {
-  const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
-
-  const [avatar, setAvatar] = useState(props.user_photo);
-  const user = getAuth().currentUser;
   const navigation = useNavigation();
 
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
     });
 
     if (!result.canceled) uploadImage(result.assets[0].uri);
   };
 
   const uploadImage = async (uri) => {
-    setLoadingText("Actualizando Avatar");
-    setLoading(true);
-
     const response = await fetch(uri);
     const blob = await response.blob();
 
@@ -58,8 +51,6 @@ function InfoUser(props) {
     const auth = getAuth();
     updateProfile(auth.currentUser, { photoURL: imageUrl });
 
-    setAvatar(imageUrl);
-    setLoading(false);
     props.update_firebasePhoto(imageUrl);
   };
 
@@ -90,7 +81,7 @@ function InfoUser(props) {
           rounded
           containerStyle={styles.avatar}
           icon={{ type: "material", name: "person" }}
-          source={{ uri: avatar }}
+          source={{ uri: props.user_photo }}
         >
           <Avatar.Accessory size={24} onPress={changeAvatar} />
         </Avatar>

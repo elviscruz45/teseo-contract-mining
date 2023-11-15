@@ -13,6 +13,7 @@ import { FileScreen } from "../screens/Search/FilesScreen/FileScreen";
 import { DocstoApproveScreen } from "../screens/Search/DocstoApproveScreen/DocstoApproveScreen";
 import { EditAITScreen } from "../screens/Search/EditAITScreen/EditAITScreen";
 import { AddDocsForm } from "../components/Forms/GeneralForms/AddDocsForm/AddForms";
+import { Platform } from "react-native";
 
 function SearchStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -70,20 +71,21 @@ function SearchStackBare(props) {
         component={ItemScreen}
         options={{
           title: " ",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: screen.search.search }],
-                })
-              }
-              // onPress={() => navigation.navigate(screen.search.search)}
-              style={{ marginLeft: -12 }}
-            >
-              <AntDesign name="left" size={24} color="black" />
-            </TouchableOpacity>
-          ),
+          headerLeft: () =>
+            Platform.OS === "ios" && (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: screen.search.search }],
+                  })
+                }
+                // onPress={() => navigation.navigate(screen.search.search)}
+                style={{ marginLeft: -12 }}
+              >
+                <AntDesign name="left" size={24} color="black" />
+              </TouchableOpacity>
+            ),
         }}
       />
       <Stack.Screen

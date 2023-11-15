@@ -8,18 +8,15 @@ import { connect } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
-import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
 import { update_firebasePhoto } from "../actions/profile";
 import { update_firebaseUserName } from "../actions/profile";
 import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
-import { db } from "../utils";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
-
   const user = getAuth().currentUser;
   const { uid, photoURL, displayName, email } = user;
 
@@ -30,7 +27,7 @@ function HomeStack(props) {
       props.update_firebaseEmail(email);
       props.update_firebaseUid(uid);
     }
-  }, []);
+  }, [user]);
 
   const home_screen = () => {
     navigation.navigate(screen.home.tab, {

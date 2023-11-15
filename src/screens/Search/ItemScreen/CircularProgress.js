@@ -35,16 +35,13 @@ export const CircularProgress = ({
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
     });
 
     if (!result.canceled) uploadImage(result.assets[0].uri);
   };
 
   const uploadImage = async (uri) => {
-    // setLoadingText("Actualizando Avatar");
-    // setLoading(true);
-
     const response = await fetch(uri);
     const blob = await response.blob();
 
@@ -68,15 +65,12 @@ export const CircularProgress = ({
     await updateDoc(RefFirebaseServiceAIT, updateDataLasEventPost);
 
     setAvatar(imageUrl);
-
-    // props.update_firebasePhoto(imageUrl);
-    // setLoading(false);
   };
 
   return (
     <>
       <Svg
-        style={{ position: "absolute", top: -41, left: -45, zIndex: -100 }}
+        style={{ position: "absolute", top: -40, left: -45, zIndex: -100 }}
         width="300%"
         height="300%"
       >
@@ -147,10 +141,13 @@ export const CircularProgress = ({
         <ImageExpo
           source={{ uri: image }}
           style={{
-            marginLeft: 10,
-            width: 100,
-            height: 100,
-            borderRadius: 80,
+            alignContent: "center",
+            marginLeft: 15,
+            marginTop: 2,
+            width: 90,
+            height: 90,
+            borderRadius: 90,
+            alignSelf: "center",
           }}
         />
       ) : (
@@ -158,8 +155,8 @@ export const CircularProgress = ({
           source={imageSourceDefault || require("../../../../assets/icon1.png")}
           style={{
             marginLeft: 10,
-            width: 100,
-            height: 100,
+            width: 90,
+            height: 90,
             borderRadius: 80,
           }}
         />

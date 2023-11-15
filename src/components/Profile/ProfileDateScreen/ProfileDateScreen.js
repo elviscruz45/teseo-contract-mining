@@ -84,6 +84,8 @@ function ProfileDateScreenNoRedux(props) {
         {androidDate && (
           <Button
             onPress={showDatepickerStart}
+            color={"#2A3B76"}
+            // style={{ shadowColor: "black" }}
             title={`${dateStart.toLocaleDateString(undefined, {
               year: "numeric",
               month: "2-digit",
@@ -105,6 +107,7 @@ function ProfileDateScreenNoRedux(props) {
         {androidDate && (
           <Button
             onPress={showDatepickerEnd}
+            color={"#2A3B76"}
             title={`${dateEnd.toLocaleDateString(undefined, {
               year: "numeric",
               month: "2-digit",

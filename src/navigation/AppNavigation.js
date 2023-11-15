@@ -8,7 +8,7 @@ import { ProfileStack } from "./ProfileStack";
 import { SearchStack } from "./SearchStack";
 import { styles } from "./Navigation.styles";
 import { ReportStack } from "./ReportStack";
-
+// const { Icon } = require("@rneui/themed");
 export function AppNavigation() {
   const Tab = createBottomTabNavigator();
 
