@@ -5,9 +5,9 @@ const windowHeight = Dimensions.get("window").height;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: 65,
-    backgroundColor: "white",
+    // padding: 20,
+    // paddingTop: 65,
+    backgroundColor: "red",
   },
 
   opStyle: {
@@ -117,6 +117,7 @@ export const styles = StyleSheet.create({
   },
 
   titledetails: {
+    width: windowWidth * 0.75,
     marginLeft: 5,
     marginRight: 35,
     marginBottom: 10,
@@ -149,6 +150,8 @@ export const styles = StyleSheet.create({
     color: "grey",
   },
   textdetail: {
+    width: windowWidth * 0.65,
+
     marginLeft: 5,
     marginRight: 35,
     textAlign: "left",

@@ -23,36 +23,60 @@ import { saveApprovalListnew } from "../../../actions/search";
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
   const [data, setData] = useState();
+  //Data about the company belong this event
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
+  const regex = /@(.+?)\./i;
 
   useEffect(() => {
     let unsubscribe;
-    function fetchData() {
-      let queryRef = query(
-        collection(db, "ServiciosAIT"),
-        where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio"),
-        where("companyName", "==", "Prodise")
-      );
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        //order the list by date
-        lista.sort((a, b) => {
-          return b.LastEventPosted - a.LastEventPosted;
-        });
+    if (props.email) {
+      const companyName =
+        capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
+      console.log("props.email", companyName);
 
-        setData(lista);
-        props.updateAITServicesDATA(lista);
-      });
-    }
-    fetchData();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
+      function fetchData() {
+        let queryRef;
+        if (companyName === "Fmi") {
+          queryRef = query(
+            collection(db, "ServiciosAIT"),
+            where("AvanceAdministrativoTexto", "!=", "Contratista-Fin servicio")
+          );
+        } else {
+          queryRef = query(
+            collection(db, "ServiciosAIT"),
+            where(
+              "AvanceAdministrativoTexto",
+              "!=",
+              "Contratista-Fin servicio"
+            ),
+            where("companyName", "==", companyName)
+          );
+        }
+
+        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+          const lista = [];
+          ItemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+          //order the list by date
+          lista.sort((a, b) => {
+            return b.LastEventPosted - a.LastEventPosted;
+          });
+
+          setData(lista.slice(0, 50));
+          props.updateAITServicesDATA(lista);
+        });
       }
-    };
-  }, []);
+      fetchData();
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
+    }
+  }, [props.email]);
 
   const selectAsset = (item) => {
     navigation.navigate(screen.search.tab, {
@@ -84,6 +108,7 @@ function HeaderScreenNoRedux(props) {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={data}
+        maxToRenderPerBatch={5}
         renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AreaServicio;

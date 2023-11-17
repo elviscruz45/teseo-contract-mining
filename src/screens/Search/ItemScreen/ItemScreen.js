@@ -45,9 +45,10 @@ function ItemScreenNotRedux(props) {
   const navigation = useNavigation();
 
   //Data about the company belong this event
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
   const regex = /@(.+?)\./i;
-  const companyName = props.email?.match(regex)?.[1] || "";
-  console.log(companyName);
 
   ///the algoritm to retrieve the image source to render the icon
   const area = serviceInfo?.AreaServicio;
@@ -127,66 +128,59 @@ function ItemScreenNotRedux(props) {
 
   useEffect(() => {
     let unsubscribe;
-    async function fetchData() {
-      let queryRef = query(
-        collection(db, "ServiciosAIT"),
-        orderBy("createdAt", "desc"),
-        where("idServiciosAIT", "==", Item),
-        where("companyName", "==", "Prodise")
-      );
-
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        const InfoService = [];
-        ItemFirebase.forEach((doc) => {
-          InfoService.push(doc.data());
-        });
-        ItemFirebase.forEach((doc) => {
-          doc.data().events.forEach((item) => {
-            const dataschema = {
-              ...item,
-              time: "27 Ago",
-              title: item.titulo,
-              description: item.comentarios,
-              lineColor: "skyblue",
-              icon: require("../../../../assets/empresa.png"),
-              imageUrl: item.fotoUsuarioPerfil,
-              idDocAITFirestoreDB: Item,
-            };
-            lista.push(dataschema);
+    if (props.email) {
+      const companyName =
+        capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
+      async function fetchData() {
+        let queryRef = query(
+          collection(db, "ServiciosAIT"),
+          where("idServiciosAIT", "==", Item)
+        );
+        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+          const lista = [];
+          const InfoService = [];
+          ItemFirebase.forEach((doc) => {
+            InfoService.push(doc.data());
           });
-        });
-
-        if (companyName !== "fmi") {
-          setPost(lista);
-        } else {
-          const filteredLista = lista.filter((item) => {
-            return item.visibilidad !== "Solo Empresa Contratista";
+          ItemFirebase.forEach((doc) => {
+            doc.data().events.forEach((item) => {
+              const dataschema = {
+                ...item,
+                time: "27 Ago",
+                title: item.titulo,
+                description: item.comentarios,
+                lineColor: "skyblue",
+                icon: require("../../../../assets/empresa.png"),
+                imageUrl: item.fotoUsuarioPerfil,
+                idDocAITFirestoreDB: Item,
+              };
+              lista.push(dataschema);
+            });
           });
 
-          setPost(filteredLista);
-        }
+          if (companyName !== "Fmi") {
+            setPost(lista);
+          } else {
+            const filteredLista = lista.filter((item) => {
+              return item.visibilidad === "Solo Empresa Contratista";
+            });
 
-        setServiceInfo(InfoService[0]);
-        props.saveActualServiceAIT(InfoService[0]);
-      });
-    }
-    fetchData();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
+            setPost(filteredLista);
+          }
+
+          setServiceInfo(InfoService[0]);
+          props.saveActualServiceAIT(InfoService[0]);
+        });
       }
-    };
-  }, [Item]);
+      fetchData();
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
+    }
+  }, [Item, props.email]);
   // }, [Item, props.servicesData]);
-
-  // //This hook used to retrieve post data from Firebase and sorted by date
-  // useEffect(() => {
-  //   let InfoService = props.servicesData.filter((item) => {
-  //     return item.idServiciosAIT === Item.idServiciosAIT;
-  //   });
-  //   setServiceInfo(InfoService[0]);
-  // }, [props.servicesData, Item]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {
@@ -247,7 +241,7 @@ function ItemScreenNotRedux(props) {
               <Text></Text>
             </View>
             <Text> </Text>
-            <View>
+            <View style={{ marginLeft: 15 }}>
               <Text style={styles.name}>{serviceInfo.NombreServicio}</Text>
               <Text style={styles.info}>
                 {"Numero Serv:  "} {serviceInfo.NumeroAIT}
@@ -340,6 +334,7 @@ function ItemScreenNotRedux(props) {
           >
             Historial de Eventos
           </Text>
+          <Text></Text>
 
           <GanttHistorial datas={post} comentPost={comentPost} />
         </ScrollView>

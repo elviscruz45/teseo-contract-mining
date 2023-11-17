@@ -95,6 +95,7 @@ function InformationScreen(props) {
         newData.AITAreaServicio = props.actualServiceAIT?.AreaServicio;
         newData.AITphotoServiceURL = props.actualServiceAIT?.photoServiceURL;
         newData.AITNumero = props.actualServiceAIT?.NumeroAIT;
+        newData.AITcompanyName = props.actualServiceAIT?.companyName;
 
         // send profile information
         newData.emailPerfil = props.email || "Anonimo";

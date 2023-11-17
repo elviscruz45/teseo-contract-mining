@@ -189,9 +189,9 @@ export const styles = StyleSheet.create({
     // margin: 10,
     padding: 10,
     paddingHorizontal: 30,
-    width: "100%",
-    alignItems: "center", // Align contents vertically
-    backgroundColor: "white", // Add backgroundColor here
+    width: "75%",
+    // alignItems: "center", // Align contents vertically
+    // backgroundColor: "white", // Add backgroundColor here
   },
   name: {
     fontWeight: "bold",

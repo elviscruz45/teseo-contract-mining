@@ -18,6 +18,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  onSnapshot,
   getDoc,
   deleteDoc,
 } from "firebase/firestore";
@@ -30,11 +31,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { screen } from "../../../utils";
 
 function CommentScreen(props) {
-  let unsubscribe;
   const [postsComments, setPostsComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [comment, setComment] = useState("");
-
   const navigation = useNavigation();
   const {
     route: {
@@ -43,22 +41,16 @@ function CommentScreen(props) {
   } = props;
 
   useEffect(() => {
-    // // //this retrieve data from ServiciosAIT collections from Firestore and send it ot the global redux state
-    async function fetchDataEventServicesCommentsList() {
-      const docRef = doc(db, "events", Item.idDocFirestoreDB);
-      const docSnapshot = await getDoc(docRef);
-      const post_array = docSnapshot.data().comentariosUsuarios || "";
+    const docRef = doc(db, "events", Item.idDocFirestoreDB);
 
-      post_array.sort((a, b) => {
-        return b.date - a.date;
-      });
-
+    // const docRef = doc(db, "events", "u9UoHrWiq0ZxIuH8ggsw");
+    let unsubscribe = onSnapshot(docRef, (snapshot) => {
+      const post_array = snapshot.data().comentariosUsuarios || [];
       setPostsComments(post_array);
-    }
-    fetchDataEventServicesCommentsList();
+    });
 
-    setIsLoading(false);
-  }, [props.totalEventServiceAITLIST]);
+    return () => unsubscribe();
+  }, []);
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
@@ -82,7 +74,7 @@ function CommentScreen(props) {
     // Send the comment to Firebase
     // Check if the comment parameter is empty or contains only spaces
     if (comment.trim() === "") {
-      return; // Do not proceed further
+      return;
     }
 
     const PostRef = doc(db, "events", Item.idDocFirestoreDB);
@@ -146,7 +138,7 @@ function CommentScreen(props) {
     );
   };
 
-  if (isLoading & !postsComments) {
+  if (!postsComments) {
     return <LoadingSpinner />;
   } else {
     return (
@@ -165,7 +157,8 @@ function CommentScreen(props) {
             style={{
               color: "black",
               fontWeight: "700",
-              alignSelf: "center",
+              textAlign: "center",
+              // alignSelf: "center",
               fontSize: 20,
               paddingHorizontal: 30,
             }}
@@ -265,7 +258,6 @@ function CommentScreen(props) {
             placeholder="Ingresa tu comentario"
             value={comment}
             onChangeText={handleCommentChange}
-            // onSubmitEditing={() => handleSendComment(comment)}
           />
           <TouchableOpacity
             onPress={() => handleSendComment(comment)}

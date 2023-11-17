@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import {
   View,
   Text,
@@ -19,19 +19,33 @@ import { areaLists } from "../../../utils/areaList";
 
 const windowWidth = Dimensions.get("window").width;
 function SearchScreenNoRedux(props) {
+  let AITServiceList;
+  const [data, setData] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
+  // console.log("searchResults", searchResults);
 
-  let AITServiceList = props.servicesData;
+  if (!data && !searchResults) {
+    setData(props.servicesData);
+    setSearchResults(props.servicesData.slice(0, 100));
+  }
 
   //This is used to retrieve the equipment we are searching for
   useEffect(() => {
     AITServiceList = props.servicesData;
+    let AITServiceListSorted = AITServiceList?.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
+    setData(AITServiceListSorted);
+    setSearchResults(AITServiceListSorted.slice(0, 100));
+  }, [props.servicesData]);
+
+  useEffect(() => {
     if (searchText === "") {
-      setSearchResults(AITServiceList);
+      setSearchResults(data.slice(0, 100));
     } else {
-      const result = AITServiceList?.filter((item) => {
+      const result = data?.filter((item) => {
         const re = new RegExp(searchText, "ig");
         return (
           re.test(item.NombreServicio) ||
@@ -41,9 +55,9 @@ function SearchScreenNoRedux(props) {
         );
       });
 
-      setSearchResults(result);
+      setSearchResults(result.slice(0, 50));
     }
-  }, [searchText, props.servicesData]);
+  }, [searchText]);
 
   //this method is used to go to a screen to see the status of the item
   const selectAsset = (idServiciosAIT) => {
@@ -115,7 +129,10 @@ function SearchScreenNoRedux(props) {
                   {"Tipo: "}
                   {item.TipoServicio}
                 </Text>
-
+                <Text style={styles.info}>
+                  {"Empresa: "}
+                  {item.companyName}
+                </Text>
                 <Text style={styles.info}>
                   {"Fecha Inicio: "}
                   {item.fechaPostFormato}

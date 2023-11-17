@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#2A3B76", // Background color of the button
     padding: 10,
     borderRadius: 5, // Rounded corners
-    opacity: 0.7,
+    opacity: 0.8,
   },
   filterButtonText: {
     color: "#fff", // Text color

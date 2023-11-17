@@ -33,54 +33,60 @@ function HomeScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   //Data about the company belong this event
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
   const regex = /@(.+?)\./i;
-  const companyName = props.email?.match(regex)?.[1] || "";
 
   // this useEffect is used to retrive all data from firebase
-  console.log("postss", posts);
 
   useEffect(() => {
     let unsubscribe;
+    if (props.email) {
+      const companyName =
+        capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
+      function fetchData() {
+        let queryRef;
+        if (companyName === "Fmi") {
+          queryRef = query(
+            collection(db, "events"),
+            limit(5),
+            where("visibilidad", "==", "Todos"),
+            orderBy("createdAt", "desc")
+          );
+        } else {
+          queryRef = query(
+            collection(db, "events"),
+            limit(5),
+            where("AITcompanyName", "==", companyName),
+            orderBy("createdAt", "desc")
+          );
+        }
 
-    function fetchData() {
-      let queryRef;
-      if (companyName !== "fmi") {
-        queryRef = query(
-          collection(db, "events"),
-          limit(15),
-          orderBy("createdAt", "desc")
-        );
-      } else {
-        queryRef = query(
-          collection(db, "events"),
-          limit(15),
-          where("visibilidad", "!=", "Solo Empresa Contratista")
-        );
+        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+          const lista = [];
+          ItemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+          //order the list by date
+          lista.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+          });
+
+          setPosts(lista);
+          props.saveTotalEventServiceAITList(lista);
+        });
+        setIsLoading(false);
       }
 
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
-        //order the list by date
-        lista.sort((a, b) => {
-          return b.createdAt - a.createdAt;
-        });
-
-        setPosts(lista);
-        props.saveTotalEventServiceAITList(lista);
-      });
-      setIsLoading(false);
+      fetchData();
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
     }
-
-    fetchData();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, []);
+  }, [props.email]);
 
   useEffect(() => {
     let unsubscribe;

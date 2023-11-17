@@ -36,13 +36,13 @@ function PostScreen(props) {
 
   useEffect(() => {
     if (searchText === "") {
-      setSearchResults(posts);
+      setSearchResults(posts.slice(0, 50));
     } else {
       const result = posts.filter((item) => {
         const re = new RegExp(searchText, "ig");
         return re.test(item.NumeroAIT) || re.test(item.NombreServicio);
       });
-      setSearchResults(result);
+      setSearchResults(result.slice(0, 50));
     }
   }, [searchText, posts]);
 
@@ -99,7 +99,10 @@ function PostScreen(props) {
   };
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+    <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: "white" }}
+    >
       <SearchBar
         placeholder="Buscar AIT o nombre del servicio"
         value={searchText}

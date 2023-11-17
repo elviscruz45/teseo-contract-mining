@@ -72,7 +72,7 @@ function SearchStackBare(props) {
         options={{
           title: " ",
           headerLeft: () =>
-            Platform.OS === "ios" && (
+            Platform.OS === "ios" ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.reset({
@@ -84,6 +84,19 @@ function SearchStackBare(props) {
                 style={{ marginLeft: -12 }}
               >
                 <AntDesign name="left" size={24} color="black" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: screen.search.search }],
+                  })
+                }
+                // onPress={() => navigation.navigate(screen.search.search)}
+                style={{ marginLeft: -55 }}
+              >
+                <AntDesign name="arrowleft" size={24} color="black" />
               </TouchableOpacity>
             ),
         }}

@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0.1,
   },
   textAreaTitle: {
-    width: windowWidth * 0.5,
+    width: windowWidth * 0.45,
     marginLeft: 10,
     fontWeight: "bold",
     fontSize: 18,
