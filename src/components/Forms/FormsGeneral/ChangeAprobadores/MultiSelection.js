@@ -25,11 +25,8 @@ const MultiSelectExampleBare = (props) => {
   useEffect(() => {
     if (props.saveTotalUsers) {
       async function fetchData() {
-        // const querySnapshot = await getDocs(collection(db, "users"));
         const post_array = [];
         props.saveTotalUsers.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          // const object = doc.data();
           const object = doc;
           const objectver2 = {
             ...object,

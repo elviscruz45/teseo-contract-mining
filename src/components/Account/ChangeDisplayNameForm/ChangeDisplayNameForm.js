@@ -12,6 +12,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { collection, doc, setDoc } from "firebase/firestore";
 import { update_firebaseProfile } from "../../../actions/profile";
 import { update_firebaseUserName } from "../../../actions/profile";
+import { userTypeList } from "../../../utils/userTypeList";
 
 function ChangeDisplayNameForm(props) {
   const { onClose } = props;
@@ -33,6 +34,7 @@ function ChangeDisplayNameForm(props) {
         newData.photoURL = props.user_photo;
         newData.email = props.email;
         newData.companyName = props.email?.match(/@(.+?)\./i)?.[1] || "";
+        newData.userType = userTypeList.worker;
         newData.uid = props.uid;
         newData.EquipmentFavorities = [];
         ///checking up if there are data in users

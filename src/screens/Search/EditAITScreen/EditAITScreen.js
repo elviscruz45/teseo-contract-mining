@@ -22,6 +22,7 @@ import {
   limit,
   where,
   orderBy,
+  getDocs,
 } from "firebase/firestore";
 import { AITForms } from "../../../components/Forms/GeneralForms/AITForms/AITForms";
 import { areaLists } from "../../../utils/areaList";
@@ -44,28 +45,52 @@ function EditAITNoReduxScreen(props) {
 
   //fetching data from firebase to retrieve all users
   useEffect(() => {
-    let unsubscribe;
+    // Function to fetch data from Firestore
+    if (props.email) {
+      const companyName = props.email?.match(/@(.+?)\./i)?.[1] || "Anonimo";
+      async function fetchData() {
+        try {
+          const queryRef1 = query(
+            collection(db, "users"),
+            where("companyName", "==", "fmi"),
+            orderBy("email", "desc")
+          );
 
-    function fetchData() {
-      let queryRef = query(collection(db, "users"), orderBy("email", "desc"));
+          const queryRef2 = query(
+            collection(db, "users"),
+            where("companyName", "==", companyName),
+            orderBy("email", "desc")
+          );
 
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
-        });
+          const getDocs1 = await getDocs(queryRef1);
+          const getDocs2 = await getDocs(queryRef2);
 
-        props.saveTotalUsers(lista);
-      });
-    }
+          const lista = [];
 
-    fetchData();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
+          // Process results from the first query
+          if (getDocs1) {
+            getDocs1.forEach((doc) => {
+              lista.push(doc.data());
+            });
+          }
+
+          // Process results from the second query
+          if (getDocs2) {
+            getDocs2.forEach((doc) => {
+              lista.push(doc.data());
+            });
+          }
+          // Save the merged results to the state or do any other necessary operations
+          props.saveTotalUsers(lista);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          // Handle the error as needed
+        }
       }
-    };
-  }, []);
+    }
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, [props.email]);
 
   const formik = useFormik({
     initialValues: initialValues(),
