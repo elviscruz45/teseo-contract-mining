@@ -137,17 +137,17 @@ export const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 24,
-    fontFamily: "Arial",
+    // fontFamily: "Arial",
     color: "#FA4A0C",
     fontWeight: "bold",
   },
   tagText: {
-    fontFamily: "Arial",
+    // fontFamily: "Arial",
     fontSize: 12,
   },
   dataText: {
     fontSize: 17,
-    fontFamily: "Arial",
+    // fontFamily: "Arial",
     color: "#FA4A0C",
   },
   backgroundImage: {

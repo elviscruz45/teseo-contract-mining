@@ -22,6 +22,13 @@ function PostScreen(props) {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
   const [searchResults, setSearchResults] = useState(null);
+  //Data about the company belong this event
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
+  const regex = /@(.+?)\./i;
+  const companyName =
+    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
 
   //retrieving serviceAIT list data from firebase
   useEffect(() => {
@@ -40,7 +47,11 @@ function PostScreen(props) {
     } else {
       const result = posts.filter((item) => {
         const re = new RegExp(searchText, "ig");
-        return re.test(item.NumeroAIT) || re.test(item.NombreServicio);
+        return (
+          re.test(item.NumeroAIT) ||
+          re.test(item.NombreServicio) ||
+          re.test(item.companyName)
+        );
       });
       setSearchResults(result.slice(0, 50));
     }
@@ -149,7 +160,7 @@ function PostScreen(props) {
           <View>
             <Text style={styles.name}>{AIT?.TipoServicio || "Escoge AIT"}</Text>
             <Text style={styles.info}>
-              {`Serv:${AIT?.NumeroAIT}` || "de la lista"}
+              {AIT?.NumeroAIT ? `Serv:${AIT?.NumeroAIT}` : "de la lista"}
             </Text>
           </View>
         </View>
@@ -236,6 +247,12 @@ function PostScreen(props) {
                     {"Tipo: "}
                     {item.TipoServicio}
                   </Text>
+                  {companyName !== item.companyName && (
+                    <Text style={styles.info}>
+                      {"Empresa: "}
+                      {item.companyName}
+                    </Text>
+                  )}
                   <Text style={styles.info}>
                     {"Fecha Inicio: "}
                     {item.fechaPostFormato}

@@ -14,7 +14,7 @@ import { update_firebaseUid } from "../../../actions/profile";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ChangeManPower } from "../../Profile/ManPowerForm/ChangeManPower";
-
+import { userTypeList } from "../../../utils/userTypeList";
 function InfoUser(props) {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -93,6 +93,7 @@ function InfoUser(props) {
           )}
 
           <Text>{props.email}</Text>
+
           {props.profile?.cargo && <Text>{props.profile.cargo}</Text>}
           {props.profile?.descripcion && (
             <Text>{props.profile.descripcion}</Text>
@@ -102,7 +103,7 @@ function InfoUser(props) {
         <Text> </Text>
         <Text> </Text>
 
-        {props.email === "daniel@prodise.com" && (
+        {props.profile?.userType === userTypeList.manager && (
           <TouchableOpacity
             style={styles.btnContainer4}
             onPress={() => updateManpower()}

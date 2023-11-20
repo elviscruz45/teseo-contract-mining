@@ -24,7 +24,14 @@ function SearchScreenNoRedux(props) {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const navigation = useNavigation();
-  // console.log("searchResults", searchResults);
+
+  //Data about the company belong this event
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
+  const regex = /@(.+?)\./i;
+  const companyName =
+    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
 
   if (!data && !searchResults) {
     setData(props.servicesData);
@@ -51,7 +58,8 @@ function SearchScreenNoRedux(props) {
           re.test(item.NombreServicio) ||
           re.test(item.NumeroAIT) ||
           re.test(item.NumeroCotizacion) ||
-          re.test(item.TipoServicio)
+          re.test(item.TipoServicio) ||
+          re.test(item.companyName)
         );
       });
 
@@ -68,88 +76,93 @@ function SearchScreenNoRedux(props) {
   };
 
   return (
-    <FlatList
-      data={searchResults}
-      ListHeaderComponent={
-        <SearchBar
-          placeholder="Buscar AIT o nombre del servicio"
-          value={searchText}
-          onChangeText={(text) => setSearchText(text)}
-          lightTheme={true}
-          inputContainerStyle={{ backgroundColor: "white" }}
-        />
-      }
-      showsVerticalScrollIndicator={false}
-      scrollEnabled={true}
-      renderItem={({ item, index }) => {
-        //the algoritm to retrieve the image source to render the icon
+    <View style={{ backgroundColor: "white", flex: 1 }}>
+      <FlatList
+        data={searchResults}
+        ListHeaderComponent={
+          <SearchBar
+            placeholder="Buscar AIT o nombre del servicio"
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
+            lightTheme={true}
+            inputContainerStyle={{ backgroundColor: "white" }}
+          />
+        }
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={true}
+        renderItem={({ item, index }) => {
+          //the algoritm to retrieve the image source to render the icon
 
-        const area = item.AreaServicio;
-        const indexareaList = areaLists.findIndex(
-          (item) => item.value === area
-        );
-        const imageSource = areaLists[indexareaList]?.image;
-        // the algorithm to retrieve the amount with format
-        const formattedAmount = new Intl.NumberFormat("en-US", {
-          style: "decimal",
-          useGrouping: true,
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(item.Monto);
+          const area = item.AreaServicio;
+          const indexareaList = areaLists.findIndex(
+            (item) => item.value === area
+          );
+          const imageSource = areaLists[indexareaList]?.image;
+          // the algorithm to retrieve the amount with format
+          const formattedAmount = new Intl.NumberFormat("en-US", {
+            style: "decimal",
+            useGrouping: true,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(item.Monto);
 
-        return (
-          <TouchableOpacity
-            onPress={() => selectAsset(item.idServiciosAIT)}
-            style={{ backgroundColor: "white" }} // Add backgroundColor here
-          >
-            <View style={styles.equipments}>
-              {item.photoServiceURL ? (
-                <ImageExpo
-                  source={{ uri: item.photoServiceURL }}
-                  style={styles.image}
-                  cachePolicy={"memory-disk"}
-                />
-              ) : (
-                <ImageExpo
-                  source={
-                    imageSource || require("../../../../assets/icon1.png")
-                  }
-                  style={styles.image}
-                  cachePolicy={"memory-disk"}
-                />
-              )}
+          return (
+            <TouchableOpacity
+              onPress={() => selectAsset(item.idServiciosAIT)}
+              style={{ backgroundColor: "white" }} // Add backgroundColor here
+            >
+              <View style={styles.equipments}>
+                {item.photoServiceURL ? (
+                  <ImageExpo
+                    source={{ uri: item.photoServiceURL }}
+                    style={styles.image}
+                    cachePolicy={"memory-disk"}
+                  />
+                ) : (
+                  <ImageExpo
+                    source={
+                      imageSource || require("../../../../assets/icon1.png")
+                    }
+                    style={styles.image}
+                    cachePolicy={"memory-disk"}
+                  />
+                )}
 
-              <View>
-                <Text style={styles.name}>{item.NombreServicio}</Text>
-                <Text style={styles.info}>
-                  {"Codigo Servicio: "}
-                  {item.NumeroAIT}
-                </Text>
-                <Text style={styles.info}>
-                  {"Tipo: "}
-                  {item.TipoServicio}
-                </Text>
-                <Text style={styles.info}>
-                  {"Empresa: "}
-                  {item.companyName}
-                </Text>
-                <Text style={styles.info}>
-                  {"Fecha Inicio: "}
-                  {item.fechaPostFormato}
-                </Text>
+                <View>
+                  <Text style={styles.name}>{item.NombreServicio}</Text>
+                  <Text style={styles.info}>
+                    {"Codigo Servicio: "}
+                    {item.NumeroAIT}
+                  </Text>
+                  <Text style={styles.info}>
+                    {"Tipo: "}
+                    {item.TipoServicio}
+                  </Text>
+                  {companyName !== item.companyName && (
+                    <Text style={styles.info}>
+                      {"Empresa: "}
+                      {item.companyName}
+                    </Text>
+                  )}
+                  <Text style={styles.info}>
+                    {"Fecha Inicio: "}
+                    {item.fechaPostFormato}
+                  </Text>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        );
-      }}
-      keyExtractor={(item) => item.NumeroAIT}
-    />
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={(item) => item.NumeroAIT}
+      />
+    </View>
   );
 }
 
 const mapStateToProps = (reducers) => {
   return {
     servicesData: reducers.home.servicesData,
+    email: reducers.profile.email,
   };
 };
 

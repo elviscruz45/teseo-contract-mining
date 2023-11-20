@@ -20,6 +20,7 @@ import { ChangeDisplayHH } from "../../FormsGeneral/ChangeNumeroHH/ChangeDisplay
 import { ChangeDisplayFileTipo } from "../../FormsGeneral/ChangeFIleTipo/ChangeDisplayFileTipo";
 import { ChangeDisplayVisibility } from "../../FormsGeneral/ChangeVisibility/ChangeDisplayVisibility";
 import { connect } from "react-redux";
+import { userTypeList } from "../../../../utils/userTypeList";
 
 export function GeneralFormsBare(props) {
   const { formik } = props;
@@ -181,7 +182,7 @@ export function GeneralFormsBare(props) {
   };
 
   const handlesetAditional = () => {
-    if (props.email === "daniel@prodise.com.pe") {
+    if (props.profile?.userType === userTypeList.manager) {
       setAditional(true);
     } else {
       alert(
@@ -362,6 +363,7 @@ export function GeneralFormsBare(props) {
 
 const mapStateToProps = (reducers) => {
   return {
+    profile: reducers.profile.profile,
     email: reducers.profile.email,
   };
 };
