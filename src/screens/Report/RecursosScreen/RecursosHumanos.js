@@ -16,28 +16,28 @@ import {
 import { db } from "../../../utils";
 export const RecursosHumanos = (props) => {
   const [manpower, setManpower] = useState([]);
-  const [company, setCompany] = useState("prodise");
-
   // this useEffect is used to retrive all data from firebase
   useEffect(() => {
     let unsubscribe;
 
-    async function fetchData() {
-      let queryRef = query(
-        collection(db, "manpower"),
-        where("companyName", "==", company),
-        orderBy("createdAt", "desc"),
-        limit(1)
-      );
+    if (props.company) {
+      async function fetchData() {
+        let queryRef = query(
+          collection(db, "manpower"),
+          where("companyName", "==", props.company.toLowerCase()),
+          orderBy("createdAt", "desc"),
+          limit(1)
+        );
 
-      unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-        const lista = [];
-        ItemFirebase.forEach((doc) => {
-          lista.push(doc.data());
+        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+          const lista = [];
+          ItemFirebase.forEach((doc) => {
+            lista.push(doc.data());
+          });
+
+          setManpower(lista[0]);
         });
-
-        setManpower(lista[0]);
-      });
+      }
     }
 
     fetchData();
@@ -47,7 +47,8 @@ export const RecursosHumanos = (props) => {
         unsubscribe();
       }
     };
-  }, []);
+  }, [props.company]);
+
   if (!manpower) {
     return (
       <>

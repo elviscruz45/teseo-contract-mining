@@ -27,10 +27,12 @@ import { areaLists } from "../../../utils/areaList";
 import { resetPostPerPageHome } from "../../../actions/home";
 import { saveApprovalListnew } from "../../../actions/search";
 import { updateAITServicesDATA } from "../../../actions/home";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [companyName, setCompanyName] = useState("");
   const navigation = useNavigation();
   //Data about the company belong this event
   function capitalizeFirstLetter(str) {
@@ -42,28 +44,30 @@ function HomeScreen(props) {
 
   useEffect(() => {
     let unsubscribe;
+
     if (props.email) {
       const companyName =
         capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
-      function fetchData() {
+      console.log("companyName", companyName);
+
+      async function fetchData() {
         let queryRef;
         if (companyName === "Fmi") {
           queryRef = query(
             collection(db, "events"),
-            limit(5),
+            limit(10),
             where("visibilidad", "==", "Todos"),
             orderBy("createdAt", "desc")
           );
         } else {
           queryRef = query(
             collection(db, "events"),
-            limit(5),
+            limit(10),
             where("AITcompanyName", "==", companyName),
             orderBy("createdAt", "desc")
           );
         }
-
-        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
+        unsubscribe = onSnapshot(queryRef, async (ItemFirebase) => {
           const lista = [];
           ItemFirebase.forEach((doc) => {
             lista.push(doc.data());
@@ -74,12 +78,15 @@ function HomeScreen(props) {
           });
 
           setPosts(lista);
+          setCompanyName(companyName);
           props.saveTotalEventServiceAITList(lista);
         });
         setIsLoading(false);
+        // Cache the fetched data
       }
 
       fetchData();
+
       return () => {
         if (unsubscribe) {
           unsubscribe();
@@ -263,11 +270,17 @@ function HomeScreen(props) {
                 </View>
               </View>
               <View style={[styles.row, styles.center]}>
-                <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
-                  {"Fecha:  "}
-                  {item.fechaPostFormato}
-                </Text>
+                {companyName === "Fmi" && (
+                  <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                    {"Empresa:  "}
+                    {item.AITcompanyName}
+                  </Text>
+                )}
               </View>
+              <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                {"Fecha:  "}
+                {item.fechaPostFormato}
+              </Text>
               <Text></Text>
               <View style={styles.equipments}>
                 <TouchableOpacity onPress={() => commentPost(item)}>

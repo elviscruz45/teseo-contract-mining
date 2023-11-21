@@ -12,74 +12,28 @@ import { saveActualPostFirebase } from "../../../actions/post";
 import { useFormik } from "formik";
 import { db } from "../../../utils";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
 import {
   collection,
   doc,
   addDoc,
   updateDoc,
-  onSnapshot,
-  orderBy,
   arrayUnion,
-  query,
-  getDocs,
 } from "firebase/firestore";
 import { areaLists } from "../../../utils/areaList";
 import { TitleForms } from "../../../components/Forms/GeneralForms/TitleForms/TitleForms";
 import { resetPostPerPageHome } from "../../../actions/home";
 import { saveTotalUsers } from "../../../actions/post";
-
+import {
+  dateFormat,
+  useUserData,
+  uploadPdf,
+  uploadImage,
+} from "./InformatioScreen.calc";
 function InformationScreen(props) {
   const navigation = useNavigation();
 
   //fetching data from firebase to retrieve all users
-  useEffect(() => {
-    // Function to fetch data from Firestore
-    if (props.email) {
-      const companyName = props.email?.match(/@(.+?)\./i)?.[1] || "Anonimo";
-      async function fetchData() {
-        try {
-          const queryRef1 = query(
-            collection(db, "users"),
-            where("companyName", "==", "fmi"),
-            orderBy("email", "desc")
-          );
-
-          const queryRef2 = query(
-            collection(db, "users"),
-            where("companyName", "==", companyName),
-            orderBy("email", "desc")
-          );
-
-          const getDocs1 = await getDocs(queryRef1);
-          const getDocs2 = await getDocs(queryRef2);
-
-          const lista = [];
-
-          // Process results from the first query
-          if (getDocs1) {
-            getDocs1.forEach((doc) => {
-              lista.push(doc.data());
-            });
-          }
-
-          // Process results from the second query
-          if (getDocs2) {
-            getDocs2.forEach((doc) => {
-              lista.push(doc.data());
-            });
-          }
-          // Save the merged results to the state or do any other necessary operations
-          props.saveTotalUsers(lista);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-          // Handle the error as needed
-        }
-      }
-    }
-    // Call the fetchData function when the component mounts
-    fetchData();
-  }, [props.email]);
+  useUserData(props.email, props.saveTotalUsers);
 
   // retrieving data from formik forms ,data from ./InfomartionScreen.data.js
   const formik = useFormik({
@@ -89,31 +43,7 @@ function InformationScreen(props) {
     onSubmit: async (formValue) => {
       try {
         const newData = formValue;
-
-        //create the algoritm to have the date format of the post
-        const date = new Date();
-        const monthNames = [
-          "ene.",
-          "feb.",
-          "mar.",
-          "abr.",
-          "may.",
-          "jun.",
-          "jul.",
-          "ago.",
-          "sep.",
-          "oct.",
-          "nov.",
-          "dic.",
-        ];
-        const day = date.getDate();
-        const month = monthNames[date.getMonth()];
-        const year = date.getFullYear();
-        const hour = date.getHours();
-        const minute = date.getMinutes();
-        const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
-        newData.fechaPostFormato = formattedDate;
-
+        newData.fechaPostFormato = dateFormat();
         //data of the service AIT information
         newData.AITidServicios = props.actualServiceAIT?.idServiciosAIT;
         newData.AITNombreServicio = props.actualServiceAIT?.NombreServicio;
@@ -121,7 +51,6 @@ function InformationScreen(props) {
         newData.AITphotoServiceURL = props.actualServiceAIT?.photoServiceURL;
         newData.AITNumero = props.actualServiceAIT?.NumeroAIT;
         newData.AITcompanyName = props.actualServiceAIT?.companyName;
-
         // send profile information
         newData.emailPerfil = props.email || "Anonimo";
         newData.nombrePerfil = props.firebase_user_name || "Anonimo";
@@ -135,14 +64,9 @@ function InformationScreen(props) {
         //manage the file updated to ask for aprovals
         let imageUrlPDF;
         if (newData.pdfFile) {
-          console.log("1");
           const snapshotPDF = await uploadPdf(newData.pdfFile);
-          console.log("2");
           const imagePathPDF = snapshotPDF.metadata.fullPath;
-          console.log("3");
-
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
-          console.log("4");
         }
         //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
         if (
@@ -172,7 +96,7 @@ function InformationScreen(props) {
             AreaServicio: props.actualServiceAIT.AreaServicio,
             photoServiceURL: props.actualServiceAIT.photoServiceURL,
             status: "Pendiente",
-            idTimeApproval: date.getTime(),
+            idTimeApproval: new Date().getTime(),
             companyName: props.actualServiceAIT.companyName,
           };
           const docRef = await addDoc(collection(db, "approvals"), docData);
@@ -283,13 +207,6 @@ function InformationScreen(props) {
 
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
 
-        // //Updating global State redux
-        // props.saveActualPostFirebase(newData);
-
-        // //reset pagination in HomeScreen to 15 to firebase
-        // props.resetPostPerPageHome(5);
-        // //once all data is uploaded to firebase , go to homescreen
-
         navigation.navigate(screen.post.post);
         navigation.navigate(screen.home.tab, {
           screen: screen.home.home,
@@ -300,38 +217,6 @@ function InformationScreen(props) {
       }
     },
   });
-
-  const uploadPdf = async (uri) => {
-    const uuid = uuidv4();
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const fileSize = blob.size;
-
-    try {
-      if (fileSize > 25 * 1024 * 1024) {
-        throw new Error("El archivo excede los 25 MB");
-      }
-      const storage = getStorage();
-
-      const storageRef = ref(storage, `pdfPost/${uuid}`);
-
-      return uploadBytes(storageRef, blob);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  };
-
-  const uploadImage = async (uri) => {
-    const uuid = uuidv4();
-
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    const storage = getStorage();
-    const storageRef = ref(storage, `mainImageEvents/${uuid}`);
-    return uploadBytes(storageRef, blob);
-  };
 
   //algorith to retrieve image source that
   const area = props.actualServiceAIT?.AreaServicio;
@@ -392,13 +277,11 @@ function InformationScreen(props) {
 const mapStateToProps = (reducers) => {
   return {
     savePhotoUri: reducers.post.savePhotoUri,
-
     firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,
     profile: reducers.profile.profile,
     uid: reducers.profile.uid,
-
     actualServiceAIT: reducers.post.actualServiceAIT,
   };
 };

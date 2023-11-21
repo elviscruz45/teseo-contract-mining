@@ -48,7 +48,6 @@ function CommentScreen(props) {
       const post_array = snapshot.data().comentariosUsuarios || [];
       setPostsComments(post_array);
     });
-
     return () => unsubscribe();
   }, []);
 

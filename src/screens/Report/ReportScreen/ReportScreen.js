@@ -39,8 +39,6 @@ const ReportScreenNoRedux = (props) => {
   //real time updates
   const [data, setData] = useState();
   const navigation = useNavigation();
-  console.log("dataaaaa", company);
-  console.log("dataaaaa", companyList);
 
   //states to view the tables
   const [serviciosActivos, setServiciosActivos] = useState(false);
@@ -58,6 +56,7 @@ const ReportScreenNoRedux = (props) => {
     setCompanyList([
       ...new Set(props.servicesData.map((item) => item.companyName)),
     ]);
+    setCompany(companyName);
   }, []);
 
   useEffect(() => {
@@ -136,11 +135,11 @@ const ReportScreenNoRedux = (props) => {
           ) : (
             <Text style={styles.company}>{company}</Text>
           )}
-          <Text></Text>
-          <RecursosHumanos />
-          <Text></Text>
-          <Text></Text>
 
+          <RecursosHumanos company={company} />
+
+          <Text></Text>
+          <Text></Text>
           <Text></Text>
           <View style={styles.iconMinMax}>
             <View style={styles.container22}>
