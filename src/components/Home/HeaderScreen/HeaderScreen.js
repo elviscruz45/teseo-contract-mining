@@ -19,6 +19,7 @@ import { CircularProgress } from "./CircularProgress";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
 import { updateAITServicesDATA } from "../../../actions/home";
 import { saveApprovalListnew } from "../../../actions/search";
+import { Platform } from "react-native";
 
 function HeaderScreenNoRedux(props) {
   const navigation = useNavigation();
@@ -108,7 +109,7 @@ function HeaderScreenNoRedux(props) {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={data}
-        maxToRenderPerBatch={5}
+        // maxToRenderPerBatch={5}
         renderItem={({ item }) => {
           //the algoritm to retrieve the image source to render the icon
           const area = item.AreaServicio;
@@ -118,13 +119,16 @@ function HeaderScreenNoRedux(props) {
           const imageSource = areaLists[indexareaList]?.image;
           return (
             <TouchableOpacity onPress={() => selectAsset(item.idServiciosAIT)}>
-              <View style={styles.textImage}>
+              <View style={{ marginTop: 10 }}></View>
+
+              <View style={[styles.textImage, { marginRight: 5 }]}>
                 <CircularProgress
                   imageSource={imageSource}
                   imageStyle={styles.roundImage5}
                   avance={item.AvanceEjecucion}
                   image={item.photoServiceURL}
                 />
+                <View style={{ marginTop: 10 }}></View>
                 {ShortTextComponent(item.NombreServicio)}
               </View>
             </TouchableOpacity>

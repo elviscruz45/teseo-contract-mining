@@ -277,6 +277,14 @@ function HomeScreen(props) {
                   </Text>
                 )}
               </View>
+              <View style={[styles.row, styles.center]}>
+                {companyName !== "Fmi" && (
+                  <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                    {"Visibilidad:  "}
+                    {item.visibilidad}
+                  </Text>
+                )}
+              </View>
               <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
                 {"Fecha:  "}
                 {item.fechaPostFormato}

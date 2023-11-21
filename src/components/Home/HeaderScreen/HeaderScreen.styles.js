@@ -34,8 +34,8 @@ export const styles = StyleSheet.create({
   textImage: {
     width: 100,
     alignItems: "center",
-    marginRight: 0,
-    marginTop: 3,
+    // marginRight: 0,
+    // marginTop: 3,
   },
   Texticons: {
     // alignItems: "center",

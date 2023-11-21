@@ -3,6 +3,7 @@ import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory-native";
 import Svg from "react-native-svg";
 import { View } from "react-native";
 import { Image as ImageExpo } from "expo-image";
+import { Platform } from "react-native";
 
 export const CircularProgress = ({
   imageSource,
@@ -18,7 +19,11 @@ export const CircularProgress = ({
   return (
     <>
       <Svg
-        style={{ position: "absolute", top: -50, left: -30, zIndex: 100 }}
+        style={
+          Platform.OS === "ios"
+            ? { position: "absolute", top: -55, left: -30, zIndex: 100 }
+            : { position: "absolute", top: -55, left: -30, zIndex: 100 }
+        }
         width="200%"
         height="200%"
       >
@@ -57,9 +62,9 @@ export const CircularProgress = ({
           source={{ uri: image }}
           style={{
             marginLeft: 20,
-            width: 80,
-            height: 80,
-            borderRadius: 80,
+            width: 70,
+            height: 70,
+            borderRadius: 70,
           }}
         />
       ) : (
@@ -67,9 +72,9 @@ export const CircularProgress = ({
           source={imageSource || require("../../../../assets/icon1.png")}
           style={{
             marginLeft: 20,
-            width: 80,
-            height: 80,
-            borderRadius: 80,
+            width: 70,
+            height: 70,
+            borderRadius: 70,
           }}
         />
       )}
