@@ -213,6 +213,7 @@ export function GeneralFormsBare(props) {
         <Input
           value={etapa}
           placeholder="Etapa del Evento"
+          multiline={true}
           editable={false}
           errorMessage={formik.errors.etapa}
           rightIcon={{

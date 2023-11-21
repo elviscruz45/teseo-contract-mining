@@ -105,28 +105,52 @@ function ApprovalScreenBare(props) {
           return (
             <TouchableOpacity onPress={() => goToApprove(item.IdAITService)}>
               <View />
-              <View>
+              <View style={{ width: "100%" }}>
                 <View style={styles.equipments2}>
-                  {item.photoServiceURL ? (
+                  {item.fotoPerfil ? (
+                    <ImageExpo
+                      source={{ uri: item.fotoPerfil }}
+                      style={[styles.image2, { alignSelf: "center" }]}
+                      cachePolicy={"memory-disk"}
+                    />
+                  ) : item.photoServiceURL ? (
                     <ImageExpo
                       source={{ uri: item.photoServiceURL }}
-                      style={styles.image2}
+                      style={[styles.image2, { alignSelf: "center" }]}
                       cachePolicy={"memory-disk"}
                     />
                   ) : (
                     <ImageExpo
                       source={imageSource}
-                      style={styles.image2}
+                      style={[styles.image2, { alignSelf: "center" }]}
                       cachePolicy={"memory-disk"}
                     />
                   )}
 
                   <View>
-                    <Text style={styles.info2}>{item.NombreServicio}</Text>
+                    <Text style={styles.info2}>
+                      {"Tipo de Solicitud: "}
+                      {item.solicitud}
+                    </Text>
 
-                    <Text style={styles.info2}>{item.solicitud}</Text>
+                    <Text style={styles.info2}>
+                      {"Solicitado por: "}
+                      {item.ApprovalRequestedBy}
+                    </Text>
+                    <Text style={styles.info2}>
+                      {"Empresa: "}
+                      {item.companyName}
+                    </Text>
+                    <Text style={styles.info2}>
+                      {"Nombre del Servicio: "}
+                      {item.NombreServicio}
+                    </Text>
 
-                    <Text style={styles.info2}>{formatDate(item.date)}</Text>
+                    <Text style={styles.info2}>
+                      {"Fecha: "}
+                      {formatDate(item.date)}
+                    </Text>
+                    <Text></Text>
                   </View>
                 </View>
               </View>
@@ -141,13 +165,13 @@ function ApprovalScreenBare(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    profile: reducers.profile.firebase_user_name,
+    // profile: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
     approvalListNew: reducers.search.approvalListNew,
 
-    ActualPostFirebase: reducers.post.ActualPostFirebase,
-    approvalList: reducers.home.approvalList,
-    totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
+    // ActualPostFirebase: reducers.post.ActualPostFirebase,
+    // approvalList: reducers.home.approvalList,
+    // totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
   };
 };
 

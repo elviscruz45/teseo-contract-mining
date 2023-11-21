@@ -29,6 +29,8 @@ import {
   uploadPdf,
   uploadImage,
 } from "./InformatioScreen.calc";
+import { onSubmitFormik } from "./InformatioScreen.calc";
+
 function InformationScreen(props) {
   const navigation = useNavigation();
 
@@ -68,7 +70,7 @@ function InformationScreen(props) {
           const imagePathPDF = snapshotPDF.metadata.fullPath;
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
         }
-        //--------Uploading docs to a new collection called "aprovals" to manage doc aprovals
+        //////////*********Uploading docs to a new collection called "aprovals" to manage doc aprovals******//////////
         if (
           newData.aprobacion &&
           (newData.etapa === "Contratista-Solicitud Aprobacion Doc" ||
@@ -88,6 +90,7 @@ function InformationScreen(props) {
             fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
             pdfFile: imageUrlPDF ?? "",
             tipoFile: newData.tipoFile,
+            fotoPerfil: newData.fotoUsuarioPerfil,
             ApprovalRequestedBy: props.email,
             ApprovalRequestSentTo: matches,
             ApprovalPerformed: [],
@@ -104,6 +107,7 @@ function InformationScreen(props) {
           const RefFirebase = doc(db, "approvals", docData.idApproval);
           await updateDoc(RefFirebase, docData);
         }
+        //////////***********************************************************************************************//////////
 
         newData.pdfPrincipal = imageUrlPDF || "";
 
@@ -113,7 +117,7 @@ function InformationScreen(props) {
         newData.likes = [];
         newData.comentariosUsuarios = [];
 
-        //-------- a default newData porcentajeAvance-------
+        //A default newData porcentajeAvance
         if (
           newData.etapa === "Usuario-Envio Solicitud Servicio" ||
           newData.etapa === "Contratista-Envio Cotizacion" ||
@@ -138,7 +142,7 @@ function InformationScreen(props) {
         const RefFirebase = doc(db, "events", newData.idDocFirestoreDB);
         await updateDoc(RefFirebase, newData);
 
-        //Modifying the Service State ServiciosAIT considering the LasEventPost events
+        /////******Modifying the Service State ServiciosAIT considering the LasEventPost events******//////
         const RefFirebaseLasEventPostd = doc(
           db,
           "ServiciosAIT",
@@ -199,7 +203,7 @@ function InformationScreen(props) {
             tipoFile: newData.tipoFile,
             email: props.email,
             fecha: new Date(),
-            fechaPostFormato: formattedDate,
+            fechaPostFormato: newData.fechaPostFormato,
             pdfFile: newData.pdfFile,
           };
           updateDataLasEventPost.pdfFile = arrayUnion(file);
@@ -218,15 +222,13 @@ function InformationScreen(props) {
     },
   });
 
-  //algorith to retrieve image source that
+  //algorithm to retrieve image source to the profile form
   const area = props.actualServiceAIT?.AreaServicio;
   const indexareaList = areaLists.findIndex((item) => item.value === area);
   const imageSource = areaLists[indexareaList]?.image;
 
   return (
-    <KeyboardAwareScrollView
-      style={{ backgroundColor: "white" }} // Add backgroundColor here
-    >
+    <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
       <View style={styles.equipments}>
         {props.actualServiceAIT?.photoServiceURL ? (
           <Avatar

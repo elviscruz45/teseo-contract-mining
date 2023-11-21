@@ -79,7 +79,7 @@ function ProfileScreen(props) {
       return b.createdAt - a.createdAt;
     });
 
-    setPost(EventList.slice(0, 100));
+    setPost(EventList?.slice(0, 100));
   }, [props.totalEventServiceAITLIST, removeFilter]);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ function ProfileScreen(props) {
             lista.push(doc.data());
           });
 
-          setPost(lista.slice(0, 100));
+          setPost(lista?.slice(0, 100));
         } catch (error) {
           console.error("Error fetching data: ", error);
         }

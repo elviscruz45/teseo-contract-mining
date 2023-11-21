@@ -214,7 +214,7 @@ function ItemScreenNotRedux(props) {
     });
   };
 
-  ///////////////////// serviceInfo
+  // ///////////////////// serviceInfo
   if (!serviceInfo || !post) {
     return;
   } else {
@@ -236,6 +236,8 @@ function ItemScreenNotRedux(props) {
                 id={serviceInfo.idServiciosAIT}
                 image={serviceInfo.photoServiceURL}
                 titulo={serviceInfo.NombreServicio}
+                author={serviceInfo.emailPerfil}
+                email={props.email}
               />
 
               <Text></Text>

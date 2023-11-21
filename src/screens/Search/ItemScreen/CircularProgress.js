@@ -13,6 +13,11 @@ import {
   addDoc,
   updateDoc,
   arrayUnion,
+  getDoc,
+  query,
+  getDocs,
+  where,
+  get,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 
@@ -23,6 +28,8 @@ export const CircularProgress = ({
   id,
   image,
   titulo,
+  author,
+  email,
 }) => {
   const [avatar, setAvatar] = useState();
 
@@ -58,12 +65,10 @@ export const CircularProgress = ({
     const imageRef = ref(storage, imagePath);
     const imageUrl = await getDownloadURL(imageRef);
     const RefFirebaseServiceAIT = doc(db, "ServiciosAIT", id);
-
     const updateDataLasEventPost = {
       photoServiceURL: imageUrl,
     };
     await updateDoc(RefFirebaseServiceAIT, updateDataLasEventPost);
-
     setAvatar(imageUrl);
   };
 
@@ -111,21 +116,23 @@ export const CircularProgress = ({
           margin: 115,
         }}
       >
-        <Avatar.Accessory
-          size={30}
-          onPress={changeAvatar}
-          containerStyle={
-            {
-              // zIndex: 10
-              // width: 80,
-              // height: 80,
-              // borderRadius: 65,
-              // borderRadius: 60,
-              // marginRight: 20,
-              // backgroundColor: "green",
+        {author === email && (
+          <Avatar.Accessory
+            size={30}
+            onPress={changeAvatar}
+            containerStyle={
+              {
+                // zIndex: 10
+                // width: 80,
+                // height: 80,
+                // borderRadius: 65,
+                // borderRadius: 60,
+                // marginRight: 20,
+                // backgroundColor: "green",
+              }
             }
-          }
-        />
+          />
+        )}
       </Avatar>
       {avatar ? (
         <ImageExpo

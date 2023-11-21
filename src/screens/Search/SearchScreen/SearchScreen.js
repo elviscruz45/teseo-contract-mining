@@ -35,7 +35,7 @@ function SearchScreenNoRedux(props) {
 
   if (!data && !searchResults) {
     setData(props.servicesData);
-    setSearchResults(props.servicesData.slice(0, 100));
+    setSearchResults(props.servicesData?.slice(0, 100));
   }
 
   //This is used to retrieve the equipment we are searching for
@@ -45,12 +45,12 @@ function SearchScreenNoRedux(props) {
       return b.createdAt - a.createdAt;
     });
     setData(AITServiceListSorted);
-    setSearchResults(AITServiceListSorted.slice(0, 100));
+    setSearchResults(AITServiceListSorted?.slice(0, 100));
   }, [props.servicesData]);
 
   useEffect(() => {
     if (searchText === "") {
-      setSearchResults(data.slice(0, 100));
+      setSearchResults(data?.slice(0, 100));
     } else {
       const result = data?.filter((item) => {
         const re = new RegExp(searchText, "ig");
@@ -63,7 +63,7 @@ function SearchScreenNoRedux(props) {
         );
       });
 
-      setSearchResults(result.slice(0, 50));
+      setSearchResults(result?.slice(0, 50));
     }
   }, [searchText]);
 

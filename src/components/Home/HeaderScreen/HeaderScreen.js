@@ -65,7 +65,7 @@ function HeaderScreenNoRedux(props) {
             return b.LastEventPosted - a.LastEventPosted;
           });
 
-          setData(lista.slice(0, 50));
+          setData(lista?.slice(0, 50));
           props.updateAITServicesDATA(lista);
         });
       }
