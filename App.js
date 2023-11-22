@@ -9,7 +9,6 @@ import { rootReducers } from "./src/reducers";
 import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { ConnectedLoginNavigator } from "./src/navigation/LoginNavigator";
-import { LoginNavigator } from "./src/navigation/LoginNavigator";
 import { StatusBar } from "expo-status-bar";
 
 LogBox.ignoreAllLogs();

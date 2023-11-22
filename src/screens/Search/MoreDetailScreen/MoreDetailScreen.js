@@ -23,6 +23,7 @@ import { EquipmentListUpper } from "../../../actions/home";
 import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { userTypeList } from "../../../utils/userTypeList";
 
 const windowWidth = Dimensions.get("window").width;
 function MoreDetailScreenNoRedux(props) {
@@ -175,7 +176,6 @@ function MoreDetailScreenNoRedux(props) {
 
   // go to edit screen
   const goToEditAITScreen = (item) => {
-    console.log("hoal");
     navigation.navigate(screen.search.tab, {
       screen: screen.search.editAIT,
       params: { Item: item },
@@ -187,7 +187,9 @@ function MoreDetailScreenNoRedux(props) {
       <Text></Text>
       <Text style={styles.name}>{Item.NombreServicio}</Text>
       <Text></Text>
-      {props.email === Item.emailPerfil && (
+      {(props.email === Item.emailPerfil ||
+        props.profile?.userType === userTypeList.manager ||
+        props.profile?.userType === userTypeList.planner) && (
         <TouchableOpacity onPress={() => goToEditAITScreen(Item)}>
           <View style={{ marginRight: 10 }}>
             <ImageExpo
@@ -319,6 +321,7 @@ function MoreDetailScreenNoRedux(props) {
 const mapStateToProps = (reducers) => {
   return {
     email: reducers.profile.email,
+    profile: reducers.profile.profile,
   };
 };
 

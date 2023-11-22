@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { Modal } from "../../../components/shared/Modal";
 import { ChangeDisplayCompany } from "../../../components/Forms/ReportScreen/ChangeCompany/ChangeCompany";
+import { userTypeList } from "../../../utils/userTypeList";
 const ReportScreenNoRedux = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -310,18 +311,21 @@ const ReportScreenNoRedux = (props) => {
           {comprometido && <MontoComprometido data={data} />}
           <Text></Text>
 
-          <TouchableOpacity
-            // style={styles.btnContainer4}
-            onPress={
-              () => getExcelReportData(data)
-              // alert("Pendiente todavia")
-            }
-          >
-            <Image
-              source={require("../../../../assets/excel2.png")}
-              style={styles.excel}
-            />
-          </TouchableOpacity>
+          {(props.profile?.userType === userTypeList.manager ||
+            props.profile?.userType === userTypeList.planner) && (
+            <TouchableOpacity
+              // style={styles.btnContainer4}
+              onPress={
+                () => getExcelReportData(data)
+                // alert("Pendiente todavia")
+              }
+            >
+              <Image
+                source={require("../../../../assets/excel2.png")}
+                style={styles.excel}
+              />
+            </TouchableOpacity>
+          )}
         </ScrollView>
         <Modal show={showModal} close={onCloseOpenModal}>
           {renderComponent}
@@ -330,11 +334,13 @@ const ReportScreenNoRedux = (props) => {
     );
   }
 };
+// if (props.profile?.userType === userTypeList.manager) {
 
 const mapStateToProps = (reducers) => {
   return {
     servicesData: reducers.home.servicesData,
     email: reducers.profile.email,
+    profile: reducers.profile.profile,
   };
 };
 

@@ -62,7 +62,9 @@ const HistoryScreenNoRedux = (props) => {
   const [montoServicios, setMontoServicios] = useState(false);
   const [historial, setHistorial] = useState(false);
   //Data about the company belong this event
-
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
   const regex = /@(.+?)\./i;
   const companyName = props.email?.match(regex)?.[1].toUpperCase() || "Anonimo"; // console.log("searchResults", searchResults);
 
@@ -88,13 +90,18 @@ const HistoryScreenNoRedux = (props) => {
   useEffect(() => {
     let unsubscribe;
     let q;
-    if (startDate && endDate) {
+
+    if (props.email && startDate && endDate) {
+      const companyNameHistory =
+        capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
+
       async function fetchData() {
         q = query(
           collection(db, "ServiciosAIT"),
           orderBy("createdAt", "desc"),
           where("createdAt", ">=", startDate),
-          where("createdAt", "<=", endDate)
+          where("createdAt", "<=", endDate),
+          where("companyName", "==", companyNameHistory)
         );
 
         try {
@@ -118,7 +125,7 @@ const HistoryScreenNoRedux = (props) => {
         }
       };
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, props.email]);
 
   //Changing the value to activate again the filter to rende the posts
   const filter = (start, end) => {

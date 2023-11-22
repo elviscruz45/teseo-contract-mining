@@ -35,7 +35,6 @@ function HeaderScreenNoRedux(props) {
     if (props.email) {
       const companyName =
         capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
-      console.log("props.email", companyName);
 
       function fetchData() {
         let queryRef;
