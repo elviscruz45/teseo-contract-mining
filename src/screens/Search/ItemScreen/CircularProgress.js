@@ -4,6 +4,7 @@ import { Avatar, Icon } from "@rneui/themed";
 import Svg from "react-native-svg";
 import { View, Text } from "react-native";
 import { Image as ImageExpo } from "expo-image";
+import { Platform } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -70,7 +71,11 @@ export const CircularProgress = ({
   return (
     <>
       <Svg
-        style={{ position: "absolute", top: -40, left: -45, zIndex: -100 }}
+        style={
+          Platform.OS === "ios"
+            ? { position: "absolute", top: -45, left: -45, zIndex: -100 }
+            : { position: "absolute", top: -41, left: -50, zIndex: -100 }
+        }
         width="300%"
         height="300%"
       >

@@ -58,7 +58,11 @@ function PostScreen(props) {
   }, [searchText, posts]);
 
   //method to retrieve the picture required in the event post (pick Imagen, take a photo)
-  const pickImage = async () => {
+  const pickImage = async (AITServiceNumber) => {
+    if (!AITServiceNumber) {
+      alert("Escoge un servicio para continuar");
+      return;
+    }
     if (!equipment) return;
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -79,7 +83,11 @@ function PostScreen(props) {
     setEquipment(null);
   };
   // go to another screen to take a photo before put data to the form
-  const camera = () => {
+  const camera = (AITServiceNumber) => {
+    if (!AITServiceNumber) {
+      alert("Escoge un servicio para continuar");
+      return;
+    }
     if (!equipment) return;
     navigation.navigate(screen.post.camera);
     setEquipment(null);
@@ -178,7 +186,7 @@ function PostScreen(props) {
         >
           <TouchableOpacity
             style={styles.btnContainer2}
-            onPress={() => pickImage()}
+            onPress={() => pickImage(AIT?.TipoServicio)}
           >
             <Image
               source={require("../../../../assets/AddImage.png")}
@@ -187,7 +195,7 @@ function PostScreen(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnContainer3}
-            onPress={() => camera()}
+            onPress={() => camera(AIT?.TipoServicio)}
           >
             <Image
               source={require("../../../../assets/TakePhoto2.png")}
