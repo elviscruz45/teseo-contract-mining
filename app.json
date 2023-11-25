@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "teseo-contract-mining",
-    "slug": "teseo-contract-mining",
+    "name": "teseo-tracking",
+    "slug": "teseo-tracking",
     "description": "high perfomance for your industry",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,6 +16,7 @@
     "ios": {
       "supportsTablet": true
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
