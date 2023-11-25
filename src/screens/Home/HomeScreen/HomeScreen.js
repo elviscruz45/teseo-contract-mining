@@ -3,7 +3,6 @@ import { Text, View, FlatList, TouchableOpacity, Linking } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
-import { equipmentList } from "../../../utils/equipmentList";
 import {
   collection,
   onSnapshot,

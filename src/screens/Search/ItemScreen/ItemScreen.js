@@ -20,10 +20,8 @@ import {
   getDocs,
   limit,
 } from "firebase/firestore";
-import { equipmentList } from "../../../utils/equipmentList";
 import { db } from "../../../utils";
 import { screen } from "../../../utils";
-import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualServiceAIT } from "../../../actions/post";
 import { EquipmentListUpper } from "../../../actions/home";

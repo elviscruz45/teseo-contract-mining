@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ChangeManPower } from "../../Profile/ManPowerForm/ChangeManPower";
 import { userTypeList } from "../../../utils/userTypeList";
+
 function InfoUser(props) {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);

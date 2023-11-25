@@ -7,7 +7,6 @@ import { styles } from "./ApprovalScreen.styles";
 import { connect } from "react-redux";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
-import { getExcelPerfil } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
   collection,
@@ -57,7 +56,7 @@ function ApprovalScreenBare(props) {
     return formattedDate;
   };
 
-  goToApprove = async (item) => {
+  const goToApprove = (item) => {
     // // retrieve the actual service to use the data to go to approve what is required
     // const serviceQuery = await getDocs(
     //   query(collection(db, "ServiciosAIT"), where("idServiciosAIT", "==", item))

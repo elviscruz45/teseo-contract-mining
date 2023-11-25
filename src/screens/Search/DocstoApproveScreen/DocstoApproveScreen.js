@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
-import { getExcelPerfil } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
   collection,

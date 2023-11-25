@@ -11,6 +11,8 @@ export function Modal(props) {
       isVisible={show}
       overlayStyle={styles.overlay}
       onBackdropPress={close}
+      // testID="modal-backdrop"
+      data-testid="modal-backdrop"
     >
       {children}
     </Overlay>

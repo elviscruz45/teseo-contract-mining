@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { Input, Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { getAuth, updateProfile } from "firebase/auth";

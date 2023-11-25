@@ -20,6 +20,7 @@ const firebaseConfig = {
   appId: "1:794583488224:web:f3a6076c904aa1c6352285",
   measurementId: "G-M2CMHVRCN9",
 };
+
 //---------Cerro Verde------
 
 // const firebaseConfig = {

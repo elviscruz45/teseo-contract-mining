@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "teseo-contract-mining",
-    "slug": "teseo-contract-mining",
-    "description": "high perfomance for your industry",
+    "name": "teseo-contract-tracking",
+    "slug": "teseo-contract-tracking",
+    "description": "real time process monitoring",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon1.png",

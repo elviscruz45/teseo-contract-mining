@@ -13,10 +13,8 @@ import { Image as ImageExpo } from "expo-image";
 import { styles } from "./MoreDetailScreen.styles";
 import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { equipmentList } from "../../../utils/equipmentList";
-import { db } from "../../../utils";
+
 import { screen } from "../../../utils";
-import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
 import { EquipmentListUpper } from "../../../actions/home";
