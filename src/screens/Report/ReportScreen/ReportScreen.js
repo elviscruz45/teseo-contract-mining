@@ -135,9 +135,7 @@ const ReportScreenNoRedux = (props) => {
           ) : (
             <Text style={styles.company}>{company}</Text>
           )}
-
-          <RecursosHumanos company={company} />
-
+          {company !== "FMI" && <RecursosHumanos company={company} />}
           <Text></Text>
           <Text></Text>
           <Text></Text>
