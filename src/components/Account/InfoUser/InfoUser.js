@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { ChangeManPower } from "../../Profile/ManPowerForm/ChangeManPower";
 import { userTypeList } from "../../../utils/userTypeList";
+
 function InfoUser(props) {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -80,7 +81,7 @@ function InfoUser(props) {
           size="large"
           rounded
           containerStyle={styles.avatar}
-          icon={{ type: "material", name: "person" }}
+          // icon={{ type: "material", name: "person" }}
           source={{ uri: props.user_photo }}
         >
           <Avatar.Accessory size={24} onPress={changeAvatar} />

@@ -21,7 +21,7 @@ export const RecursosHumanos = (props) => {
     let unsubscribe;
 
     if (props.company) {
-      async function fetchData() {
+      function fetchData() {
         let queryRef = query(
           collection(db, "manpower"),
           where("companyName", "==", props.company.toLowerCase()),
@@ -38,9 +38,8 @@ export const RecursosHumanos = (props) => {
           setManpower(lista[0]);
         });
       }
+      fetchData();
     }
-
-    fetchData();
 
     return () => {
       if (unsubscribe) {

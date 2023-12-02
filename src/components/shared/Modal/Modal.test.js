@@ -4,10 +4,6 @@ import { Modal } from "./Modal";
 import { Text } from "react-native";
 // import "@testing-library/jest-dom";
 
-jest.mock("@rneui/themed", () => ({
-  Overlay: jest.fn(({ children }) => children),
-}));
-
 describe("Modal", () => {
   it("renders the modal when show prop is true", () => {
     const { getByTestId } = render(
@@ -27,7 +23,7 @@ describe("Modal", () => {
   it("does not render the modal when show prop is false", () => {
     const { queryByTestId } = render(
       <Modal show={false} close={jest.fn()}>
-        <Text>Modal Content</Text>
+        <Text testID="overlay">Modal Content</Text>
       </Modal>
     );
 

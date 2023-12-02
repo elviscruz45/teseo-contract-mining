@@ -15,6 +15,7 @@ export function ChangeDisplayTipoServicio(props) {
         <SelectExample formik={formik} setText={setText} />
         <Button
           title="Aceptar"
+          testID="ChangeDisplayTipoServicio:Button2"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

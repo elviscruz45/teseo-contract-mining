@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Input, Button } from "@rneui/themed";
-import { useFormik } from "formik";
+import { Button } from "@rneui/themed";
 import { styles } from "./ChangeDisplayContratista.styles";
 import { MultiSelectExample } from "./MultiSelection";
 
@@ -15,6 +14,7 @@ export function ChangeDisplayAdminContratista(props) {
         <MultiSelectExample formik={formik} setText={setText} />
         <Button
           title="Aceptar"
+          testID="ChangeDisplayAdminContratista:Button"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

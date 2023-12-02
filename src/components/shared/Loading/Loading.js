@@ -11,7 +11,11 @@ export function Loading(props) {
   return (
     <View style={styles.content}>
       <ActivityIndicator size="large" color="#FA4A0C" />
-      {text && <Text style={styles.text}>{text}</Text>}
+      {text && (
+        <Text testID="loading-component" style={styles.text}>
+          {text}
+        </Text>
+      )}
     </View>
   );
 }

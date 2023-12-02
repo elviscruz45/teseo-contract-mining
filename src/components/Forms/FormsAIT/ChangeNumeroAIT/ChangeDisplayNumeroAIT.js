@@ -11,14 +11,18 @@ export function ChangeDisplaynumeroAIT(props) {
     <View>
       <View style={styles.content}>
         <Input
+          value={text}
           placeholder="Numero de AIT"
+          testID="ChangeDisplaynumeroAIT:Input"
           // editable={true}
           keyboardType="numeric"
           onChangeText={(text) => setText(text)}
-          errorMessage={formik.errors.NumeroAIT}
+          // errorMessage={formik.errors.NumeroAIT}
         />
+
         <Button
           title="Aceptar"
+          testID="ChangeDisplaynumeroAIT:Button"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

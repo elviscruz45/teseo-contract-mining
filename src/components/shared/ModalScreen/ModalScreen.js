@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Overlay } from "@rneui/themed";
-import { Modal } from "react-native";
+import { Modal, TouchableOpacity, Text } from "react-native";
 import { styles } from "./ModalScreen.styles";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 export function ModalScreen(props) {
-  const { show, close, children } = props;
+  const { show } = props;
   const [item, setItem] = useState(null);
 
   setLocation = (location) => {
@@ -13,13 +12,22 @@ export function ModalScreen(props) {
   };
 
   return (
-    <Modal animationType="slide" transparent={false} visible={show}>
-      <SafeAreaView style={[styles.container, styles.center]}>
+    <Modal
+      animationType="slide"
+      transparent={false}
+      visible={show}
+      testID="ModalScreen:Modal"
+    >
+      <SafeAreaView
+        style={[styles.container, styles.center]}
+        testID="ModalScreen:SafeAreaView"
+      >
         <TouchableOpacity
+          testID="ModalScreen:TouchableOpacity"
           style={styles.border}
           onPress={() => setLocation("Aguas Residuales")}
         >
-          <Text>Aguas Residuales</Text>
+          <Text testID="ModalScreen:Text">Aguas Residuales</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </Modal>

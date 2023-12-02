@@ -57,6 +57,7 @@ function ChangeDisplayNameForm(props) {
     <>
       <KeyboardAwareScrollView>
         <Input
+          testID="displayNameform"
           placeholder="Nombre y apellidos"
           multiline={true}
           rightIcon={{
@@ -68,6 +69,7 @@ function ChangeDisplayNameForm(props) {
           // errorMessage={formik.errors.displayNameform}
         />
         <Input
+          testID="cargo"
           placeholder="Escribe tu cargo"
           multiline={true}
           rightIcon={{
@@ -79,6 +81,7 @@ function ChangeDisplayNameForm(props) {
           // errorMessage={formik.errors.cargo}
         />
         <Input
+          testID="descripcion"
           placeholder="Descripcion"
           multiline={true}
           rightIcon={{
@@ -90,6 +93,7 @@ function ChangeDisplayNameForm(props) {
           // errorMessage={formik.errors.displayName}
         />
         <Button
+          testID="submitButton"
           title="Actualizar"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}

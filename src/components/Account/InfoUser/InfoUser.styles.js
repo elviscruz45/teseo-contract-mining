@@ -12,7 +12,10 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     marginRight: 20,
-    backgroundColor: "green",
+    // backgroundColor: "green",
+    // width: 100,
+    // height: 100,
+    // borderRadius: 200,
   },
   displayName: {
     fontWeight: "bold",

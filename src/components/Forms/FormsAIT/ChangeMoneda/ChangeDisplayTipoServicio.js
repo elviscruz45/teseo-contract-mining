@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Input, Button } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 
 import { styles } from "./ChangeDisplayTipoServicio.styles";
 import { SelectExample } from "./Selection";
@@ -15,6 +15,7 @@ export function ChangeDisplayMoneda(props) {
         <SelectExample formik={formik} setText={setText} />
         <Button
           title="Aceptar"
+          testID="ChangeDisplayMoneda:Button"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

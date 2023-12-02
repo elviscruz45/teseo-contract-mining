@@ -135,7 +135,7 @@ function PostScreen(props) {
             size="large"
             rounded
             containerStyle={styles.avatar}
-            icon={{ type: "material", name: "person" }}
+            // icon={{ type: "material", name: "person" }}
             source={{ uri: props.user_photo }}
           ></Avatar>
           <View>
@@ -162,7 +162,7 @@ function PostScreen(props) {
             size="large"
             rounded
             containerStyle={styles.avatar}
-            icon={{ type: "material", name: "person" }}
+            // icon={{ type: "material", name: "person" }}
             source={equipment || emptyimage}
           ></Avatar>
           <View>

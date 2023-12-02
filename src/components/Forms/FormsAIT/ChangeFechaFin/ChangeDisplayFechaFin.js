@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
-import { Input, Button } from "@rneui/themed";
-import { initialValues, validationSchema } from "./ChangeDisplayFechaFin.data";
-import { styles } from "./ChangeDisplayFechaFin.styles";
-import { MultiSelectExample } from "./MultiSelection";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 

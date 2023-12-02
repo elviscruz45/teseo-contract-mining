@@ -9,6 +9,7 @@ export function Modal(props) {
   return (
     <Overlay
       isVisible={show}
+      testID="modal-component"
       overlayStyle={styles.overlay}
       onBackdropPress={close}
     >

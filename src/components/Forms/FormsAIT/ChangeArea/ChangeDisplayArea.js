@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Input, Button } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import { styles } from "./ChangeDisplayArea.styles";
 import { SelectExample } from "./Selection";
 
@@ -16,6 +16,7 @@ export function ChangeDisplayArea(props) {
           title="Aceptar"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
+          testID="ChangeDisplayArea:Button"
           onPress={() => {
             setAreaservicio(text.toString());
             setArea(text.toString());

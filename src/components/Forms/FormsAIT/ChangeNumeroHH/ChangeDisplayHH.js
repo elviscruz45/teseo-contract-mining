@@ -11,14 +11,17 @@ export function ChangeDisplayHH(props) {
     <View>
       <View style={styles.content}>
         <Input
+          value={text}
+          testID="ChangeDisplayHH:Input"
           placeholder="Horas Hombre en Cotizacion"
           // editable={true}
           keyboardType="numeric"
           onChangeText={(text) => setText(text)}
-          errorMessage={formik.errors.NumeroAIT}
+          // errorMessage={formik.errors.NumeroAIT}
         />
         <Button
           title="Aceptar"
+          testID="ChangeDisplayHH:Button"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

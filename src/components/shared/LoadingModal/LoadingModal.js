@@ -10,7 +10,11 @@ export function LoadingModal(props) {
     <Overlay isVisible={show} overlayStyle={styles.overlay}>
       <View style={styles.view}>
         <ActivityIndicator size="large" color="#FA4A0C" />
-        {text && <Text style={styles.text}>{text}</Text>}
+        {text && (
+          <Text testID="loading-component" style={styles.text}>
+            {text}
+          </Text>
+        )}
       </View>
     </Overlay>
   );

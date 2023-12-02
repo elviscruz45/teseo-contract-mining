@@ -1,20 +1,5 @@
 import { MultipleSelectList } from "react-native-dropdown-select-list";
 import React, { useState, useEffect } from "react";
-import { View, Text, Linking, Button } from "react-native";
-import { getAuth, updateProfile } from "firebase/auth";
-import { db } from "../../../../utils";
-import {
-  collection,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  serverTimestamp,
-  arrayUnion,
-  arrayRemove,
-  setDoc,
-  deleteDoc,
-} from "firebase/firestore";
 import { connect } from "react-redux";
 
 const MultiSelectExampleBare = (props) => {
