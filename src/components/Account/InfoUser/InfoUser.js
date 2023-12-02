@@ -81,7 +81,6 @@ function InfoUser(props) {
           size="large"
           rounded
           containerStyle={styles.avatar}
-          // icon={{ type: "material", name: "person" }}
           source={{ uri: props.user_photo }}
         >
           <Avatar.Accessory size={24} onPress={changeAvatar} />
