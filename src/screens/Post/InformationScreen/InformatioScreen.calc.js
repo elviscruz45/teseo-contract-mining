@@ -63,9 +63,10 @@ export const useUserData = (email, saveTotalUsers) => {
           // Handle the error as needed
         }
       }
+      // Call the fetchData function when the component mounts
+
+      fetchData();
     }
-    // Call the fetchData function when the component mounts
-    fetchData();
   }, [email]);
 };
 

@@ -81,9 +81,9 @@ function AITNoReduxScreen(props) {
           // Handle the error as needed
         }
       }
+      // Call the fetchData function when the component mounts
+      fetchData();
     }
-    // Call the fetchData function when the component mounts
-    fetchData();
   }, [props.email]);
 
   // find Index of areaList array where there is the image of the area to render the icon Avatar

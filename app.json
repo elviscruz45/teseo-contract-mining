@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.elviscruz29.teseotracking"
     },
     "android": {
       "adaptiveIcon": {
