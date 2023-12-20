@@ -47,6 +47,7 @@ function TitleFormsBare(props) {
           }}
           rightIcon={{
             type: "material-community",
+            testID: "right-icon",
             name: "arrow-right-circle-outline",
             onPress: () => {
               if (props.actualServiceAIT.TipoServicio !== "Instalacion") {

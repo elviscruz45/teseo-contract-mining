@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Linking,
-  Button,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./GeneralForms.styles";
 import { Input } from "@rneui/themed";
@@ -22,7 +15,7 @@ import { ChangeDisplayVisibility } from "../../FormsGeneral/ChangeVisibility/Cha
 import { connect } from "react-redux";
 import { userTypeList } from "../../../../utils/userTypeList";
 
-export function GeneralFormsBare(props) {
+function GeneralFormsBare(props) {
   const { formik } = props;
   const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);

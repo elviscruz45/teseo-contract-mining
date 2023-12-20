@@ -79,11 +79,16 @@ function InfoUser(props) {
       <View style={styles.content}>
         <Avatar
           size="large"
+          testID="avatar"
           rounded
           containerStyle={styles.avatar}
           source={{ uri: props.user_photo }}
         >
-          <Avatar.Accessory size={24} onPress={changeAvatar} />
+          <Avatar.Accessory
+            testID="avatar-accessory"
+            size={24}
+            onPress={changeAvatar}
+          />
         </Avatar>
         <View>
           {props.profile?.displayNameform && (
@@ -121,6 +126,7 @@ function InfoUser(props) {
           onPress={() => goToApprovalScreen()}
         >
           <Image
+            testID="change-manpower-component"
             source={require("../../../../assets/bell1.png")}
             style={styles.roundImageUpload}
           />
@@ -130,7 +136,7 @@ function InfoUser(props) {
           <Text style={styles.bellNomber}>{approvalListPending.length}</Text>
         )}
       </View>
-      <Modal show={showModal} close={onCloseOpenModal}>
+      <Modal testID="modal" show={showModal} close={onCloseOpenModal}>
         {renderComponent}
       </Modal>
     </>

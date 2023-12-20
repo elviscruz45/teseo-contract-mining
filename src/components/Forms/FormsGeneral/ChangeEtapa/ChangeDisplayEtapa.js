@@ -28,7 +28,6 @@ export function ChangeDisplayEtapa(props) {
             }
             onClose();
           }}
-          // loading={formik2.isSubmitting}
         />
       </View>
     </View>

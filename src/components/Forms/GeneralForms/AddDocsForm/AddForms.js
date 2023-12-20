@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Linking,
-  Button,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, Text, Button } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./AddForms.styles";
 import { Input } from "@rneui/themed";
@@ -20,16 +13,7 @@ import { db } from "../../../../utils";
 import { screen } from "../../../../utils";
 import { v4 as uuidv4 } from "uuid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  onSnapshot,
-  orderBy,
-  arrayUnion,
-  query,
-} from "firebase/firestore";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 export function AddDocsFormBare(props) {
   const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);

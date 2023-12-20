@@ -23,7 +23,7 @@ export function ChangeDisplayTipoServicio(props) {
             formik.setFieldValue("TipoServicio", text.toString());
             onClose();
           }}
-          // loading={formik2.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

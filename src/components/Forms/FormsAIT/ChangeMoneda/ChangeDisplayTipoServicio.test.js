@@ -18,7 +18,7 @@ describe("ChangeDisplayMoneda", () => {
       />
     );
 
-    const aceptarButton = getByTestId("ChangeDisplayMoneda:Button");
+    const aceptarButton = getByTestId("ChangeDisplayMoneda:Button6");
     fireEvent.press(aceptarButton);
 
     expect(setMonedaMock).toHaveBeenCalled();

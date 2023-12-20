@@ -26,7 +26,7 @@ export function ChangeDisplaynumeroCot(props) {
             onClose();
             formik.setFieldValue("NumeroCotizacion", text.toString());
           }}
-          // loading={formik.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

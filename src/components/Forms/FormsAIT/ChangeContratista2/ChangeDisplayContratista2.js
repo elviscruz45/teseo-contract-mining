@@ -15,6 +15,7 @@ export function ChangeDisplayAdminContratista2(props) {
         <MultiSelectExample formik={formik} setText={setText} />
         <Button
           title="Aceptar"
+          testID="ChangeDisplayAdminContratista:Button2"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

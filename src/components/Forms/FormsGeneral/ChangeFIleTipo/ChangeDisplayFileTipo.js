@@ -21,7 +21,7 @@ export function ChangeDisplayFileTipo(props) {
             formik.setFieldValue("tipoFile", text.toString());
             onClose();
           }}
-          // loading={formik2.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

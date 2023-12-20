@@ -14,6 +14,7 @@ export function ChangeDisplayTitulo(props) {
         <SelectExample setText={setText} formik={formik} />
         <Button
           title="Aceptar"
+          testID="change-display-titulo"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
@@ -21,7 +22,7 @@ export function ChangeDisplayTitulo(props) {
             formik.setFieldValue("titulo", text.toString());
             onClose();
           }}
-          // loading={formik2.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

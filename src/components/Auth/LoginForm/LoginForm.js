@@ -44,7 +44,6 @@ function LoginForm(props) {
           });
         }
       } catch (error) {
-        alert("Usuario o Contraseña incorrecta");
         Toast.show({
           type: "error",
           position: "bottom",
@@ -57,6 +56,7 @@ function LoginForm(props) {
   return (
     <View style={styles.content}>
       <Input
+        value={formik.values.email}
         placeholder="Correo electronico"
         autoCapitalize="none"
         containerStyle={styles.input}
@@ -67,6 +67,7 @@ function LoginForm(props) {
         errorMessage={formik.errors.email}
       />
       <Input
+        value={formik.values.password}
         placeholder="Contraseña"
         containerStyle={styles.input}
         secureTextEntry={showPassword ? false : true}
@@ -83,6 +84,7 @@ function LoginForm(props) {
       />
       <Button
         title="Iniciar sesión"
+        testID="submitButton" // Add testID here
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
         onPress={formik.handleSubmit}

@@ -15,7 +15,7 @@ export function ChangeDisplayMoneda(props) {
         <SelectExample formik={formik} setText={setText} />
         <Button
           title="Aceptar"
-          testID="ChangeDisplayMoneda:Button"
+          testID="ChangeDisplayMoneda:Button6"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {

@@ -26,7 +26,7 @@ export function ChangeDisplayHH(props) {
             onClose();
             formik.setFieldValue("HHModificado", text.toString());
           }}
-          // loading={formik.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

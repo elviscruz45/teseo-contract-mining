@@ -1,14 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  where,
-  orderBy,
-  limit,
-  getDocs,
-} from "firebase/firestore";
+import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { styles } from "./HeaderScreen.styles";
 import { connect } from "react-redux";
 import { db } from "../../../utils";

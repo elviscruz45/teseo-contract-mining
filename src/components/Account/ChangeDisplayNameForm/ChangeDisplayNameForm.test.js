@@ -1,52 +1,110 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
+import { render, fireEvent, act } from "@testing-library/react-native";
 import { ConnectedChangeDisplayNameForm } from "./ChangeDisplayNameForm";
+import { getAuth, updateProfile } from "firebase/auth";
+import { Provider } from "react-redux";
+import { store } from "../../../../App";
 
-const mockStore = configureStore([]);
+jest.mock("firebase/auth", () => ({
+  getAuth: jest.fn(),
+  updateProfile: jest.fn(),
+}));
+jest.mock("firebase/app", () => ({
+  initializeApp: jest.fn(),
+}));
+jest.mock("firebase/analytics", () => ({
+  getAnalytics: jest.fn(),
+}));
+jest.mock("firebase/firestore", () => ({
+  getFirestore: jest.fn(),
+}));
+jest.mock("victory-native", () => ({
+  VictoryPie: jest.fn(() => null), // Mocked component returns null
+  VictoryLabel: jest.fn(() => null), // Mocked component returns null
+}));
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  removeItem: jest.fn(),
+}));
+
+jest.mock("firebase/storage", () => ({
+  getStorage: jest.fn(),
+  ref: jest.fn(),
+  uploadBytes: jest.fn(),
+  getDownloadURL: jest.fn(),
+}));
 
 describe("ChangeDisplayNameForm", () => {
-  let store;
-  let component;
-
-  beforeEach(() => {
-    store = mockStore({
-      profile: {
-        user_photo: "user_photo_url",
-        email: "test@example.com",
-        profile: {},
-        uid: "user_uid",
+  it("updates the display name and calls onClose when submitted", async () => {
+    const onCloseMock = jest.fn();
+    const updateProfileMock = jest.fn();
+    const getAuthMock = jest.fn(() => ({
+      currentUser: {
+        displayName: "Old Name",
       },
-    });
+    }));
 
-    component = (
+    updateProfile.mockImplementation(updateProfileMock);
+    getAuth.mockImplementation(getAuthMock);
+
+    const { getByTestId, getByText } = render(
       <Provider store={store}>
-        <ConnectedChangeDisplayNameForm onClose={jest.fn()} />
+        <ConnectedChangeDisplayNameForm onClose={onCloseMock} />
       </Provider>
     );
-  });
-
-  it("should update display name and submit form", async () => {
-    const { getByTestId } = render(component);
 
     const displayNameInput = getByTestId("displayNameform");
-    const cargoInput = getByTestId("cargo");
-    const descripcionInput = getByTestId("descripcion");
+    const cargo = getByTestId("cargo");
+    const descripcion = getByTestId("descripcion");
+
     const submitButton = getByTestId("submitButton");
 
-    fireEvent.changeText(displayNameInput, "John Doe");
-    fireEvent.changeText(cargoInput, "Software Engineer");
-    fireEvent.changeText(descripcionInput, "I love coding!");
-
-    fireEvent.press(submitButton);
-
-    await waitFor(() => {
-      expect(store.getActions()).toEqual([
-        // Add expected redux actions here
-      ]);
+    await act(async () => {
+      fireEvent.changeText(displayNameInput, "New Name");
+      fireEvent.changeText(cargo, "New Name");
+      fireEvent.changeText(descripcion, "New Name");
     });
+    await act(async () => {
+      fireEvent.press(submitButton);
+    });
+    expect(updateProfileMock).toHaveBeenCalledWith(getAuthMock().currentUser, {
+      displayName: "New Name",
+    });
+    //match that the cargo has the text New Name
+    expect(cargo.props.value).toBe("New Name");
+    expect(onCloseMock).toHaveBeenCalled();
   });
 
-  // Add more test cases as needed
+  it("displays an error toast when an error occurs", async () => {
+    const onCloseMock = jest.fn();
+    const updateProfileMock = jest.fn(() => {
+      throw new Error("Update failed");
+    });
+
+    updateProfile.mockImplementation(updateProfileMock);
+
+    const { getByTestId, getByText } = render(
+      <Provider store={store}>
+        <ConnectedChangeDisplayNameForm onClose={onCloseMock} />
+      </Provider>
+    );
+
+    const displayNameInput = getByTestId("displayNameform");
+    const cargo = getByTestId("cargo");
+    const descripcion = getByTestId("descripcion");
+
+    const submitButton = getByTestId("submitButton");
+    await act(async () => {
+      fireEvent.changeText(displayNameInput, "New Name");
+      fireEvent.changeText(cargo, "New Name");
+      fireEvent.changeText(descripcion, "New Name");
+    });
+    await act(async () => {
+      fireEvent.press(submitButton);
+    });
+
+    expect(updateProfileMock).toHaveBeenCalled();
+    expect(onCloseMock).toHaveBeenCalled();
+  });
 });

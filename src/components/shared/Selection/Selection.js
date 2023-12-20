@@ -1,6 +1,5 @@
 import { SelectList } from "react-native-dropdown-select-list";
 import React, { useState } from "react";
-import { Text } from "react-native";
 import { chancadoraSecundaria } from "../../../utils/componentsList";
 
 export const SelectExample = () => {
@@ -15,7 +14,6 @@ export const SelectExample = () => {
         save="value"
         maxHeight={500}
       />
-      {/* <Text testID="SelectExample">hola</Text> */}
     </>
   );
 };

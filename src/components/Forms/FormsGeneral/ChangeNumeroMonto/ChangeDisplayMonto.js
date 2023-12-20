@@ -26,7 +26,7 @@ export function ChangeDisplayMonto(props) {
             onClose();
             formik.setFieldValue("MontoModificado", text.toString());
           }}
-          // loading={formik.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

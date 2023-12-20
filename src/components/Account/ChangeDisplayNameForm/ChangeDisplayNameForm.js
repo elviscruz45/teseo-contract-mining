@@ -42,7 +42,11 @@ function ChangeDisplayNameForm(props) {
         await setDoc(docRef, newData);
         props.update_firebaseProfile(newData);
         props.update_firebaseUserName(newData.displayNameform);
-        onClose();
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "Nombre y apellidos actualizados",
+        });
       } catch (error) {
         Toast.show({
           type: "error",
@@ -50,57 +54,59 @@ function ChangeDisplayNameForm(props) {
           text1: "Error al cambiar el nombre y apellidos",
         });
       }
+      onClose();
     },
   });
 
   return (
     <>
-      <KeyboardAwareScrollView>
-        <Input
-          testID="displayNameform"
-          placeholder="Nombre y apellidos"
-          multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
-          onChangeText={(text) => formik.setFieldValue("displayNameform", text)}
-          // errorMessage={formik.errors.displayNameform}
-        />
-        <Input
-          testID="cargo"
-          placeholder="Escribe tu cargo"
-          multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
-          onChangeText={(text) => formik.setFieldValue("cargo", text)}
-          // errorMessage={formik.errors.cargo}
-        />
-        <Input
-          testID="descripcion"
-          placeholder="Descripcion"
-          multiline={true}
-          rightIcon={{
-            type: "material-community",
-            name: "account-circle-outline",
-            color: "#c2c2c2",
-          }}
-          onChangeText={(text) => formik.setFieldValue("descripcion", text)}
-          // errorMessage={formik.errors.displayName}
-        />
-        <Button
-          testID="submitButton"
-          title="Actualizar"
-          containerStyle={styles.btnContainer}
-          buttonStyle={styles.btn}
-          onPress={formik.handleSubmit}
-          loading={formik.isSubmitting}
-        />
-      </KeyboardAwareScrollView>
+      <Input
+        testID="displayNameform"
+        value={formik.values.displayNameform}
+        placeholder="Nombre y apellidos"
+        multiline={true}
+        rightIcon={{
+          type: "material-community",
+          name: "account-circle-outline",
+          color: "#c2c2c2",
+        }}
+        onChangeText={(text) => formik.setFieldValue("displayNameform", text)}
+        errorMessage={formik.errors.displayNameform}
+      />
+      <Input
+        testID="cargo"
+        value={formik.values.cargo}
+        placeholder="Escribe tu cargo"
+        multiline={true}
+        rightIcon={{
+          type: "material-community",
+          name: "account-circle-outline",
+          color: "#c2c2c2",
+        }}
+        onChangeText={(text) => formik.setFieldValue("cargo", text)}
+        errorMessage={formik.errors.cargo}
+      />
+      <Input
+        testID="descripcion"
+        value={formik.values.descripcion}
+        placeholder="Descripcion"
+        multiline={true}
+        rightIcon={{
+          type: "material-community",
+          name: "account-circle-outline",
+          color: "#c2c2c2",
+        }}
+        onChangeText={(text) => formik.setFieldValue("descripcion", text)}
+        errorMessage={formik.errors.descripcion}
+      />
+      <Button
+        testID="submitButton"
+        title="Actualizar"
+        containerStyle={styles.btnContainer}
+        buttonStyle={styles.btn}
+        onPress={formik.handleSubmit}
+        loading={formik.isSubmitting}
+      />
     </>
   );
 }

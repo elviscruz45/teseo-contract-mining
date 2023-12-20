@@ -19,16 +19,9 @@ export function ChangeDisplayVisibility(props) {
           onPress={() => {
             setVisibilidad(text.toString());
             formik.setFieldValue("visibilidad", text.toString());
-            // if (etapa !== "Contratista-Envio Cotizacion") {
-            //   setAprobadores(null);
-            // } else if (etapa !== "Contratista-Solicitud Ampliacion Servicio") {
-            //   setAprobadores(null);
-            // } else if (etapa !== "Contratista-Envio EDP") {
-            //   setAprobadores(null);
-            // }
             onClose();
           }}
-          // loading={formik2.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

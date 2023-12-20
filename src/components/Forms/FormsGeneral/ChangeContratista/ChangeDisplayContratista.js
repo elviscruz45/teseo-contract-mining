@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "@rneui/themed";
-import { useFormik } from "formik";
 import { styles } from "./ChangeDisplayContratista.styles";
 import { MultiSelectExample } from "./MultiSelection";
 

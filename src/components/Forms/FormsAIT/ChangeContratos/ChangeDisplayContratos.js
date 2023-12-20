@@ -7,7 +7,7 @@ import { MultiSelectExample } from "./MultiSelection";
 
 export function ChangeDisplayAdminContracts(props) {
   const { onClose, formik, setResponsableempresausuario } = props;
-  const [text, setText] = useState("");
+  const [text, setText] = useState([]);
 
   return (
     <View>
@@ -15,10 +15,11 @@ export function ChangeDisplayAdminContracts(props) {
         <MultiSelectExample formik={formik} setText={setText} />
         <Button
           title="Aceptar"
+          testID="accept-button"
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
-            setResponsableempresausuario(text.toString());
+            setResponsableempresausuario(text.join(","));
             formik.setFieldValue("ResponsableEmpresaUsuario", text.join(","));
 
             onClose();

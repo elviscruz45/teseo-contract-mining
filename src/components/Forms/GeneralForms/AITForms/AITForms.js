@@ -17,6 +17,7 @@ import { ChangeDisplayHH } from "../../FormsAIT/ChangeNumeroHH/ChangeDisplayHH";
 import { ChangeDisplayMoneda } from "../../FormsAIT/ChangeMoneda/ChangeDisplayTipoServicio";
 import { ChangeDisplayFechaFin } from "../../FormsAIT/ChangeFechaFin/ChangeDisplayFechaFin";
 import { ChangeDisplayFechaInicio } from "../../FormsAIT/ChangeFechaInicio/ChangeDisplayFechaInicio";
+
 export function AITForms(props) {
   const { formik, setTituloserv, setAit, setTiposerv, setArea } = props;
   const [renderComponent, setRenderComponent] = useState(null);
@@ -24,7 +25,7 @@ export function AITForms(props) {
   //state to render the header
 
   //state of displays
-  const [numeroAIT, setnumeroAIT] = useState(null);
+  // const [numeroAIT, setnumeroAIT] = useState(null);
   const [areaservicio, setAreaservicio] = useState(null);
   const [tiposervicio, setTiposervicio] = useState(null);
   const [responsableempresausuario, setResponsableempresausuario] =
@@ -236,6 +237,7 @@ export function AITForms(props) {
     <View>
       <View style={styles.content}>
         <Input
+          value={formik.values.NombreServicio}
           placeholder="Nombre del Servicio"
           onChangeText={(text) => {
             formik.setFieldValue("NombreServicio", text);
@@ -244,6 +246,7 @@ export function AITForms(props) {
           errorMessage={formik.errors.NombreServicio}
         />
         <Input
+          value={formik.values.NumeroAIT}
           placeholder="Numero Servicio"
           onChangeText={(text) => {
             formik.setFieldValue("NumeroAIT", text);
@@ -371,6 +374,7 @@ export function AITForms(props) {
           editable={false}
           errorMessage={formik.errors.FechaFin}
           rightIcon={{
+            testID: "right-icon-AreaServicio",
             type: "material-community",
             name: "arrow-right-circle-outline",
             onPress: () => selectComponent("FechaFin"),

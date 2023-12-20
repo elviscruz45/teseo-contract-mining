@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "@rneui/themed";
-import { useFormik } from "formik";
 import { styles } from "./ChangeDisplayContratos.styles";
 import { MultiSelectExample } from "./MultiSelection";
 
 export function ChangeDisplayAdminContracts3(props) {
   const { onClose, formik, setResponsableempresausuario3 } = props;
-  const [text, setText] = useState("");
+  const [text, setText] = useState([]);
 
   return (
     <View>
@@ -18,7 +17,7 @@ export function ChangeDisplayAdminContracts3(props) {
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
-            setResponsableempresausuario3(text.toString());
+            setResponsableempresausuario3(text.join(","));
             formik.setFieldValue("ResponsableEmpresaUsuario3", text.join(","));
 
             onClose();

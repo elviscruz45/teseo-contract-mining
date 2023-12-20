@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "@rneui/themed";
-import { useFormik } from "formik";
 import { styles } from "./ChangeDisplayAprobadores.styles";
 import { MultiSelectExample } from "./MultiSelection";
+import Toast from "react-native-toast-message";
 
 export function ChangeDisplayAprobadores(props) {
   const { onClose, formik, setAprobadores, etapa } = props;
-  const [text, setText] = useState("");
+  const [text, setText] = useState([]);
 
   return (
     <View>
@@ -24,11 +24,11 @@ export function ChangeDisplayAprobadores(props) {
               etapa === "Contratista-Envio EDP" ||
               etapa === "Contratista-Solicitud Aprobacion Doc"
             ) {
-              setAprobadores(text.toString());
+              setAprobadores(text.join(","));
               formik.setFieldValue("aprobacion", text.join(","));
               onClose();
             } else {
-              alert("No requiere Aprobacion");
+              // alert("No requiere Aprobacion");
               onClose();
             }
           }} // loading={formik2.isSubmitting}

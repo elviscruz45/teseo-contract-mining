@@ -23,7 +23,7 @@ export function ChangeDisplayMoneda(props) {
 
             onClose();
           }}
-          // loading={formik2.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

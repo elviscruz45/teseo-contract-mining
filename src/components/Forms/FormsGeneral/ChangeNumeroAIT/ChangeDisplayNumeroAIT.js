@@ -27,7 +27,7 @@ export function ChangeDisplaynumeroAIT(props) {
             onClose();
             formik.setFieldValue("NumeroAIT", text.toString());
           }}
-          // loading={formik.isSubmitting}
+          loading={formik.isSubmitting}
         />
       </View>
     </View>

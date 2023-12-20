@@ -1,7 +1,5 @@
 import { MultipleSelectList } from "react-native-dropdown-select-list";
 import React, { useState } from "react";
-import { View, Text, Linking, Button } from "react-native";
-import { getAuth, updateProfile } from "firebase/auth";
 
 export const MultiSelectExample = () => {
   const [selected, setSelected] = React.useState([]);
