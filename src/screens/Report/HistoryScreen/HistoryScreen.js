@@ -67,9 +67,11 @@ const HistoryScreenNoRedux = (props) => {
   const companyName = props.email?.match(regex)?.[1].toUpperCase() || "Anonimo"; // console.log("searchResults", searchResults);
 
   useEffect(() => {
-    setCompanyList([
-      ...new Set(props.servicesData.map((item) => item.companyName)),
-    ]);
+    if (Array.isArray(props.servicesData)) {
+      setCompanyList([
+        ...new Set(props.servicesData.map((item) => item.companyName)),
+      ]);
+    }
   }, []);
 
   useEffect(() => {

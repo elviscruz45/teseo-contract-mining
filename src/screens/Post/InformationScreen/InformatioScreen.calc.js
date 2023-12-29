@@ -1,21 +1,8 @@
-import React, { useState } from "react";
-
 import { v4 as uuidv4 } from "uuid";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  arrayUnion,
-  query,
-  where,
-  getDocs,
-  orderBy,
-} from "firebase/firestore";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils";
-import { screen } from "../../../utils";
-import { useNavigation } from "@react-navigation/native";
+
 import { useEffect } from "react";
 
 export const useUserData = (email, saveTotalUsers) => {

@@ -59,7 +59,10 @@ function DocstoApproveScreenBare(props) {
 
   //create the algoritm to have the date format of the post
   const formatDate = (dateInput) => {
-    const { seconds, nanoseconds } = dateInput;
+    const { seconds, nanoseconds } = dateInput || {
+      seconds: 0,
+      nanoseconds: 0,
+    };
     const milliseconds = seconds * 1000 + nanoseconds / 1000000;
     const date = new Date(milliseconds);
     const monthNames = [
@@ -85,6 +88,35 @@ function DocstoApproveScreenBare(props) {
     return formattedDate;
   };
 
+  // const formatDate = (dateInput) => {
+  //   if (dateInput && "seconds" in dateInput && "nanoseconds" in dateInput) {
+  //     const { seconds, nanoseconds } = dateInput;
+  //     const milliseconds = seconds * 1000 + nanoseconds / 1000000;
+  //     const date = new Date(milliseconds);
+  //     const monthNames = [
+  //       "ene.",
+  //       "feb.",
+  //       "mar.",
+  //       "abr.",
+  //       "may.",
+  //       "jun.",
+  //       "jul.",
+  //       "ago.",
+  //       "sep.",
+  //       "oct.",
+  //       "nov.",
+  //       "dic.",
+  //     ];
+  //     const day = date.getDate();
+  //     const month = monthNames[date.getMonth()];
+  //     const year = date.getFullYear();
+  //     const hour = date.getHours();
+  //     const minute = date.getMinutes();
+  //     const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
+  //     return formattedDate;
+  //   }
+  //   return null;
+  // };
   useEffect(() => {
     let ApprovalList = props.approvalListNew;
     const filteredArray = ApprovalList.filter(
@@ -274,22 +306,25 @@ function DocstoApproveScreenBare(props) {
       scrollEnabled={true}
       showsVerticalScrollIndicator={false}
       renderItem={({ item }) => {
-        const approvalRequestedLength = item.ApprovalRequestSentTo.length;
-        const approvalPerformedLength = item.ApprovalPerformed.length;
+        const approvalRequestedLength = item.ApprovalRequestSentTo?.length;
+        const approvalPerformedLength = item.ApprovalPerformed?.length;
         const emailUser = props.email;
 
         //reviewing the conditionals
         const isIncludedapprovalRequested =
-          item.ApprovalRequestSentTo.includes(emailUser);
+          item.ApprovalRequestSentTo?.includes(emailUser);
         const isIncludedapprovalPerformed =
-          item.ApprovalPerformed.includes(emailUser);
+          item.ApprovalPerformed?.includes(emailUser);
         const isIncludedRectionPerformed =
-          item.RejectionPerformed.includes(emailUser);
+          item.RejectionPerformed?.includes(emailUser);
         const idApproval = item.idApproval;
 
         //id format date
         const formatDateSol = formatDate(item.date);
-        const { seconds, nanoseconds } = item.date;
+        const { seconds, nanoseconds } = item.date || {
+          seconds: 0,
+          nanoseconds: 0,
+        };
         let idTime =
           item.idTimeApproval ??
           ((seconds * 1000 + nanoseconds / 1000000) / 1000).toFixed(0);
@@ -388,24 +423,24 @@ function DocstoApproveScreenBare(props) {
                   <View style={[styles.row, styles.center]}>
                     <Text style={styles.info}>{"Req:         "}</Text>
                     <Text style={styles.info2}>
-                      {item.ApprovalRequestSentTo.join(", ")}
+                      {item.ApprovalRequestSentTo?.join(", ")}
                     </Text>
                   </View>
 
-                  {item.ApprovalPerformed.length !== 0 && (
+                  {item.ApprovalPerformed?.length !== 0 && (
                     <View style={[styles.row, styles.center]}>
                       <Text style={styles.info}>{"Aprob:     "}</Text>
                       <Text style={styles.info2}>
-                        {item.ApprovalPerformed.join(", ")}
+                        {item.ApprovalPerformed?.join(", ")}
                       </Text>
                     </View>
                   )}
 
-                  {item.RejectionPerformed.length !== 0 && (
+                  {item.RejectionPerformed?.length !== 0 && (
                     <View style={[styles.row, styles.center]}>
                       <Text style={styles.info5}>{"Desap:     "}</Text>
                       <Text style={styles.info6}>
-                        {item.RejectionPerformed.join(", ")}
+                        {item.RejectionPerformed?.join(", ")}
                       </Text>
                     </View>
                   )}

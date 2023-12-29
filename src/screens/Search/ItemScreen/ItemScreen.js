@@ -1,33 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Linking,
-  ScrollView,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { styles } from "./ItemScreen.styles";
 import { useNavigation } from "@react-navigation/native";
-import {
-  collection,
-  onSnapshot,
-  doc,
-  updateDoc,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  limit,
-} from "firebase/firestore";
-import { equipmentList } from "../../../utils/equipmentList";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../../utils";
 import { screen } from "../../../utils";
-import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualServiceAIT } from "../../../actions/post";
 import { EquipmentListUpper } from "../../../actions/home";
-import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
 import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";

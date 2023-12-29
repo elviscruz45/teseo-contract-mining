@@ -3,7 +3,6 @@ import { Text, View, FlatList, TouchableOpacity, Linking } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@rneui/themed";
 import { styles } from "./HomeScreen.styles";
-import { equipmentList } from "../../../utils/equipmentList";
 import {
   collection,
   onSnapshot,
@@ -27,7 +26,7 @@ import { areaLists } from "../../../utils/areaList";
 import { resetPostPerPageHome } from "../../../actions/home";
 import { saveApprovalListnew } from "../../../actions/search";
 import { updateAITServicesDATA } from "../../../actions/home";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen(props) {
   const [posts, setPosts] = useState([]);

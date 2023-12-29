@@ -31,7 +31,10 @@ function ApprovalScreenBare(props) {
   const navigation = useNavigation();
   //create the algoritm to have the date format of the post
   const formatDate = (dateInput) => {
-    const { seconds, nanoseconds } = dateInput;
+    const { seconds, nanoseconds } = dateInput || {
+      seconds: 0,
+      nanoseconds: 0,
+    };
     const milliseconds = seconds * 1000 + nanoseconds / 1000000;
     const date = new Date(milliseconds);
     const monthNames = [

@@ -33,10 +33,17 @@ function PostScreen(props) {
   //retrieving serviceAIT list data from firebase
   useEffect(() => {
     let servicesList = props.servicesData;
-    servicesList?.sort((a, b) => {
-      return b.createdAt - a.createdAt;
-    });
-    setPosts(servicesList);
+    // servicesList?.sort((a, b) => {
+    //   return b.createdAt - a.createdAt;
+    // });
+    // setPosts(servicesList);
+
+    if (Array.isArray(servicesList)) {
+      servicesList.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      });
+      setPosts(servicesList);
+    }
   }, [props.servicesData]);
 
   //This is used to retrieve the servicies AIT we are looking for

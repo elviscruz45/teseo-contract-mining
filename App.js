@@ -12,10 +12,11 @@ import { ConnectedLoginNavigator } from "./src/navigation/LoginNavigator";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 
-LogBox.ignoreAllLogs();
+// LogBox.ignoreAllLogs();
 
-const composedEnhancers = compose(applyMiddleware(reduxThunk));
-const store = createStore(rootReducers, {}, composedEnhancers);
+const middleware = [reduxThunk];
+const composedEnhancers = compose(applyMiddleware(...middleware));
+export const store = createStore(rootReducers, {}, composedEnhancers);
 export default function App() {
   return (
     <>
@@ -29,5 +30,3 @@ export default function App() {
     </>
   );
 }
-
-export { store };

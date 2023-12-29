@@ -27,9 +27,3 @@ export function profile(state = INITIAL_STATE, action) {
       return state;
   }
 }
-
-// export const update_approvalQuantity = (firebase_uid) => (dispatch) => {
-//   dispatch({
-//     type: "UPDATE_APPROVALQUANTITY",
-//     payload: firebase_uid,
-//   })}

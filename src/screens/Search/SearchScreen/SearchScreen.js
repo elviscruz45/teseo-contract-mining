@@ -1,24 +1,16 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./SearchScreen.styles";
 import { SearchBar, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { screen } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
-import { db } from "../../../utils";
 import { connect } from "react-redux";
 import { EquipmentListUpper } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
 
-const windowWidth = Dimensions.get("window").width;
 function SearchScreenNoRedux(props) {
+  console.log("searchResults");
   let AITServiceList;
   const [data, setData] = useState(null);
   const [searchText, setSearchText] = useState("");
@@ -35,17 +27,24 @@ function SearchScreenNoRedux(props) {
 
   if (!data && !searchResults) {
     setData(props.servicesData);
-    setSearchResults(props.servicesData.slice(0, 100));
+    setSearchResults(props.servicesData?.slice(0, 100));
   }
 
   //This is used to retrieve the equipment we are searching for
   useEffect(() => {
     AITServiceList = props.servicesData;
-    let AITServiceListSorted = AITServiceList?.sort((a, b) => {
-      return b.createdAt - a.createdAt;
-    });
-    setData(AITServiceListSorted);
-    setSearchResults(AITServiceListSorted.slice(0, 100));
+    if (Array.isArray(AITServiceList)) {
+      let AITServiceListSorted = AITServiceList.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      });
+      setData(AITServiceListSorted);
+      setSearchResults(AITServiceListSorted?.slice(0, 100));
+    }
+    // let AITServiceListSorted = AITServiceList?.sort((a, b) => {
+    //   return b.createdAt - a.createdAt;
+    // });
+    // setData(AITServiceListSorted);
+    // setSearchResults(AITServiceListSorted?.slice(0, 100));
   }, [props.servicesData]);
 
   useEffect(() => {

@@ -11,15 +11,10 @@ import { saveActualPostFirebase } from "../../../actions/post";
 import { useFormik } from "formik";
 import { db } from "../../../utils";
 import {
-  addDoc,
   collection,
-  onSnapshot,
   query,
   doc,
   updateDoc,
-  arrayUnion,
-  arrayRemove,
-  limit,
   where,
   orderBy,
   getDocs,

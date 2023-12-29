@@ -53,10 +53,21 @@ const ReportScreenNoRedux = (props) => {
   const regex = /@(.+?)\./i;
   const companyName = props.email?.match(regex)?.[1].toUpperCase() || "Anonimo"; // console.log("searchResults", searchResults);
 
+  // useEffect(() => {
+  //   setCompanyList([
+  //     ...new Set(props.servicesData.map((item) => item.companyName)),
+  //   ]);
+  //   if (companyName !== "FMI") {
+  //     setCompany(companyName);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    setCompanyList([
-      ...new Set(props.servicesData.map((item) => item.companyName)),
-    ]);
+    if (Array.isArray(props.servicesData)) {
+      setCompanyList([
+        ...new Set(props.servicesData.map((item) => item.companyName)),
+      ]);
+    }
     if (companyName !== "FMI") {
       setCompany(companyName);
     }
@@ -66,7 +77,14 @@ const ReportScreenNoRedux = (props) => {
     if (props.servicesData && company === "TOTAL CONTRATISTAS") {
       setData(props.servicesData);
     }
-    if (company !== "TOTAL CONTRATISTAS") {
+    // if (company !== "TOTAL CONTRATISTAS") {
+    //   setData(
+    //     props.servicesData.filter(
+    //       (item) => item.companyName?.toUpperCase() === company
+    //     )
+    //   );
+    // }
+    if (company !== "TOTAL CONTRATISTAS" && Array.isArray(props.servicesData)) {
       setData(
         props.servicesData.filter(
           (item) => item.companyName?.toUpperCase() === company

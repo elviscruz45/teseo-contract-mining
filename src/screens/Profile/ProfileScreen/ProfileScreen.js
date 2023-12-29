@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Linking,
-  FlatList,
-  Text,
-  Image,
-} from "react-native";
-import { Button, Icon } from "@rneui/themed";
+import { View, TouchableOpacity, FlatList, Text } from "react-native";
+import { Button } from "@rneui/themed";
 import { getAuth, signOut } from "firebase/auth";
 import { ConnectedInfoUser } from "../../../components/Account";
 import { styles } from "./ProfileScreen.styles";
@@ -16,14 +9,7 @@ import { update_firebaseUserUid } from "../../../actions/auth";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
 import { update_firebaseProfile } from "../../../actions/profile";
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  limit,
-} from "firebase/firestore";
+import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 import { useNavigation } from "@react-navigation/native";

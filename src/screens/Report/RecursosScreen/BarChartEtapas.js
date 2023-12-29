@@ -27,14 +27,6 @@ export const BarChartExample = () => {
         domainPadding={{ x: 25 }} // Adjust the padding between the bars and the edges of the chart
         containerComponent={<VictoryContainer />} // Use VictoryContainer for tooltips
       >
-        {/* Hide both X-axis and Y-axis */}
-        {/* <VictoryAxis
-          style={{
-            axis: { stroke: "blue" },
-            tickLabels: { fill: "black" },
-            grid: { stroke: "transparent" },
-          }}
-        /> */}
         <VictoryBar
           data={data}
           x="label"

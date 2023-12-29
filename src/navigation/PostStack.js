@@ -6,11 +6,12 @@ import { styles } from "./Navigation.styles";
 import { ConnectedPostScreen } from "../screens";
 import { ConnectedCameraScreen } from "../screens";
 import { ConnectedInformationScreen } from "../screens";
+import { AITScreen } from "../screens/Post/AITScreen";
+
 import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
-import { AITScreen } from "../screens/Post/AITScreen";
 
 function PostStackBare(props) {
   const Stack = createNativeStackNavigator();

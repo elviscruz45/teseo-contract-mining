@@ -5,22 +5,14 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
-  Image,
-  Pressable,
-  Linking,
 } from "react-native";
 import { Image as ImageExpo } from "expo-image";
 import { styles } from "./MoreDetailScreen.styles";
-import { SearchBar, Icon, Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { equipmentList } from "../../../utils/equipmentList";
-import { db } from "../../../utils";
 import { screen } from "../../../utils";
-import { getExcelEquipo } from "../../../utils/excelData";
 import { connect } from "react-redux";
 import { saveActualEquipment } from "../../../actions/post";
 import { EquipmentListUpper } from "../../../actions/home";
-import { DateScreen } from "../../../components/Post/DateScreen/DateScreen";
 import { areaLists } from "../../../utils/areaList";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -101,16 +93,16 @@ function MoreDetailScreenNoRedux(props) {
   //Algoritm to calculate  "Avance Ejecucion Proyectado"
   const ActualDate = new Date();
   const DaysProyectedToCompleteTask =
-    NuevaFechaEstimadatoCalculate - new Date(Item.createdAt.seconds * 1000);
+    NuevaFechaEstimadatoCalculate - new Date(Item.createdAt?.seconds * 1000);
   let AvanceProyected;
 
   if (!Item?.FechaInicio) {
     AvanceProyected =
-      ((ActualDate - new Date(Item.createdAt.seconds * 1000)) * 100) /
+      ((ActualDate - new Date(Item.createdAt?.seconds * 1000)) * 100) /
       DaysProyectedToCompleteTask;
   } else {
     AvanceProyected =
-      ((ActualDate - new Date(Item.FechaInicio.seconds * 1000)) * 100) /
+      ((ActualDate - new Date(Item.FechaInicio?.seconds * 1000)) * 100) /
       DaysProyectedToCompleteTask;
   }
 
@@ -283,17 +275,6 @@ function MoreDetailScreenNoRedux(props) {
         </View>
 
         {BarProgress(AvanceProyected)}
-        {/* 
-        <View style={[styles.row, styles.center]}>
-          <Text style={styles.info}>{"Avance Administrativo:  "}</Text>
-          <Text style={styles.info2}>
-            {Item.AvanceAdministrativo}
-            {" %"}
-          </Text>
-        </View>
-
-        {BarProgress(Item.AvanceAdministrativo)} */}
-
         <Text></Text>
 
         <Text style={styles.info}>

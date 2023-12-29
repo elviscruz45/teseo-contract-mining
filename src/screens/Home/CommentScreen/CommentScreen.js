@@ -158,6 +158,7 @@ function CommentScreen(props) {
               fontWeight: "700",
               textAlign: "center",
               // alignSelf: "center",
+
               fontSize: 20,
               paddingHorizontal: 30,
             }}

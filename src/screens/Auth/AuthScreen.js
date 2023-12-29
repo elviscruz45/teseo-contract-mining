@@ -2,14 +2,11 @@ import React from "react";
 import { Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "./AuthScreen.styles";
-import { useNavigation } from "@react-navigation/native";
 import { ConnectedLoginForm } from "../../components/Auth";
 import { Image as ImageExpo } from "expo-image";
 import { Linking } from "react-native";
 
 export function AuthScreen(props) {
-  const navigation = useNavigation();
-
   const goToRegister = () => {
     Linking.openURL("https://www.teseosoftwarecompany.com/"); // to register a new user , it show to get in touch with a personel from Teseo
   };
@@ -18,6 +15,7 @@ export function AuthScreen(props) {
     <KeyboardAwareScrollView>
       <View style={styles.image}>
         <ImageExpo
+          testID="image"
           source={require("../../../assets/appTeseoLogol.png")}
           style={{ width: 60, height: 70 }}
           cachePolicy={"memory-disk"}
