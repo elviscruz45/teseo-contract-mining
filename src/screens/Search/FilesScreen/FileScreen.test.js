@@ -123,6 +123,5 @@ describe("AITNoReduxScreen", () => {
         <FileScreen route={route} />
       </Provider>
     );
-    screen.debug();
   });
 });

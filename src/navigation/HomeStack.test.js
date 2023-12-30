@@ -113,9 +113,5 @@ describe("HomeStack", () => {
         </Provider>
       </NavigationContainer>
     );
-    screen.debug();
-
-    // fireEvent.press(getByTestId("home-button"));
-    // expect(navigate).toHaveBeenCalledWith("Home");
   });
 });

@@ -106,6 +106,5 @@ describe("AITNoReduxScreen", () => {
         <HistoryScreen />
       </Provider>
     );
-    screen.debug();
   });
 });

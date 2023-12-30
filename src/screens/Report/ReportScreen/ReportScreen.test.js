@@ -106,6 +106,5 @@ describe("AITNoReduxScreen", () => {
         <ReportScreen />
       </Provider>
     );
-    screen.debug();
   });
 });

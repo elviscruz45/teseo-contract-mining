@@ -123,6 +123,5 @@ describe("AITNoReduxScreen", () => {
         <EditAITScreen route={route} />
       </Provider>
     );
-    screen.debug();
   });
 });

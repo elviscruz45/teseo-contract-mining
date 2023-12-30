@@ -106,6 +106,5 @@ describe("AITNoReduxScreen", () => {
         <ConnectedProfileScreen />
       </Provider>
     );
-    screen.debug();
   });
 });

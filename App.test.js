@@ -34,7 +34,5 @@ jest.mock("react-native-toast-message", () => () => <text>Toast</text>);
 describe("App", () => {
   it("renders correctly", () => {
     const { getByText } = render(<App />);
-    screen.debug();
-    // expect(getByText("StatusBar")).toBeInTheDocument();
   });
 });

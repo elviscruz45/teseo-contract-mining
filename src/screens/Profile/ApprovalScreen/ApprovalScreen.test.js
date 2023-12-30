@@ -106,6 +106,5 @@ describe("AITNoReduxScreen", () => {
         <ApprovalScreen />
       </Provider>
     );
-    screen.debug();
   });
 });

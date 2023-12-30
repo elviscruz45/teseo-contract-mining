@@ -123,6 +123,5 @@ describe("AITNoReduxScreen", () => {
         <MoreDetailScreen route={route} />
       </Provider>
     );
-    screen.debug();
   });
 });

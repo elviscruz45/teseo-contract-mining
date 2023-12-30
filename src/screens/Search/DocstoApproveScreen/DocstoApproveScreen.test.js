@@ -123,6 +123,5 @@ describe("AITNoReduxScreen", () => {
         <DocstoApproveScreen route={route} />
       </Provider>
     );
-    screen.debug();
   });
 });

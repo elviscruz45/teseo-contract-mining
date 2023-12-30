@@ -43,6 +43,7 @@ jest.mock("firebase/storage", () => ({
 jest.mock("@react-navigation/native", () => ({
   useNavigation: jest.fn(() => ({ navigate: jest.fn() })),
 }));
+
 describe("ChangeManPowerBare", () => {
   it("renders correctly", () => {
     const onCloseMock = jest.fn();

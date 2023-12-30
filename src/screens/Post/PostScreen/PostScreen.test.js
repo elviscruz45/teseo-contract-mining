@@ -100,6 +100,5 @@ describe("AITNoReduxScreen", () => {
         <ConnectedPostScreen />
       </Provider>
     );
-    screen.debug();
   });
 });

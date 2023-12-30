@@ -93,13 +93,5 @@ describe("AITNoReduxScreen", () => {
         <ConnectedCameraScreen />
       </Provider>
     );
-    screen.debug();
-
-    // // Add your assertions here to verify that the component is rendered correctly
-    // expect(screen.getByText("Titulo del servicio")).toBeInTheDocument();
-    // expect(screen.getByText("AIT:")).toBeInTheDocument();
-    // expect(screen.getByText("Tipo Servicio:")).toBeInTheDocument();
-    // expect(screen.getByText("Area:")).toBeInTheDocument();
-    // // ...
   });
 });

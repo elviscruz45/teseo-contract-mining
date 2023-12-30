@@ -123,6 +123,5 @@ describe("AITNoReduxScreen", () => {
         <ItemScreen route={route} />
       </Provider>
     );
-    screen.debug();
   });
 });

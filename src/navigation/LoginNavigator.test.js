@@ -38,25 +38,11 @@ describe("ConnectedLoginNavigator", () => {
       },
     });
     // Dispatch the SET_EMAIL action to set the email state to "test-email"
-    // mockStore.dispatch({ type: "SET_EMAIL", email: "test-email" });
+    mockStore.dispatch({ type: "SET_EMAIL", email: "test-email" });
     render(
       <Provider store={mockStore}>
         <ConnectedLoginNavigator />
       </Provider>
     );
-    screen.debug();
-    // expect(screen.getByTestId("app-navigation")).toBeInTheDocument();
-    // expect(screen.queryByTestId("auth-screen")).not.toBeInTheDocument();
   });
 });
-
-// test("renders AuthScreen when firebase_user_uid is not in state", () => {
-//   render(
-//     <Provider store={store}>
-//       <ConnectedLoginNavigator firebase_user_uid={null} />
-//     </Provider>
-//   );
-
-//   expect(screen.getByTestId("auth-screen")).toBeInTheDocument();
-//   expect(screen.queryByTestId("app-navigation")).not.toBeInTheDocument();
-// });

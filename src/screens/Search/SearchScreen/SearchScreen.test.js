@@ -123,6 +123,5 @@ describe("AITNoReduxScreen", () => {
         <SearchScreen route={route} />
       </Provider>
     );
-    screen.debug();
   });
 });

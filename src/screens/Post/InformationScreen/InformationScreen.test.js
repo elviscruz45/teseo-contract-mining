@@ -97,48 +97,5 @@ describe("AITNoReduxScreen", () => {
         <ConnectedInformationScreen />
       </Provider>
     );
-    screen.debug();
   });
 });
-
-// // Add your assertions here to verify that the component is rendered correctly
-// expect(screen.getByText("Titulo del servicio")).toBeInTheDocument();
-// expect(screen.getByText("AIT:")).toBeInTheDocument();
-// expect(screen.getByText("Tipo Servicio:")).toBeInTheDocument();
-// expect(screen.getByText("Area:")).toBeInTheDocument();
-// // ...
-
-// it("should submit the form successfully", async () => {
-//   // Mock the necessary dependencies and setup initial state
-//   const mockNavigation = { navigate: jest.fn() };
-//   const mockAddDoc = jest.fn(() => Promise.resolve({ id: "test-id" }));
-//   const mockUpdateDoc = jest.fn();
-//   const mockCollection = jest.fn(() => ({
-//     addDoc: mockAddDoc,
-//   }));
-//   const mockDb = {
-//     collection: mockCollection,
-//     updateDoc: mockUpdateDoc,
-//   };
-
-//   render(
-//     <AITNoReduxScreen
-//       email="test@example.com"
-//       firebase_user_name="Test User"
-//       navigation={mockNavigation}
-//       db={mockDb}
-//     />
-//   );
-
-//   // Simulate user interaction and submit the form
-//   // ...
-
-//   // Wait for the form submission to complete
-//   await waitFor(() => {
-//     // Add your assertions here to verify the expected behavior after form submission
-//     expect(mockAddDoc).toHaveBeenCalledTimes(1);
-//     expect(mockUpdateDoc).toHaveBeenCalledTimes(1);
-//     expect(mockNavigation.navigate).toHaveBeenCalledWith("post");
-//     // ...
-//   });
-// });
