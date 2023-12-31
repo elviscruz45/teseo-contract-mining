@@ -14,6 +14,7 @@ import { ChangeDisplayFileTipo } from "../../FormsGeneral/ChangeFIleTipo/ChangeD
 import { ChangeDisplayVisibility } from "../../FormsGeneral/ChangeVisibility/ChangeDisplayVisibility";
 import { connect } from "react-redux";
 import { userTypeList } from "../../../../utils/userTypeList";
+import Toast from "react-native-toast-message";
 
 function GeneralFormsBare(props) {
   const { formik } = props;
@@ -55,7 +56,11 @@ function GeneralFormsBare(props) {
         setPickedDocument(null);
       }
     } catch (err) {
-      alert("Error picking document", err);
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Error al adjuntar el documento",
+      });
     }
   };
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
@@ -178,9 +183,12 @@ function GeneralFormsBare(props) {
     if (props.profile?.userType === userTypeList.manager) {
       setAditional(true);
     } else {
-      alert(
-        "Solicitar Autorizacion al Gerente de Proyecto para Modificar El Monto, Fecha Estimada y Horas Hombre"
-      );
+      Toast.show({
+        type: "success",
+        position: "bottom",
+        text1:
+          "Solicitar Autorizacion al Gerente de Proyecto para Modificar El Monto, Fecha Estimada y Horas Hombre",
+      });
     }
   };
 

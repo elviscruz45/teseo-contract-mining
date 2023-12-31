@@ -135,7 +135,6 @@ function HomeScreen(props) {
       if (supported) {
         await Linking.openURL(uri);
       } else {
-        // alert("Unable to open PDF document");
         Toast.show({
           type: "error",
           position: "top",
@@ -143,7 +142,6 @@ function HomeScreen(props) {
         });
       }
     } catch (error) {
-      // alert("Error opening PDF document", error);
       Toast.show({
         type: "error",
         position: "top",

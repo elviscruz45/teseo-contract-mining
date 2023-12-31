@@ -38,7 +38,6 @@ function LoginForm(props) {
         if (docSnap.exists()) {
           props.update_firebaseProfile(docSnap.data());
         } else {
-          // alert("Actualice sus datos en el perfil para comenzar");
           Toast.show({
             type: "error",
             position: "bottom",

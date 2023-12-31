@@ -29,6 +29,9 @@ import {
   uploadPdf,
   uploadImage,
 } from "./InformatioScreen.calc";
+import { Image as ImageExpo } from "expo-image";
+
+import Toast from "react-native-toast-message";
 function InformationScreen(props) {
   const navigation = useNavigation();
 
@@ -199,7 +202,7 @@ function InformationScreen(props) {
             tipoFile: newData.tipoFile,
             email: props.email,
             fecha: new Date(),
-            fechaPostFormato: formattedDate,
+            fechaPostFormato: dateFormat(),
             pdfFile: newData.pdfFile,
           };
           updateDataLasEventPost.pdfFile = arrayUnion(file);
@@ -211,9 +214,17 @@ function InformationScreen(props) {
         navigation.navigate(screen.home.tab, {
           screen: screen.home.home,
         });
-        alert("El evento se ha subido correctamente");
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "El evento se ha subido correctamente",
+        });
       } catch (error) {
-        alert(error);
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al tratar de subir estos datos",
+        });
       }
     },
   });
@@ -229,21 +240,17 @@ function InformationScreen(props) {
     >
       <View style={styles.equipments}>
         {props.actualServiceAIT?.photoServiceURL ? (
-          <Avatar
-            size="large"
-            rounded
-            containerStyle={styles.avatar}
-            // icon={{ type: "material", name: "person" }}
+          <ImageExpo
             source={{ uri: props.actualServiceAIT?.photoServiceURL }}
-          ></Avatar>
+            style={styles.roundImage}
+            cachePolicy={"memory-disk"}
+          />
         ) : (
-          <Avatar
-            size="large"
-            rounded
-            containerStyle={styles.avatar}
-            // icon={{ type: "material", name: "person" }}
+          <ImageExpo
             source={imageSource}
-          ></Avatar>
+            style={styles.roundImage}
+            cachePolicy={"memory-disk"}
+          />
         )}
 
         <View>

@@ -48,6 +48,8 @@ function HomeStack(props) {
       <Stack.Navigator
         screenOptions={{
           headerShown: true,
+          headerTitleAlign: "center",
+
           headerTitle: () => (
             <TouchableOpacity onPress={() => home_screen()}>
               <Image

@@ -23,6 +23,8 @@ export function ProfileStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
+        headerTitleAlign: "center",
+
         headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image

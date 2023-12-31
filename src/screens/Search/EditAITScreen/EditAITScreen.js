@@ -22,6 +22,7 @@ import {
 import { AITForms } from "../../../components/Forms/GeneralForms/AITForms/AITForms";
 import { areaLists } from "../../../utils/areaList";
 import { saveTotalUsers } from "../../../actions/post";
+import Toast from "react-native-toast-message";
 
 function EditAITNoReduxScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
@@ -167,9 +168,17 @@ function EditAITNoReduxScreen(props) {
         navigation.navigate(screen.search.search);
         navigation.navigate(screen.home.home);
 
-        alert("Se ha Actualizado correctamente");
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "Se ha Actualizado correctamente",
+        });
       } catch (error) {
-        alert(error);
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al tratar de subir estos datos",
+        });
       }
     },
   });

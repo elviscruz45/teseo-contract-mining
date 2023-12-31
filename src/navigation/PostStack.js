@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
+import { Platform } from "react-native";
 
 function PostStackBare(props) {
   const Stack = createNativeStackNavigator();
@@ -33,6 +34,8 @@ function PostStackBare(props) {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
+        headerTitleAlign: "center",
+
         headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
@@ -73,14 +76,30 @@ function PostStackBare(props) {
           headerShown: true,
           headerBackTitle: "Home",
           headerTintColor: "black",
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate(screen.post.post)}
-              style={{ marginLeft: -12 }}
-            >
-              <AntDesign name="left" size={24} color="black" />
-            </TouchableOpacity>
-          ),
+          headerBackTitleVisible: false, // This hides the default back button
+
+          headerBackImage: () =>
+            Platform.OS === "ios" ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate(screen.post.post)}
+                style={{ marginLeft: -12 }}
+              >
+                <AntDesign name="left" size={24} color="black" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: screen.search.search }],
+                  })
+                }
+                // onPress={() => navigation.navigate(screen.search.search)}
+                style={{ marginLeft: -55 }}
+              >
+                <AntDesign name="arrowleft" size={24} color="black" />
+              </TouchableOpacity>
+            ),
         }}
       />
       <Stack.Screen

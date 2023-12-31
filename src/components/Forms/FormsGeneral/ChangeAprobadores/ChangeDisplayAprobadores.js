@@ -28,7 +28,11 @@ export function ChangeDisplayAprobadores(props) {
               formik.setFieldValue("aprobacion", text.join(","));
               onClose();
             } else {
-              // alert("No requiere Aprobacion");
+              Toast.show({
+                type: "error",
+                position: "bottom",
+                text1: "No requiere Aprobacion",
+              });
               onClose();
             }
           }} // loading={formik2.isSubmitting}

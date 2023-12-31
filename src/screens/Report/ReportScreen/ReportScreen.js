@@ -332,13 +332,7 @@ const ReportScreenNoRedux = (props) => {
           {comprometido && <MontoComprometido data={data} />}
           <Text></Text>
 
-          <TouchableOpacity
-            // style={styles.btnContainer4}
-            onPress={
-              () => getExcelReportData(data)
-              // alert("Pendiente todavia")
-            }
-          >
+          <TouchableOpacity onPress={() => getExcelReportData(data)}>
             <Image
               source={require("../../../../assets/excel2.png")}
               style={styles.excel}

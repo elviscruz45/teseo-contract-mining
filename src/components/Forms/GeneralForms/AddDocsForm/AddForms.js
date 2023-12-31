@@ -91,7 +91,6 @@ export function AddDocsFormBare(props) {
         console.log(newData);
         navigation.navigate(screen.search.search);
 
-        // alert("Documento Agregado Correctamente");
         Toast.show({
           type: "success",
           position: "bottom",
@@ -155,7 +154,11 @@ export function AddDocsFormBare(props) {
         setPickedDocument(null);
       }
     } catch (err) {
-      alert("Error picking document", err);
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Error al tratar de subir estos datos",
+      });
     }
   };
 

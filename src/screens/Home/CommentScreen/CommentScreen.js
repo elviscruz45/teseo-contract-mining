@@ -29,6 +29,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image as ImageExpo } from "expo-image";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { screen } from "../../../utils";
+import Toast from "react-native-toast-message";
 
 function CommentScreen(props) {
   const [postsComments, setPostsComments] = useState([]);
@@ -60,10 +61,18 @@ function CommentScreen(props) {
       if (supported) {
         await Linking.openURL(uri);
       } else {
-        alert("Unable to open PDF document");
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "No se pudo abrir el documento",
+        });
       }
     } catch (error) {
-      alert("Error opening PDF document", error);
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Error al abrir el documento",
+      });
     }
   }, []);
 

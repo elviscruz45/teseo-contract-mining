@@ -125,7 +125,11 @@ function ChangeManPowerBare(props) {
 
         const docRef = doc(collection(db, "manpower"), newData.uid);
         await setDoc(docRef, newData);
-        alert("La disponibilidad de trabajadores se ha subido correctamente");
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "La disponibilidad de trabajadores se ha subido correctamente",
+        });
       } catch (error) {
         Toast.show({
           type: "error",

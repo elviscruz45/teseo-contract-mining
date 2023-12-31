@@ -311,10 +311,7 @@ const HistoryScreenNoRedux = (props) => {
 
         <TouchableOpacity
           // style={styles.btnContainer4}
-          onPress={
-            () => getExcelReportData(data)
-            // alert("Pendiente todavia")
-          }
+          onPress={() => getExcelReportData(data)}
         >
           <Image
             source={require("../../../../assets/excel2.png")}

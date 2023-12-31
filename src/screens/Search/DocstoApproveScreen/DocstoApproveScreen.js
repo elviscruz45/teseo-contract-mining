@@ -20,6 +20,7 @@ import { Image as ImageExpo } from "expo-image";
 
 import { update_approvalList } from "../../../actions/home";
 import * as MailComposer from "expo-mail-composer";
+import Toast from "react-native-toast-message";
 
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
@@ -233,10 +234,18 @@ function DocstoApproveScreenBare(props) {
       if (supported) {
         await Linking.openURL(uri);
       } else {
-        alert("Este archivo no tiene Documento adjunto");
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Este archivo no tiene Documento adjunto",
+        });
       }
     } catch (error) {
-      alert("No Hay Documento Adjunto", error);
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Este archivo no tiene Documento adjunto",
+      });
     }
   }, []);
 
@@ -246,10 +255,18 @@ function DocstoApproveScreenBare(props) {
       if (supported) {
         await Linking.openURL(uri);
       } else {
-        alert("Este archivo no tiene Documento adjunto");
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Este archivo no tiene Documento adjunto",
+        });
       }
     } catch (error) {
-      alert("No Hay Documento Adjunto", error);
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Este archivo no tiene Documento adjunto",
+      });
     }
   }, []);
 

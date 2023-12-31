@@ -4,6 +4,7 @@ import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils";
 
 import { useEffect } from "react";
+import Toast from "react-native-toast-message";
 
 export const useUserData = (email, saveTotalUsers) => {
   useEffect(() => {
@@ -110,6 +111,10 @@ export const uploadPdf = async (uri) => {
 
     return uploadBytes(storageRef, blob);
   } catch (error) {
-    alert(error);
+    Toast.show({
+      type: "error",
+      position: "bottom",
+      text1: "El archivo excede los 25 MB",
+    });
   }
 };

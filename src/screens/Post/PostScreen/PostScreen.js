@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
-import { Icon, Avatar, SearchBar } from "@rneui/themed";
+import { Icon, SearchBar } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { saveActualServiceAIT } from "../../../actions/post";
@@ -13,6 +13,7 @@ import { areaLists } from "../../../utils/areaList";
 import { saveActualAITServicesFirebaseGlobalState } from "../../../actions/post";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Image as ImageExpo } from "expo-image";
+import Toast from "react-native-toast-message";
 
 function PostScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
@@ -66,33 +67,57 @@ function PostScreen(props) {
 
   //method to retrieve the picture required in the event post (pick Imagen, take a photo)
   const pickImage = async (AITServiceNumber) => {
-    if (!AITServiceNumber) {
-      alert("Escoge un servicio para continuar");
+    if (!equipment) {
+      Toast.show({
+        type: "error",
+        text1: "Escoge un servicio para continuar",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
       return;
     }
     if (!equipment) return;
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 4],
       quality: 1,
     });
-    const resizedPhoto = await ImageManipulator.manipulateAsync(
-      result.assets[0].uri,
-      [{ resize: { width: 800 } }],
-      { compress: 0.1, format: "jpeg", base64: true }
-    );
-    props.savePhotoUri(resizedPhoto.uri);
-    navigation.navigate(screen.post.form);
+    if (result.canceled) {
+      Toast.show({
+        type: "error",
+        text1: "No se ha seleccionado ninguna imagen",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
+    } else {
+      const resizedPhoto = await ImageManipulator.manipulateAsync(
+        result.assets[0].uri,
+        [{ resize: { width: 800 } }],
+        { compress: 0.1, format: "jpeg", base64: true }
+      );
+      props.savePhotoUri(resizedPhoto.uri);
+      navigation.navigate(screen.post.form);
 
-    if (!result.canceled) {
+      setEquipment(null);
     }
-    setEquipment(null);
   };
   // go to another screen to take a photo before put data to the form
   const camera = (AITServiceNumber) => {
-    if (!AITServiceNumber) {
-      alert("Escoge un servicio para continuar");
+    if (!equipment) {
+      Toast.show({
+        type: "error",
+        text1: "Escoge un servicio para continuar",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
       return;
     }
     if (!equipment) return;
@@ -114,6 +139,10 @@ function PostScreen(props) {
     const indexareaList = areaLists.findIndex((item) => item.value === area);
     const imageSource = areaLists[indexareaList]?.image;
     const imageUpdated = AIT.photoServiceURL;
+    console.log("oaaaa", indexareaList);
+    console.log("oaaaa", areaLists[indexareaList]);
+    console.log("oaaaa", imageSource);
+    console.log("byeee", imageUpdated);
 
     if (imageUpdated) {
       setEquipment({ uri: imageUpdated });
@@ -123,7 +152,7 @@ function PostScreen(props) {
     setAIT(AIT);
     props.saveActualServiceAIT(AIT);
   };
-
+  console.log("equipment", equipment);
   return (
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}
@@ -138,13 +167,11 @@ function PostScreen(props) {
       />
       <View style={styles.equipments2}>
         <View>
-          <Avatar
-            size="large"
-            rounded
-            containerStyle={styles.avatar}
-            // icon={{ type: "material", name: "person" }}
+          <ImageExpo
             source={{ uri: props.user_photo }}
-          ></Avatar>
+            style={styles.roundImage}
+            cachePolicy={"memory-disk"}
+          />
           <View>
             <Text style={styles.name}>
               {props.firebase_user_name || "Anónimo"}
@@ -165,17 +192,18 @@ function PostScreen(props) {
         </View>
 
         <View>
-          <Avatar
-            size="large"
-            rounded
-            containerStyle={styles.avatar}
-            // icon={{ type: "material", name: "person" }}
-            source={equipment || emptyimage}
-          ></Avatar>
+          <ImageExpo
+            source={equipment ?? emptyimage}
+            style={styles.roundImage}
+            cachePolicy={"memory-disk"}
+          />
+
           <View>
-            <Text style={styles.name}>{AIT?.TipoServicio || "Escoge AIT"}</Text>
+            <Text style={styles.name}>
+              {equipment ? AIT?.TipoServicio : "Escoge AIT"}
+            </Text>
             <Text style={styles.info}>
-              {AIT?.NumeroAIT ? `Serv:${AIT?.NumeroAIT}` : "de la lista"}
+              {equipment ? `Serv:${AIT?.NumeroAIT}` : "de la lista"}
             </Text>
           </View>
         </View>

@@ -67,9 +67,9 @@ export const styles = StyleSheet.create({
     marginLeft: 80,
   },
   roundImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     margin: 5,
   },
 

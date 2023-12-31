@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Toast from "react-native-toast-message";
 
 export function FileScreen(props) {
   const {
@@ -25,10 +26,26 @@ export function FileScreen(props) {
       if (supported) {
         await Linking.openURL(uri);
       } else {
-        alert("Unable to open PDF document");
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: "No se puede abrir el documento PDF",
+          visibilityTime: 2000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+        });
       }
     } catch (error) {
-      alert("Error opening PDF document", error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "No se puede abrir el documento PDF",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
   }, []);
 

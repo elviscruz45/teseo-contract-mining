@@ -25,8 +25,6 @@ export function ChangeDisplayAvance(props) {
           buttonStyle={styles.btn}
           onPress={() => {
             if (text > 100) {
-              // alert("No numeros mayores que 100");
-              //correct the previous line
               Toast.show({
                 type: "error",
                 position: "bottom",
