@@ -76,16 +76,16 @@ export const CircularProgress = ({
             ? { position: "absolute", top: -45, left: -45, zIndex: -100 }
             : { position: "absolute", top: -41, left: -50, zIndex: -100 }
         }
-        width="300%"
-        height="300%"
+        width="200%"
+        height="200%"
       >
         <VictoryPie
           standalone={false}
           // animate={{ duration: 1000 }}
-          width={210}
-          height={210}
+          width={180}
+          height={180}
           data={data}
-          innerRadius={50}
+          innerRadius={44}
           // cornerRadius={80}
           labels={() => null}
           style={{
@@ -110,60 +110,96 @@ export const CircularProgress = ({
         />
       </Svg>
       <Avatar
-        style={{
-          zIndex: 10,
-          position: "absolute",
-          margin: 115,
-        }}
+        style={
+          Platform.OS === "ios"
+            ? {
+                zIndex: 10,
+                position: "absolute",
+                margin: "90%",
+              }
+            : {
+                zIndex: 10,
+                position: "absolute",
+                margin: "110%",
+              }
+        }
       >
-        <Avatar.Accessory
-          size={30}
-          onPress={changeAvatar}
-          containerStyle={
-            {
-              // zIndex: 10
-              // width: 80,
-              // height: 80,
-              // borderRadius: 65,
-              // borderRadius: 60,
-              // marginRight: 20,
-              // backgroundColor: "green",
-            }
-          }
-        />
+        <Avatar.Accessory size={30} onPress={changeAvatar} />
       </Avatar>
       {avatar ? (
         <ImageExpo
           source={{ uri: avatar }}
-          style={{
-            marginLeft: 10,
-            width: 100,
-            height: 100,
-            borderRadius: 80,
-          }}
+          style={
+            Platform.OS === "ios"
+              ? {
+                  // alignContent: "center",
+                  marginLeft: "5%",
+                  marginTop: "5%",
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80,
+                  // alignSelf: "center",
+                }
+              : {
+                  // alignContent: "center",
+                  marginLeft: "0%",
+                  marginTop: "11%",
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80,
+                  // alignSelf: "center",
+                }
+          }
         />
       ) : image ? (
         <ImageExpo
           source={{ uri: image }}
-          style={{
-            alignContent: "center",
-            marginLeft: 15,
-            marginTop: 2,
-            width: 90,
-            height: 90,
-            borderRadius: 90,
-            alignSelf: "center",
-          }}
+          style={
+            Platform.OS === "ios"
+              ? {
+                  // alignContent: "center",
+                  marginLeft: "5%",
+                  marginTop: "5%",
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80,
+                  // alignSelf: "center",
+                }
+              : {
+                  // alignContent: "center",
+                  marginLeft: "0%",
+                  marginTop: "11%",
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80,
+                  // alignSelf: "center",
+                }
+          }
         />
       ) : (
         <ImageExpo
           source={imageSourceDefault || require("../../../../assets/icon1.png")}
-          style={{
-            marginLeft: 10,
-            width: 90,
-            height: 90,
-            borderRadius: 80,
-          }}
+          style={
+            Platform.OS === "ios"
+              ? {
+                  // alignContent: "center",
+                  marginLeft: "5%",
+                  marginTop: "5%",
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80,
+                  // alignSelf: "center",
+                }
+              : {
+                  // alignContent: "center",
+                  marginLeft: "0%",
+                  marginTop: "11%",
+                  width: 80,
+                  height: 80,
+                  borderRadius: 80,
+                  // alignSelf: "center",
+                }
+          }
         />
       )}
     </>

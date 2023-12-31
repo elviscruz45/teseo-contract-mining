@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     // marginLeft: windowWidth / 12,
     // marginLeft: 10,
-    marginRight: 120,
+    marginRight: "35%",
     textAlign: "center",
   },
   btnContainer2: {
@@ -196,8 +196,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
   center: {
-    marginLeft: 50,
-    justifyContent: "space-between",
+    marginLeft: "2%",
+    // justifyContent: "space-between",
   },
   roundImage: { width: 100, height: 100, borderRadius: 50, margin: 5 },
 

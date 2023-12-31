@@ -22,7 +22,7 @@ export const CircularProgress = ({
         style={
           Platform.OS === "ios"
             ? { position: "absolute", top: -50, left: -30, zIndex: 100 }
-            : { position: "absolute", top: -55, left: -30, zIndex: 100 }
+            : { position: "absolute", top: -50, left: -30, zIndex: 100 }
         }
         width="200%"
         height="200%"

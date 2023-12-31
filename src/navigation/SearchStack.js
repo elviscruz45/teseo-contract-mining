@@ -94,9 +94,9 @@ function SearchStackBare(props) {
                   })
                 }
                 // onPress={() => navigation.navigate(screen.search.search)}
-                style={{ marginLeft: -55 }}
+                // style={{ marginLeft: 0 }}
               >
-                <AntDesign name="arrowleft" size={24} color="black" />
+                {/* <AntDesign name="arrowleft" size={24} color="black" /> */}
               </TouchableOpacity>
             ),
         }}

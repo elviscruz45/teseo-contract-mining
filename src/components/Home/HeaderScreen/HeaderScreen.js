@@ -26,7 +26,6 @@ function HeaderScreenNoRedux(props) {
     if (props.email) {
       const companyName =
         capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
-      console.log("props.email", companyName);
 
       function fetchData() {
         let queryRef;
@@ -56,6 +55,7 @@ function HeaderScreenNoRedux(props) {
           lista.sort((a, b) => {
             return b.LastEventPosted - a.LastEventPosted;
           });
+          console.log("Headerscreen");
 
           setData(lista.slice(0, 50));
           props.updateAITServicesDATA(lista);
@@ -90,41 +90,38 @@ function HeaderScreenNoRedux(props) {
   };
 
   return (
-    <>
-      <FlatList
-        style={{
-          backgroundColor: "white",
-          paddingTop: 10,
-          paddingVertical: 10,
-        }}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        data={data}
-        maxToRenderPerBatch={5}
-        renderItem={({ item }) => {
-          //the algoritm to retrieve the image source to render the icon
-          const area = item.AreaServicio;
-          const indexareaList = areaLists.findIndex(
-            (item) => item.value === area
-          );
-          const imageSource = areaLists[indexareaList]?.image;
-          return (
-            <TouchableOpacity onPress={() => selectAsset(item.idServiciosAIT)}>
-              <View style={styles.textImage}>
-                <CircularProgress
-                  imageSource={imageSource}
-                  imageStyle={styles.roundImage5}
-                  avance={item.AvanceEjecucion}
-                  image={item.photoServiceURL}
-                />
-                {ShortTextComponent(item.NombreServicio)}
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item) => item.NumeroAIT}
-      />
-    </>
+    <FlatList
+      style={{
+        backgroundColor: "white",
+        paddingTop: 10,
+        paddingVertical: 10,
+      }}
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      data={data}
+      renderItem={({ item }) => {
+        //the algoritm to retrieve the image source to render the icon
+        const area = item.AreaServicio;
+        const indexareaList = areaLists.findIndex(
+          (item) => item.value === area
+        );
+        const imageSource = areaLists[indexareaList]?.image;
+        return (
+          <TouchableOpacity onPress={() => selectAsset(item.idServiciosAIT)}>
+            <View style={styles.textImage}>
+              <CircularProgress
+                imageSource={imageSource}
+                imageStyle={styles.roundImage5}
+                avance={item.AvanceEjecucion}
+                image={item.photoServiceURL}
+              />
+              {ShortTextComponent(item.NombreServicio)}
+            </View>
+          </TouchableOpacity>
+        );
+      }}
+      keyExtractor={(item) => item.NumeroAIT}
+    />
   );
 }
 

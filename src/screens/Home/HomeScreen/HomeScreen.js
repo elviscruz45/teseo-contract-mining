@@ -26,6 +26,8 @@ import { areaLists } from "../../../utils/areaList";
 import { resetPostPerPageHome } from "../../../actions/home";
 import { saveApprovalListnew } from "../../../actions/search";
 import { updateAITServicesDATA } from "../../../actions/home";
+import Toast from "react-native-toast-message";
+
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen(props) {
@@ -38,6 +40,7 @@ function HomeScreen(props) {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
   }
   const regex = /@(.+?)\./i;
+  console.log("HomeScreen");
 
   // this useEffect is used to retrive all data from firebase
 
@@ -47,7 +50,6 @@ function HomeScreen(props) {
     if (props.email) {
       const companyName =
         capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
-      console.log("companyName", companyName);
 
       async function fetchData() {
         let queryRef;
@@ -79,9 +81,9 @@ function HomeScreen(props) {
           setPosts(lista);
           setCompanyName(companyName);
           props.saveTotalEventServiceAITList(lista);
+          console.log("events");
         });
         setIsLoading(false);
-        // Cache the fetched data
       }
 
       fetchData();
@@ -110,6 +112,7 @@ function HomeScreen(props) {
             lista.push(doc.data());
           });
           props.saveApprovalListnew(lista);
+          console.log("approvals");
         });
       }
       fetchData();
@@ -132,10 +135,20 @@ function HomeScreen(props) {
       if (supported) {
         await Linking.openURL(uri);
       } else {
-        alert("Unable to open PDF document");
+        // alert("Unable to open PDF document");
+        Toast.show({
+          type: "error",
+          position: "top",
+          text1: "Unable to open PDF document",
+        });
       }
     } catch (error) {
-      alert("Error opening PDF document", error);
+      // alert("Error opening PDF document", error);
+      Toast.show({
+        type: "error",
+        position: "top",
+        text1: "Error opening PDF document",
+      });
     }
   }, []);
 
@@ -178,7 +191,14 @@ function HomeScreen(props) {
 
   if (isLoading) {
     return <LoadingSpinner />;
-  } else if (posts?.length === 0) {
+  }
+
+  if (
+    posts?.length === 0 ||
+    !props.email ||
+    !props.user_photo ||
+    !companyName
+  ) {
     return (
       <View
         style={{
@@ -209,156 +229,161 @@ function HomeScreen(props) {
     );
   } else {
     return (
-      <FlatList
-        data={posts}
-        ListHeaderComponent={<HeaderScreen />}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: "white" }}
-        renderItem={({ item }) => {
-          //the algoritm to retrieve the image source to render the icon
-          const area = item.AITAreaServicio;
-          const indexareaList = areaLists.findIndex(
-            (item) => item.value === area
-          );
-          const imageSource =
-            areaLists[indexareaList]?.image ??
-            require("../../../../assets/icon1.png");
+      <>
+        {console.log("HomeScreenRender")}
+        <FlatList
+          data={posts}
+          ListHeaderComponent={<HeaderScreen />}
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: "white" }}
+          renderItem={({ item }) => {
+            //the algoritm to retrieve the image source to render the icon
+            const area = item.AITAreaServicio;
+            const indexareaList = areaLists.findIndex(
+              (item) => item.value === area
+            );
+            const imageSource =
+              areaLists[indexareaList]?.image ??
+              require("../../../../assets/icon1.png");
 
-          return (
-            <View
-              style={{
-                // margin: 2,
-                borderBottomWidth: 5,
-                borderBottomColor: "#f0f8ff",
-                paddingVertical: 10,
-              }}
-            >
-              <View style={[styles.row, styles.center]}>
+            return (
+              <View
+                style={{
+                  // margin: 2,
+                  borderBottomWidth: 5,
+                  borderBottomColor: "#f0f8ff",
+                  paddingVertical: 10,
+                }}
+              >
                 <View style={[styles.row, styles.center]}>
-                  <TouchableOpacity
-                    style={[styles.row, styles.center]}
-                    onPress={() => goToServiceInfo(item)}
-                  >
-                    {item.AITphotoServiceURL ? (
-                      <ImageExpo
-                        source={{ uri: item.AITphotoServiceURL }}
-                        style={styles.roundImage}
-                        cachePolicy={"memory-disk"}
-                      />
-                    ) : (
-                      <ImageExpo
-                        source={imageSource}
-                        style={styles.roundImage}
-                        cachePolicy={"memory-disk"}
-                      />
-                    )}
-                    <Text style={styles.NombreServicio}>
-                      {item.AITNombreServicio}
+                  <View style={[styles.row, styles.center]}>
+                    <TouchableOpacity
+                      style={[styles.row, styles.center]}
+                      onPress={() => goToServiceInfo(item)}
+                    >
+                      {item.AITphotoServiceURL ? (
+                        <ImageExpo
+                          source={{ uri: item.AITphotoServiceURL }}
+                          style={styles.roundImage}
+                          cachePolicy={"memory-disk"}
+                        />
+                      ) : (
+                        <ImageExpo
+                          source={imageSource}
+                          style={styles.roundImage}
+                          cachePolicy={"memory-disk"}
+                        />
+                      )}
+                      <Text style={styles.NombreServicio}>
+                        {item.AITNombreServicio}
+                      </Text>
+                    </TouchableOpacity>
+
+                    <ImageExpo
+                      source={{ uri: item.fotoUsuarioPerfil }}
+                      style={styles.roundImage}
+                      cachePolicy={"memory-disk"}
+                    />
+                    <Text style={styles.NombrePerfilCorto}>
+                      {item.nombrePerfil}
                     </Text>
-                  </TouchableOpacity>
-
-                  <ImageExpo
-                    source={{ uri: item.fotoUsuarioPerfil }}
-                    style={styles.roundImage}
-                    cachePolicy={"memory-disk"}
-                  />
-                  <Text style={styles.NombrePerfilCorto}>
-                    {item.nombrePerfil}
-                  </Text>
+                  </View>
                 </View>
-              </View>
-              <View style={[styles.row, styles.center]}>
-                {companyName === "Fmi" && (
-                  <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
-                    {"Empresa:  "}
-                    {item.AITcompanyName}
-                  </Text>
-                )}
-              </View>
-              <View style={[styles.row, styles.center]}>
-                {companyName !== "Fmi" && (
-                  <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
-                    {"Visibilidad:  "}
-                    {item.visibilidad}
-                  </Text>
-                )}
-              </View>
-              <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
-                {"Fecha:  "}
-                {item.fechaPostFormato}
-              </Text>
-              <Text></Text>
-              <View style={styles.equipments}>
-                <TouchableOpacity onPress={() => commentPost(item)}>
-                  <ImageExpo
-                    source={{ uri: item.fotoPrincipal }}
-                    style={styles.postPhoto}
-                    cachePolicy={"memory-disk"}
-                  />
-                </TouchableOpacity>
-
-                <View>
-                  <Text style={styles.textAreaTitle}>
-                    {/* {"Evento: "} */}
-                    {item.titulo}
-                  </Text>
-                  <Text></Text>
-                  <Text style={styles.textAreaComment} selectable={true}>
-                    {item.comentarios}
-                  </Text>
+                <View style={[styles.row, styles.center]}>
+                  {companyName === "Fmi" && (
+                    <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                      {"Empresa:  "}
+                      {item.AITcompanyName}
+                    </Text>
+                  )}
                 </View>
-              </View>
-              <View style={styles.rowlikes}>
-                <View style={styles.likeComment}>
-                  <TouchableOpacity
-                    onPress={() => likePost(item)}
-                    style={{ flexDirection: "row", alignItems: "center" }}
-                  >
-                    <Icon
-                      type="material-community"
-                      name={
-                        item.likes.includes(props.email)
-                          ? "thumb-up"
-                          : "thumb-up-outline"
-                      }
+                <View style={[styles.row, styles.center]}>
+                  {companyName !== "Fmi" && (
+                    <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                      {"Visibilidad:  "}
+                      {item.visibilidad}
+                    </Text>
+                  )}
+                </View>
+                <Text style={{ marginLeft: 5, color: "#5B5B5B" }}>
+                  {"Fecha:  "}
+                  {item.fechaPostFormato}
+                </Text>
+                <Text></Text>
+                <View style={styles.equipments}>
+                  <TouchableOpacity onPress={() => commentPost(item)}>
+                    <ImageExpo
+                      source={{ uri: item.fotoPrincipal }}
+                      style={styles.postPhoto}
+                      cachePolicy={"memory-disk"}
                     />
+                  </TouchableOpacity>
 
-                    <Text> {item.likes.length} Revisado</Text>
-                  </TouchableOpacity>
+                  <View>
+                    <Text style={styles.textAreaTitle}>
+                      {/* {"Evento: "} */}
+                      {item.titulo}
+                    </Text>
+                    <Text></Text>
+                    <Text style={styles.textAreaComment} selectable={true}>
+                      {item.comentarios}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.likeComment}>
-                  <TouchableOpacity
-                    onPress={() => commentPost(item)}
-                    style={{ flexDirection: "row", alignItems: "center" }}
-                  >
-                    <Icon
-                      type="material-community"
-                      name="comment-processing-outline"
-                    />
-                    <Text>{item?.comentariosUsuarios?.length} Comentarios</Text>
-                  </TouchableOpacity>
+                <View style={styles.rowlikes}>
+                  <View style={styles.likeComment}>
+                    <TouchableOpacity
+                      onPress={() => likePost(item)}
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Icon
+                        type="material-community"
+                        name={
+                          item.likes.includes(props.email)
+                            ? "thumb-up"
+                            : "thumb-up-outline"
+                        }
+                      />
+
+                      <Text> {item.likes.length} Revisado</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.likeComment}>
+                    <TouchableOpacity
+                      onPress={() => commentPost(item)}
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Icon
+                        type="material-community"
+                        name="comment-processing-outline"
+                      />
+                      <Text>
+                        {item?.comentariosUsuarios?.length} Comentarios
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  {item.pdfPrincipal && (
+                    <TouchableOpacity
+                      onPress={() => uploadFile(item.pdfPrincipal)}
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Icon type="material-community" name="paperclip" />
+                      <Text>Pdf File</Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
-                {item.pdfPrincipal && (
-                  <TouchableOpacity
-                    onPress={() => uploadFile(item.pdfPrincipal)}
-                    style={{ flexDirection: "row", alignItems: "center" }}
-                  >
-                    <Icon type="material-community" name="paperclip" />
-                    <Text>Pdf File</Text>
-                  </TouchableOpacity>
-                )}
               </View>
-            </View>
-          );
-        }}
-        keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
-        onEndReached={() => {
-          console.log("se re-rerenderiza mucho");
-        }}
-        // onEndReached={() => loadMorePosts()}
-        onEndReachedThreshold={0.1}
-      />
+            );
+          }}
+          keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
+          // onEndReached={() => {
+          //   console.log("se re-rerenderiza mucho");
+          // }}
+          // onEndReached={() => loadMorePosts()}
+          // onEndReachedThreshold={0.1}
+        />
+      </>
     );
   }
 }

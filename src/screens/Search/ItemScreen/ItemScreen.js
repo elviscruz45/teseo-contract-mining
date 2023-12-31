@@ -208,7 +208,6 @@ function ItemScreenNotRedux(props) {
 
           <View style={[styles.row, styles.center]}>
             <View>
-              <Text></Text>
               <CircularProgress
                 imageSourceDefault={imageSource}
                 imageStyle={styles.roundImage}
@@ -217,11 +216,9 @@ function ItemScreenNotRedux(props) {
                 image={serviceInfo.photoServiceURL}
                 titulo={serviceInfo.NombreServicio}
               />
-
-              <Text></Text>
             </View>
             <Text> </Text>
-            <View style={{ marginLeft: 15 }}>
+            <View style={{ marginLeft: 0 }}>
               <Text style={styles.name}>{serviceInfo.NombreServicio}</Text>
               <Text style={styles.info}>
                 {"Numero Serv:  "} {serviceInfo.NumeroAIT}

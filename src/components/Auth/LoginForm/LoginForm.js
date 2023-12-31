@@ -38,7 +38,12 @@ function LoginForm(props) {
         if (docSnap.exists()) {
           props.update_firebaseProfile(docSnap.data());
         } else {
-          alert("Actualice sus datos en el perfil para comenzar");
+          // alert("Actualice sus datos en el perfil para comenzar");
+          Toast.show({
+            type: "error",
+            position: "bottom",
+            text1: "Actualice sus datos en el perfil para comenzar",
+          });
           navigation.navigate(screen.profile.tab, {
             screen: screen.profile.account,
           });
@@ -69,6 +74,7 @@ function LoginForm(props) {
       <Input
         value={formik.values.password}
         placeholder="Contraseña"
+        autoCapitalize="none"
         containerStyle={styles.input}
         secureTextEntry={showPassword ? false : true}
         rightIcon={

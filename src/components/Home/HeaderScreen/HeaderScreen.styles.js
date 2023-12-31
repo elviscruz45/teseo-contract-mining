@@ -32,8 +32,8 @@ export const styles = StyleSheet.create({
   roundImage: { width: 40, height: 40, borderRadius: 20, margin: 5 },
   roundImage5: { width: 60, height: 60 },
   textImage: {
-    width: 100,
-    alignItems: "center",
+    width: 110,
+    // alignItems: "center",
     marginRight: 0,
     marginTop: 3,
   },
