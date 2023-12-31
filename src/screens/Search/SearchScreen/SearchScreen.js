@@ -10,7 +10,7 @@ import { EquipmentListUpper } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
 
 function SearchScreenNoRedux(props) {
-  console.log("searchResults");
+  console.log("SearchScreenNoRedux");
   let AITServiceList;
   const [data, setData] = useState(null);
   const [searchText, setSearchText] = useState("");
@@ -40,11 +40,6 @@ function SearchScreenNoRedux(props) {
       setData(AITServiceListSorted);
       setSearchResults(AITServiceListSorted?.slice(0, 100));
     }
-    // let AITServiceListSorted = AITServiceList?.sort((a, b) => {
-    //   return b.createdAt - a.createdAt;
-    // });
-    // setData(AITServiceListSorted);
-    // setSearchResults(AITServiceListSorted?.slice(0, 100));
   }, [props.servicesData]);
 
   useEffect(() => {
@@ -73,9 +68,14 @@ function SearchScreenNoRedux(props) {
       params: { Item: idServiciosAIT },
     });
   };
+  if (props.servicesData?.length === 0 && !props.email && !data) {
+    return;
+  }
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
+      {console.log("SearchItem")}
+
       <FlatList
         data={searchResults}
         ListHeaderComponent={

@@ -241,7 +241,7 @@ function InformationScreen(props) {
             size="large"
             rounded
             containerStyle={styles.avatar}
-            icon={{ type: "material", name: "person" }}
+            // icon={{ type: "material", name: "person" }}
             source={imageSource}
           ></Avatar>
         )}

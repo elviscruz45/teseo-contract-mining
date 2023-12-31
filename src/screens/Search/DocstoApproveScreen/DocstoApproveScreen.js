@@ -7,34 +7,17 @@ import {
   Text,
   Alert,
 } from "react-native";
-import { Button, Icon } from "@rneui/themed";
-import { getAuth, signOut } from "firebase/auth";
-import { ConnectedInfoUser } from "../../../components/Account";
+import { Button } from "@rneui/themed";
+
 import { styles } from "./DocstoApproveScreen.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
-import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
-import { Modal } from "../../../components/shared/Modal";
-import { getExcelPerfil } from "../../../utils/excelData";
+
 import { update_firebaseProfile } from "../../../actions/profile";
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  docs,
-  getDocs,
-  arrayUnion,
-  arrayRemove,
-  updateDoc,
-  limit,
-  doc,
-} from "firebase/firestore";
+import { arrayUnion, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
-import { screen } from "../../../utils";
-import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen/ProfileDateScreen";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import { update_approvalList } from "../../../actions/home";
 import * as MailComposer from "expo-mail-composer";
 
@@ -88,35 +71,6 @@ function DocstoApproveScreenBare(props) {
     return formattedDate;
   };
 
-  // const formatDate = (dateInput) => {
-  //   if (dateInput && "seconds" in dateInput && "nanoseconds" in dateInput) {
-  //     const { seconds, nanoseconds } = dateInput;
-  //     const milliseconds = seconds * 1000 + nanoseconds / 1000000;
-  //     const date = new Date(milliseconds);
-  //     const monthNames = [
-  //       "ene.",
-  //       "feb.",
-  //       "mar.",
-  //       "abr.",
-  //       "may.",
-  //       "jun.",
-  //       "jul.",
-  //       "ago.",
-  //       "sep.",
-  //       "oct.",
-  //       "nov.",
-  //       "dic.",
-  //     ];
-  //     const day = date.getDate();
-  //     const month = monthNames[date.getMonth()];
-  //     const year = date.getFullYear();
-  //     const hour = date.getHours();
-  //     const minute = date.getMinutes();
-  //     const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
-  //     return formattedDate;
-  //   }
-  //   return null;
-  // };
   useEffect(() => {
     let ApprovalList = props.approvalListNew;
     const filteredArray = ApprovalList.filter(

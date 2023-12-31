@@ -37,6 +37,7 @@ function SearchStackBare(props) {
       initialRouteName={screen.search.search}
       screenOptions={{
         headerShown: true,
+        headerTitleAlign: "center",
         headerTitle: () => (
           <TouchableOpacity onPress={() => home_screen()}>
             <Image
@@ -71,7 +72,8 @@ function SearchStackBare(props) {
         component={ItemScreen}
         options={{
           title: " ",
-          headerLeft: () =>
+          headerBackTitleVisible: false, // This hides the default back button
+          headerBackImage: () =>
             Platform.OS === "ios" ? (
               <TouchableOpacity
                 onPress={() =>
@@ -94,9 +96,9 @@ function SearchStackBare(props) {
                   })
                 }
                 // onPress={() => navigation.navigate(screen.search.search)}
-                // style={{ marginLeft: 0 }}
+                style={{ marginLeft: -55 }}
               >
-                {/* <AntDesign name="arrowleft" size={24} color="black" /> */}
+                <AntDesign name="arrowleft" size={24} color="black" />
               </TouchableOpacity>
             ),
         }}
@@ -104,17 +106,6 @@ function SearchStackBare(props) {
       <Stack.Screen
         name={screen.search.moreDetail}
         component={MoreDetailScreen}
-        // options={{
-        //   title: " ",
-        //   headerLeft: () => (
-        //     <TouchableOpacity
-        //       onPress={() => navigation.goBack()}
-        //       style={{ marginLeft: -12 }}
-        //     >
-        //       <AntDesign name="left" size={24} color="black" />
-        //     </TouchableOpacity>
-        //   ),
-        // }}
       />
       <Stack.Screen
         name={screen.search.pdf}

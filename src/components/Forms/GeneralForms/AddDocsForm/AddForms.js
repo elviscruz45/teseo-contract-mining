@@ -1,7 +1,7 @@
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./AddForms.styles";
-import { Input } from "@rneui/themed";
+import { Input, Button } from "@rneui/themed";
 import * as DocumentPicker from "expo-document-picker";
 import { Modal } from "../../../shared/Modal/Modal";
 import { ChangeDisplayFileTipo } from "../../FormsGeneral/ChangeFIleTipo/ChangeDisplayFileTipo";
@@ -14,6 +14,7 @@ import { screen } from "../../../../utils";
 import { v4 as uuidv4 } from "uuid";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import Toast from "react-native-toast-message";
 export function AddDocsFormBare(props) {
   const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -90,9 +91,19 @@ export function AddDocsFormBare(props) {
         console.log(newData);
         navigation.navigate(screen.search.search);
 
-        alert("Documento Agregado Correctamente");
+        // alert("Documento Agregado Correctamente");
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "Documento Agregado Correctamente",
+        });
       } catch (error) {
-        console.log(error);
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al tratar de subir estos datos",
+        });
+        // console.log(error);
       }
     },
   });
@@ -149,7 +160,7 @@ export function AddDocsFormBare(props) {
   };
 
   return (
-    <View>
+    <View style={{ backgroundColor: "white", flex: 1 }}>
       <Text></Text>
       <Text></Text>
       <Text></Text>
@@ -158,6 +169,7 @@ export function AddDocsFormBare(props) {
       <View style={styles.content}>
         <Input
           value={shortNameFile}
+          errorMessage={formik.errors.pdfFile}
           placeholder="Adjuntar PDF"
           multiline={true}
           editable={false}
@@ -172,6 +184,7 @@ export function AddDocsFormBare(props) {
 
         <Input
           value={tipoFile}
+          errorMessage={formik.errors.tipoFile}
           placeholder="Tipo de Archivo Adjunto"
           multiline={true}
           editable={false}

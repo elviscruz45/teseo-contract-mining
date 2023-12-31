@@ -9,8 +9,8 @@ export function initialValues() {
 
 export function validationSchema() {
   return Yup.object({
-    // titulo: Yup.string().required("Campo obligatorio"),
-    // comentarios: Yup.string().required("Campo obligatorio"),
+    pdfFile: Yup.string().required("Campo obligatorio"),
+    tipoFile: Yup.string().required("Campo obligatorio"),
     // etapa: Yup.string().required("Campo obligatorio"),
     // porcentajeAvance: Yup.string().required("Campo obligatorio"),
     // aprobacion: Yup.string().required("Campo obligatorio"),

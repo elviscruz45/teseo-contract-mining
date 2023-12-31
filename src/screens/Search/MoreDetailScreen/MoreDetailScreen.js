@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -18,10 +18,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 const windowWidth = Dimensions.get("window").width;
 function MoreDetailScreenNoRedux(props) {
-  const [post, setPost] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [firestoreEquipmentLiked, setFirestoreEquipmentLiked] = useState();
-
   //Retrieve data Item that comes from the previous screen to render the Updated Status
   const {
     route: {
@@ -65,8 +61,6 @@ function MoreDetailScreenNoRedux(props) {
     const day = date.getDate();
     const month = monthNames[date.getMonth()];
     const year = date.getFullYear();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
     const formattedDate = `${day} ${month} ${year}`;
     return formattedDate;
   };
