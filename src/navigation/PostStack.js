@@ -77,8 +77,8 @@ function PostStackBare(props) {
           headerBackTitle: "Home",
           headerTintColor: "black",
           headerBackTitleVisible: false, // This hides the default back button
-
-          headerBackImage: () =>
+          headerBackVisible: false,
+          headerLeft: () =>
             Platform.OS === "ios" ? (
               <TouchableOpacity
                 onPress={() => navigation.navigate(screen.post.post)}
@@ -88,14 +88,9 @@ function PostStackBare(props) {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: screen.search.search }],
-                  })
-                }
+                onPress={() => navigation.navigate(screen.post.post)}
                 // onPress={() => navigation.navigate(screen.search.search)}
-                style={{ marginLeft: -55 }}
+                style={{ marginLeft: 0 }}
               >
                 <AntDesign name="arrowleft" size={24} color="black" />
               </TouchableOpacity>

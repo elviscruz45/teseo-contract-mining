@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "@rneui/themed";
 import { styles } from "./ChangeDisplayAvance.styles";
-import { Toast } from "react-native-toast-message";
+import Toast from "react-native-toast-message";
 
 export function ChangeDisplayAvance(props) {
   const { onClose, formik, setAvance } = props;
@@ -24,11 +24,18 @@ export function ChangeDisplayAvance(props) {
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
-            if (text > 100) {
+            if (isNaN(text)) {
               Toast.show({
                 type: "error",
                 position: "bottom",
-                text1: "No numeros mayores que 100",
+                text1: "Ingrese un número válido",
+              });
+              onClose();
+            } else if (text > 100 || text.trim() === "" || text < 0) {
+              Toast.show({
+                type: "error",
+                position: "bottom",
+                text1: "Solo numeros entre 0 y 100",
               });
 
               onClose();

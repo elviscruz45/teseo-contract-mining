@@ -160,7 +160,6 @@ function CommentScreen(props) {
         // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
       >
         <Text></Text>
-        <Text></Text>
 
         <View style={{ flexDirection: "row", alignSelf: "center" }}>
           <Text
@@ -170,7 +169,7 @@ function CommentScreen(props) {
               textAlign: "center",
               // alignSelf: "center",
 
-              fontSize: 20,
+              fontSize: 15,
               paddingHorizontal: 30,
             }}
             onPress={() => goToServiceInfo()}
@@ -181,11 +180,19 @@ function CommentScreen(props) {
           {/* <Text></Text> */}
         </View>
         <Text></Text>
+
+        <Text></Text>
+
+        <ImageExpo
+          source={{ uri: Item?.fotoPrincipal }}
+          style={styles.postPhoto}
+          cachePolicy={"memory-disk"}
+        />
         {props.email === Item?.emailPerfil && (
           <TouchableOpacity
             onPress={() => docDelete(Item.idDocFirestoreDB)}
             style={{
-              marginRight: 15,
+              marginRight: "2%",
             }}
           >
             <ImageExpo
@@ -195,14 +202,6 @@ function CommentScreen(props) {
             />
           </TouchableOpacity>
         )}
-
-        <Text></Text>
-
-        <ImageExpo
-          source={{ uri: Item?.fotoPrincipal }}
-          style={styles.postPhoto}
-          cachePolicy={"memory-disk"}
-        />
         <Text></Text>
         <Text></Text>
         <Text

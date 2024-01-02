@@ -170,12 +170,9 @@ function MoreDetailScreenNoRedux(props) {
 
   return (
     <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
-      <Text></Text>
-      <Text style={styles.name}>{Item.NombreServicio}</Text>
-      <Text></Text>
       {props.email === Item.emailPerfil && (
         <TouchableOpacity onPress={() => goToEditAITScreen(Item)}>
-          <View style={{ marginRight: 10 }}>
+          <View style={{ marginRight: "2%" }}>
             <ImageExpo
               source={require("../../../../assets/editIcon2.png")}
               style={styles.editIcon}
@@ -183,6 +180,7 @@ function MoreDetailScreenNoRedux(props) {
           </View>
         </TouchableOpacity>
       )}
+
       {Item.photoServiceURL ? (
         <ImageExpo
           source={{ uri: Item.photoServiceURL }}
@@ -196,7 +194,9 @@ function MoreDetailScreenNoRedux(props) {
           cachePolicy={"memory-disk"}
         />
       )}
-
+      <Text></Text>
+      <Text style={styles.name}>{Item.NombreServicio}</Text>
+      <Text></Text>
       <View>
         <Text></Text>
 

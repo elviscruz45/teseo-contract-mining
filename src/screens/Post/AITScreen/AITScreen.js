@@ -24,6 +24,8 @@ import { AITForms } from "../../../components/Forms/GeneralForms/AITForms/AITFor
 import { areaLists } from "../../../utils/areaList";
 import { saveTotalUsers } from "../../../actions/post";
 import Toast from "react-native-toast-message";
+import { Image as ImageExpo } from "expo-image";
+
 function AITNoReduxScreen(props) {
   const emptyimage = require("../../../../assets/splash.png");
   const navigation = useNavigation();
@@ -180,13 +182,11 @@ function AITNoReduxScreen(props) {
       style={{ backgroundColor: "white" }} // Add backgroundColor here
     >
       <View style={styles.sectionForms}>
-        <Avatar
-          size="large"
-          rounded
-          containerStyle={styles.avatar}
-          icon={{ type: "material", name: "person" }}
+        <ImageExpo
           source={imageSource}
-        ></Avatar>
+          style={styles.roundImage}
+          cachePolicy={"memory-disk"}
+        />
 
         <View>
           <Text style={styles.name}>{tituloserv || "Titulo del servicio"}</Text>

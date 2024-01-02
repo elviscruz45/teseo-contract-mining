@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SearchScreen } from "../screens";
@@ -73,30 +73,34 @@ function SearchStackBare(props) {
         options={{
           title: " ",
           headerBackTitleVisible: false, // This hides the default back button
-          headerBackImage: () =>
+          headerBackVisible: false,
+
+          headerLeft: () =>
             Platform.OS === "ios" ? (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: screen.search.search }],
-                  })
-                }
-                // onPress={() => navigation.navigate(screen.search.search)}
+                // onPress={() =>
+                //   navigation.reset({
+                //     index: 0,
+                //     routes: [{ name: screen.search.search }],
+                //   })
+                // }
+                onPress={() => navigation.navigate(screen.search.search)}
+                // onPress={() => navigation.goBack()}
                 style={{ marginLeft: -12 }}
               >
                 <AntDesign name="left" size={24} color="black" />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: screen.search.search }],
-                  })
-                }
+                // onPress={() =>
+                //   navigation.reset({
+                //     index: 0,
+                //     routes: [{ name: screen.search.search }],
+                //   })
+                // }
                 // onPress={() => navigation.navigate(screen.search.search)}
-                style={{ marginLeft: -55 }}
+                onPress={() => navigation.navigate(screen.search.search)}
+                style={{ marginLeft: 0 }}
               >
                 <AntDesign name="arrowleft" size={24} color="black" />
               </TouchableOpacity>

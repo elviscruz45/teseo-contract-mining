@@ -184,10 +184,9 @@ function GeneralFormsBare(props) {
       setAditional(true);
     } else {
       Toast.show({
-        type: "success",
+        type: "error",
         position: "bottom",
-        text1:
-          "Solicitar Autorizacion al Gerente de Proyecto para Modificar El Monto, Fecha Estimada y Horas Hombre",
+        text1: "Solicitar Autorizacion al Gerente de Proyecto",
       });
     }
   };

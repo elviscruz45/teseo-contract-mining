@@ -42,7 +42,11 @@ function HomeStack(props) {
     });
   };
 
-  return user && props.user_photo && props.profile ? (
+  if (!user || !props.user_photo || !props.profile) {
+    return;
+  }
+
+  return (
     <>
       {console.log("HomeStackRender")}
       <Stack.Navigator
@@ -86,7 +90,7 @@ function HomeStack(props) {
         />
       </Stack.Navigator>
     </>
-  ) : null;
+  );
 }
 
 const mapStateToProps = (reducers) => {

@@ -115,4 +115,10 @@ export const styles = StyleSheet.create({
     backgroundColor: "#2A3B76",
     margin: 20,
   },
+  roundImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    margin: 5,
+  },
 });
