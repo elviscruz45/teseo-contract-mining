@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { Platform, Button } from "react-native";
 
 export function ChangeDisplayFechaInicio(props) {
-  const { onClose, formik, setFechaInicio } = props;
+  const { onClose, formik, setFechaInicio, showTimePicker, setShowTimePicker } =
+    props;
+  console.log("com oestas");
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -17,20 +21,44 @@ export function ChangeDisplayFechaInicio(props) {
     formik.setFieldValue("FechaInicio", currentDate);
     onClose();
   };
+  useEffect(() => {
+    if (show === false) setShow(true);
+    console.log("useEffect");
+  }, []);
 
-  return (
-    <SafeAreaView>
-      {/* <Button onPress={showDatepicker} title="Show date picker!" /> */}
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-          style={{ alignSelf: "center", backgroundColor: "#2A3B76" }}
-        />
-      )}
-    </SafeAreaView>
-  );
+  const showMode = () => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: mode,
+      is24Hour: true,
+    });
+  };
+
+  const showDatepicker = () => {
+    showMode();
+  };
+
+  if (Platform.OS === "ios") {
+    return (
+      <SafeAreaView>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            onChange={onChange}
+            style={{ alignSelf: "center", backgroundColor: "#2A3B76" }}
+          />
+        )}
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <SafeAreaView>
+        <Button onPress={showDatepicker} title="Calendario" />
+      </SafeAreaView>
+    );
+  }
 }

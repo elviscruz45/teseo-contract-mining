@@ -49,7 +49,7 @@ export function AITForms(props) {
   const [moneda, setMoneda] = useState(null);
   const [monto, setMonto] = useState(null);
   const [horashombre, setHorashombre] = useState(null);
-
+  // const [showTimePicker, setShowTimePicker] = useState(false);
   //open or close modal
   const [showModal, setShowModal] = useState(false);
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
@@ -364,7 +364,9 @@ export function AITForms(props) {
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("FechaInicio"),
+            onPress: () => {
+              selectComponent("FechaInicio");
+            },
           }}
         />
         <Input
