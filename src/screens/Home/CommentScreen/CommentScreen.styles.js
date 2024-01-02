@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   center: {
     // alignItems: "center",
     justifyContent: "space-between",
-    marginRight: 5,
+    // marginRight: 5,
   },
   row2: {
     flexDirection: "row",

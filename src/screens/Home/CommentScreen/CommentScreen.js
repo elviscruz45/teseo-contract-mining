@@ -160,34 +160,45 @@ function CommentScreen(props) {
         // keyboardShouldPersistTaps="handled" // Ensure taps are handled when the keyboard is open
       >
         <Text></Text>
-
-        <View style={{ flexDirection: "row", alignSelf: "center" }}>
-          <Text
-            style={{
-              color: "black",
-              fontWeight: "700",
-              textAlign: "center",
-              // alignSelf: "center",
-
-              fontSize: 15,
-              paddingHorizontal: 30,
-            }}
-            onPress={() => goToServiceInfo()}
-          >
-            {Item?.AITNombreServicio}
+        <View style={[styles.row5, styles.center]}>
+          <Text style={{ margin: 5, color: "#5B5B5B" }}>
+            {"Fecha:  "}
+            {Item?.fechaPostFormato}
           </Text>
-
-          {/* <Text></Text> */}
+          {Item?.pdfPrincipal && (
+            <TouchableOpacity
+              onPress={() => uploadFile(Item.pdfPrincipal)}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginRight: "2%",
+              }}
+            >
+              <Icon type="material-community" name="paperclip" />
+            </TouchableOpacity>
+          )}
         </View>
-        <Text></Text>
-
-        <Text></Text>
 
         <ImageExpo
           source={{ uri: Item?.fotoPrincipal }}
           style={styles.postPhoto}
           cachePolicy={"memory-disk"}
         />
+
+        <Text
+          style={{
+            color: "black",
+            fontWeight: "700",
+            textAlign: "center",
+            // alignSelf: "center",
+
+            fontSize: 15,
+            paddingHorizontal: 30,
+          }}
+          onPress={() => goToServiceInfo()}
+        >
+          {Item?.AITNombreServicio}
+        </Text>
         {props.email === Item?.emailPerfil && (
           <TouchableOpacity
             onPress={() => docDelete(Item.idDocFirestoreDB)}
@@ -202,8 +213,6 @@ function CommentScreen(props) {
             />
           </TouchableOpacity>
         )}
-        <Text></Text>
-        <Text></Text>
         <Text
           style={{
             // color: "black",
@@ -218,43 +227,11 @@ function CommentScreen(props) {
         <Text></Text>
         <Text
           style={{
-            // color: "black",
-            // fontWeight: "700",
-            // alignSelf: "center",
-            // fontSize: 20,
             paddingHorizontal: 5,
           }}
         >
           {Item?.comentarios}
         </Text>
-        <Text></Text>
-
-        <View style={[styles.row5, styles.center]}>
-          {Item?.pdfPrincipal && (
-            <>
-              <Text style={{ fontWeight: "bold", alignSelf: "center" }}>
-                {" "}
-                Archivo Adjunto:
-              </Text>
-              <TouchableOpacity
-                onPress={() => uploadFile(Item.pdfPrincipal)}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginRight: 60,
-                }}
-              >
-                <Icon type="material-community" name="paperclip" />
-                <Text>Pdf</Text>
-              </TouchableOpacity>
-            </>
-          )}
-
-          <Text style={{ margin: 5, color: "#5B5B5B" }}>
-            {"Fecha:  "}
-            {Item?.fechaPostFormato}
-          </Text>
-        </View>
         <Text></Text>
 
         <View style={styles.commentContainer}>

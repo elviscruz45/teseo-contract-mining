@@ -65,7 +65,11 @@ function SearchStackBare(props) {
       <Stack.Screen
         name={screen.search.search}
         component={SearchScreen}
-        options={{ title: " " }}
+        options={{
+          title: " ",
+          headerBackTitleVisible: false, // This hides the default back button
+          headerBackVisible: false,
+        }}
       />
       <Stack.Screen
         name={screen.search.item}
@@ -98,8 +102,8 @@ function SearchStackBare(props) {
                 //     routes: [{ name: screen.search.search }],
                 //   })
                 // }
-                // onPress={() => navigation.navigate(screen.search.search)}
                 onPress={() => navigation.navigate(screen.search.search)}
+                // onPress={() => navigation.navigate(screen.search.search)}
                 style={{ marginLeft: 0 }}
               >
                 <AntDesign name="arrowleft" size={24} color="black" />
@@ -107,6 +111,7 @@ function SearchStackBare(props) {
             ),
         }}
       />
+
       <Stack.Screen
         name={screen.search.moreDetail}
         component={MoreDetailScreen}
