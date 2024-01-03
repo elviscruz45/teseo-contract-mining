@@ -177,7 +177,7 @@ function EditAITNoReduxScreen(props) {
         Toast.show({
           type: "error",
           position: "bottom",
-          text1: "Error al tratar de subir estos datos",
+          text1: "Error al tratar de actualizar estos datos",
         });
       }
     },

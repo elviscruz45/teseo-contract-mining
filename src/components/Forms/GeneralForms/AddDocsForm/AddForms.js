@@ -26,7 +26,8 @@ export function AddDocsFormBare(props) {
   let shortNameFile = "";
 
   if (pickedDocument) {
-    shortNameFile = pickedDocument.replace(/%20/g, "_").split("/").pop();
+    shortNameFile = pickedDocument;
+    // shortNameFile = pickedDocument.replace(/%20/g, "_").split("/").pop();
   }
 
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
@@ -145,9 +146,9 @@ export function AddDocsFormBare(props) {
         copyToCacheDirectory: false,
       });
       if (result.type === "success") {
-        setPickedDocument(result.uri);
+        setPickedDocument(result.name);
         formik.setFieldValue("pdfFile", result.uri);
-        formik.setFieldValue("FilenameTitle", shortNameFile);
+        formik.setFieldValue("FilenameTitle", result.name);
         console.log(result.uri);
         console.log(shortNameFile);
       } else {

@@ -3,15 +3,15 @@ export function initialValues() {
   return {
     titulo: "",
     comentarios: "",
-    visibilidad: "",
+    visibilidad: "Todos",
     etapa: "",
-    porcentajeAvance: "",
+    porcentajeAvance: "0",
     aprobacion: "",
     pdfFile: "",
     FilenameTitle: "",
-    MontoModificado: null,
+    MontoModificado: "0",
     NuevaFechaEstimada: null,
-    HHModificado: null,
+    HHModificado: "0",
     tipoFile: "",
   };
 }
@@ -20,7 +20,6 @@ export function validationSchema() {
   return Yup.object({
     titulo: Yup.string().required("Campo obligatorio"),
     comentarios: Yup.string().required("Campo obligatorio"),
-    visibilidad: Yup.string().required("Campo obligatorio"),
     etapa: Yup.string().required("Campo obligatorio"),
 
     // porcentajeAvance: Yup.string().required("Campo obligatorio"),
@@ -29,5 +28,6 @@ export function validationSchema() {
     // MontoModificado: Yup.string().required("Campo obligatorio"),
     // NuevaFechaEstimada: Yup.string().required("Campo obligatorio"),
     // HHModificado: Yup.string().required("Campo obligatorio"),
+    // visibilidad: Yup.string().required("Campo obligatorio"),
   });
 }

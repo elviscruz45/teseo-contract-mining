@@ -65,6 +65,8 @@ function PostStackBare(props) {
         component={ConnectedPostScreen}
         options={{
           title: " ",
+          headerBackTitleVisible: false, // This hides the default back button
+          headerBackVisible: false,
         }}
       />
       <Stack.Screen

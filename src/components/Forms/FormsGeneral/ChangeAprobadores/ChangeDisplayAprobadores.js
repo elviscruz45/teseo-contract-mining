@@ -19,6 +19,7 @@ export function ChangeDisplayAprobadores(props) {
           buttonStyle={styles.btn}
           onPress={() => {
             if (
+              etapa === "Usuario-Envio Solicitud Servicio" ||
               etapa === "Contratista-Envio Cotizacion" ||
               etapa === "Contratista-Solicitud Ampliacion Servicio" ||
               etapa === "Contratista-Envio EDP" ||
@@ -31,7 +32,7 @@ export function ChangeDisplayAprobadores(props) {
               Toast.show({
                 type: "error",
                 position: "bottom",
-                text1: "No requiere Aprobacion",
+                text1: "No requiere Aprobacion/No autorizado",
               });
               onClose();
             }

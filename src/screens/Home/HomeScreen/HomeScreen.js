@@ -81,7 +81,7 @@ function HomeScreen(props) {
           setPosts(lista);
           setCompanyName(companyName);
           props.saveTotalEventServiceAITList(lista);
-          console.log("events");
+          console.log("fetch events");
         });
         setIsLoading(false);
       }
@@ -112,7 +112,7 @@ function HomeScreen(props) {
             lista.push(doc.data());
           });
           props.saveApprovalListnew(lista);
-          console.log("approvals");
+          console.log("fetch approvals");
         });
       }
       fetchData();

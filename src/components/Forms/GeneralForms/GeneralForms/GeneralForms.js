@@ -38,7 +38,9 @@ function GeneralFormsBare(props) {
   let shortNameFile = "";
 
   if (pickedDocument) {
-    shortNameFile = pickedDocument.replace(/%20/g, "_").split("/").pop();
+    // shortNameFile = pickedDocument.replace(/%20/g, "_").split("/").pop();
+    shortNameFile = pickedDocument;
+    // console.log(shortNameFile);
   }
 
   //algorith to pick a pdf File to attach to the event
@@ -49,9 +51,11 @@ function GeneralFormsBare(props) {
         copyToCacheDirectory: false,
       });
       if (result.type === "success") {
-        setPickedDocument(result.uri);
+        setPickedDocument(result.name);
         formik.setFieldValue("pdfFile", result.uri);
-        formik.setFieldValue("FilenameTitle", shortNameFile);
+        formik.setFieldValue("FilenameTitle", result.name);
+        // console.log(shortNameFile);
+        // console.log(result.name); // This will log the file name
       } else {
         setPickedDocument(null);
       }
@@ -95,7 +99,6 @@ function GeneralFormsBare(props) {
   //function to format money
   const formatNumber = (item) => {
     const amount = item;
-
     const formattedAmount = new Intl.NumberFormat("en-US").format(amount);
     return formattedAmount;
   };
@@ -194,22 +197,6 @@ function GeneralFormsBare(props) {
   return (
     <View>
       <View style={styles.content}>
-        {/* <Text style={styles.subtitleForm}>Avance del Servicio:</Text> */}
-
-        {companyName !== "fmi" && (
-          <Input
-            value={visibilidad}
-            placeholder="Visibilidad del evento"
-            editable={false}
-            errorMessage={formik.errors.visibilidad}
-            rightIcon={{
-              type: "material-community",
-              name: "arrow-right-circle-outline",
-              onPress: () => selectComponent("visibilidad"),
-            }}
-          />
-        )}
-
         <Input
           value={etapa}
           placeholder="Etapa del Evento"
@@ -259,6 +246,22 @@ function GeneralFormsBare(props) {
           />
         )}
 
+        <Text style={styles.subtitleForm}>Opcional</Text>
+
+        {companyName !== "fmi" && (
+          <Input
+            value={visibilidad}
+            placeholder="Visibilidad del evento"
+            editable={false}
+            // errorMessage={formik.errors.visibilidad}
+            rightIcon={{
+              type: "material-community",
+              name: "arrow-right-circle-outline",
+              onPress: () => selectComponent("visibilidad"),
+            }}
+          />
+        )}
+
         <Input
           value={shortNameFile}
           placeholder="Adjuntar PDF"
@@ -287,7 +290,7 @@ function GeneralFormsBare(props) {
           />
         )}
 
-        <View style={styles.iconMinMax}>
+        {/* <View style={styles.iconMinMax}>
           <TouchableOpacity onPress={() => handlesetAditional()}>
             <Image
               source={require("../../../../../assets/plus3.png")}
@@ -301,9 +304,9 @@ function GeneralFormsBare(props) {
               style={styles.roundImageUploadmas}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        {aditional && (
+        {/* {aditional && (
           <>
             <Text style={styles.subtitleForm}>Modificaciones (*)</Text>
 
@@ -351,7 +354,7 @@ function GeneralFormsBare(props) {
               * No modificar sin aprobacion
             </Text>
           </>
-        )}
+        )} */}
       </View>
 
       <Modal show={showModal} close={onCloseOpenModal}>

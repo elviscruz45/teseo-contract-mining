@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "@rneui/themed";
 import { styles } from "./ChangeDisplayHH.styles";
+import Toast from "react-native-toast-message";
 
 export function ChangeDisplayHH(props) {
   const { onClose, setHorashombre, formik } = props;
@@ -25,9 +26,26 @@ export function ChangeDisplayHH(props) {
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
-            setHorashombre(text.toString());
-            onClose();
-            formik.setFieldValue("HorasHombre", text.toString());
+            if (isNaN(text)) {
+              Toast.show({
+                type: "error",
+                position: "bottom",
+                text1: "Ingrese un número válido",
+              });
+              onClose();
+            } else if (text.trim() === "" || text < 0) {
+              Toast.show({
+                type: "error",
+                position: "bottom",
+                text1: "Solo numeros mayores a 0",
+              });
+
+              onClose();
+            } else {
+              setHorashombre(text.toString());
+              onClose();
+              formik.setFieldValue("HorasHombre", text.toString());
+            }
           }}
           // loading={formik.isSubmitting}
         />

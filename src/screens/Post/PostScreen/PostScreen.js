@@ -27,22 +27,20 @@ function PostScreen(props) {
   function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
   }
+
   const regex = /@(.+?)\./i;
   const companyName =
     capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
 
   //retrieving serviceAIT list data from firebase
+  console.log("PostScreen");
   useEffect(() => {
     let servicesList = props.servicesData;
-    // servicesList?.sort((a, b) => {
-    //   return b.createdAt - a.createdAt;
-    // });
-    // setPosts(servicesList);
-
     if (Array.isArray(servicesList)) {
       servicesList.sort((a, b) => {
         return b.createdAt - a.createdAt;
       });
+
       setPosts(servicesList);
     }
   }, [props.servicesData]);
@@ -152,7 +150,6 @@ function PostScreen(props) {
     setAIT(AIT);
     props.saveActualServiceAIT(AIT);
   };
-  console.log("equipment", equipment);
   return (
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}

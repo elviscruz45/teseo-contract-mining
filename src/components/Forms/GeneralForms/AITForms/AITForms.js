@@ -237,6 +237,17 @@ export function AITForms(props) {
     <View>
       <View style={styles.content}>
         <Input
+          value={areaservicio}
+          placeholder="Area del Servicio a Realizar"
+          editable={false}
+          errorMessage={formik.errors.AreaServicio}
+          rightIcon={{
+            type: "material-community",
+            name: "arrow-right-circle-outline",
+            onPress: () => selectComponent("AreaServicio"),
+          }}
+        />
+        <Input
           value={formik.values.NombreServicio}
           placeholder="Nombre del Servicio"
           onChangeText={(text) => {
@@ -257,17 +268,6 @@ export function AITForms(props) {
 
         <Text style={styles.subtitleForm}>Detalles del Servicio</Text>
 
-        <Input
-          value={areaservicio}
-          placeholder="Area del Servicio a Realizar"
-          editable={false}
-          errorMessage={formik.errors.AreaServicio}
-          rightIcon={{
-            type: "material-community",
-            name: "arrow-right-circle-outline",
-            onPress: () => selectComponent("AreaServicio"),
-          }}
-        />
         <Input
           value={tiposervicio}
           placeholder="Tipo de Servicio"
