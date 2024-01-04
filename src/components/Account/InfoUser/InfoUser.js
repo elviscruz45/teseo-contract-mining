@@ -82,7 +82,10 @@ function InfoUser(props) {
           testID="avatar"
           rounded
           containerStyle={styles.avatar}
-          source={{ uri: props.user_photo }}
+          source={
+            { uri: props.user_photo } ??
+            require("../../../../assets/splash.png")
+          }
         >
           <Avatar.Accessory
             testID="avatar-accessory"

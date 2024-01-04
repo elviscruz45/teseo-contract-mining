@@ -166,7 +166,10 @@ function PostScreen(props) {
       <View style={styles.equipments2}>
         <View>
           <ImageExpo
-            source={{ uri: props.user_photo }}
+            source={
+              { uri: props.user_photo } ??
+              require("../../../../assets/splash.png")
+            }
             style={styles.roundImage}
             cachePolicy={"memory-disk"}
           />

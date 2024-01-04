@@ -67,7 +67,7 @@ function ProfileScreen(props) {
       return b.createdAt - a.createdAt;
     });
 
-    setPost(EventList.slice(0, 100));
+    setPost(EventList?.slice(0, 100));
   }, [props.totalEventServiceAITLIST, removeFilter]);
 
   useEffect(() => {
