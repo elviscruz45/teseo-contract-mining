@@ -105,7 +105,6 @@ function HomeScreen(props) {
           orderBy("date", "desc"),
           where("ApprovalRequestSentTo", "array-contains", props.email)
         );
-
         unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
           const lista = [];
           ItemFirebase.forEach((doc) => {

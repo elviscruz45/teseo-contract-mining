@@ -29,9 +29,7 @@ export const styles = StyleSheet.create({
     height: 80,
     marginRight: 15,
   },
-  name: {
-    fontWeight: "bold",
-  },
+
   info: {
     color: "#828282",
     paddingRight: 100,
@@ -86,7 +84,7 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
-    marginRight: 100,
+    marginRight: "30%",
     textAlign: "center",
   },
   info: {

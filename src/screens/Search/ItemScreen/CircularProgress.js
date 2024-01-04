@@ -25,6 +25,7 @@ export const CircularProgress = ({
   image,
   titulo,
 }) => {
+  console.log("CircularProgress");
   const [avatar, setAvatar] = useState();
 
   const data = [
@@ -126,9 +127,9 @@ export const CircularProgress = ({
       >
         <Avatar.Accessory size={30} onPress={changeAvatar} />
       </Avatar>
-      {avatar ? (
+      {image ? (
         <ImageExpo
-          source={{ uri: avatar }}
+          source={{ uri: image }}
           style={
             Platform.OS === "ios"
               ? {
@@ -151,9 +152,9 @@ export const CircularProgress = ({
                 }
           }
         />
-      ) : image ? (
+      ) : imageSourceDefault ? (
         <ImageExpo
-          source={{ uri: image }}
+          source={imageSourceDefault}
           style={
             Platform.OS === "ios"
               ? {

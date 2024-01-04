@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Alert, Text } from "react-native";
+import { View, Alert, Text, ScrollView } from "react-native";
 import { Input, Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import Toast from "react-native-toast-message";
@@ -142,25 +142,32 @@ function ChangeManPowerBare(props) {
   });
 
   return (
-    <>
+    <ScrollView>
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"1."}
-        </Text>
         <Input
-          placeholder="Total Reparacion"
+          // placeholder="Total Reparacion"
           keyboardType="numeric"
           multiline={true}
+          label="Total Reparacion"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           onChangeText={(text) => formik.setFieldValue("TotalReparacion", text)}
           // errorMessage={formik.errors.displayNameform}
         />
       </View>
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"2."}
-        </Text>
         <Input
-          placeholder="Disponible Reparacion"
+          label="Disponible Reparacion"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
           multiline={true}
           onChangeText={(text) => formik.setFieldValue("Reparacion", text)}
@@ -169,11 +176,14 @@ function ChangeManPowerBare(props) {
       </View>
 
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"3."}
-        </Text>
         <Input
-          placeholder="Total Fabricacion"
+          label="Total Fabricacion"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
           multiline={true}
           onChangeText={(text) =>
@@ -184,11 +194,14 @@ function ChangeManPowerBare(props) {
       </View>
 
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"4."}
-        </Text>
         <Input
-          placeholder="Disponible Fabricacion"
+          label="Disponible Fabricacion"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
           multiline={true}
           onChangeText={(text) => formik.setFieldValue("Fabricacion", text)}
@@ -197,11 +210,14 @@ function ChangeManPowerBare(props) {
       </View>
 
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"5."}
-        </Text>
         <Input
-          placeholder="Total Ingenieria"
+          label="Total Ingenieria"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
           multiline={true}
           onChangeText={(text) => formik.setFieldValue("TotalIngenieria", text)}
@@ -210,11 +226,14 @@ function ChangeManPowerBare(props) {
       </View>
 
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"6."}
-        </Text>
         <Input
-          placeholder="Disponible Ingenieria"
+          label="Disponible Ingenieria"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
           multiline={true}
           onChangeText={(text) => formik.setFieldValue("Ingenieria", text)}
@@ -223,11 +242,14 @@ function ChangeManPowerBare(props) {
       </View>
 
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"7."}
-        </Text>
         <Input
-          placeholder="Total Maquinado"
+          label="Total Maquinado"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
           multiline={true}
           onChangeText={(text) => formik.setFieldValue("TotalMaquinado", text)}
@@ -236,13 +258,16 @@ function ChangeManPowerBare(props) {
       </View>
 
       <View style={[styles.row, styles.center]}>
-        <Text style={{ fontSize: 24, fontWeight: "200", marginBottom: 25 }}>
-          {"8."}
-        </Text>
         <Input
-          placeholder="Disponible Maquinado"
+          label="Disponible Maquinado"
+          labelStyle={{
+            position: "absolute",
+            bottom: 8,
+            marginLeft: 10,
+            fontSize: 12,
+          }}
           keyboardType="numeric"
-          multiline={true}
+          multiline={false}
           onChangeText={(text) => formik.setFieldValue("Maquinado", text)}
           // errorMessage={formik.errors.cargo}
         />
@@ -255,7 +280,7 @@ function ChangeManPowerBare(props) {
         onPress={formik.handleSubmit}
         loading={formik.isSubmitting}
       />
-    </>
+    </ScrollView>
   );
 }
 

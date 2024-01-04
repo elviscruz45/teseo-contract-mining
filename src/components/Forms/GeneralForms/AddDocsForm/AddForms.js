@@ -90,7 +90,11 @@ export function AddDocsFormBare(props) {
 
         await updateDoc(RefFirebaseLasEventPostd, updatedData);
         console.log(newData);
-        navigation.navigate(screen.search.search);
+        navigation.goBack();
+        navigation.goBack();
+
+        // screen.search.pdf
+        // navigation.navigate(screen.search.item);
 
         Toast.show({
           type: "success",
@@ -101,7 +105,7 @@ export function AddDocsFormBare(props) {
         Toast.show({
           type: "error",
           position: "bottom",
-          text1: "Error al tratar de subir estos datos",
+          text1: "Error al tratar de subir documento",
         });
         // console.log(error);
       }

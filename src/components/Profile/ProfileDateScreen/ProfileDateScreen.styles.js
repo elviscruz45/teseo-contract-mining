@@ -97,12 +97,14 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5, // Rounded corners
     opacity: 1,
+    borderWidth: 3,
+    borderColor: "black",
   },
   filterbutton2: {
     backgroundColor: "#2A3B76", // Background color of the button
     padding: 10,
     borderRadius: 5, // Rounded corners
-    opacity: 0.8,
+    opacity: 1,
   },
   filterButtonText: {
     color: "#fff", // Text color

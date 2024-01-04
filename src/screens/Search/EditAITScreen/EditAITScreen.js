@@ -20,7 +20,6 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { AITForms } from "../../../components/Forms/GeneralForms/AITForms/AITForms";
-import { areaLists } from "../../../utils/areaList";
 import { saveTotalUsers } from "../../../actions/post";
 import Toast from "react-native-toast-message";
 
@@ -161,7 +160,7 @@ function EditAITNoReduxScreen(props) {
           updateDataLasEventPost.HorasHombre = newData.HorasHombre;
         }
 
-        console.log("updateDataLasEventPost", updateDataLasEventPost);
+        console.log("updateDataLasEventPost");
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
 
         // this hedlps to go to the begining of the process

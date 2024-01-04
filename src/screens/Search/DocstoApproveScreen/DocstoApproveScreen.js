@@ -14,7 +14,16 @@ import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
 
 import { update_firebaseProfile } from "../../../actions/profile";
-import { arrayUnion, updateDoc, doc } from "firebase/firestore";
+import {
+  arrayUnion,
+  updateDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
 
@@ -73,11 +82,40 @@ function DocstoApproveScreenBare(props) {
   };
 
   useEffect(() => {
-    let ApprovalList = props.approvalListNew;
-    const filteredArray = ApprovalList.filter(
-      (element) => element.IdAITService === Item.idServiciosAIT
-    );
-    setApproval(filteredArray);
+    async function fetchData() {
+      try {
+        const queryRef1 = query(
+          collection(db, "approvals"),
+          where("IdAITService", "==", Item.idServiciosAIT),
+          orderBy("date", "desc")
+        );
+        const getDocs1 = await getDocs(queryRef1);
+        const lista = [];
+        // Process results from the first query
+        if (getDocs1) {
+          getDocs1.forEach((doc) => {
+            lista.push(doc.data());
+          });
+        }
+
+        setApproval(lista);
+      } catch (error) {
+        // console.error("Error fetching data:", error);
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al cargar los datos",
+        });
+        // Handle the error as needed
+      }
+      // let ApprovalList = props.approvalListNew;
+      // const filteredArray = ApprovalList.filter(
+      //   (element) => element.IdAITService === Item.idServiciosAIT
+      // );
+      // setApproval(filteredArray);
+    }
+
+    fetchData();
   }, [props.approvalListNew]);
 
   // create a function that uses MailComposer to send an email

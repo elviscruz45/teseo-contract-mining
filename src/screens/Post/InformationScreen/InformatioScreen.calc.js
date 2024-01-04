@@ -47,7 +47,12 @@ export const useUserData = (email, saveTotalUsers) => {
           // Save the merged results to the state or do any other necessary operations
           saveTotalUsers(lista);
         } catch (error) {
-          console.error("Error fetching data:", error);
+          // console.error("Error fetching data:", error);
+          Toast.show({
+            type: "error",
+            position: "bottom",
+            text1: "Error al cargar los datos",
+          });
           // Handle the error as needed
         }
       }

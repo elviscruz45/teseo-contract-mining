@@ -89,7 +89,7 @@ function InformationScreen(props) {
             NombreServicio: props.actualServiceAIT.NombreServicio,
             NumeroServicio: props.actualServiceAIT.NumeroAIT,
             IdAITService: props.actualServiceAIT.idServiciosAIT,
-            fileName: newData.pdfFile.replace(/%20/g, "_").split("/").pop(),
+            fileName: newData.FilenameTitle,
             pdfFile: imageUrlPDF ?? "",
             tipoFile: newData.tipoFile,
             ApprovalRequestedBy: props.email,
@@ -193,10 +193,7 @@ function InformationScreen(props) {
         }
         if (imageUrlPDF) {
           const file = {
-            FilenameTitle: newData.pdfFile
-              .replace(/%20/g, "_")
-              .split("/")
-              .pop(),
+            FilenameTitle: newData.FilenameTitle,
             pdfPrincipal: imageUrlPDF,
             tipoFile: newData.tipoFile,
             email: props.email,

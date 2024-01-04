@@ -16,6 +16,7 @@ import { Image as ImageExpo } from "expo-image";
 import Toast from "react-native-toast-message";
 
 function PostScreen(props) {
+  console.log("PostScreen");
   const emptyimage = require("../../../../assets/splash.png");
   const navigation = useNavigation();
   const [equipment, setEquipment] = useState(null);
