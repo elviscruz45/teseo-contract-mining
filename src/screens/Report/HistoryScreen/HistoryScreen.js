@@ -30,7 +30,7 @@ import { Modal } from "../../../components/shared/Modal";
 import { ChangeDisplayCompany } from "../../../components/Forms/ReportScreen/ChangeCompany/ChangeCompany";
 
 const HistoryScreenNoRedux = (props) => {
-  console.log("HistoryScreen");
+  // console.log("HistoryScreen");
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
   const [company, setCompany] = useState("TOTAL CONTRATISTAS");

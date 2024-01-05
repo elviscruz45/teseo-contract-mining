@@ -18,7 +18,7 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
-  console.log("ProfileScreen");
+  // console.log("ProfileScreen");
 
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);

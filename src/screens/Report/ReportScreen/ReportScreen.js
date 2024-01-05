@@ -24,7 +24,7 @@ const ReportScreenNoRedux = (props) => {
   const [renderComponent, setRenderComponent] = useState(null);
   const [company, setCompany] = useState("TOTAL CONTRATISTAS");
   const [companyList, setCompanyList] = useState();
-  console.log(company);
+  // console.log(company);
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
   const update_Data = () => {
@@ -156,7 +156,7 @@ const ReportScreenNoRedux = (props) => {
           ) : (
             <Text style={styles.company}>{company}</Text>
           )}
-          {(company !== "FMI" || company !== "TOTAL CONTRATISTAS") && (
+          {company !== "FMI" && company !== "TOTAL CONTRATISTAS" && (
             <RecursosHumanos company={company} />
           )}
 

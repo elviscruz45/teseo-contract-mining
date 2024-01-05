@@ -161,7 +161,6 @@ function MoreDetailScreenNoRedux(props) {
 
   // go to edit screen
   const goToEditAITScreen = (item) => {
-    console.log("hoal");
     navigation.navigate(screen.search.tab, {
       screen: screen.search.editAIT,
       params: { Item: item },

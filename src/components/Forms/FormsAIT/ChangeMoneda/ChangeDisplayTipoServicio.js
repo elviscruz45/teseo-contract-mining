@@ -23,7 +23,6 @@ export function ChangeDisplayMoneda(props) {
             formik.setFieldValue("Moneda", text.toString());
             onClose();
           }}
-          // loading={formik2.isSubmitting}
         />
       </View>
     </View>

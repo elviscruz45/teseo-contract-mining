@@ -55,7 +55,8 @@ function AITNoReduxScreen(props) {
           );
 
           const getDocs1 = await getDocs(queryRef1);
-          const getDocs2 = await getDocs(queryRef2);
+          const getDocs2 =
+            companyName !== "fmi" ? await getDocs(queryRef2) : null;
 
           const lista = [];
 
@@ -72,6 +73,12 @@ function AITNoReduxScreen(props) {
               lista.push(doc.data());
             });
           }
+
+          // //avoid duplicates of email of lista
+          // const unique = lista.filter(
+          //   (v, i, a) => a.findIndex((t) => t.email === v.email) === i
+          // );
+
           // Save the merged results to the state or do any other necessary operations
           props.saveTotalUsers(lista);
         } catch (error) {

@@ -27,7 +27,8 @@ export const useUserData = (email, saveTotalUsers) => {
           );
 
           const getDocs1 = await getDocs(queryRef1);
-          const getDocs2 = await getDocs(queryRef2);
+          const getDocs2 =
+            companyName !== "fmi" ? await getDocs(queryRef2) : null;
 
           const lista = [];
 

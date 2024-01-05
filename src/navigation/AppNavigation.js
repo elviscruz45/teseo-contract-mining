@@ -11,7 +11,7 @@ import { ReportStack } from "./ReportStack";
 
 export function AppNavigation() {
   const Tab = createBottomTabNavigator();
-  console.log("AppNavigation");
+  // console.log("AppNavigation");
 
   return (
     <Tab.Navigator

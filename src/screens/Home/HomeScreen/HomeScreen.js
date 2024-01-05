@@ -40,7 +40,7 @@ function HomeScreen(props) {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
   }
   const regex = /@(.+?)\./i;
-  console.log("HomeScreen");
+  // console.log("HomeScreen");
 
   // this useEffect is used to retrive all data from firebase
 
@@ -81,7 +81,7 @@ function HomeScreen(props) {
           setPosts(lista);
           setCompanyName(companyName);
           props.saveTotalEventServiceAITList(lista);
-          console.log("fetch events");
+          // console.log("fetch events");
         });
         setIsLoading(false);
       }
@@ -111,7 +111,7 @@ function HomeScreen(props) {
             lista.push(doc.data());
           });
           props.saveApprovalListnew(lista);
-          console.log("fetch approvals");
+          // console.log("fetch approvals");
         });
       }
       fetchData();
@@ -227,7 +227,7 @@ function HomeScreen(props) {
   } else {
     return (
       <>
-        {console.log("HomeScreenRender")}
+        {/* {console.log("HomeScreenRender")} */}
         <FlatList
           data={posts}
           ListHeaderComponent={<HeaderScreen />}

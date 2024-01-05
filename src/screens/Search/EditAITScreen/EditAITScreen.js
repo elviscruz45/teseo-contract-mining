@@ -58,8 +58,8 @@ function EditAITNoReduxScreen(props) {
           );
 
           const getDocs1 = await getDocs(queryRef1);
-          const getDocs2 = await getDocs(queryRef2);
-
+          const getDocs2 =
+            companyName !== "fmi" ? await getDocs(queryRef2) : null;
           const lista = [];
 
           // Process results from the first query
@@ -160,7 +160,7 @@ function EditAITNoReduxScreen(props) {
           updateDataLasEventPost.HorasHombre = newData.HorasHombre;
         }
 
-        console.log("updateDataLasEventPost");
+        // console.log("updateDataLasEventPost");
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
 
         // this hedlps to go to the begining of the process

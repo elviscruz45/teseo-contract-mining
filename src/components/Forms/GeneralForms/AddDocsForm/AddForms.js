@@ -89,7 +89,7 @@ export function AddDocsFormBare(props) {
         };
 
         await updateDoc(RefFirebaseLasEventPostd, updatedData);
-        console.log(newData);
+        // console.log(newData);
         navigation.goBack();
         navigation.goBack();
 
@@ -153,8 +153,8 @@ export function AddDocsFormBare(props) {
         setPickedDocument(result.name);
         formik.setFieldValue("pdfFile", result.uri);
         formik.setFieldValue("FilenameTitle", result.name);
-        console.log(result.uri);
-        console.log(shortNameFile);
+        // console.log(result.uri);
+        // console.log(shortNameFile);
       } else {
         setPickedDocument(null);
       }

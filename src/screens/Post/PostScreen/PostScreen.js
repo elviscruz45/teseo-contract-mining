@@ -16,7 +16,7 @@ import { Image as ImageExpo } from "expo-image";
 import Toast from "react-native-toast-message";
 
 function PostScreen(props) {
-  console.log("PostScreen");
+  // console.log("PostScreen");
   const emptyimage = require("../../../../assets/splash.png");
   const navigation = useNavigation();
   const [equipment, setEquipment] = useState(null);
@@ -34,7 +34,7 @@ function PostScreen(props) {
     capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
 
   //retrieving serviceAIT list data from firebase
-  console.log("PostScreen");
+  // console.log("PostScreen");
   useEffect(() => {
     let servicesList = props.servicesData;
     if (Array.isArray(servicesList)) {
@@ -138,10 +138,6 @@ function PostScreen(props) {
     const indexareaList = areaLists.findIndex((item) => item.value === area);
     const imageSource = areaLists[indexareaList]?.image;
     const imageUpdated = AIT.photoServiceURL;
-    console.log("oaaaa", indexareaList);
-    console.log("oaaaa", areaLists[indexareaList]);
-    console.log("oaaaa", imageSource);
-    console.log("byeee", imageUpdated);
 
     if (imageUpdated) {
       setEquipment({ uri: imageUpdated });

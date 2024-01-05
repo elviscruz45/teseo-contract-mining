@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.elviscruz29.teseotracking"
     },
     "web": {
       "favicon": "./assets/favicon.png"

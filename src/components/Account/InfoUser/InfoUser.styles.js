@@ -12,10 +12,6 @@ export const styles = StyleSheet.create({
   },
   avatar: {
     marginRight: 20,
-    // backgroundColor: "green",
-    // width: 100,
-    // height: 100,
-    // borderRadius: 200,
     borderWidth: 0.5,
   },
   displayName: {
@@ -23,13 +19,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   detalles: {
-    flexDirection: "row", // Set direction to row for horizontal layout
-    // justifyContent: "space-between", // Optional: adjust spacing between items
-    // alignItems: "center", // Optional: adjust vertical alignment of items
-    // alignContent: "center",
-    // justifyContent: "left",
-    // marginLeft: 15,
-    // paddingRight: 40,
+    flexDirection: "row",
   },
   icon: {
     color: "grey",
@@ -40,7 +30,6 @@ export const styles = StyleSheet.create({
     width: 50,
     height: 50,
     zIndex: 122,
-    // borderRadius: 50, // half of width and height
   },
   roundImageUpload2: {
     width: 30,

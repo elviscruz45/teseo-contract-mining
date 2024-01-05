@@ -9,17 +9,26 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
+//--------------Teso-fmi-prodise--------------
+const firebaseConfig = {
+  apiKey: "AIzaSyCV-_gjkUhNKX0x0J0qZRQmhTUsziN7k4I",
+  authDomain: "teseo-fmi-prodise.firebaseapp.com",
+  projectId: "teseo-fmi-prodise",
+  storageBucket: "teseo-fmi-prodise.appspot.com",
+  messagingSenderId: "629895390761",
+  appId: "1:629895390761:web:6304c7338934889fac5e38",
+};
 // ---------Prueba------
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD12JVsdmR1IMXdbtW3EXtWxYzgAsD07MI",
-  authDomain: "teseo-app-81d77.firebaseapp.com",
-  projectId: "teseo-app-81d77",
-  storageBucket: "teseo-app-81d77.appspot.com",
-  messagingSenderId: "794583488224",
-  appId: "1:794583488224:web:f3a6076c904aa1c6352285",
-  measurementId: "G-M2CMHVRCN9",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyD12JVsdmR1IMXdbtW3EXtWxYzgAsD07MI",
+//   authDomain: "teseo-app-81d77.firebaseapp.com",
+//   projectId: "teseo-app-81d77",
+//   storageBucket: "teseo-app-81d77.appspot.com",
+//   messagingSenderId: "794583488224",
+//   appId: "1:794583488224:web:f3a6076c904aa1c6352285",
+//   measurementId: "G-M2CMHVRCN9",
+// };
 //---------Cerro Verde------
 
 // const firebaseConfig = {

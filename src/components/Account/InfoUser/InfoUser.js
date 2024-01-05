@@ -20,7 +20,7 @@ function InfoUser(props) {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
   const navigation = useNavigation();
-  console.log(props.profile?.userType);
+  // console.log(props.profile?.userType);
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

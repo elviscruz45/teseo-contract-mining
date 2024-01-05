@@ -142,7 +142,7 @@ function ItemScreenNotRedux(props) {
             setPost(lista);
           } else {
             const filteredLista = lista.filter((item) => {
-              return item.visibilidad === "Solo Empresa Contratista";
+              return item.visibilidad === "Todos";
             });
 
             setPost(filteredLista);

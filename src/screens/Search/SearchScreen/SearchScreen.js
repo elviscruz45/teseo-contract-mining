@@ -10,7 +10,7 @@ import { EquipmentListUpper } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
 
 function SearchScreenNoRedux(props) {
-  console.log("SearchScreenNoRedux");
+  // console.log("SearchScreenNoRedux");
   let AITServiceList;
   const [data, setData] = useState(null);
   const [searchText, setSearchText] = useState("");
@@ -74,7 +74,7 @@ function SearchScreenNoRedux(props) {
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-      {console.log("SearchItem")}
+      {/* {console.log("SearchItem")} */}
 
       <FlatList
         data={searchResults}

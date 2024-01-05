@@ -34,7 +34,7 @@ import Toast from "react-native-toast-message";
 function CommentScreen(props) {
   const [postsComments, setPostsComments] = useState([]);
   const [comment, setComment] = useState("");
-  console.log("CommentScreen");
+  // console.log("CommentScreen");
 
   const navigation = useNavigation();
   const {
@@ -141,6 +141,11 @@ function CommentScreen(props) {
             };
 
             await updateDoc(Ref, updatedData);
+            Toast.show({
+              type: "success",
+              position: "bottom",
+              text1: "Se ha eliminado correctamente",
+            });
           },
         },
       ],

@@ -19,7 +19,7 @@ function HomeStack(props) {
   const navigation = useNavigation();
   const user = getAuth().currentUser;
   const { uid, photoURL, displayName, email } = user;
-  console.log("HomeStack");
+  // console.log("HomeStack");
 
   useEffect(() => {
     if (user) {
@@ -48,7 +48,7 @@ function HomeStack(props) {
 
   return (
     <>
-      {console.log("HomeStackRender")}
+      {/* {console.log("HomeStackRender")} */}
       <Stack.Navigator
         screenOptions={{
           headerShown: true,

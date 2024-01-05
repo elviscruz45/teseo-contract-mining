@@ -100,7 +100,7 @@ function DocstoApproveScreenBare(props) {
 
         setApproval(lista);
       } catch (error) {
-        // console.error("Error fetching data:", error);
+        console.error("Error fetching data:", error);
         Toast.show({
           type: "error",
           position: "bottom",

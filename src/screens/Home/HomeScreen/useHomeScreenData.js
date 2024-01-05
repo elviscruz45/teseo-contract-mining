@@ -65,7 +65,7 @@ export const useHomeScreenData = (
           setPosts(lista);
           setCompanyName(companyName);
           saveTotalEventServiceAITList(lista);
-          console.log("events");
+          // console.log("events");
         });
         setIsLoading(false);
       }
@@ -96,7 +96,7 @@ export const useHomeScreenData = (
             lista.push(doc.data());
           });
           saveApprovalListnew(lista);
-          console.log("approvals");
+          // console.log("approvals");
         });
       }
       fetchData();

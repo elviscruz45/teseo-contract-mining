@@ -7,7 +7,6 @@ import { Platform, Button } from "react-native";
 export function ChangeDisplayFechaInicio(props) {
   const { onClose, formik, setFechaInicio, showTimePicker, setShowTimePicker } =
     props;
-  console.log("com oestas");
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -23,7 +22,7 @@ export function ChangeDisplayFechaInicio(props) {
   };
   useEffect(() => {
     if (show === false) setShow(true);
-    console.log("useEffect");
+    // console.log("useEffect");
   }, []);
 
   const showMode = () => {
