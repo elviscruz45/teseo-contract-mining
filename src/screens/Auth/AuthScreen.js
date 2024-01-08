@@ -32,12 +32,12 @@ export function AuthScreen(props) {
       <View>
         <ConnectedLoginForm />
 
-        <Text style={styles.textRegister}>
+        {/* <Text style={styles.textRegister}>
           ¿Aún no tienes cuenta:{" "}
           <Text style={styles.btnRegister} onPress={goToRegister}>
             Regístrarse
           </Text>
-        </Text>
+        </Text> */}
       </View>
     </KeyboardAwareScrollView>
   );

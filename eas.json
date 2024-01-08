@@ -12,5 +12,14 @@
     "production": {
       "channel": "production"
     }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "elviscruz45@gmail.com",
+        "ascAppId": "6473748697",
+        "appleTeamId": "LKTS9BPGFL"
+      }
+    }
   }
 }
