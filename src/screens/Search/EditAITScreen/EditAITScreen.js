@@ -24,7 +24,6 @@ import { saveTotalUsers } from "../../../actions/post";
 import Toast from "react-native-toast-message";
 
 function EditAITNoReduxScreen(props) {
-  const emptyimage = require("../../../../assets/splash.png");
   const navigation = useNavigation();
   const [tituloserv, setTituloserv] = useState();
   const [ait, setAit] = useState();
@@ -82,9 +81,9 @@ function EditAITNoReduxScreen(props) {
           // Handle the error as needed
         }
       }
+      fetchData();
     }
     // Call the fetchData function when the component mounts
-    fetchData();
   }, [props.email]);
 
   const formik = useFormik({
