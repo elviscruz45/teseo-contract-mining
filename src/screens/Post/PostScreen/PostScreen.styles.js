@@ -71,6 +71,7 @@ export const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     margin: 5,
+    alignSelf: "center",
   },
 
   // roundImageUpload: {
@@ -186,16 +187,24 @@ export const styles = StyleSheet.create({
   },
   equipments2: {
     flexDirection: "row",
-    // margin: 10,
-    padding: 10,
-    paddingHorizontal: 30,
-    width: "75%",
+    margin: 10,
+    // padding: 10,
+    // paddingHorizontal: 30,
+    // width: "75%",
+
+    alignSelf: "center",
     // alignItems: "center", // Align contents vertically
-    // backgroundColor: "white", // Add backgroundColor here
+    // backgroundColor: "red", // Add backgroundColor here
   },
   name: {
     fontWeight: "bold",
     marginRight: 65,
+  },
+  name2: {
+    fontWeight: "bold",
+
+    alignSelf: "center",
+    alignContent: "center",
   },
   info: {
     color: "#828282",

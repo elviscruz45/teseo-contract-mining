@@ -186,7 +186,7 @@ function PostScreen(props) {
 
       {props.firebase_user_name && (
         <View style={styles.equipments2}>
-          <View>
+          {/* <View>
             <ImageExpo
               source={
                 { uri: props.user_photo } ??
@@ -212,7 +212,7 @@ function PostScreen(props) {
               containerStyle={styles.btnContainer1}
               // onPress={() => goToEdit(item, index)}
             />
-          </View>
+          </View> */}
 
           <View>
             <ImageExpo
@@ -222,12 +222,12 @@ function PostScreen(props) {
             />
 
             <View>
-              <Text style={styles.name}>
-                {equipment ? AIT?.TipoServicio : "Escoge AIT"}
+              <Text style={styles.name2}>
+                {equipment ? AIT?.NombreServicio : "Escoge El Servicio"}
               </Text>
-              <Text style={styles.info}>
+              {/* <Text style={styles.info}>
                 {equipment ? `Serv:${AIT?.NumeroAIT}` : "de la lista"}
-              </Text>
+              </Text> */}
             </View>
           </View>
         </View>
