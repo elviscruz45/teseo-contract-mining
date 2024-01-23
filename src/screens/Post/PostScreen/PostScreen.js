@@ -147,6 +147,30 @@ function PostScreen(props) {
     setAIT(AIT);
     props.saveActualServiceAIT(AIT);
   };
+
+  // if (!AIT) {
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         backgroundColor: "white",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //       }}
+  //     >
+  //       <Text
+  //         style={{
+  //           fontSize: 50,
+  //           // fontFamily: "Arial",
+  //           color: "#2A3B76",
+  //         }}
+  //       >
+  //         Bienvenido
+  //       </Text>
+  //     </View>
+  //   );
+  // }
+
   return (
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}
@@ -159,52 +183,55 @@ function PostScreen(props) {
         lightTheme={true}
         inputContainerStyle={{ backgroundColor: "white" }}
       />
-      <View style={styles.equipments2}>
-        <View>
-          <ImageExpo
-            source={
-              { uri: props.user_photo } ??
-              require("../../../../assets/splash.png")
-            }
-            style={styles.roundImage}
-            cachePolicy={"memory-disk"}
-          />
-          <View>
-            <Text style={styles.name}>
-              {props.firebase_user_name || "Anónimo"}
-            </Text>
-            <Text style={styles.info}>{props.email}</Text>
-          </View>
-        </View>
-        <View>
-          <Icon
-            // reverse
-            type="material-community"
-            name="arrow-right-bold"
-            color="#384967"
-            size={25}
-            containerStyle={styles.btnContainer1}
-            // onPress={() => goToEdit(item, index)}
-          />
-        </View>
 
-        <View>
-          <ImageExpo
-            source={equipment ?? emptyimage}
-            style={styles.roundImage}
-            cachePolicy={"memory-disk"}
-          />
+      {props.firebase_user_name && (
+        <View style={styles.equipments2}>
+          <View>
+            <ImageExpo
+              source={
+                { uri: props.user_photo } ??
+                require("../../../../assets/splash.png")
+              }
+              style={styles.roundImage}
+              cachePolicy={"memory-disk"}
+            />
+            <View>
+              <Text style={styles.name}>
+                {props.firebase_user_name || "Anónimo"}
+              </Text>
+              <Text style={styles.info}>{props.email}</Text>
+            </View>
+          </View>
+          <View>
+            <Icon
+              // reverse
+              type="material-community"
+              name="arrow-right-bold"
+              color="#384967"
+              size={25}
+              containerStyle={styles.btnContainer1}
+              // onPress={() => goToEdit(item, index)}
+            />
+          </View>
 
           <View>
-            <Text style={styles.name}>
-              {equipment ? AIT?.TipoServicio : "Escoge AIT"}
-            </Text>
-            <Text style={styles.info}>
-              {equipment ? `Serv:${AIT?.NumeroAIT}` : "de la lista"}
-            </Text>
+            <ImageExpo
+              source={equipment ?? emptyimage}
+              style={styles.roundImage}
+              cachePolicy={"memory-disk"}
+            />
+
+            <View>
+              <Text style={styles.name}>
+                {equipment ? AIT?.TipoServicio : "Escoge AIT"}
+              </Text>
+              <Text style={styles.info}>
+                {equipment ? `Serv:${AIT?.NumeroAIT}` : "de la lista"}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      )}
       {props.firebase_user_name && (
         <View
           style={{

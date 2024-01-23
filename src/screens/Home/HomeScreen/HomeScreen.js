@@ -189,7 +189,6 @@ function HomeScreen(props) {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-
   if (
     posts?.length === 0 ||
     !props.email ||

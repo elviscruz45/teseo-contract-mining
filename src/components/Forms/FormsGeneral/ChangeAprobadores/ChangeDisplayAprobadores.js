@@ -25,8 +25,8 @@ export function ChangeDisplayAprobadores(props) {
               etapa === "Contratista-Envio EDP" ||
               etapa === "Contratista-Solicitud Aprobacion Doc"
             ) {
-              setAprobadores(text.join(","));
-              formik.setFieldValue("aprobacion", text.join(","));
+              setAprobadores(text?.join(","));
+              formik.setFieldValue("aprobacion", text?.join(","));
               onClose();
             } else {
               Toast.show({

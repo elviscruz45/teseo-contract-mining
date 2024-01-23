@@ -1,4 +1,4 @@
-import { TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
@@ -13,6 +13,7 @@ import { update_firebaseUserName } from "../actions/profile";
 import { update_firebaseEmail } from "../actions/profile";
 import { update_firebaseUid } from "../actions/profile";
 import { saveActualAITServicesFirebaseGlobalState } from "../actions/post";
+import Toast from "react-native-toast-message";
 
 function HomeStack(props) {
   const Stack = createNativeStackNavigator();
@@ -43,7 +44,36 @@ function HomeStack(props) {
   };
 
   if (!user || !props.user_photo || !props.profile) {
-    return;
+    // Toast.show({
+    //   type: "error",
+    //   position: "top",
+    //   text1: "No se pudo cargar la foto de perfil",
+    //   // text2: "No se pudo cargar la foto de perfil",
+    //   visibilityTime: 3000,
+    //   autoHide: true,
+    //   topOffset: 30,
+    //   bottomOffset: 40,
+    // });
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 50,
+            // fontFamily: "Arial",
+            color: "#2A3B76",
+          }}
+        >
+          Bienvenido
+        </Text>
+      </View>
+    );
   }
 
   return (

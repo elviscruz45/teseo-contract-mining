@@ -43,7 +43,7 @@ const MultiSelectExampleBare = (props) => {
   }, [props.saveTotalUsers]);
 
   function saveProperty(itemValue) {
-    formik.setFieldValue("equipoTrabajo", itemValue.join(","));
+    formik.setFieldValue("equipoTrabajo", itemValue?.join(","));
   }
 
   return (

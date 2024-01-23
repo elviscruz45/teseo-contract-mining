@@ -17,8 +17,8 @@ export function ChangeDisplayAdminContracts3(props) {
           containerStyle={styles.btnContainer}
           buttonStyle={styles.btn}
           onPress={() => {
-            setResponsableempresausuario3(text.join(","));
-            formik.setFieldValue("ResponsableEmpresaUsuario3", text.join(","));
+            setResponsableempresausuario3(text?.join(","));
+            formik.setFieldValue("ResponsableEmpresaUsuario3", text?.join(","));
 
             onClose();
           }} // loading={formik2.isSubmitting}

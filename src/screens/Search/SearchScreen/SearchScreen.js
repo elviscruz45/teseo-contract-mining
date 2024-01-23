@@ -25,10 +25,17 @@ function SearchScreenNoRedux(props) {
   const companyName =
     capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
 
-  if (!data && !searchResults) {
-    setData(props.servicesData);
-    setSearchResults(props.servicesData?.slice(0, 100));
-  }
+  // if (!data && !searchResults) {
+  //   setData(props.servicesData);
+  //   setSearchResults(props.servicesData?.slice(0, 100));
+  // }
+  //to initialize the data in null
+  useEffect(() => {
+    if (!data && !searchResults) {
+      setData(props.servicesData);
+      setSearchResults(props.servicesData?.slice(0, 100));
+    }
+  }, [data, searchResults]);
 
   //This is used to retrieve the equipment we are searching for
   useEffect(() => {
@@ -44,7 +51,7 @@ function SearchScreenNoRedux(props) {
 
   useEffect(() => {
     if (searchText === "") {
-      setSearchResults(data.slice(0, 100));
+      setSearchResults(data?.slice(0, 100));
     } else {
       const result = data?.filter((item) => {
         const re = new RegExp(searchText, "ig");
@@ -68,14 +75,31 @@ function SearchScreenNoRedux(props) {
       params: { Item: idServiciosAIT },
     });
   };
-  if (props.servicesData?.length === 0 && !props.email && !data) {
-    return;
+  if (props.servicesData?.length === 0 || !props.email || !data) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 50,
+            // fontFamily: "Arial",
+            color: "#2A3B76",
+          }}
+        >
+          Bienvenido
+        </Text>
+      </View>
+    );
   }
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-      {/* {console.log("SearchItem")} */}
-
       <FlatList
         data={searchResults}
         ListHeaderComponent={
@@ -162,6 +186,7 @@ const mapStateToProps = (reducers) => {
   return {
     servicesData: reducers.home.servicesData,
     email: reducers.profile.email,
+    // user_photo: reducers.profile.user_photo,
   };
 };
 
