@@ -240,7 +240,7 @@ export function AITForms(props) {
           value={areaservicio}
           placeholder="Area del Servicio a Realizar"
           editable={false}
-          errorMessage={formik.errors.AreaServicio}
+          // errorMessage={formik.errors.AreaServicio}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -263,7 +263,8 @@ export function AITForms(props) {
             formik.setFieldValue("NumeroAIT", text);
             setAit(text);
           }}
-          errorMessage={formik.errors.NumeroAIT}
+
+          // errorMessage={formik.errors.NumeroAIT}
         />
 
         <Text style={styles.subtitleForm}>Detalles del Servicio</Text>
@@ -284,7 +285,7 @@ export function AITForms(props) {
           placeholder="Administrador de Contrato Usuario Responsable"
           multiline={true}
           editable={false}
-          errorMessage={formik.errors.ResponsableEmpresaUsuario}
+          // errorMessage={formik.errors.ResponsableEmpresaUsuario}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -296,7 +297,7 @@ export function AITForms(props) {
           placeholder="Planeamiento Usuario Responsable"
           multiline={true}
           editable={false}
-          errorMessage={formik.errors.ResponsableEmpresaUsuario}
+          // errorMessage={formik.errors.ResponsableEmpresaUsuario}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -308,7 +309,7 @@ export function AITForms(props) {
           placeholder="Mantenimiento Usuario Responsable"
           multiline={true}
           editable={false}
-          errorMessage={formik.errors.ResponsableEmpresaUsuario}
+          // errorMessage={formik.errors.ResponsableEmpresaUsuario}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -321,7 +322,7 @@ export function AITForms(props) {
           placeholder="Gerente Contratista"
           multiline={true}
           editable={false}
-          errorMessage={formik.errors.ResponsableEmpresaContratista}
+          // errorMessage={formik.errors.ResponsableEmpresaContratista}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -334,7 +335,7 @@ export function AITForms(props) {
           placeholder="Planificador Contratista"
           multiline={true}
           editable={false}
-          errorMessage={formik.errors.ResponsableEmpresaContratista}
+          // errorMessage={formik.errors.ResponsableEmpresaContratista}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -347,7 +348,7 @@ export function AITForms(props) {
           placeholder="Supervisor Contratista"
           multiline={true}
           editable={false}
-          errorMessage={formik.errors.ResponsableEmpresaContratista}
+          // errorMessage={formik.errors.ResponsableEmpresaContratista}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -387,7 +388,7 @@ export function AITForms(props) {
           value={numerocotizacion}
           placeholder="Numero de Cotizacion"
           editable={false}
-          errorMessage={formik.errors.NumeroCotizacion}
+          // errorMessage={formik.errors.NumeroCotizacion}
           rightIcon={{
             type: "material-community",
             name: "numeric",
@@ -399,7 +400,7 @@ export function AITForms(props) {
           value={moneda}
           placeholder="Moneda"
           editable={false}
-          errorMessage={formik.errors.Moneda}
+          // errorMessage={formik.errors.Moneda}
           rightIcon={{
             type: "material-community",
             name: "arrow-right-circle-outline",
@@ -410,7 +411,7 @@ export function AITForms(props) {
           value={formatNumber(monto)}
           placeholder="Monto Total"
           editable={false}
-          errorMessage={formik.errors.Monto}
+          // errorMessage={formik.errors.Monto}
           rightIcon={{
             type: "material-community",
             name: "numeric",
@@ -423,7 +424,7 @@ export function AITForms(props) {
           value={formatNumber(horashombre)}
           placeholder="Horas Hombre"
           editable={false}
-          errorMessage={formik.errors.HorasHombre}
+          // errorMessage={formik.errors.HorasHombre}
           rightIcon={{
             type: "material-community",
             name: "numeric",
