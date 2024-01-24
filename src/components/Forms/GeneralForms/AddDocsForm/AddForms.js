@@ -21,6 +21,7 @@ export function AddDocsFormBare(props) {
   const [showModal, setShowModal] = useState(false);
   const [tipoFile, setTipoFile] = useState(null);
   const navigation = useNavigation();
+  const [shortNameFileUpdated, setShortNameFileUpdated] = useState("");
 
   //configuring the name of the pdf file to make it readable
   let shortNameFile = "";
@@ -138,7 +139,6 @@ export function AddDocsFormBare(props) {
         />
       );
     }
-
     onCloseOpenModal();
   };
 
@@ -149,10 +149,12 @@ export function AddDocsFormBare(props) {
         // type: "application/pdf",
         copyToCacheDirectory: false,
       });
-      if (result.type === "success") {
-        setPickedDocument(result.name);
-        formik.setFieldValue("pdfFile", result.uri);
-        formik.setFieldValue("FilenameTitle", result.name);
+
+      if (result.assets) {
+        setShortNameFileUpdated(result?.assets[0]?.name);
+        setPickedDocument(result?.assets[0]?.name);
+        formik.setFieldValue("pdfFile", result?.assets[0]?.uri);
+        formik.setFieldValue("FilenameTitle", result?.assets[0]?.name);
         // console.log(result.uri);
         // console.log(shortNameFile);
       } else {
@@ -176,7 +178,7 @@ export function AddDocsFormBare(props) {
       <Text></Text>
       <View style={styles.content}>
         <Input
-          value={shortNameFile}
+          value={shortNameFileUpdated}
           errorMessage={formik.errors.pdfFile}
           placeholder="Adjuntar PDF"
           multiline={true}

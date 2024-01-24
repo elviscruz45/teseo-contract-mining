@@ -372,7 +372,9 @@ function HomeScreen(props) {
               </View>
             );
           }}
-          keyExtractor={(item) => item.fotoPrincipal} // Provide a unique key for each item
+          keyExtractor={(item) =>
+            `${item.fotoPrincipal}-${item.fechaPostFormato}`
+          } // Provide a unique key for each item
           // onEndReached={() => {
           //   console.log("se re-rerenderiza mucho");
           // }}

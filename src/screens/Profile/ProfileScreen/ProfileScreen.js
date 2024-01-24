@@ -177,7 +177,9 @@ function ProfileScreen(props) {
               </TouchableOpacity>
             );
           }}
-          keyExtractor={(item) => item.fotoPrincipal}
+          keyExtractor={(item) =>
+            `${item.fotoPrincipal}-${item.fechaPostFormato}`
+          }
         />
       </KeyboardAwareScrollView>
       <Modal show={showModal} close={onCloseOpenModal}>

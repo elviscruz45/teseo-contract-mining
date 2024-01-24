@@ -329,7 +329,7 @@ function PostScreen(props) {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.NumeroAIT} // Provide a unique key for each item
+        keyExtractor={(item) => `${item.NumeroAIT}-${item.fechaPostFormato}`} // Provide a unique key for each item
       />
     </KeyboardAwareScrollView>
   );
