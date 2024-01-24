@@ -138,11 +138,12 @@ function PostScreen(props) {
     const indexareaList = areaLists.findIndex((item) => item.value === area);
     const imageSource = areaLists[indexareaList]?.image;
     const imageUpdated = AIT.photoServiceURL;
-
     if (imageUpdated) {
       setEquipment({ uri: imageUpdated });
+      console.log("selectAsset");
     } else {
       setEquipment(imageSource);
+      console.log("selectAsset111", imageSource);
     }
     setAIT(AIT);
     props.saveActualServiceAIT(AIT);

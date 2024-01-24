@@ -154,7 +154,7 @@ function HomeScreen(props) {
     async (item) => {
       const postRef = doc(db, "events", item.idDocFirestoreDB);
 
-      if (item.likes.includes(props.email)) {
+      if (item.likes?.includes(props.email)) {
         await updateDoc(postRef, {
           likes: arrayRemove(props.email),
         });
@@ -336,7 +336,7 @@ function HomeScreen(props) {
                       <Icon
                         type="material-community"
                         name={
-                          item.likes.includes(props.email)
+                          item.likes?.includes(props.email)
                             ? "thumb-up"
                             : "thumb-up-outline"
                         }

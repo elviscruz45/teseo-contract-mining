@@ -16,20 +16,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import Toast from "react-native-toast-message";
 export function AddDocsFormBare(props) {
-  const [pickedDocument, setPickedDocument] = useState(null);
+  // const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [tipoFile, setTipoFile] = useState(null);
   const navigation = useNavigation();
   const [shortNameFileUpdated, setShortNameFileUpdated] = useState("");
-
-  //configuring the name of the pdf file to make it readable
-  let shortNameFile = "";
-
-  if (pickedDocument) {
-    shortNameFile = pickedDocument;
-    // shortNameFile = pickedDocument.replace(/%20/g, "_").split("/").pop();
-  }
 
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
 
@@ -76,7 +68,7 @@ export function AddDocsFormBare(props) {
         }
 
         newData.pdfPrincipal = imageUrlPDF || "";
-        newData.FilenameTitle = shortNameFile;
+        newData.FilenameTitle = shortNameFileUpdated || "";
 
         //Modifying the Service State ServiciosAIT considering the LasEventPost events
         const RefFirebaseLasEventPostd = doc(
@@ -152,13 +144,14 @@ export function AddDocsFormBare(props) {
 
       if (result.assets) {
         setShortNameFileUpdated(result?.assets[0]?.name);
-        setPickedDocument(result?.assets[0]?.name);
+        // setPickedDocument(result?.assets[0]?.name);
         formik.setFieldValue("pdfFile", result?.assets[0]?.uri);
         formik.setFieldValue("FilenameTitle", result?.assets[0]?.name);
         // console.log(result.uri);
         // console.log(shortNameFile);
       } else {
-        setPickedDocument(null);
+        // setPickedDocument(null);
+        setShortNameFileUpdated("");
       }
     } catch (err) {
       Toast.show({

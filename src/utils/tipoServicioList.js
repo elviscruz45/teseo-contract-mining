@@ -26,6 +26,18 @@ export const Reparacion = [
     progress: 7,
   },
   {
+    value: "Limpieza",
+    progress: 8,
+  },
+  {
+    value: "Control dimensional",
+    progress: 9,
+  },
+  {
+    value: "Mantenimiento",
+    progress: 10,
+  },
+  {
     value: "Maquinado",
     progress: 35,
   },
@@ -33,10 +45,13 @@ export const Reparacion = [
     value: "Soldeo",
     progress: 85,
   },
-
+  {
+    value: "Armado",
+    progress: 92,
+  },
   {
     value: "Pintado",
-    progress: 92,
+    progress: 95,
   },
   {
     value: "Envio de Componentes Terminado",
