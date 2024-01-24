@@ -18,7 +18,7 @@ function LoginForm(props) {
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
   const onShowHidePassword = () => setShowPassword((prevState) => !prevState);
-  console.log("holaa , LoginForm");
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -31,15 +31,16 @@ function LoginForm(props) {
           formValue.email,
           formValue.password
         );
-        console.log("medio , LoginForm");
+
+        const user_uid = userCredential.user.uid;
+
+        const docRef = doc(db, "users", user_uid);
+
+        const docSnap = await getDoc(docRef);
 
         props.update_firebaseUserUid(userCredential.user.uid);
-        const user_uid = userCredential.user.uid;
-        const docRef = doc(db, "users", user_uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
+        if (docSnap?.exists()) {
           props.update_firebaseProfile(docSnap.data());
-          console.log("update_firebaseProfile , LoginForm");
         } else {
           Toast.show({
             type: "error",
