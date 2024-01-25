@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils";
 
@@ -98,7 +103,7 @@ export const uploadImage = async (uri) => {
 
   const storage = getStorage();
   const storageRef = ref(storage, `mainImageEvents/${uuid}`);
-  return uploadBytes(storageRef, blob);
+  return uploadBytesResumable(storageRef, blob);
 };
 
 export const uploadPdf = async (uri) => {
@@ -115,7 +120,7 @@ export const uploadPdf = async (uri) => {
 
     const storageRef = ref(storage, `pdfPost/${uuid}`);
 
-    return uploadBytes(storageRef, blob);
+    return uploadBytesResumable(storageRef, blob);
   } catch (error) {
     Toast.show({
       type: "error",

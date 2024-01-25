@@ -7,7 +7,13 @@ import { Image as ImageExpo } from "expo-image";
 import { Platform } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import {
   collection,
   doc,
@@ -50,7 +56,7 @@ export const CircularProgress = ({
     const storage = getStorage();
     const storageRef = ref(storage, `Serviceavatar/${id}`);
 
-    uploadBytes(storageRef, blob).then((snapshot) => {
+    uploadBytesResumable(storageRef, blob).then((snapshot) => {
       updatePhotoUrl(snapshot.metadata.fullPath);
     });
   };

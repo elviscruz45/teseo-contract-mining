@@ -12,9 +12,17 @@ import { useNavigation } from "@react-navigation/native";
 import { db } from "../../../../utils";
 import { screen } from "../../../../utils";
 import { v4 as uuidv4 } from "uuid";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import Toast from "react-native-toast-message";
+import * as FileSystem from "expo-file-system";
+
 export function AddDocsFormBare(props) {
   // const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -33,7 +41,6 @@ export function AddDocsFormBare(props) {
     onSubmit: async (formValue) => {
       try {
         const newData = formValue;
-
         //create the algoritm to have the date format of the post
         const date = new Date();
         const monthNames = [
@@ -57,13 +64,22 @@ export function AddDocsFormBare(props) {
         const minute = date.getMinutes();
         const formattedDate = `${day} ${month} ${year}  ${hour}:${minute} Hrs`;
         newData.fechaPostFormato = formattedDate;
-        (newData.fecha = new Date()), (newData.email = props.email);
+        newData.fecha = new Date();
+        newData.email = props.email;
 
         //manage the file updated to ask for aprovals
         let imageUrlPDF;
+        let snapshotPDF;
+
         if (newData.pdfFile) {
-          const snapshotPDF = await uploadPdf(newData.pdfFile);
+          // const snapshotPDF = await uploadPdf(newData.pdfFile);
+          // proving
+          snapshotPDF = await uploadPdf(newData.pdfFile);
+
+          //proving
+
           const imagePathPDF = snapshotPDF.metadata.fullPath;
+
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
         }
 
@@ -82,7 +98,7 @@ export function AddDocsFormBare(props) {
         };
 
         await updateDoc(RefFirebaseLasEventPostd, updatedData);
-        // console.log(newData);
+
         navigation.goBack();
         navigation.goBack();
 
@@ -100,25 +116,41 @@ export function AddDocsFormBare(props) {
           position: "bottom",
           text1: "Error al tratar de subir documento",
         });
-        // console.log(error);
       }
     },
   });
 
   const uploadPdf = async (uri) => {
-    const uuid = uuidv4();
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const fileSize = blob.size;
+    try {
+      const uuid = uuidv4();
 
-    if (fileSize > 25 * 1024 * 1024) {
-      throw new Error("El archivo excede los 25 MB");
+      const response = await fetch(uri);
+
+      const blob = await response.blob();
+      // const blob = new Blob(response);
+
+      const fileSize = blob.size;
+
+      if (fileSize > 25 * 1024 * 1024) {
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "El archivo excede los 25 MB",
+        });
+        throw new Error("El archivo excede los 25 MB");
+      }
+
+      const storage = getStorage();
+
+      const storageRef = ref(storage, `pdfPost/${uuid}`);
+      return await uploadBytesResumable(storageRef, blob);
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Error al tratar de subir documento actual",
+      });
     }
-    const storage = getStorage();
-
-    const storageRef = ref(storage, `pdfPost/${uuid}`);
-
-    return uploadBytes(storageRef, blob);
   };
 
   const selectComponent = (key) => {
@@ -144,13 +176,9 @@ export function AddDocsFormBare(props) {
 
       if (result.assets) {
         setShortNameFileUpdated(result?.assets[0]?.name);
-        // setPickedDocument(result?.assets[0]?.name);
         formik.setFieldValue("pdfFile", result?.assets[0]?.uri);
         formik.setFieldValue("FilenameTitle", result?.assets[0]?.name);
-        // console.log(result.uri);
-        // console.log(shortNameFile);
       } else {
-        // setPickedDocument(null);
         setShortNameFileUpdated("");
       }
     } catch (err) {

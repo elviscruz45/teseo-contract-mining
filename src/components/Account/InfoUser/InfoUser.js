@@ -3,7 +3,13 @@ import { View, TouchableOpacity, Image } from "react-native";
 import { Avatar, Text, Icon } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import { getAuth, updateProfile } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { styles } from "./InfoUser.styles";
 import { Modal } from "../Modal";
 import { connect } from "react-redux";
@@ -38,7 +44,7 @@ function InfoUser(props) {
     const storage = getStorage();
     const storageRef = ref(storage, `avatar/${props.uid}`);
 
-    uploadBytes(storageRef, blob).then((snapshot) => {
+    uploadBytesResumable(storageRef, blob).then((snapshot) => {
       updatePhotoUrl(snapshot.metadata.fullPath);
     });
   };
