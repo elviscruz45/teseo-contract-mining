@@ -112,6 +112,7 @@ function CommentScreen(props) {
 
   //Delete function
   const docDelete = async (idDoc) => {
+    console.log("1111");
     Alert.alert(
       "Eliminar Evento",
       "Estas Seguro que desear Eliminar el evento?",
@@ -125,20 +126,25 @@ function CommentScreen(props) {
           onPress: async () => {
             //delete the doc from events collections
             navigation.navigate(screen.home.home);
-            await deleteDoc(doc(db, "events", idDoc));
+            console.log("Item,antes", Item);
 
+            await deleteDoc(doc(db, "events", idDoc));
+            console.log("Item", Item);
             //updating events in ServiciosAIT to filter the deleted event
-            const Ref = doc(db, "ServiciosAIT", Item?.idDocAITFirestoreDB);
+            const Ref = doc(db, "ServiciosAIT", Item?.AITidServicios);
             const docSnapshot = await getDoc(Ref);
             const eventList = docSnapshot.data().events;
+            console.log("eventList", eventList);
 
             const filteredList = eventList.filter(
               (obj) => obj.idDocFirestoreDB !== Item.idDocFirestoreDB
             );
+            console.log("filteredList", filteredList);
 
             const updatedData = {
               events: filteredList,
             };
+            console.log("updatedData", updatedData);
 
             await updateDoc(Ref, updatedData);
             Toast.show({

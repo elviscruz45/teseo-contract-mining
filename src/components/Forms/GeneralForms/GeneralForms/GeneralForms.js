@@ -30,18 +30,14 @@ function GeneralFormsBare(props) {
   const [aditional, setAditional] = useState(false);
   const [tipoFile, setTipoFile] = useState(null);
   const [visibilidad, setVisibilidad] = useState(null);
+  const [shortNameFileUpdated, setShortNameFileUpdated] = useState("");
+
   //Data about the company belong this event
   const regex = /@(.+?)\./i;
   const companyName = props.email?.match(regex)?.[1] || "";
 
-  //configuring the name of the pdf file to make it readable
-  let shortNameFile = "";
-
-  if (pickedDocument) {
-    // shortNameFile = pickedDocument.replace(/%20/g, "_").split("/").pop();
-    shortNameFile = pickedDocument;
-    // console.log(shortNameFile);
-  }
+  // //configuring the name of the pdf file to make it readable
+  // let shortNameFile = "";
 
   //algorith to pick a pdf File to attach to the event
   const pickDocument = async () => {
@@ -50,14 +46,12 @@ function GeneralFormsBare(props) {
         // type: "application/pdf",
         copyToCacheDirectory: false,
       });
-      if (result.type === "success") {
-        setPickedDocument(result.name);
-        formik.setFieldValue("pdfFile", result.uri);
-        formik.setFieldValue("FilenameTitle", result.name);
-        // console.log(shortNameFile);
-        // console.log(result.name); // This will log the file name
+      if (result.assets) {
+        setShortNameFileUpdated(result?.assets[0]?.name);
+        formik.setFieldValue("pdfFile", result?.assets[0]?.uri);
+        formik.setFieldValue("FilenameTitle", result?.assets[0]?.name);
       } else {
-        setPickedDocument(null);
+        setShortNameFileUpdated("");
       }
     } catch (err) {
       Toast.show({
@@ -263,7 +257,7 @@ function GeneralFormsBare(props) {
         )}
 
         <Input
-          value={shortNameFile}
+          value={shortNameFileUpdated}
           placeholder="Adjuntar PDF"
           multiline={true}
           editable={false}
@@ -276,7 +270,7 @@ function GeneralFormsBare(props) {
           }}
         />
 
-        {shortNameFile && (
+        {shortNameFileUpdated && (
           <Input
             value={tipoFile}
             placeholder="Tipo de Archivo Adjunto"

@@ -24,7 +24,6 @@ import Toast from "react-native-toast-message";
 import * as FileSystem from "expo-file-system";
 
 export function AddDocsFormBare(props) {
-  // const [pickedDocument, setPickedDocument] = useState(null);
   const [renderComponent, setRenderComponent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [tipoFile, setTipoFile] = useState(null);
