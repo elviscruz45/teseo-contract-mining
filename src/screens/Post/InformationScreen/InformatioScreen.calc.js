@@ -106,7 +106,7 @@ export const uploadImage = async (uri) => {
   return uploadBytesResumable(storageRef, blob);
 };
 
-export const uploadPdf = async (uri) => {
+export const uploadPdf = async (uri, FilenameTitle, formattedDate) => {
   const uuid = uuidv4();
   const response = await fetch(uri);
   const blob = await response.blob();
@@ -118,7 +118,10 @@ export const uploadPdf = async (uri) => {
     }
     const storage = getStorage();
 
-    const storageRef = ref(storage, `pdfPost/${uuid}`);
+    const storageRef = ref(
+      storage,
+      `pdfPost/${FilenameTitle}-${formattedDate}`
+    );
 
     return uploadBytesResumable(storageRef, blob);
   } catch (error) {

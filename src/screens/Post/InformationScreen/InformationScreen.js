@@ -68,7 +68,11 @@ function InformationScreen(props) {
         //manage the file updated to ask for aprovals
         let imageUrlPDF;
         if (newData.pdfFile) {
-          const snapshotPDF = await uploadPdf(newData.pdfFile);
+          const snapshotPDF = await uploadPdf(
+            newData.pdfFile,
+            newData.FilenameTitle,
+            newData.fechaPostFormato
+          );
           const imagePathPDF = snapshotPDF.metadata.fullPath;
           imageUrlPDF = await getDownloadURL(ref(getStorage(), imagePathPDF));
         }

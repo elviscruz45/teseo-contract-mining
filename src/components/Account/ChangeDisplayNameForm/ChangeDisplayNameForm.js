@@ -9,7 +9,7 @@ import { styles } from "./ChangeDisplayNameForm.styles";
 import { connect } from "react-redux";
 import { db } from "../../../utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { update_firebaseProfile } from "../../../actions/profile";
 import { update_firebaseUserName } from "../../../actions/profile";
 import { userTypeList } from "../../../utils/userTypeList";
@@ -30,16 +30,42 @@ function ChangeDisplayNameForm(props) {
         await updateProfile(currentLoginUser, {
           displayName: newData.displayNameform,
         });
-        //sign up the users in Firestore Database
-        newData.photoURL = props.user_photo;
-        newData.email = props.email;
-        newData.companyName = props.email?.match(/@(.+?)\./i)?.[1] || "";
-        newData.userType = userTypeList.worker;
-        newData.uid = props.uid;
-        newData.EquipmentFavorities = [];
-        ///checking up if there are data in users
-        const docRef = doc(collection(db, "users"), newData.uid);
-        await setDoc(docRef, newData);
+
+        //checking up if there are data in users
+        const docRef = doc(db, "users", props.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap?.exists()) {
+          const updateDataLasEventPost = {
+            displayNameform: newData.displayNameform,
+            cargo: newData.cargo,
+            descripcion: newData.descripcion,
+            photoURL: props.user_photo,
+          };
+          if (props.user_photo) {
+            updateDataLasEventPost.photoURL = props.user_photo;
+          }
+          await updateDoc(docRef, updateDataLasEventPost);
+
+          props.update_firebaseProfile(newData);
+          props.update_firebaseUserName(newData.displayNameform);
+          Toast.show({
+            type: "success",
+            position: "bottom",
+            text1: "Datos actualizados",
+          });
+        } else {
+          //sign up the users in Firestore Database
+          newData.photoURL = props.user_photo;
+          newData.email = props.email;
+          newData.companyName = props.email?.match(/@(.+?)\./i)?.[1] || "";
+          newData.userType = userTypeList.worker;
+          newData.uid = props.uid;
+          newData.EquipmentFavorities = [];
+          ///checking up if there are data in users
+          const docRef = doc(collection(db, "users"), newData.uid);
+          await setDoc(docRef, newData);
+        }
+
         props.update_firebaseProfile(newData);
         props.update_firebaseUserName(newData.displayNameform);
         Toast.show({
