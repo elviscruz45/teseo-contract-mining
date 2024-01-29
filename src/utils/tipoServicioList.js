@@ -22,9 +22,14 @@ export const tipoServicioList = [
 
 export const Reparacion = [
   {
+    value: "Cotizacion",
+    progress: 1,
+  },
+  {
     value: "Envio Inicial de Componentes",
     progress: 7,
   },
+
   {
     value: "Limpieza",
     progress: 8,
@@ -61,6 +66,10 @@ export const Reparacion = [
 
 export const Fabricacion = [
   {
+    value: "Cotizacion",
+    progress: 1,
+  },
+  {
     value: "Pedido de Materiales",
     progress: 15,
   },
@@ -88,6 +97,10 @@ export const Fabricacion = [
 
 export const Ingenieria = [
   {
+    value: "Cotizacion",
+    progress: 1,
+  },
+  {
     value: "Medidas en Campo",
     progress: 20,
   },
@@ -107,6 +120,10 @@ export const Ingenieria = [
 ];
 
 export const IngenieriayFabricacion = [
+  {
+    value: "Cotizacion",
+    progress: 1,
+  },
   {
     value: "Medidas en Campo",
     progress: 8,
