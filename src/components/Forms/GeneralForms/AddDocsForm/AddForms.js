@@ -73,7 +73,7 @@ export function AddDocsFormBare(props) {
         if (newData.pdfFile) {
           // const snapshotPDF = await uploadPdf(newData.pdfFile);
           // proving
-          snapshotPDF = await uploadPdf(newData.pdfFile);
+          snapshotPDF = await uploadPdf(newData.pdfFile, formattedDate);
 
           //proving
 
@@ -119,7 +119,7 @@ export function AddDocsFormBare(props) {
     },
   });
 
-  const uploadPdf = async (uri) => {
+  const uploadPdf = async (uri, formattedDate) => {
     try {
       const uuid = uuidv4();
 
@@ -141,7 +141,10 @@ export function AddDocsFormBare(props) {
 
       const storage = getStorage();
 
-      const storageRef = ref(storage, `pdfPost/${uuid}`);
+      const storageRef = ref(
+        storage,
+        `pdfPost/${shortNameFileUpdated}-${formattedDate}`
+      );
       return await uploadBytesResumable(storageRef, blob);
     } catch (error) {
       Toast.show({

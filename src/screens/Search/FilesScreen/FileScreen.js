@@ -1,21 +1,33 @@
 import React, { useCallback } from "react";
-import { View, Text, FlatList, TouchableOpacity, Linking } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Linking,
+  Alert,
+} from "react-native";
 import { Image as ImageExpo } from "expo-image";
 import { styles } from "./FileScreen.styles";
 
 import { useNavigation } from "@react-navigation/native";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 
 import { screen } from "../../../utils";
+import { connect } from "react-redux";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Toast from "react-native-toast-message";
+import { db } from "../../../utils";
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 
-export function FileScreen(props) {
+function FileScreenBare(props) {
   const {
     route: {
       params: { Item },
     },
   } = props;
+
   const navigation = useNavigation();
   const documents = Item.pdfFile?.filter((item) => {
     return typeof item !== "string";
@@ -56,6 +68,59 @@ export function FileScreen(props) {
     });
   };
 
+  const deleteDoc = (item) => {
+    Alert.alert(
+      "Eliminar Documento",
+      "Estas Seguro que desear Eliminar el Documento?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Aceptar",
+          onPress: async () => {
+            //updating events in ServiciosAIT to filter the deleted event
+            const Ref = doc(db, "ServiciosAIT", Item?.idServiciosAIT);
+            const docSnapshot = await getDoc(Ref);
+            const eventList = docSnapshot.data().pdfFile;
+
+            const filteredList = eventList.filter(
+              (obj) => obj.pdfPrincipal !== item.pdfPrincipal
+            );
+
+            const updatedData = {
+              pdfFile: filteredList,
+            };
+
+            await updateDoc(Ref, updatedData);
+
+            //delete doc from storage
+            const documentPath = `pdfPost/${item.FilenameTitle}-${item.fechaPostFormato}`;
+            try {
+              const storage = getStorage();
+              const storageRef = ref(storage, documentPath);
+              await deleteObject(storageRef);
+              console.log("Document deleted successfully");
+            } catch (error) {
+              console.error("Error deleting document:", error.message);
+              // Handle errors as needed
+            }
+
+            //send success message
+            Toast.show({
+              type: "success",
+              position: "bottom",
+              text1: "Se ha eliminado correctamente",
+            });
+            navigation.goBack();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <KeyboardAwareScrollView
       style={{ backgroundColor: "white" }} // Add backgroundColor here
@@ -77,7 +142,12 @@ export function FileScreen(props) {
         scrollEnabled={false}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => uploadFile(item.pdfPrincipal)}>
+            <TouchableOpacity
+              onPress={() => uploadFile(item.pdfPrincipal)}
+              onLongPress={
+                props.email === item.email ? () => deleteDoc(item) : null
+              }
+            >
               <View style={{ marginBottom: 20 }}>
                 <View style={styles.equipments2}>
                   <ImageExpo
@@ -120,3 +190,14 @@ export function FileScreen(props) {
     </KeyboardAwareScrollView>
   );
 }
+
+const mapStateToProps = (reducers) => {
+  return {
+    email: reducers.profile.email,
+
+    // servicesData: reducers.home.servicesData,
+    // totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,
+  };
+};
+
+export const FileScreen = connect(mapStateToProps, {})(FileScreenBare);
