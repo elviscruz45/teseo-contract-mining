@@ -88,6 +88,7 @@ function InformationScreen(props) {
           const matches = newData.aprobacion.match(regex);
           const docData = {
             solicitud: newData.etapa,
+            email: newData.emailPerfil,
             solicitudComentario: newData.comentarios,
             etapa: newData.etapa,
             NombreServicio: props.actualServiceAIT.NombreServicio,
@@ -101,6 +102,7 @@ function InformationScreen(props) {
             ApprovalPerformed: [],
             RejectionPerformed: [],
             date: new Date(),
+            fechaPostFormato: newData.fechaPostFormato,
             AreaServicio: props.actualServiceAIT.AreaServicio,
             photoServiceURL: props.actualServiceAIT.photoServiceURL,
             status: "Pendiente",

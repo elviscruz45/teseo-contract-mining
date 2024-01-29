@@ -22,10 +22,12 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { Image as ImageExpo } from "expo-image";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 
 import { update_approvalList } from "../../../actions/home";
 import * as MailComposer from "expo-mail-composer";
@@ -34,6 +36,7 @@ import Toast from "react-native-toast-message";
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
   const [isMailAvailable, setIsMailAvailable] = useState(false);
+  console.log("approval", approval);
 
   useEffect(() => {
     async function checkAvailability() {
@@ -307,6 +310,49 @@ function DocstoApproveScreenBare(props) {
       });
     }
   }, []);
+  const deleteDoc = (item) => {
+    Alert.alert(
+      "Eliminar Documento",
+      "Estas Seguro que desear Eliminar la solicitud de aprobacion?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Aceptar",
+          onPress: async () => {
+            console.log("delete Doc");
+
+            //updating events in ServiciosAIT to filter the deleted event
+            const Ref = doc(db, "approvals", item.idApproval);
+            await deleteDoc(Ref);
+
+            //delete doc from storage
+            const documentPath = `pdfPost/${item.fileName}-${item.fechaPostFormato}`;
+            try {
+              const storage = getStorage();
+              const storageRef = ref(storage, documentPath);
+              await deleteObject(storageRef);
+              console.log("Document deleted successfully");
+            } catch (error) {
+              console.error("Error deleting document:", error.message);
+              // Handle errors as needed
+            }
+
+            //send success message
+            Toast.show({
+              type: "success",
+              position: "bottom",
+              text1: "Se ha eliminado correctamente",
+            });
+            navigation.goBack();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <FlatList
@@ -353,7 +399,12 @@ function DocstoApproveScreenBare(props) {
             <View>
               <View style={styles.equipments2}>
                 <View style={styles.image2}>
-                  <TouchableOpacity onPress={() => uploadFile(item.pdfFile)}>
+                  <TouchableOpacity
+                    onPress={() => uploadFile(item.pdfFile)}
+                    onLongPress={
+                      props.email === item.email ? () => deleteDoc(item) : null
+                    }
+                  >
                     <ImageExpo
                       source={
                         item.pdfFile

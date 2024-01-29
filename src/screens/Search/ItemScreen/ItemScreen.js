@@ -11,6 +11,7 @@ import { EquipmentListUpper } from "../../../actions/home";
 import { areaLists } from "../../../utils/areaList";
 import { CircularProgress } from "./CircularProgress";
 import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";
+import Toast from "react-native-toast-message";
 
 function ItemScreenNotRedux(props) {
   const [post, setPost] = useState(null);
@@ -99,6 +100,18 @@ function ItemScreenNotRedux(props) {
 
   //Using navigation.navigate I send it to another screen (post)
   const goToPublicar = () => {
+    if (!imageSource && !serviceInfo.photoServiceURL) {
+      Toast.show({
+        type: "error",
+        text1: "Actualizar foto del servicio para continuar",
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
+      return;
+    }
+
     navigation.goBack();
 
     navigation.navigate(screen.post.tab, {
