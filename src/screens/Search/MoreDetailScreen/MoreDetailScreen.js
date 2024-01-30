@@ -25,7 +25,7 @@ function MoreDetailScreenNoRedux(props) {
     },
   } = props;
   const navigation = useNavigation();
-  const userType = props.profile.userType;
+  const userType = props.profile?.userType;
   ///the algoritm to retrieve the image source to render the icon
   const area = Item.AreaServicio;
   const indexareaList = areaLists.findIndex((item) => item.value === area);

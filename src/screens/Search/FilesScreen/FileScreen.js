@@ -29,7 +29,7 @@ function FileScreenBare(props) {
   } = props;
 
   const navigation = useNavigation();
-  const userType = props.profile.userType;
+  const userType = props.profile?.userType;
 
   const documents = Item.pdfFile?.filter((item) => {
     return typeof item !== "string";

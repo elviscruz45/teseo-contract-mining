@@ -26,7 +26,7 @@ const ReportScreenNoRedux = (props) => {
   const [company, setCompany] = useState("TOTAL CONTRATISTAS");
   const [companyList, setCompanyList] = useState();
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
-  const userType = props.profile.userType;
+  const userType = props.profile?.userType;
   const update_Data = () => {
     setRenderComponent(
       <ChangeDisplayCompany
