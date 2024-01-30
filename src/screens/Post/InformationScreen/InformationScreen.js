@@ -216,7 +216,6 @@ function InformationScreen(props) {
         navigation.navigate(screen.home.tab, {
           screen: screen.home.home,
         });
-        console.log("33333");
 
         Toast.show({
           type: "success",

@@ -18,15 +18,15 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 import { Modal } from "../../../components/shared/Modal";
 import { ChangeDisplayCompany } from "../../../components/Forms/ReportScreen/ChangeCompany/ChangeCompany";
+import Toast from "react-native-toast-message";
 
 const ReportScreenNoRedux = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
   const [company, setCompany] = useState("TOTAL CONTRATISTAS");
   const [companyList, setCompanyList] = useState();
-  // console.log(company);
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
-
+  const userType = props.profile.userType;
   const update_Data = () => {
     setRenderComponent(
       <ChangeDisplayCompany
@@ -99,6 +99,13 @@ const ReportScreenNoRedux = (props) => {
       screen: screen.report.history,
     });
   };
+  const userTypeWarn = () => {
+    Toast.show({
+      type: "error",
+      position: "bottom",
+      text1: "No autorizado para esta accion",
+    });
+  };
 
   if (!data || !company || !companyList) {
     return (
@@ -144,7 +151,17 @@ const ReportScreenNoRedux = (props) => {
               />
             )}
 
-            <TouchableOpacity onPress={() => goToHistoryScreen()}>
+            <TouchableOpacity
+              onPress={
+                userType === "Gerente" ||
+                userType === "Planificador" ||
+                userType === "Supervisor" ||
+                userType === "GerenteContratista" ||
+                userType === "PlanificadorContratista"
+                  ? () => goToHistoryScreen()
+                  : () => userTypeWarn()
+              }
+            >
               <Image
                 source={require("../../../../assets/historyIcon.png")}
                 style={styles.history}
@@ -156,9 +173,15 @@ const ReportScreenNoRedux = (props) => {
           ) : (
             <Text style={styles.company}>{company}</Text>
           )}
-          {company !== "FMI" && company !== "TOTAL CONTRATISTAS" && (
-            <RecursosHumanos company={company} />
-          )}
+          {company !== "FMI" &&
+            company !== "TOTAL CONTRATISTAS" &&
+            (userType === "Gerente" ||
+              userType === "Planificador" ||
+              userType === "Supervisor" ||
+              userType === "GerenteContratista" ||
+              userType === "PlanificadorContratista") && (
+              <RecursosHumanos company={company} />
+            )}
 
           <Text></Text>
           <Text></Text>
@@ -254,85 +277,130 @@ const ReportScreenNoRedux = (props) => {
           )}
           <Text></Text>
 
-          <View style={styles.iconMinMax}>
-            <View style={styles.container22}>
-              <Text style={styles.titleText}>Monto Servicios</Text>
-            </View>
-            <TouchableOpacity onPress={() => setMontoServicios(true)}>
-              <Image
-                source={require("../../../../assets/plus3.png")}
-                style={styles.roundImageUploadmas}
-              />
-            </TouchableOpacity>
+          {(userType === "Gerente" ||
+            userType === "Planificador" ||
+            userType === "Supervisor" ||
+            userType === "GerenteContratista" ||
+            userType === "PlanificadorContratista") && (
+            <View style={styles.iconMinMax}>
+              <View style={styles.container22}>
+                <Text style={styles.titleText}>Monto Servicios</Text>
+              </View>
+              <TouchableOpacity onPress={() => setMontoServicios(true)}>
+                <Image
+                  source={require("../../../../assets/plus3.png")}
+                  style={styles.roundImageUploadmas}
+                />
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setMontoServicios(false)}>
-              <Image
-                source={require("../../../../assets/minus3.png")}
-                style={styles.roundImageUploadmas}
-              />
-            </TouchableOpacity>
-          </View>
-          {montoServicios && (
-            <>
-              <BarChartMontoServicios data={data} />
-              <MontoServiceList data={data} />
-            </>
+              <TouchableOpacity onPress={() => setMontoServicios(false)}>
+                <Image
+                  source={require("../../../../assets/minus3.png")}
+                  style={styles.roundImageUploadmas}
+                />
+              </TouchableOpacity>
+            </View>
           )}
+          {montoServicios &&
+            (userType === "Gerente" ||
+              userType === "Planificador" ||
+              userType === "Supervisor" ||
+              userType === "GerenteContratista" ||
+              userType === "PlanificadorContratista") && (
+              <>
+                <BarChartMontoServicios data={data} />
+                <MontoServiceList data={data} />
+              </>
+            )}
           <Text></Text>
 
           <Text></Text>
-          <View style={styles.iconMinMax}>
-            <View style={styles.container22}>
-              <Text style={styles.titleText}>Monto Estado de Pago</Text>
+          {(userType === "Gerente" ||
+            userType === "Planificador" ||
+            userType === "Supervisor" ||
+            userType === "GerenteContratista" ||
+            userType === "PlanificadorContratista") && (
+            <View style={styles.iconMinMax}>
+              <View style={styles.container22}>
+                <Text style={styles.titleText}>Monto Estado de Pago</Text>
+              </View>
+              <TouchableOpacity onPress={() => setMontoEDP(true)}>
+                <Image
+                  source={require("../../../../assets/plus3.png")}
+                  style={styles.roundImageUploadmas}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setMontoEDP(false)}>
+                <Image
+                  source={require("../../../../assets/minus3.png")}
+                  style={styles.roundImageUploadmas}
+                />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => setMontoEDP(true)}>
-              <Image
-                source={require("../../../../assets/plus3.png")}
-                style={styles.roundImageUploadmas}
-              />
-            </TouchableOpacity>
+          )}
+          {montoEDP &&
+            (userType === "Gerente" ||
+              userType === "Planificador" ||
+              userType === "Supervisor" ||
+              userType === "GerenteContratista" ||
+              userType === "PlanificadorContratista") && (
+              <>
+                <BarChartProceso data={data} />
+                <MontoEDPList data={data} />
+              </>
+            )}
 
-            <TouchableOpacity onPress={() => setMontoEDP(false)}>
-              <Image
-                source={require("../../../../assets/minus3.png")}
-                style={styles.roundImageUploadmas}
-              />
-            </TouchableOpacity>
-          </View>
-          {montoEDP && (
-            <>
-              <BarChartProceso data={data} />
-              <MontoEDPList data={data} />
-            </>
+          <Text></Text>
+
+          <Text></Text>
+
+          {(userType === "Gerente" ||
+            userType === "Planificador" ||
+            userType === "Supervisor" ||
+            userType === "GerenteContratista" ||
+            userType === "PlanificadorContratista") && (
+            <View style={styles.iconMinMax}>
+              <View style={styles.container22}>
+                <Text style={styles.titleText}>Montos Comprometidos</Text>
+              </View>
+              <TouchableOpacity onPress={() => setComprometido(true)}>
+                <Image
+                  source={require("../../../../assets/plus3.png")}
+                  style={styles.roundImageUploadmas}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setComprometido(false)}>
+                <Image
+                  source={require("../../../../assets/minus3.png")}
+                  style={styles.roundImageUploadmas}
+                />
+              </TouchableOpacity>
+            </View>
           )}
 
+          {comprometido &&
+            (userType === "Gerente" ||
+              userType === "Planificador" ||
+              userType === "Supervisor" ||
+              userType === "GerenteContratista" ||
+              userType === "PlanificadorContratista") && (
+              <MontoComprometido data={data} />
+            )}
           <Text></Text>
 
-          <Text></Text>
-
-          <View style={styles.iconMinMax}>
-            <View style={styles.container22}>
-              <Text style={styles.titleText}>Montos Comprometidos</Text>
-            </View>
-            <TouchableOpacity onPress={() => setComprometido(true)}>
-              <Image
-                source={require("../../../../assets/plus3.png")}
-                style={styles.roundImageUploadmas}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setComprometido(false)}>
-              <Image
-                source={require("../../../../assets/minus3.png")}
-                style={styles.roundImageUploadmas}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {comprometido && <MontoComprometido data={data} />}
-          <Text></Text>
-
-          <TouchableOpacity onPress={() => getExcelReportData(data)}>
+          <TouchableOpacity
+            onPress={
+              userType === "Gerente" ||
+              userType === "Planificador" ||
+              userType === "Supervisor" ||
+              userType === "GerenteContratista" ||
+              userType === "PlanificadorContratista"
+                ? () => getExcelReportData(data)
+                : () => userTypeWarn()
+            }
+          >
             <Image
               source={require("../../../../assets/excel2.png")}
               style={styles.excel}
@@ -351,6 +419,7 @@ const mapStateToProps = (reducers) => {
   return {
     servicesData: reducers.home.servicesData,
     email: reducers.profile.email,
+    profile: reducers.profile.profile,
   };
 };
 

@@ -40,7 +40,6 @@ function HomeScreen(props) {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
   }
   const regex = /@(.+?)\./i;
-  // console.log("HomeScreen");
 
   // this useEffect is used to retrive all data from firebase
 
@@ -111,7 +110,6 @@ function HomeScreen(props) {
             lista.push(doc.data());
           });
           props.saveApprovalListnew(lista);
-          // console.log("fetch approvals");
         });
       }
       fetchData();

@@ -22,7 +22,6 @@ export function ChangeDisplayFechaInicio(props) {
   };
   useEffect(() => {
     if (show === false) setShow(true);
-    // console.log("useEffect");
   }, []);
 
   const showMode = () => {

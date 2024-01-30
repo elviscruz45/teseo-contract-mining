@@ -29,9 +29,22 @@ function FileScreenBare(props) {
   } = props;
 
   const navigation = useNavigation();
+  const userType = props.profile.userType;
+
   const documents = Item.pdfFile?.filter((item) => {
     return typeof item !== "string";
   });
+
+  const documentsUserType = documents?.filter((item) => {
+    return (
+      item.tipoFile !== "Cotizacion" ||
+      userType === "Gerente" ||
+      userType === "Planificador" ||
+      userType === "GerenteContratista" ||
+      userType === "PlanificadorContratista"
+    );
+  });
+
   const uploadFile = useCallback(async (uri) => {
     try {
       const supported = await Linking.canOpenURL(uri);
@@ -101,7 +114,6 @@ function FileScreenBare(props) {
               const storage = getStorage();
               const storageRef = ref(storage, documentPath);
               await deleteObject(storageRef);
-              console.log("Document deleted successfully");
             } catch (error) {
               console.error("Error deleting document:", error.message);
               // Handle errors as needed
@@ -138,7 +150,7 @@ function FileScreenBare(props) {
       </TouchableOpacity>
 
       <FlatList
-        data={documents}
+        data={documentsUserType}
         scrollEnabled={false}
         renderItem={({ item }) => {
           return (
@@ -194,6 +206,7 @@ function FileScreenBare(props) {
 const mapStateToProps = (reducers) => {
   return {
     email: reducers.profile.email,
+    profile: reducers.profile.profile,
 
     // servicesData: reducers.home.servicesData,
     // totalEventServiceAITLIST: reducers.home.totalEventServiceAITLIST,

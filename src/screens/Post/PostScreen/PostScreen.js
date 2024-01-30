@@ -140,10 +140,8 @@ function PostScreen(props) {
     const imageUpdated = AIT.photoServiceURL;
     if (imageUpdated) {
       setEquipment({ uri: imageUpdated });
-      console.log("selectAsset");
     } else {
       setEquipment(imageSource);
-      console.log("selectAsset111", imageSource);
     }
     setAIT(AIT);
     props.saveActualServiceAIT(AIT);

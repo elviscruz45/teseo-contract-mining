@@ -12,12 +12,14 @@ import { Button } from "@rneui/themed";
 import { styles } from "./DocstoApproveScreen.styles";
 import { connect } from "react-redux";
 import { update_firebaseUserUid } from "../../../actions/auth";
+import { useNavigation } from "@react-navigation/native";
 
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
   arrayUnion,
   updateDoc,
   doc,
+  deleteDoc,
   collection,
   query,
   where,
@@ -36,7 +38,8 @@ import Toast from "react-native-toast-message";
 function DocstoApproveScreenBare(props) {
   const [approval, setApproval] = useState();
   const [isMailAvailable, setIsMailAvailable] = useState(false);
-  console.log("approval", approval);
+  const userType = props.profile.userType;
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function checkAvailability() {
@@ -84,6 +87,8 @@ function DocstoApproveScreenBare(props) {
     return formattedDate;
   };
 
+  const emailUser = props.email;
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -97,7 +102,12 @@ function DocstoApproveScreenBare(props) {
         // Process results from the first query
         if (getDocs1) {
           getDocs1.forEach((doc) => {
-            lista.push(doc.data());
+            if (
+              doc.data()?.ApprovalRequestedBy === emailUser ||
+              doc.data()?.ApprovalRequestSentTo.includes(emailUser)
+            ) {
+              lista.push(doc.data());
+            }
           });
         }
 
@@ -117,7 +127,6 @@ function DocstoApproveScreenBare(props) {
       // );
       // setApproval(filteredArray);
     }
-
     fetchData();
   }, [props.approvalListNew]);
 
@@ -310,7 +319,7 @@ function DocstoApproveScreenBare(props) {
       });
     }
   }, []);
-  const deleteDoc = (item) => {
+  const deleteApproval = (item) => {
     Alert.alert(
       "Eliminar Documento",
       "Estas Seguro que desear Eliminar la solicitud de aprobacion?",
@@ -322,23 +331,21 @@ function DocstoApproveScreenBare(props) {
         {
           text: "Aceptar",
           onPress: async () => {
-            console.log("delete Doc");
-
             //updating events in ServiciosAIT to filter the deleted event
             const Ref = doc(db, "approvals", item.idApproval);
             await deleteDoc(Ref);
 
-            //delete doc from storage
-            const documentPath = `pdfPost/${item.fileName}-${item.fechaPostFormato}`;
-            try {
-              const storage = getStorage();
-              const storageRef = ref(storage, documentPath);
-              await deleteObject(storageRef);
-              console.log("Document deleted successfully");
-            } catch (error) {
-              console.error("Error deleting document:", error.message);
-              // Handle errors as needed
-            }
+            // // //delete doc from storage
+            // const documentPath = `pdfPost/${item.fileName}-${item.fechaPostFormato}`;
+
+            // try {
+            //   const storage = getStorage();
+            //   const storageRef = ref(storage, documentPath);
+            //   await deleteObject(storageRef);
+            // } catch (error) {
+            //   console.error("Error deleting document:", error.message);
+            //   // Handle errors as needed
+            // }
 
             //send success message
             Toast.show({
@@ -400,9 +407,11 @@ function DocstoApproveScreenBare(props) {
               <View style={styles.equipments2}>
                 <View style={styles.image2}>
                   <TouchableOpacity
-                    onPress={() => uploadFile(item.pdfFile)}
+                    // onPress={() => uploadFile(item.pdfFile)}
                     onLongPress={
-                      props.email === item.email ? () => deleteDoc(item) : null
+                      props.email === item.email
+                        ? () => deleteApproval(item)
+                        : null
                     }
                   >
                     <ImageExpo
@@ -578,7 +587,7 @@ function DocstoApproveScreenBare(props) {
 
 const mapStateToProps = (reducers) => {
   return {
-    profile: reducers.profile.firebase_user_name,
+    profile: reducers.profile.profile,
     email: reducers.profile.email,
     ActualPostFirebase: reducers.post.ActualPostFirebase,
     approvalListNew: reducers.search.approvalListNew, //important

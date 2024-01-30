@@ -7,7 +7,6 @@ describe("SelectExample", () => {
     // const setText = jest.fn();
     // const { getByTestId } = render(<SelectExample setText={setText} />);
     // const selectList = getByTestId("ChangeDisplayArea:SelectList");
-    // console.log("selectList", selectList);
     // expect(selectList).toBeTruthy();
     // const { getByText } = render(<SelectExample />);
     // expect(getByText("Select option")).toBeTruthy();

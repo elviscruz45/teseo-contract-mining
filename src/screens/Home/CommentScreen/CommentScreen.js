@@ -34,7 +34,6 @@ import Toast from "react-native-toast-message";
 function CommentScreen(props) {
   const [postsComments, setPostsComments] = useState([]);
   const [comment, setComment] = useState("");
-  // console.log("CommentScreen");
 
   const navigation = useNavigation();
   const {

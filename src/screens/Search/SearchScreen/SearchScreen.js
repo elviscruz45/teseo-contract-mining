@@ -23,7 +23,7 @@ function SearchScreenNoRedux(props) {
   }
   const regex = /@(.+?)\./i;
   const companyName =
-    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
+    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
 
   // if (!data && !searchResults) {
   //   setData(props.servicesData);
@@ -32,7 +32,6 @@ function SearchScreenNoRedux(props) {
 
   //This is used to retrieve the the services we are filtering and sorting
   useEffect(() => {
-    // console.log("useEffect 222");
     AITServiceList = props.servicesData;
     if (Array.isArray(AITServiceList)) {
       let AITServiceListSorted = AITServiceList.sort((a, b) => {
@@ -41,12 +40,9 @@ function SearchScreenNoRedux(props) {
       setData(AITServiceListSorted);
       setSearchResults(AITServiceListSorted?.slice(0, 100));
     }
-    // console.log("useEffect fin 222");
   }, [props.servicesData]);
 
   useEffect(() => {
-    // console.log("useEffect 333");
-
     if (searchText === "") {
       setSearchResults(data?.slice(0, 100));
     } else {
@@ -63,18 +59,14 @@ function SearchScreenNoRedux(props) {
 
       setSearchResults(result.slice(0, 50));
     }
-    // console.log("useEffect fin 3333");
   }, [searchText]);
   //to initialize the data in null
-  // console.log("xcreen");
 
   useEffect(() => {
-    // console.log("useEffect 111");
     if (!data && !searchResults) {
       setData(props.servicesData);
       setSearchResults(props.servicesData?.slice(0, 100));
     }
-    // console.log("useEffect fin 111");
   }, []);
 
   //this method is used to go to a screen to see the status of the item

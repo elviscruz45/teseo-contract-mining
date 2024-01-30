@@ -25,7 +25,7 @@ function MoreDetailScreenNoRedux(props) {
     },
   } = props;
   const navigation = useNavigation();
-
+  const userType = props.profile.userType;
   ///the algoritm to retrieve the image source to render the icon
   const area = Item.AreaServicio;
   const indexareaList = areaLists.findIndex((item) => item.value === area);
@@ -226,12 +226,16 @@ function MoreDetailScreenNoRedux(props) {
           <Text style={styles.info}>{"Creado por:  "}</Text>
           <Text style={styles.info2}>{Item.emailPerfil}</Text>
         </View>
-        <View style={[styles.row, styles.center]}>
-          <Text style={styles.info}>{"Monto de Cotizacion:  "}</Text>
-          <Text style={styles.info2}>
-            {formattedAmount} {Item.Moneda}
-          </Text>
-        </View>
+
+        {(userType === "Gerente" || userType === "Planificador") && (
+          <View style={[styles.row, styles.center]}>
+            <Text style={styles.info}>{"Monto de Cotizacion:  "}</Text>
+            <Text style={styles.info2}>
+              {formattedAmount} {Item.Moneda}
+            </Text>
+          </View>
+        )}
+
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Fecha de Asignacion:  "}</Text>
           <Text style={styles.info2}>
@@ -243,13 +247,21 @@ function MoreDetailScreenNoRedux(props) {
           <Text style={styles.info}>{"Fecha de Fin Propuesto:  "}</Text>
           <Text style={styles.info2}>{NuevaFechaEstimadatoRender}</Text>
         </View>
-        <View style={[styles.row, styles.center]}>
-          <Text style={styles.info}>{"Horas Hombre Cotizadas:  "}</Text>
-          <Text style={styles.info2}>
-            {Item.HorasHombre}
-            {" HH"}
-          </Text>
-        </View>
+
+        {(userType === "Gerente" ||
+          userType === "Planificador" ||
+          userType === "Supervisor" ||
+          userType === "GerenteContratista" ||
+          userType === "PlanificadorContratista") && (
+          <View style={[styles.row, styles.center]}>
+            <Text style={styles.info}>{"Horas Hombre Cotizadas:  "}</Text>
+            <Text style={styles.info2}>
+              {Item.HorasHombre}
+              {" HH"}
+            </Text>
+          </View>
+        )}
+
         <View style={[styles.row, styles.center]}>
           <Text style={styles.info}>{"Avance Ejecucion Real:  "}</Text>
           <Text style={styles.info2}>
@@ -293,6 +305,7 @@ function MoreDetailScreenNoRedux(props) {
 const mapStateToProps = (reducers) => {
   return {
     email: reducers.profile.email,
+    profile: reducers.profile.profile,
   };
 };
 

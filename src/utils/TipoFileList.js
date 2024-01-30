@@ -1,5 +1,8 @@
 export const TipoFileLists = [
   {
+    value: "Cotizacion",
+  },
+  {
     value: "PET",
   },
   {
