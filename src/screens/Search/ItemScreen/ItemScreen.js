@@ -251,9 +251,14 @@ function ItemScreenNotRedux(props) {
                 {"Ejecucion:  "} {serviceInfo.AvanceEjecucion}
                 {" %"}
               </Text>
-              {daysLeft < 0 ? (
+              {serviceInfo.AvanceEjecucion === "100" ? (
+                <Text style={styles.alert2}>
+                  {"Estado:  "}
+                  {" Finalizado"}
+                </Text>
+              ) : daysLeft < 0 ? (
                 <Text style={styles.alert1}>
-                  {"Dias de Retraso:  "} {daysLeft}
+                  {"Dias de Retraso:  "} {-daysLeft}
                   {" dias"}
                 </Text>
               ) : (

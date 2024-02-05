@@ -120,7 +120,7 @@ function HeaderScreenNoRedux(props) {
           </TouchableOpacity>
         );
       }}
-      keyExtractor={(item) => `${item.idServiciosAIT}-${item.photoServiceURL}`}
+      keyExtractor={(item) => `${item.fechaPostISO}`}
     />
   );
 }
