@@ -240,7 +240,7 @@ function GeneralFormsBare(props) {
           />
         )}
 
-        <Text style={styles.subtitleForm}>Opcional</Text>
+        {/* <Text style={styles.subtitleForm}>Opcional</Text> */}
 
         {companyName !== "fmi" && (
           <Input
@@ -256,19 +256,22 @@ function GeneralFormsBare(props) {
           />
         )}
 
-        <Input
-          value={shortNameFileUpdated}
-          placeholder="Adjuntar PDF"
-          multiline={true}
-          editable={false}
-          rightIcon={{
-            type: "material-community",
-            name: "arrow-right-circle-outline",
-            onPress: () => {
-              pickDocument();
-            },
-          }}
-        />
+        {(formik.values.etapa === "Contratista-Solicitud Aprobacion Doc" ||
+          formik.values.etapa === "Contratista-Envio Cotizacion") && (
+          <Input
+            value={shortNameFileUpdated}
+            placeholder="Adjuntar PDF"
+            multiline={true}
+            editable={false}
+            rightIcon={{
+              type: "material-community",
+              name: "arrow-right-circle-outline",
+              onPress: () => {
+                pickDocument();
+              },
+            }}
+          />
+        )}
 
         {shortNameFileUpdated && (
           <Input
@@ -283,72 +286,6 @@ function GeneralFormsBare(props) {
             }}
           />
         )}
-
-        {/* <View style={styles.iconMinMax}>
-          <TouchableOpacity onPress={() => handlesetAditional()}>
-            <Image
-              source={require("../../../../../assets/plus3.png")}
-              style={styles.roundImageUploadmas}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => setAditional(false)}>
-            <Image
-              source={require("../../../../../assets/minus3.png")}
-              style={styles.roundImageUploadmas}
-            />
-          </TouchableOpacity>
-        </View> */}
-
-        {/* {aditional && (
-          <>
-            <Text style={styles.subtitleForm}>Modificaciones (*)</Text>
-
-            <Input
-              value={formatNumber(monto)}
-              placeholder="No hay modificacion de Monto Cotizado"
-              multiline={true}
-              editable={false}
-              // errorMessage={formik.errors.MontoModificado}
-              rightIcon={{
-                type: "material-community",
-                name: "arrow-right-circle-outline",
-                onPress: () => selectComponent("MontoModificado"),
-              }}
-            />
-            <Input
-              value={formatdate(fechafin)}
-              placeholder="No hay modificacion de Fecha Fin"
-              editable={false}
-              // errorMessage={formik.errors.NuevaFechaEstimada}
-              multiline={true}
-              // editable={false}
-
-              rightIcon={{
-                type: "material-community",
-                name: "arrow-right-circle-outline",
-                onPress: () => selectComponent("NuevaFechaEstimada"),
-              }}
-            />
-
-            <Input
-              value={formatNumber(horashombre)}
-              placeholder="No hay modificacion de Horas Hombres"
-              editable={false}
-              // errorMessage={formik.errors.HHModificado}
-              multiline={true}
-              rightIcon={{
-                type: "material-community",
-                name: "arrow-right-circle-outline",
-                onPress: () => selectComponent("HHModificado"),
-              }}
-            />
-
-            <Text style={styles.subtitleForm}>
-              * No modificar sin aprobacion
-            </Text>
-          </>
-        )} */}
       </View>
 
       <Modal show={showModal} close={onCloseOpenModal}>
