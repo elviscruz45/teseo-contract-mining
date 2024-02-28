@@ -85,7 +85,7 @@ function ChangeDisplayNameForm(props) {
   });
 
   return (
-    <>
+    <KeyboardAwareScrollView>
       <Input
         testID="displayNameform"
         value={formik.values.displayNameform}
@@ -133,7 +133,7 @@ function ChangeDisplayNameForm(props) {
         onPress={formik.handleSubmit}
         loading={formik.isSubmitting}
       />
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 

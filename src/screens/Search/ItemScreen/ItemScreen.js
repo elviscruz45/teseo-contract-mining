@@ -14,6 +14,8 @@ import { GanttHistorial } from "../../../components/Search/Gantt/Gantt";
 import Toast from "react-native-toast-message";
 
 function ItemScreenNotRedux(props) {
+  let AITServiceList;
+
   const [post, setPost] = useState(null);
   const [serviceInfo, setServiceInfo] = useState();
 
@@ -120,60 +122,38 @@ function ItemScreenNotRedux(props) {
   };
 
   useEffect(() => {
-    let unsubscribe;
-    if (props.email) {
-      const companyName =
-        capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
-      async function fetchData() {
-        let queryRef = query(
-          collection(db, "ServiciosAIT"),
-          where("idServiciosAIT", "==", Item)
-        );
-        unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
-          const lista = [];
-          const InfoService = [];
-          ItemFirebase.forEach((doc) => {
-            InfoService.push(doc.data());
-          });
-          ItemFirebase.forEach((doc) => {
-            doc.data().events.forEach((item) => {
-              const dataschema = {
-                ...item,
-                time: "27 Ago",
-                title: item.titulo,
-                description: item.comentarios,
-                lineColor: "skyblue",
-                icon: require("../../../../assets/empresa.png"),
-                imageUrl: item.fotoUsuarioPerfil,
-                idDocAITFirestoreDB: Item,
-              };
-              lista.push(dataschema);
-            });
-          });
+    const companyName =
+      capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
+    AITServiceList = props.servicesData;
 
-          if (companyName !== "Fmi") {
-            setPost(lista);
-          } else {
-            const filteredLista = lista.filter((item) => {
-              return item.visibilidad === "Todos";
-            });
-
-            setPost(filteredLista);
-          }
-
-          setServiceInfo(InfoService[0]);
-          props.saveActualServiceAIT(InfoService[0]);
-        });
-      }
-      fetchData();
-      return () => {
-        if (unsubscribe) {
-          unsubscribe();
-        }
+    let service = AITServiceList.filter(
+      (item) => item.idServiciosAIT === Item
+    )[0];
+    const lista = [];
+    service?.events?.forEach((item) => {
+      const dataschema = {
+        ...item,
+        time: "27 Ago",
+        title: item.titulo,
+        description: item.comentarios,
+        lineColor: "skyblue",
+        icon: require("../../../../assets/empresa.png"),
+        imageUrl: item.fotoUsuarioPerfil,
+        idDocAITFirestoreDB: Item,
       };
+      lista.push(dataschema);
+    });
+    if (companyName !== "Fmi") {
+      setPost(lista);
+    } else {
+      const filteredLista = lista.filter((item) => {
+        return item.visibilidad === "Todos";
+      });
+      setPost(filteredLista);
     }
-  }, [Item, props.email]);
-  // }, [Item, props.servicesData]);
+    setServiceInfo(service);
+    props.saveActualServiceAIT(service);
+  }, [props.servicesData]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {
@@ -340,6 +320,7 @@ function ItemScreenNotRedux(props) {
 
 const mapStateToProps = (reducers) => {
   return {
+    servicesData: reducers.home.servicesData,
     email: reducers.profile.email,
 
     // servicesData: reducers.home.servicesData,

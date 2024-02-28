@@ -32,6 +32,8 @@ import { screen } from "../../../utils";
 import Toast from "react-native-toast-message";
 
 function CommentScreen(props) {
+  let totalEventServiceAITLIST;
+
   const [postsComments, setPostsComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -43,15 +45,12 @@ function CommentScreen(props) {
   } = props;
 
   useEffect(() => {
-    const docRef = doc(db, "events", Item.idDocFirestoreDB);
-
-    // const docRef = doc(db, "events", "u9UoHrWiq0ZxIuH8ggsw");
-    let unsubscribe = onSnapshot(docRef, (snapshot) => {
-      const post_array = snapshot.data().comentariosUsuarios || [];
-      setPostsComments(post_array);
-    });
-    return () => unsubscribe();
-  }, []);
+    totalEventServiceAITLIST = props.totalEventServiceAITLIST;
+    let EventServiceITEM = totalEventServiceAITLIST.filter(
+      (item) => item.idDocFirestoreDB === Item?.idDocFirestoreDB
+    );
+    setPostsComments(EventServiceITEM[0]?.comentariosUsuarios);
+  }, [props.totalEventServiceAITLIST]);
 
   //---This is used to get the attached file in the post that contain an attached file---
   const uploadFile = useCallback(async (uri) => {
@@ -305,6 +304,7 @@ function CommentScreen(props) {
 
 const mapStateToProps = (reducers) => {
   return {
+    servicesData: reducers.home.servicesData,
     firebase_user_name: reducers.profile.firebase_user_name,
     user_photo: reducers.profile.user_photo,
     email: reducers.profile.email,

@@ -11,14 +11,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 //--------------Teso-fmi-prodise--------------
-const firebaseConfig = {
-  apiKey: "AIzaSyCV-_gjkUhNKX0x0J0qZRQmhTUsziN7k4I",
-  authDomain: "teseo-fmi-prodise.firebaseapp.com",
-  projectId: "teseo-fmi-prodise",
-  storageBucket: "teseo-fmi-prodise.appspot.com",
-  messagingSenderId: "629895390761",
-  appId: "1:629895390761:web:6304c7338934889fac5e38",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCV-_gjkUhNKX0x0J0qZRQmhTUsziN7k4I",
+//   authDomain: "teseo-fmi-prodise.firebaseapp.com",
+//   projectId: "teseo-fmi-prodise",
+//   storageBucket: "teseo-fmi-prodise.appspot.com",
+//   messagingSenderId: "629895390761",
+//   appId: "1:629895390761:web:6304c7338934889fac5e38",
+// };
 // ---------Prueba------
 
 // const firebaseConfig = {
@@ -54,14 +54,14 @@ const firebaseConfig = {
 
 //---------Prodise------
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCXDbxa1Qs90RlUFOxMob9jY3SBLoj_tRA",
-//   authDomain: "teseo-prodise.firebaseapp.com",
-//   projectId: "teseo-prodise",
-//   storageBucket: "teseo-prodise.appspot.com",
-//   messagingSenderId: "997153190348",
-//   appId: "1:997153190348:web:e1b2494f61e601fce6ad69",
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyCXDbxa1Qs90RlUFOxMob9jY3SBLoj_tRA",
+  authDomain: "teseo-prodise.firebaseapp.com",
+  projectId: "teseo-prodise",
+  storageBucket: "teseo-prodise.appspot.com",
+  messagingSenderId: "997153190348",
+  appId: "1:997153190348:web:e1b2494f61e601fce6ad69",
+};
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
