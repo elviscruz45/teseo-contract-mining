@@ -11,7 +11,7 @@ import { db } from "../../../utils";
 import { useEffect } from "react";
 import Toast from "react-native-toast-message";
 
-export const useUserData = (email, saveTotalUsers) => {
+export const useUserData = (email, saveTotalUsers, getTotalUsers) => {
   useEffect(() => {
     // Function to fetch data from Firestore
     if (email) {
@@ -63,8 +63,9 @@ export const useUserData = (email, saveTotalUsers) => {
         }
       }
       // Call the fetchData function when the component mounts
-
-      fetchData();
+      if (!getTotalUsers) {
+        fetchData();
+      }
     }
   }, [email]);
 };

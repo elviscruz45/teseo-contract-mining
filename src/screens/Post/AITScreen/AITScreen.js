@@ -74,11 +74,6 @@ function AITNoReduxScreen(props) {
             });
           }
 
-          // //avoid duplicates of email of lista
-          // const unique = lista.filter(
-          //   (v, i, a) => a.findIndex((t) => t.email === v.email) === i
-          // );
-
           // Save the merged results to the state or do any other necessary operations
           props.saveTotalUsers(lista);
         } catch (error) {
@@ -87,7 +82,10 @@ function AITNoReduxScreen(props) {
         }
       }
       // Call the fetchData function when the component mounts
-      fetchData();
+
+      if (!props.getTotalUsers) {
+        fetchData();
+      }
     }
   }, [props.email]);
 
@@ -235,6 +233,7 @@ const mapStateToProps = (reducers) => {
   return {
     firebase_user_name: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
+    getTotalUsers: reducers.post.saveTotalUsers,
   };
 };
 

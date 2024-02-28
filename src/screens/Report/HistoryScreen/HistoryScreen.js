@@ -89,7 +89,6 @@ const HistoryScreenNoRedux = (props) => {
   }, [props.servicesData, removeFilter, company]);
 
   useEffect(() => {
-    let unsubscribe;
     let q;
     if (startDate && endDate) {
       async function fetchData() {
@@ -114,12 +113,6 @@ const HistoryScreenNoRedux = (props) => {
       }
 
       fetchData();
-
-      return () => {
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      };
     }
   }, [startDate, endDate]);
 

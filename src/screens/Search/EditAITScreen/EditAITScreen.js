@@ -81,7 +81,9 @@ function EditAITNoReduxScreen(props) {
           // Handle the error as needed
         }
       }
-      fetchData();
+      if (!props.getTotalUsers) {
+        fetchData();
+      }
     }
     // Call the fetchData function when the component mounts
   }, [props.email]);
@@ -225,6 +227,7 @@ const mapStateToProps = (reducers) => {
   return {
     firebase_user_name: reducers.profile.firebase_user_name,
     email: reducers.profile.email,
+    getTotalUsers: reducers.post.saveTotalUsers,
   };
 };
 

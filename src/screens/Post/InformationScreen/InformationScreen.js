@@ -36,7 +36,7 @@ function InformationScreen(props) {
   const navigation = useNavigation();
   // console.log("InformationScreen");
   //fetching data from firebase to retrieve all users
-  useUserData(props.email, props.saveTotalUsers);
+  useUserData(props.email, props.saveTotalUsers, props.getTotalUsers);
 
   // retrieving data from formik forms ,data from ./InfomartionScreen.data.js
   const formik = useFormik({
@@ -293,6 +293,7 @@ const mapStateToProps = (reducers) => {
     uid: reducers.profile.uid,
     actualServiceAIT: reducers.post.actualServiceAIT,
     savePhotoUri: reducers.post.savePhotoUri,
+    getTotalUsers: reducers.post.saveTotalUsers,
   };
 };
 
