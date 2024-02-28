@@ -319,10 +319,6 @@ function PostScreen(props) {
                       {item.companyName}
                     </Text>
                   )}
-                  <Text style={styles.info}>
-                    {"Fecha Inicio: "}
-                    {item.fechaPostFormato}
-                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
