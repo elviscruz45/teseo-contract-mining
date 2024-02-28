@@ -19,6 +19,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 function ProfileScreen(props) {
   // console.log("ProfileScreen");
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
+  const regex = /@(.+?)\./i;
+  const companyName =
+    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
 
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
@@ -56,31 +62,43 @@ function ProfileScreen(props) {
     setEndDate(null);
   };
 
-  //This hook used to retrieve post data from Firebase and sorted by date
+  // //This hook used to retrieve post data from Firebase and sorted by date
+  // useEffect(() => {
+  //   // let EventList = props.totalEventServiceAITLIST?.filter((item) => {
+  //   //   return item.emailPerfil === props.email;
+  //   // });
+
+  //   let EventList = props.totalEventServiceAITLIST?.sort((a, b) => {
+  //     return b.createdAt - a.createdAt;
+  //   });
+  //   const lastEvent = EventList[0]?.emailPerfil;
+
+  //   if (lastEvent === props.email) {
+  //   }
+
+  //   setPost(EventList?.slice(0, 100));
+  // }, [props.totalEventServiceAITLIST, removeFilter]);
 
   useEffect(() => {
-    let EventList = props.totalEventServiceAITLIST?.filter((item) => {
-      return item.emailPerfil === props.email;
-    });
-
-    EventList?.sort((a, b) => {
-      return b.createdAt - a.createdAt;
-    });
-
-    setPost(EventList?.slice(0, 100));
-  }, [props.totalEventServiceAITLIST, removeFilter]);
-
-  useEffect(() => {
-    let unsubscribe;
     let q;
     if (startDate && endDate) {
       async function fetchData() {
-        q = query(
-          collection(db, "events"),
-          orderBy("createdAt", "desc"),
-          where("createdAt", ">=", startDate),
-          where("createdAt", "<=", endDate)
-        );
+        if (companyName === "Fmi") {
+          q = query(
+            collection(db, "events"),
+            orderBy("createdAt", "desc"),
+            where("createdAt", ">=", startDate),
+            where("createdAt", "<=", endDate)
+          );
+        } else {
+          q = query(
+            collection(db, "events"),
+            orderBy("createdAt", "desc"),
+            where("createdAt", ">=", startDate),
+            where("createdAt", "<=", endDate),
+            where("AITcompanyName", "==", companyName)
+          );
+        }
 
         try {
           const querySnapshot = await getDocs(q);
@@ -96,12 +114,6 @@ function ProfileScreen(props) {
       }
 
       fetchData();
-
-      return () => {
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      };
     }
   }, [startDate, endDate]);
 

@@ -63,9 +63,12 @@ const HistoryScreenNoRedux = (props) => {
   const [montoServicios, setMontoServicios] = useState(false);
   const [historial, setHistorial] = useState(false);
   //Data about the company belong this event
-
+  function capitalizeFirstLetter(str) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
   const regex = /@(.+?)\./i;
-  const companyName = props.email?.match(regex)?.[1].toUpperCase() || "Anonimo"; // console.log("searchResults", searchResults);
+  const companyName =
+    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
 
   useEffect(() => {
     if (Array.isArray(props.servicesData)) {
@@ -92,12 +95,22 @@ const HistoryScreenNoRedux = (props) => {
     let q;
     if (startDate && endDate) {
       async function fetchData() {
-        q = query(
-          collection(db, "ServiciosAIT"),
-          orderBy("createdAt", "desc"),
-          where("createdAt", ">=", startDate),
-          where("createdAt", "<=", endDate)
-        );
+        if (companyName === "Fmi") {
+          q = query(
+            collection(db, "ServiciosAIT"),
+            orderBy("createdAt", "desc"),
+            where("createdAt", ">=", startDate),
+            where("createdAt", "<=", endDate)
+          );
+        } else {
+          q = query(
+            collection(db, "ServiciosAIT"),
+            orderBy("createdAt", "desc"),
+            where("createdAt", ">=", startDate),
+            where("createdAt", "<=", endDate),
+            where("companyName", "==", companyName)
+          );
+        }
 
         try {
           const querySnapshot = await getDocs(q);
@@ -135,7 +148,7 @@ const HistoryScreenNoRedux = (props) => {
       >
         <Text></Text>
 
-        {companyName === "FMI" ? (
+        {companyName === "Fmi" ? (
           <TouchableOpacity onPress={() => update_Data()}>
             <Image
               source={require("../../../../assets/empresa.png")}
@@ -149,7 +162,7 @@ const HistoryScreenNoRedux = (props) => {
           />
         )}
 
-        {companyName !== "FMI" ? (
+        {companyName !== "Fmi" ? (
           <Text style={styles.company}>{companyName}</Text>
         ) : (
           <Text style={styles.company}>{company}</Text>

@@ -42,8 +42,8 @@ function DateScreenNoRedux(props) {
 
     if (dateStart > dateEnd) {
       alert("La fecha de inicio no puede ser mayor a la fecha de fin");
-    } else if (daysDifference >= 366) {
-      alert("La diferencia entre las fechas no debe ser mayor a 365 días");
+    } else if (daysDifference >= 31) {
+      alert("La diferencia entre las fechas no debe ser mayor a 31 días");
     } else if (startDate > new Date()) {
       alert("La fecha de inicio no puede ser mayor a la fecha de hoy");
     } else {
@@ -55,7 +55,7 @@ function DateScreenNoRedux(props) {
     setFiltroText("Sin Filtro");
     setDateEnd(new Date());
     setDateStart(new Date());
-    quitFilterButton();
+    quitFilterButton(dateStart, dateEnd);
   };
 
   //methods to change the date
