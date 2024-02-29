@@ -227,7 +227,10 @@ function MoreDetailScreenNoRedux(props) {
           <Text style={styles.info2}>{Item.emailPerfil}</Text>
         </View>
 
-        {(userType === "Gerente" || userType === "Planificador") && (
+        {(userType === "Gerente" ||
+          userType === "Planificador" ||
+          userType === "GerenteContratista" ||
+          userType === "PlanificadorContratista") && (
           <View style={[styles.row, styles.center]}>
             <Text style={styles.info}>{"Monto de Cotizacion:  "}</Text>
             <Text style={styles.info2}>

@@ -9,13 +9,10 @@ import {
 } from "react-native";
 import { Image as ImageExpo } from "expo-image";
 import { styles } from "./FileScreen.styles";
-
 import { useNavigation } from "@react-navigation/native";
 import { getStorage, ref, deleteObject } from "firebase/storage";
-
 import { screen } from "../../../utils";
 import { connect } from "react-redux";
-
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Toast from "react-native-toast-message";
 import { db } from "../../../utils";

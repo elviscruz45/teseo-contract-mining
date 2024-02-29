@@ -95,12 +95,16 @@ const HistoryScreenNoRedux = (props) => {
     let q;
     if (startDate && endDate) {
       async function fetchData() {
+        const CompanySelectedHistory = capitalizeFirstLetter(
+          company.toLowerCase()
+        );
         if (companyName === "Fmi") {
           q = query(
             collection(db, "ServiciosAIT"),
             orderBy("createdAt", "desc"),
             where("createdAt", ">=", startDate),
-            where("createdAt", "<=", endDate)
+            where("createdAt", "<=", endDate),
+            where("companyName", "==", CompanySelectedHistory)
           );
         } else {
           q = query(

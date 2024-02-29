@@ -140,7 +140,6 @@ const ReportScreenNoRedux = (props) => {
               onPress={
                 userType === "Gerente" ||
                 userType === "Planificador" ||
-                userType === "Supervisor" ||
                 userType === "GerenteContratista" ||
                 userType === "PlanificadorContratista"
                   ? () => goToHistoryScreen()
@@ -264,7 +263,6 @@ const ReportScreenNoRedux = (props) => {
 
           {(userType === "Gerente" ||
             userType === "Planificador" ||
-            userType === "Supervisor" ||
             userType === "GerenteContratista" ||
             userType === "PlanificadorContratista") && (
             <View style={styles.iconMinMax}>
@@ -289,7 +287,6 @@ const ReportScreenNoRedux = (props) => {
           {montoServicios &&
             (userType === "Gerente" ||
               userType === "Planificador" ||
-              userType === "Supervisor" ||
               userType === "GerenteContratista" ||
               userType === "PlanificadorContratista") && (
               <>
@@ -302,7 +299,6 @@ const ReportScreenNoRedux = (props) => {
           <Text></Text>
           {(userType === "Gerente" ||
             userType === "Planificador" ||
-            userType === "Supervisor" ||
             userType === "GerenteContratista" ||
             userType === "PlanificadorContratista") && (
             <View style={styles.iconMinMax}>
@@ -327,7 +323,6 @@ const ReportScreenNoRedux = (props) => {
           {montoEDP &&
             (userType === "Gerente" ||
               userType === "Planificador" ||
-              userType === "Supervisor" ||
               userType === "GerenteContratista" ||
               userType === "PlanificadorContratista") && (
               <>
@@ -342,7 +337,6 @@ const ReportScreenNoRedux = (props) => {
 
           {(userType === "Gerente" ||
             userType === "Planificador" ||
-            userType === "Supervisor" ||
             userType === "GerenteContratista" ||
             userType === "PlanificadorContratista") && (
             <View style={styles.iconMinMax}>
@@ -368,7 +362,6 @@ const ReportScreenNoRedux = (props) => {
           {comprometido &&
             (userType === "Gerente" ||
               userType === "Planificador" ||
-              userType === "Supervisor" ||
               userType === "GerenteContratista" ||
               userType === "PlanificadorContratista") && (
               <MontoComprometido data={data} />
@@ -379,7 +372,6 @@ const ReportScreenNoRedux = (props) => {
             onPress={
               userType === "Gerente" ||
               userType === "Planificador" ||
-              userType === "Supervisor" ||
               userType === "GerenteContratista" ||
               userType === "PlanificadorContratista"
                 ? () => getExcelReportData(data)
