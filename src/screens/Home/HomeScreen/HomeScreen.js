@@ -55,7 +55,7 @@ function HomeScreen(props) {
         if (companyName === "Fmi") {
           queryRef = query(
             collection(db, "events"),
-            limit(10),
+            limit(20),
             where("visibilidad", "==", "Todos"),
             orderBy("createdAt", "desc")
           );
@@ -102,7 +102,8 @@ function HomeScreen(props) {
         let queryRef = query(
           collection(db, "approvals"),
           orderBy("date", "desc"),
-          where("ApprovalRequestSentTo", "array-contains", props.email)
+          where("ApprovalRequestSentTo", "array-contains", props.email),
+          limit(25)
         );
         unsubscribe = onSnapshot(queryRef, (ItemFirebase) => {
           const lista = [];

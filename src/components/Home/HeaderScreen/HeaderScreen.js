@@ -40,7 +40,6 @@ function HeaderScreenNoRedux(props) {
             where(
               "AvanceAdministrativoTexto",
               "!=",
-
               "Contratista-Fin servicio"
             ),
             where("companyName", "==", companyName)
