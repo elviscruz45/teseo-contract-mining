@@ -153,7 +153,7 @@ function ItemScreenNotRedux(props) {
     }
     setServiceInfo(service);
     props.saveActualServiceAIT(service);
-  }, [props.servicesData]);
+  }, [props.servicesData, Item]);
 
   //this function goes to another screen to get more detail about the service state
   const Detalles = (data) => {

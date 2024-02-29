@@ -71,6 +71,7 @@ function SearchScreenNoRedux(props) {
 
   //this method is used to go to a screen to see the status of the item
   const selectAsset = (idServiciosAIT) => {
+    console.log("idServiciosAIT", idServiciosAIT);
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: idServiciosAIT },
