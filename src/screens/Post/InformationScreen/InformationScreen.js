@@ -34,7 +34,6 @@ import { Image as ImageExpo } from "expo-image";
 import Toast from "react-native-toast-message";
 function InformationScreen(props) {
   const navigation = useNavigation();
-  // console.log("InformationScreen");
   //fetching data from firebase to retrieve all users
   useUserData(props.email, props.saveTotalUsers, props.getTotalUsers);
 
@@ -45,7 +44,6 @@ function InformationScreen(props) {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        // console.log("formik handleSubmit");
         const newData = formValue;
         newData.fechaPostFormato = dateFormat();
         //data of the service AIT information

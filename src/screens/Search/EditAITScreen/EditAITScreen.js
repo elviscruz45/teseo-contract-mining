@@ -161,7 +161,6 @@ function EditAITNoReduxScreen(props) {
           updateDataLasEventPost.HorasHombre = newData.HorasHombre;
         }
 
-        // console.log("updateDataLasEventPost");
         await updateDoc(RefFirebaseLasEventPostd, updateDataLasEventPost);
 
         // this hedlps to go to the begining of the process

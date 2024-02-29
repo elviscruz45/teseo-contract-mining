@@ -31,7 +31,6 @@ export const CircularProgress = ({
   image,
   titulo,
 }) => {
-  // console.log("CircularProgress");
   const [avatar, setAvatar] = useState();
 
   const data = [

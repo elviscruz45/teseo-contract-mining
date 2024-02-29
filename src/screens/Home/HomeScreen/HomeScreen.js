@@ -80,7 +80,6 @@ function HomeScreen(props) {
           setPosts(lista);
           setCompanyName(companyName);
           props.saveTotalEventServiceAITList(lista);
-          // console.log("fetch events");
         });
         setIsLoading(false);
       }
@@ -225,7 +224,6 @@ function HomeScreen(props) {
   } else {
     return (
       <>
-        {/* {console.log("HomeScreenRender")} */}
         <FlatList
           data={posts}
           ListHeaderComponent={<HeaderScreen />}
@@ -375,7 +373,6 @@ function HomeScreen(props) {
             `${item.fotoPrincipal}-${item.fechaPostFormato}`
           } // Provide a unique key for each item
           // onEndReached={() => {
-          //   console.log("se re-rerenderiza mucho");
           // }}
           // onEndReached={() => loadMorePosts()}
           // onEndReachedThreshold={0.1}

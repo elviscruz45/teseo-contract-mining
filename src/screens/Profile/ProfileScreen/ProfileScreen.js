@@ -18,7 +18,6 @@ import { ProfileDateScreen } from "../../../components/Profile/ProfileDateScreen
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function ProfileScreen(props) {
-  // console.log("ProfileScreen");
   function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
   }

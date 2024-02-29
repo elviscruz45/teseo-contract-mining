@@ -15,7 +15,7 @@ export const SelectExampleBare = (props) => {
 
   const regex = /@(.+?)\./i;
 
-  const companyName = props.email?.match(regex)?.[1].toUpperCase() || "Anonimo"; // console.log("searchResults", searchResults);
+  const companyName = props.email?.match(regex)?.[1].toUpperCase() || "Anonimo";
   const userType = props.profile?.userType;
   const etapaLists =
     companyName === "FMI" && userType !== "Trabajador"

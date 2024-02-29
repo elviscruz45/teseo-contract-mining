@@ -16,7 +16,6 @@ import { Image as ImageExpo } from "expo-image";
 import Toast from "react-native-toast-message";
 
 function PostScreen(props) {
-  // console.log("PostScreen");
   const emptyimage = require("../../../../assets/splash.png");
   const navigation = useNavigation();
   const [equipment, setEquipment] = useState(null);
@@ -31,10 +30,9 @@ function PostScreen(props) {
 
   const regex = /@(.+?)\./i;
   const companyName =
-    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo"; // console.log("searchResults", searchResults);
+    capitalizeFirstLetter(props.email?.match(regex)?.[1]) || "Anonimo";
 
   //retrieving serviceAIT list data from firebase
-  // console.log("PostScreen");
   useEffect(() => {
     let servicesList = props.servicesData;
     if (Array.isArray(servicesList)) {
