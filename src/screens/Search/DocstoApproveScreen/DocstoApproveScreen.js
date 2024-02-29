@@ -407,7 +407,7 @@ function DocstoApproveScreenBare(props) {
               <View style={styles.equipments2}>
                 <View style={styles.image2}>
                   <TouchableOpacity
-                    // onPress={() => uploadFile(item.pdfFile)}
+                    onPress={() => openGoogleDriveLink(item.pdfFile)}
                     onLongPress={
                       props.email === item.email
                         ? () => deleteApproval(item)
