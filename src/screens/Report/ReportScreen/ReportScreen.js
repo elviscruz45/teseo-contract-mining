@@ -56,7 +56,7 @@ const ReportScreenNoRedux = (props) => {
   useEffect(() => {
     if (Array.isArray(props.servicesData)) {
       setCompanyList([
-        ...new Set(props.servicesData.map((item) => item.companyName)),
+        ...new Set(props.servicesData?.map((item) => item.companyName)),
       ]);
     }
     if (companyName !== "FMI") {
@@ -71,7 +71,7 @@ const ReportScreenNoRedux = (props) => {
 
     if (company !== "TOTAL CONTRATISTAS" && Array.isArray(props.servicesData)) {
       setData(
-        props.servicesData.filter(
+        props.servicesData?.filter(
           (item) => item.companyName?.toUpperCase() === company
         )
       );
