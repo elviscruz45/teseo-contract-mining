@@ -41,7 +41,7 @@ function CameraScreen(props) {
       const resizedPhoto = await ImageManipulator.manipulateAsync(
         data.uri,
         [{ resize: { width: 800 } }],
-        { compress: 0.2, format: "jpeg", base64: true }
+        { compress: 0.4, format: "jpeg", base64: true }
       );
       props.savePhotoUri(resizedPhoto.uri);
       navigation.navigate(screen.post.form);
