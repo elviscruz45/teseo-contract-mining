@@ -116,7 +116,8 @@ function InfoUser(props) {
         <Text> </Text>
         <Text> </Text>
 
-        {props.profile?.userType === userTypeList.manager && (
+        {(props.profile?.userType === userTypeList.managerContratista ||
+          props.profile?.userType === userTypeList.plannerContratista) && (
           <TouchableOpacity
             style={styles.btnContainer4}
             onPress={() => updateManpower()}

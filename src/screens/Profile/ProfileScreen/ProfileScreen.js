@@ -62,43 +62,17 @@ function ProfileScreen(props) {
     setEndDate(null);
   };
 
-  // //This hook used to retrieve post data from Firebase and sorted by date
-  // useEffect(() => {
-  //   // let EventList = props.totalEventServiceAITLIST?.filter((item) => {
-  //   //   return item.emailPerfil === props.email;
-  //   // });
-
-  //   let EventList = props.totalEventServiceAITLIST?.sort((a, b) => {
-  //     return b.createdAt - a.createdAt;
-  //   });
-  //   const lastEvent = EventList[0]?.emailPerfil;
-
-  //   if (lastEvent === props.email) {
-  //   }
-
-  //   setPost(EventList?.slice(0, 100));
-  // }, [props.totalEventServiceAITLIST, removeFilter]);
-
   useEffect(() => {
     let q;
     if (startDate && endDate) {
       async function fetchData() {
-        if (companyName === "Fmi") {
-          q = query(
-            collection(db, "events"),
-            orderBy("createdAt", "desc"),
-            where("createdAt", ">=", startDate),
-            where("createdAt", "<=", endDate)
-          );
-        } else {
-          q = query(
-            collection(db, "events"),
-            orderBy("createdAt", "desc"),
-            where("createdAt", ">=", startDate),
-            where("createdAt", "<=", endDate),
-            where("AITcompanyName", "==", companyName)
-          );
-        }
+        q = query(
+          collection(db, "events"),
+          orderBy("createdAt", "desc"),
+          where("createdAt", ">=", startDate),
+          where("createdAt", "<=", endDate),
+          where("AITcompanyName", "==", companyName)
+        );
 
         try {
           const querySnapshot = await getDocs(q);
