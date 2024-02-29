@@ -56,7 +56,9 @@ export const etapaListUsuario = [
   {
     value: "Usuario-Aprobacion Doc",
   },
-
+  {
+    value: "Contratista-Avance Ejecucion",
+  },
   {
     value: "Usuario-Aprobacion Ampliacion",
   },

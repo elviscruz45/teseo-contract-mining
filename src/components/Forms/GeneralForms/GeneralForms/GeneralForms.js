@@ -256,7 +256,8 @@ function GeneralFormsBare(props) {
           />
         )}
 
-        {(formik.values.etapa === "Contratista-Solicitud Aprobacion Doc" ||
+        {(formik.values.etapa === "Usuario-Envio Solicitud Servicio" ||
+          formik.values.etapa === "Contratista-Solicitud Aprobacion Doc" ||
           formik.values.etapa === "Contratista-Envio Cotizacion") && (
           <Input
             value={shortNameFileUpdated}
