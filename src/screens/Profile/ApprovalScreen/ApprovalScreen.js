@@ -7,7 +7,6 @@ import { styles } from "./ApprovalScreen.styles";
 import { connect } from "react-redux";
 import { ConnectedChangeDisplayNameForm } from "../../../components/Account/ChangeDisplayNameForm";
 import { Modal } from "../../../components/shared/Modal";
-import { getExcelPerfil } from "../../../utils/excelData";
 import { update_firebaseProfile } from "../../../actions/profile";
 import {
   collection,
@@ -61,20 +60,9 @@ function ApprovalScreenBare(props) {
   };
 
   goToApprove = async (item) => {
-    // // retrieve the actual service to use the data to go to approve what is required
-    // const serviceQuery = await getDocs(
-    //   query(collection(db, "ServiciosAIT"), where("idServiciosAIT", "==", item))
-    // );
-    // const post_array = [];
-    // serviceQuery.forEach((doc) => {
-    //   post_array.push(doc.data());
-    // });
-
     navigation.navigate(screen.search.tab, {
       screen: screen.search.item,
       params: { Item: item },
-
-      // params: { Item: post_array[0] },
     });
   };
 
@@ -92,8 +80,6 @@ function ApprovalScreenBare(props) {
       style={{ backgroundColor: "white" }} // Add backgroundColor here
     >
       <Text></Text>
-
-      {/* <Text style={styles.name}>{Item.NombreServicio}</Text> */}
 
       <FlatList
         data={approvalListPending}
