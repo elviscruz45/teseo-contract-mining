@@ -70,7 +70,7 @@ function ProfileScreen(props) {
           orderBy("createdAt", "desc"),
           where("createdAt", ">=", startDate),
           where("createdAt", "<=", endDate),
-          where("AITcompanyName", "==", companyName)
+          where("emailPerfil", "==", props.email)
         );
 
         try {
@@ -135,37 +135,47 @@ function ProfileScreen(props) {
           quitFilterButton={quitfilter}
         />
 
-        <FlatList
-          data={post}
-          scrollEnabled={false}
-          renderItem={({ item, index }) => {
-            return (
-              <TouchableOpacity onPress={() => comentPost(item)}>
-                <View>
-                  <View style={styles.equipments2}>
-                    <ImageExpo
-                      source={{ uri: item.fotoPrincipal }}
-                      style={styles.image2}
-                      cachePolicy={"memory-disk"}
-                    />
-                    <View style={{ marginLeft: 5 }}>
-                      <Text style={styles.name2}>{item.AITNombreServicio}</Text>
-                      <Text style={styles.name2}>
-                        {"Evento: "}
-                        {item.titulo}
-                      </Text>
-                      <Text style={styles.info2}>{item.comentarios}</Text>
-                      <Text style={styles.info2}>{item.fechaPostFormato}</Text>
+        {post ? (
+          <FlatList
+            data={post}
+            scrollEnabled={false}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity onPress={() => comentPost(item)}>
+                  <View>
+                    <View style={styles.equipments2}>
+                      <ImageExpo
+                        source={{ uri: item.fotoPrincipal }}
+                        style={styles.image2}
+                        cachePolicy={"memory-disk"}
+                      />
+                      <View style={{ marginLeft: 5 }}>
+                        <Text style={styles.name2}>
+                          {item.AITNombreServicio}
+                        </Text>
+                        <Text style={styles.name2}>
+                          {"Evento: "}
+                          {item.titulo}
+                        </Text>
+                        <Text style={styles.info2}>{item.comentarios}</Text>
+                        <Text style={styles.info2}>
+                          {item.fechaPostFormato}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-          keyExtractor={(item) =>
-            `${item.fotoPrincipal}-${item.fechaPostFormato}`
-          }
-        />
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={(item) =>
+              `${item.fotoPrincipal}-${item.fechaPostFormato}`
+            }
+          />
+        ) : (
+          <Text style={{ alignSelf: "center" }}>
+            No hay eventos personales entre las fechas dadas
+          </Text>
+        )}
       </KeyboardAwareScrollView>
       <Modal show={showModal} close={onCloseOpenModal}>
         {renderComponent}

@@ -20,7 +20,7 @@
     },
     "android": {
       "package": "com.elviscruz29.teseotracking",
-      "versionCode": 2,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
