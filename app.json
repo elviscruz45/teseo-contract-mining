@@ -15,7 +15,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.elviscruz30.teseo",
+      "bundleIdentifier": "com.elviscruz29.teseotracking",
       "buildNumber": "3"
     },
     "android": {
