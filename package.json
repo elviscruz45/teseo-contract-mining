@@ -20,7 +20,6 @@
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
     "buffer": "^6.0.3",
-    "eas-cli": "^7.3.0",
     "expo": "49",
     "expo-av": "~13.4.1",
     "expo-blur": "~12.4.1",
