@@ -19,8 +19,8 @@
       "buildNumber": "3"
     },
     "android": {
-      "package": "com.elviscruz29.teseotracking",
-      "versionCode": 7,
+      "package": "elviscruz30.teseo",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
