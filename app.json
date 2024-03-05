@@ -15,11 +15,11 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "elviscruz30.teseo",
+      "bundleIdentifier": "com.elviscruz30.teseo",
       "buildNumber": "3"
     },
     "android": {
-      "package": "elviscruz30.teseo",
+      "package": "com.elviscruz30.teseo",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
