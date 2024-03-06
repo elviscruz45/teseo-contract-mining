@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "teseo-track",
+    "name": "TeseoTracking",
     "slug": "teseo-tracking",
     "description": "high perfomance for your industry",
     "version": "2.0.0",
@@ -20,9 +20,9 @@
     },
     "android": {
       "package": "com.elviscruz30.teseotracking",
-      "versionCode": 2,
+      "versionCode": 6,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/appTeseoLogol.png",
         "backgroundColor": "#ffffff"
       }
     },
