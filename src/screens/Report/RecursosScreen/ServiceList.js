@@ -46,8 +46,8 @@ export const ServiceList = (props) => {
         </DataTable.Header>
 
         {/* Table data */}
-        {newTableData.map((item) => (
-          <DataTable.Row key={item.id}>
+        {newTableData.map((item, index) => (
+          <DataTable.Row key={index}>
             <DataTable.Cell style={styles.shortColumn1}>
               {item.TipoServicio}
             </DataTable.Cell>

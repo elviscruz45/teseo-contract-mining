@@ -13,14 +13,8 @@ export const EstadoServiceList = (props) => {
   if (data) {
     for (let i = 0; i < data.length; i++) {
       if (
-        data[i].AvanceAdministrativoTexto === "Contratista-Inicio Servicio" ||
-        data[i].AvanceAdministrativoTexto ===
-          "Contratista-Solicitud Aprobacion Doc" ||
-        data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Doc" ||
-        data[i].AvanceAdministrativoTexto === "Contratista-Avance Ejecucion" ||
-        data[i].AvanceAdministrativoTexto ===
-          "Contratista-Solicitud Ampliacion Servicio" ||
-        data[i].AvanceAdministrativoTexto === "Usuario-Aprobacion Ampliacion"
+        data[i].AvanceAdministrativoTexto !== "Stand by" &&
+        data[i].AvanceAdministrativoTexto !== "Cancelacion"
       ) {
         let daysLeft = data[i].NuevaFechaEstimada
           ? (
@@ -69,8 +63,8 @@ export const EstadoServiceList = (props) => {
         </DataTable.Header>
 
         {/* Table data */}
-        {newTableData.map((item) => (
-          <DataTable.Row key={item.id}>
+        {newTableData.map((item, index) => (
+          <DataTable.Row key={index}>
             <Text
               style={{
                 flex: 0.75,

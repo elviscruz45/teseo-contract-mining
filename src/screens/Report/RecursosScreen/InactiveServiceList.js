@@ -48,8 +48,8 @@ export const InactiveServiceList = (props) => {
         {newTableData.length === 0 ? (
           <Text>No hay datos Servicios Inactivos</Text>
         ) : (
-          newTableData.map((item) => (
-            <DataTable.Row key={item.id}>
+          newTableData.map((item, index) => (
+            <DataTable.Row key={index}>
               <DataTable.Cell style={styles.shortColumn1}>
                 {item.id}
               </DataTable.Cell>

@@ -63,8 +63,8 @@ export const HistoryServiceList = (props) => {
         </DataTable.Header>
 
         {/* Table data */}
-        {newTableData.map((item) => (
-          <DataTable.Row key={item.id}>
+        {newTableData.map((item, index) => (
+          <DataTable.Row key={index}>
             <Text
               style={{
                 flex: 0.75,

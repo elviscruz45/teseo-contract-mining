@@ -79,24 +79,23 @@ function MoreDetailScreenNoRedux(props) {
       ? formatDate(NuevaFechaEstimada?.seconds * 1000)
       : formatDate(Item?.FechaFin?.seconds * 1000);
 
-  const NuevaFechaEstimadatoCalculate =
-    NuevaFechaEstimada > Item?.FechaFin
-      ? NuevaFechaEstimada?.seconds * 1000
-      : Item?.FechaFin?.seconds * 1000;
+  // const NuevaFechaEstimadatoCalculate =
+  //   NuevaFechaEstimada > Item?.FechaFin
+  //     ? NuevaFechaEstimada?.seconds * 1000
+  //     : Item?.FechaFin?.seconds * 1000;
 
   //Algoritm to calculate  "Avance Ejecucion Proyectado"
-  const ActualDate = new Date();
   const DaysProyectedToCompleteTask =
-    NuevaFechaEstimadatoCalculate - new Date(Item.createdAt?.seconds * 1000);
-  let AvanceProyected;
+    Item?.FechaFin?.seconds * 1000 - new Date(Item.FechaInicio?.seconds * 1000);
 
+  let AvanceProyected;
   if (!Item?.FechaInicio) {
     AvanceProyected =
-      ((ActualDate - new Date(Item.createdAt?.seconds * 1000)) * 100) /
+      ((new Date() - new Date(Item.createdAt?.seconds * 1000)) * 100) /
       DaysProyectedToCompleteTask;
   } else {
     AvanceProyected =
-      ((ActualDate - new Date(Item.FechaInicio?.seconds * 1000)) * 100) /
+      ((new Date() - new Date(Item.FechaInicio?.seconds * 1000)) * 100) /
       DaysProyectedToCompleteTask;
   }
 

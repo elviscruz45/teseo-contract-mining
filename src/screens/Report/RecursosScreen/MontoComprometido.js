@@ -85,8 +85,8 @@ export const MontoComprometido = (props) => {
         </DataTable.Header>
 
         {/* Table data */}
-        {ServicesByYearAndMonthList.map((item) => (
-          <DataTable.Row key={item.date}>
+        {ServicesByYearAndMonthList.map((item, index) => (
+          <DataTable.Row key={index}>
             <DataTable.Cell style={styles.multiLineColumn}>
               {item.year}
             </DataTable.Cell>
