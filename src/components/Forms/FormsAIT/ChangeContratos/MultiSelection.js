@@ -11,6 +11,8 @@ const MultiSelectExampleBare = (props) => {
   useEffect(() => {
     if (props.saveTotalUsers) {
       async function fetchData() {
+        const companyName = props.email?.match(/@(.+?)\./i)?.[1] || "Anonimo";
+
         const post_array = [];
         props.saveTotalUsers.forEach((doc) => {
           const object = doc;
@@ -19,7 +21,9 @@ const MultiSelectExampleBare = (props) => {
             value: `${object.displayNameform}\n(${object.email})`,
             email: object.email,
           };
-          post_array.push(objectver2);
+          if (objectver2.email.includes("fmi")) {
+            post_array.push(objectver2);
+          }
         });
 
         setList(post_array);
@@ -48,6 +52,7 @@ const MultiSelectExampleBare = (props) => {
 const mapStateToProps = (reducers) => {
   return {
     saveTotalUsers: reducers.post.saveTotalUsers,
+    email: reducers.profile.email,
   };
 };
 

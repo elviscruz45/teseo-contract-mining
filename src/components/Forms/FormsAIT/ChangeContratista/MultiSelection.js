@@ -18,7 +18,9 @@ const MultiSelectExampleBare = (props) => {
             value: `${object.displayNameform}\n(${object.email})`,
             email: object.email,
           };
-          post_array.push(objectver2);
+          if (!objectver2.email.includes("fmi")) {
+            post_array.push(objectver2);
+          }
         });
 
         setList(post_array);
